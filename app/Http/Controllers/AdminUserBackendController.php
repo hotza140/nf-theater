@@ -26,6 +26,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\users;
 use App\Models\users_in;
 use App\Models\users_in_in;
+use App\Models\users_in_in_history;
 use App\Models\admin;
 
 class AdminUserBackendController extends Controller
@@ -240,6 +241,14 @@ class AdminUserBackendController extends Controller
 
      //User//
      public function users(Request $r){
+         // ลบเช็คเวลา
+         $date=date('Y-m-d');
+         $users = users::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+         $accounts=users_in_in::whereIn('id_user',@$users)->delete();
+         $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+         // ลบเช็คเวลา
+
+
         $item=users ::orderby('id','desc')->paginate(10);
 
         $search = $r->search;
@@ -369,12 +378,8 @@ class AdminUserBackendController extends Controller
         
         // ลบเช็คเวลา
         $date=date('Y-m-d');
-        $users = users::where('id',$id)
-                ->whereDate('date_start', '<=', $date)
-                ->whereDate('date_end', '>=', $date)
-                ->fisrt();
-         
-        if($users==null){
+        $users = users::where('id',$id)->whereDate('date_end', '<', $date)->first();
+        if($users!=null){
             $accounts=users_in_in::where('id_user',@$id)->delete();
             $item->status_account=2;
             $item->save();
@@ -491,6 +496,13 @@ class AdminUserBackendController extends Controller
   
        //User_in//
        public function users_in(Request $r){
+         // ลบเช็คเวลา
+         $date=date('Y-m-d');
+         $users = users::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+         $accounts=users_in_in::whereIn('id_user',@$users)->delete();
+         $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+         // ลบเช็คเวลา
+
           $item=users_in ::orderby('id','desc')->paginate(10);
           $search = $r->search;
           if (!empty($search)) {
@@ -566,12 +578,8 @@ class AdminUserBackendController extends Controller
           $ch=users_in_in::where('id_user_in',@$id)->get();
           $date=date('Y-m-d');
           foreach($ch as $chs){
-          $users = users::where('id',$chs->id_user)
-                  ->whereDate('date_start', '<=', $date)
-                  ->whereDate('date_end', '>=', $date)
-                  ->fisrt();
-           
-          if($users==null){
+          $users = users::where('id',$chs->id_user)->whereDate('date_end', '<', $date)->first();
+          if($users!=null){
               $accounts=users_in_in::where('id',$chs->id)->delete();
               $item->status_account=2;
               $item->save();

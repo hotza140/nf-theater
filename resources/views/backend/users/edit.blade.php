@@ -198,7 +198,7 @@
                             <!-- Zero config.table start -->
                             <div class="card">
                                 <div class="card-header">
-                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">Account ที่เชื่อมต่อ</h1>
+                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">Account ที่เชื่อมต่อปัจจุบัน</h1>
                                 <br><br>
 
                                 </div>
@@ -212,6 +212,7 @@
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
+                                                    <th>Create Date</th>
 
                                                 </tr>
                                             </thead>
@@ -226,6 +227,7 @@
                                                     <td>{{@$accountsss->name}}</td>
                                                     <td>{{@$accountsss->email}}</td>
                                                     <td>{{@$accountsss->password}}</td>
+                                                    <td>{{@$accountsss->created_at}}</td>
                                                 </tr>
                                                 @endforeach
 

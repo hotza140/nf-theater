@@ -401,10 +401,11 @@
                                                 <tr>
                                                
                                                     <th>#</th>
-                                                    <th>Open/Close</th>
+                                                    <!-- <th>Open/Close</th> -->
                                                     <th>Type</th>
                                                     <th>Name</th>
                                                     <th>Email</th>
+                                                    <th>Create Date</th>
                                                     <th>Tool</th>
 
                                                 </tr>
@@ -415,16 +416,17 @@
                                             <tr class="num" id="{{$user_ins->id}}">
                                                     <td>{{$key+1}}</td>
 
-                                                    <td>
+                                                    <!-- <td>
                                                         <form method="post" id="form{{$user_ins->id}}" name="form{{$user_ins->id}}">
                                                         @csrf
                                                         <label class="switch">
                                                             <input type="checkbox" class="toggle-switch" data-id="{{$user_ins->id}}" 
-                                                                {{ $user_ins->open == 0 ? 'checked' : '' }}> <!-- ค่าที่เปิดจะเป็น 0 -->
+                                                                {{ $user_ins->open == 0 ? 'checked' : '' }}>
                                                             <span class="slider"></span>
                                                         </label>
                                                     </form>
-                                                    </td>
+                                                    </td> -->
+
                                                     <td>
                                                         @if($user_ins->type=='MOBILE' or $user_ins->type=='')
                                                         <i class="fa fa-mobile" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
@@ -438,6 +440,7 @@
 
                                                     <td>{{@$user_aa->name}}</td>
                                                     <td>{{@$user_aa->email}}</td>
+                                                    <td>{{@$user_ins->created_at}}</td>
                                                     <td>
                                                     <!-- <a href="{{url('users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
                                                         <a href="{{url('users_in_in_destroy/'.$user_ins->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('You Want To Delete?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>

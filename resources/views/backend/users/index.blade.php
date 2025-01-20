@@ -83,10 +83,10 @@
                                         <div class="form-group row" style="display: flex; justify-content: flex-end;">
                                         <div class="col-sm-2">
                                             <select name="status_account" id="" class="form-control">
-                                            <option value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
-                                            <option value="0" @if(@$status_account==0) selected  @endif >มีแอคเคาท์</option>
-                                            <option value="1" @if(@$status_account==1) selected  @endif >ไม่มีแอคเคาท์</option>
-                                            <option value="2" @if(@$status_account==2) selected  @endif >หมดอายุ</option>
+                                            <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
+                                            <option class="status-active" value="0" @if(@$status_account==0) selected  @endif >มีแอคเคาท์</option>
+                                            <option class="status-inactive" value="1" @if(@$status_account==1) selected  @endif >ไม่มีแอคเคาท์</option>
+                                            <option class="status-expired" value="2" @if(@$status_account==2) selected  @endif >หมดอายุ</option>
                                             </select>
                                             </div>
                                             <div class="col-sm-2">
@@ -105,6 +105,29 @@
 
                                 </div>
 
+                                <style>
+                                                    .status-active {
+                                                        color: white;
+                                                        background-color: #dc3545; /* สีแดง */
+                                                        padding: 5px 10px;
+                                                        border-radius: 5px;
+                                                    }
+
+                                                    .status-inactive {
+                                                        color: white;
+                                                        background-color: #28a745; /* สีเขียว */
+                                                        padding: 5px 10px;
+                                                        border-radius: 5px;
+                                                    }
+
+                                                    .status-expired {
+                                                        color: white;
+                                                        background-color: #6c757d; /* สีเทา */
+                                                        padding: 5px 10px;
+                                                        border-radius: 5px;
+                                                    }
+                                                    </style>
+
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
                                         <table id="simpletable_call" class="table table-striped table-bordered nowrap">
@@ -118,6 +141,7 @@
                                                     <th>Email</th>
                                                     <th>Phone</th>
                                                     <th>Line</th>
+                                                    <th>สถานะ Account</th>
                                                     <th>Tool</th>
 
                                                 </tr>
@@ -144,6 +168,16 @@
                                                     <td>{{$items->email}}</td>
                                                     <td>{{$items->phone}}</td>
                                                     <td>{{$items->line}}</td>
+                                                    <td>
+                                                        @if($items->status_account == 0)
+                                                            <span class="status-active">มีแอคเคาท์</span>
+                                                        @elseif($items->status_account == 1)
+                                                            <span class="status-inactive">ไม่มีแอคเคาท์</span>
+                                                        @else
+                                                            <span class="status-expired">หมดอายุ</span>
+                                                        @endif
+                                                    </td>
+
                                                     <td>
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
