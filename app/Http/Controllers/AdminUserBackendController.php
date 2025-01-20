@@ -250,12 +250,12 @@ class AdminUserBackendController extends Controller
     public function users_store(Request $r){
         $item=new users();
         $ch=users::where('email',$r->email)->orderby('id','desc')->first();
-        $ca=users::where('code',$r->code)->orderby('id','desc')->first();
+        $ca=users::where('username',$r->username)->orderby('id','desc')->first();
 
         if($ch!=null){
             return redirect()->back()->with('message','Email Already Have in Data!');
             }elseif($ca!=null){
-                return redirect()->back()->with('message','Code Already Have in Data!');
+                return redirect()->back()->with('message','Username Already Have in Data!');
             }
 
         // if($r->password!=null){
@@ -275,6 +275,11 @@ class AdminUserBackendController extends Controller
         $item->date_end=$r->date_end;
         $item->day=$r->day;
         $item->type=$r->type;
+
+        $caa=users::where('username',$r->username)->orderby('id','desc')->first();
+        if($caa!=null){
+            return redirect()->back()->with('message','Username Already Have in Data!');
+        }
 
         if($item->save()){
         $user = (new users_in())->getEligibleUser();
@@ -290,21 +295,18 @@ class AdminUserBackendController extends Controller
         }
 
         }
-
-
-
         return redirect()->to('users_edit/'.$item->id)->with('message','Sucess!');
 
     }
     public function users_update(Request $r,$id){
         $item=users::where('id',$id)->first();
         $ch=users::where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
-        $ca=users::where('id','!=',$id)->where('code',$r->code)->orderby('id','desc')->first();
+        $ca=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
 
         if($ch!=null){
             return redirect()->back()->with('message','Email Already Have in Data!');
             }elseif($ca!=null){
-                return redirect()->back()->with('message','Code Already Have in Data!');
+                return redirect()->back()->with('message','Username Already Have in Data!');
             }
 
         // if($r->password!=null){
@@ -325,6 +327,10 @@ class AdminUserBackendController extends Controller
         $item->day=$r->day;
         $item->type=$r->type;
 
+        $caa=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
+        if($caa!=null){
+            return redirect()->back()->with('message','Username Already Have in Data!');
+        }
         $item->save();
         return redirect()->to('users_edit/'.$id)->with('message','Sucess!');
     }
@@ -348,6 +354,50 @@ class AdminUserBackendController extends Controller
         ]);
     }
     //users//
+
+
+
+
+    public function users_store_form_in(Request $r){
+        $item=new users();
+        $ch=users::where('email',$r->email)->orderby('id','desc')->first();
+        $ca=users::where('username',$r->username)->orderby('id','desc')->first();
+
+        if($ch!=null){
+            return redirect()->back()->with('message','Email Already Have in Data!');
+            }elseif($ca!=null){
+                return redirect()->back()->with('message','Username Already Have in Data!');
+            }
+            
+        $item->password=$r->password;
+
+        $item->username=$r->username;
+        $item->name=$r->name;
+        $item->email=$r->email;
+        $item->link_line=$r->link_line;
+        $item->line=$r->line;
+        $item->phone=$r->phone;
+        $item->code=$r->code;
+        $item->date_start=$r->date_start;
+        $item->date_end=$r->date_end;
+        $item->day=$r->day;
+        $item->type=$r->type;
+
+        $caa=users::where('username',$r->username)->orderby('id','desc')->first();
+        if($caa!=null){
+            return redirect()->back()->with('message','Username Already Have in Data!');
+        }
+
+        $item->save();
+
+        $aaa=new users_in_in();
+        $aaa->id_user=$item->id;  
+        $aaa->id_user_in=$r->id_user_in;    
+        $aaa->type=$item->type;
+        $aaa->save();
+        return redirect()->back()->with('message','Sucess!');
+
+    }
 
 
 
@@ -466,11 +516,11 @@ class AdminUserBackendController extends Controller
 
      //users_in_in//
       public function add_user_in_in(Request $r){
-        $ch=users_in_in::where('id_user',$r->id_user)->where('id_user_in',$r->id_user_in)->first();
+        // $ch=users_in_in::where('id_user',$r->id_user)->where('id_user_in',$r->id_user_in)->first();
   
-        if($ch!=null){
-            return redirect()->back()->with('message','User Already Have in Data!');
-            }
+        // if($ch!=null){
+        //     return redirect()->back()->with('message','User Already Have in Data!');
+        //     }
 
         $user=users::where('id',$r->id_user)->first();
         $item=new users_in_in();

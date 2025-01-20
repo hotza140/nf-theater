@@ -176,7 +176,7 @@
 
 
                 <?php
-                 $user_in_in=App\Models\users_in_in::where('id_user_in',@$item->id)->orderby('id','desc')->cursor();
+                 $user_in_in=App\Models\users_in_in::where('id_user_in',@$item->id)->orderby('name','desc')->cursor();
                  $user_in_in_count=App\Models\users_in_in::where('id_user_in',@$item->id)->orderby('id','desc')->count();
                 ?>
                  <!-- Page body2 start -->
@@ -257,6 +257,129 @@
                                 </form>    
 
                                 </div>
+
+                                <div class="card">
+                                <div class="card-header">
+
+                                </div>
+                                <div class="card-block">
+
+                                    <form method="post" id="" action="{{ url('users_store_form_in') }}"
+                                        enctype="multipart/form-data" >
+                                        @csrf
+
+                                        <!-- -------EDIT---------- -->
+                                        <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
+                                        <!-- -------EDIT---------- -->
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Name Profile</label>
+                                                <input type="text" name="name" class="form-control" id=""
+                                                      value="{{@$item->name}}">
+                                            </div>
+                                        </div>
+                                        
+                                        <?php
+                                        $runnum=DB::table('tb_users')->orderby('id','desc')->count();
+                                        $runtotal=$runnum+1;
+                                        $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
+                                        $run = "NF{$xxxx}";
+
+                                        if(@$item->username!=null){
+                                            $run=@$item->username;
+                                        }
+
+                                        if(@$item->password!=null){
+                                            $password=@$item->password;
+                                        }else{
+                                            $password = rand(111111, 999999);
+                                        }
+
+                                        ?>
+                                        
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Username*</label>
+                                                <input type="username" name="username" class="form-control" id=""  maxlength = "25"
+                                                     required value="{{@$run}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Password*</label>
+                                                <input type="text" name="password" class="form-control" id="" required value="{{@$password}}" >
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Email</label>
+                                                <input type="email" name="email" class="form-control" id=""  
+                                                      value="{{@$item->email}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Phone</label>
+                                                <input type="text" name="phone" class="form-control" id=""  maxlength = "10"
+                                                      value="{{@$item->phone}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Line</label>
+                                                <input type="text" name="line" class="form-control" id=""  
+                                                      value="{{@$item->line}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Link Line</label>
+                                                <input type="text" name="link_line" class="form-control" id=""  
+                                                      value="{{@$item->link_line}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                        <div class="col-sm-3">
+                                        <label class="col-form-label">Package*</label>
+                                        <select name="type" id="type" class="form-control add_select2" required  >
+                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
+                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        </select>
+                                        </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                        <div class="col-sm-2">
+                                            <label class="col-form-label">Enter Days*</label>
+                                            <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
+                                        </div>
+                                            <div class="col-sm-2">
+                                                <label class="col-form-label">Date Start</label>
+                                                <input type="date" name="date_start" class="form-control" id="date_start"
+                                                      value="{{@$item->date_start}}" readonly required >
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <label class="col-form-label">Date End</label>
+                                                <input type="date" name="date_end" class="form-control" id="date_end"
+                                                      value="{{@$item->date_end}}" readonly required >
+                                            </div>
+                                        </div>
+
+                                     
+
+
+                                        <p class="text-right">
+                                            <button type="submit" class="btn btn-success" style="color:white;"
+                                                onclick="return confirm('Confirm!');"> <i
+                                                    class="fa fa-check-circle-o"></i> Save </button>
+                                        </p>
+
+                                    </form>
+                                </div>
+                            </div>
+
+
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
                                         <table id="" class="table  table-bordered nowrap">

@@ -44,7 +44,9 @@ Route::group(['middleware' => ['auth:admin']],function(){
  Route::post('admin_open_close',[App\Http\Controllers\AdminUserBackendController::class,'admin_open_close']);
  //admin
 
-  //users
+  //userss
+  Route::post('users_store_form_in',[App\Http\Controllers\AdminUserBackendController::class,'users_store_form_in']);
+
   Route::get('users',[App\Http\Controllers\AdminUserBackendController::class,'users']);
   Route::get('users_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_destroy']);
   Route::get('users_add',[App\Http\Controllers\AdminUserBackendController::class,'users_add']);
