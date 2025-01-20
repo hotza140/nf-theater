@@ -212,7 +212,7 @@
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
-                                                    <th>Create Date</th>
+                                                    <th>วันที่เชื่อมต่อ</th>
 
                                                 </tr>
                                             </thead>
@@ -272,7 +272,7 @@
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
-                                                    <th>Create Date</th>
+                                                    <th>วันที่เชื่อมต่อ</th>
 
                                                 </tr>
                                             </thead>

@@ -405,7 +405,7 @@
                                                     <th>Type</th>
                                                     <th>Name</th>
                                                     <th>Email</th>
-                                                    <th>Create Date</th>
+                                                    <th>วันที่เชื่อมต่อ</th>
                                                     <th>Tool</th>
 
                                                 </tr>
