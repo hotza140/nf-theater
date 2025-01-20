@@ -76,7 +76,7 @@
                                         
                                         <div class="form-group row">
                                             <div class="col-sm-6">
-                                                <label class="col-form-label">Email</label>
+                                                <label class="col-form-label">Email*</label>
                                                 <input type="email" name="email" class="form-control" id=""  maxlength = "25"
                                                      required value="{{@$item->email}}">
                                             </div>
@@ -84,7 +84,7 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
-                                                <label class="col-form-label">New Password (ไม่เกิน 20 ตัวอักษร) (ถ้าไม่ต้องการเปลี่ยนรหัสให้ปล่อยช่องว่างเอาไว้)</label>
+                                                <label class="col-form-label">New Password* (ไม่เกิน 20 ตัวอักษร) (ถ้าไม่ต้องการเปลี่ยนรหัสให้ปล่อยช่องว่างเอาไว้)</label>
                                                 <input type="text" name="password" class="form-control" id=""  maxlength="20">
                                             </div>
                                         </div>
