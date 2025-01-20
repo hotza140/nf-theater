@@ -86,7 +86,6 @@
                                                     <th>#</th>
                                                     <th>Open/Close</th>
                                                     <!-- <th>Picture</th> -->
-                                                    <th>Code</th>
                                                     <th>Name Profile</th>
                                                     <th>Email</th>
                                                     <th>Phone</th>
@@ -113,7 +112,6 @@
                                                     </td>
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
-                                                    <td>{{$items->code}}</td>
                                                     <td>{{$items->name}}</td>
                                                     <td>{{$items->email}}</td>
                                                     <td>{{$items->phone}}</td>

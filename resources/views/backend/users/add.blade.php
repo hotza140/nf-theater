@@ -33,15 +33,6 @@
                                         <input type="hidden" name="edit" value="{{@$item->id}}">
                                         <!-- -------EDIT---------- -->
 
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <label class="col-form-label">CODE</label>
-                                                <input type="text" name="code" class="form-control" id="" required
-                                                      value="{{@$item->code}}">
-                                            </div>
-                                        </div>
-
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Name Profile</label>
@@ -50,15 +41,41 @@
                                             </div>
                                         </div>
                                         
+                                        <?php
+                                        $runnum=DB::table('users')->orderby('id','desc')->count();
+                                        $runtotal=$runnum+1;
+                                        $xxxx = str_pad($runtotal, 4, '0', STR_PAD_LEFT);
+                                        $run = "NF{$xxxx}";
+
+                                        if(@$item->username!=null){
+                                            $run=@$item->username;
+                                        }
+
+                                        if(@$item->password!=null){
+                                            $password=@$item->password;
+                                        }else{
+                                            $password = rand(111111, 999999);
+                                        }
+
+                                        ?>
+                                        
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Email</label>
-                                                <input type="email" name="email" class="form-control" id=""  maxlength = "25"
-                                                     required value="{{@$item->email}}">
+                                                <label class="col-form-label">Username</label>
+                                                <input type="username" name="username" class="form-control" id=""  maxlength = "25"
+                                                     required value="{{@$run}}">
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password</label>
-                                                <input type="text" name="password" class="form-control" id="" required value="{{@$item->password}}" >
+                                                <input type="text" name="password" class="form-control" id="" required value="{{@$password}}" >
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Email</label>
+                                                <input type="email" name="email" class="form-control" id=""  maxlength = "10"
+                                                      value="{{@$item->email}}">
                                             </div>
                                         </div>
 

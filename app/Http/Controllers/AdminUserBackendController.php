@@ -264,7 +264,7 @@ class AdminUserBackendController extends Controller
 
         $item->password=$r->password;
 
-        
+        $item->username=$r->username;
         $item->name=$r->name;
         $item->email=$r->email;
         $item->link_line=$r->link_line;
@@ -313,6 +313,7 @@ class AdminUserBackendController extends Controller
 
         $item->password=$r->password;
 
+        $item->username=$r->username;
         $item->name=$r->name;
         $item->email=$r->email;
         $item->line=$r->line;
