@@ -199,7 +199,11 @@
                                 <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
 
                                     <?php 
-                                    $user=App\Models\users::where('open',0)->orderby('id','desc')->cursor();
+                                    $date_ch_in=date('Y-m-d');
+                                    $user=App\Models\users::where('open',0)
+                                    ->whereDate('date_start', '<=',$date_ch_in) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
+                                    ->whereDate('date_end', '>=',$date_ch_in) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
+                                    ->orderby('id','desc')->cursor();
                                     ?>
                                     <div class="col-sm-3">
                                     <select name="id_user" id="id_user" class="form-control add_select2"  required >

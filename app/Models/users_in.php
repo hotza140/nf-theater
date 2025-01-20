@@ -44,14 +44,15 @@ class users_in extends Authenticatable
             $query->whereHas('users_in_in', function ($subQuery) use ($date) {
                 $subQuery->whereHas('user', function ($userQuery) use ($date) {
                     $userQuery->whereDate('date_start', '<=', $date)
-                              ->whereDate('date_end', '>=', $date);
+                              ->whereDate('date_end', '>=', $date)
+                              ->where('open',0);
                 });
             });
             // หรือกรณีที่ไม่มีข้อมูลใน users_in_in
             $query->orDoesntHave('users_in_in');
         })
         ->withCount('users_in_in') // นับจำนวน `users_in_in`
-        ->having('users_in_in_count', '<', 6) // เงื่อนไขไม่เกิน 6 ตัว
+        ->having('users_in_in_count', '<', 7) // เงื่อนไขไม่เกิน 6 ตัว
         ->inRandomOrder() // สุ่มลำดับ
         ->first(); // ดึงตัวแรกที่สุ่มได้
     

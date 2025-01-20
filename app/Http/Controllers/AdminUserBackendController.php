@@ -239,12 +239,33 @@ class AdminUserBackendController extends Controller
 
 
      //User//
-     public function users(){
-        $item=users ::orderby('id','desc')->cursor();
+     public function users(Request $r){
+        $item=users ::orderby('id','desc')->paginate(10);
+
+        $search = $r->search;
+        $status_account = $r->status_account;
+        if (!empty($search) or !empty($status_account)) {
+            $item = users::where(function ($query) use ($search, $status_account) {
+                $query->where('name', 'LIKE', '%' . $search . '%')
+                      ->orWhere('email', 'LIKE', '%' . $search . '%')
+                      ->orWhere('phone', 'LIKE', '%' . $search . '%')
+                      ->orWhere('line', 'LIKE', '%' . $search . '%');
+            });
+        
+            if ($status_account != null and $status_account != 999) {
+                $item = $item->where('status_account', $status_account);
+            }
+        
+            $item = $item->orderBy('id', 'desc')->paginate(10);
+        }
+
         return view('backend.users.index',[
             'item'=>$item,
             'page'=>"admin",
             'list'=>"users",
+
+            'search'=>$search,
+            'status_account'=>$status_account,
         ]);
     }
     public function users_store(Request $r){
@@ -290,7 +311,16 @@ class AdminUserBackendController extends Controller
             $aaa->id_user_in=$user->id;    
             $aaa->type=$item->type;
             $aaa->save();
+
+            $aaa_his=new users_in_in_history();
+            $aaa_his->id_user=$item->id;  
+            $aaa_his->id_user_in=$user->id;    
+            $aaa_his->type=$item->type;
+            $aaa_his->save();
+
         }else{
+            $item->status_account=1;
+            $item->save();
             return redirect()->to('users_edit/'.$item->id)->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
         }
 
@@ -336,6 +366,21 @@ class AdminUserBackendController extends Controller
     }
     public function users_edit($id){
         $item=users::where('id',$id)->first();
+        
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users = users::where('id',$id)
+                ->whereDate('date_start', '<=', $date)
+                ->whereDate('date_end', '>=', $date)
+                ->fisrt();
+         
+        if($users==null){
+            $accounts=users_in_in::where('id_user',@$id)->delete();
+            $item->status_account=2;
+            $item->save();
+        }
+        // ลบเช็คเวลา
+
         return view('backend.users.edit',[
             'item'=>$item,
             'page'=>"admin",
@@ -393,7 +438,9 @@ class AdminUserBackendController extends Controller
         
 
         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
-        if($user_in_in_count >= 6){
+        if($user_in_in_count >= 7){
+        $item->status_account=1;
+        $item->save();
         return redirect()->back()->with('message','สร้างสำเร็จแต่นำเข้า Account นี้ไม่ได้เนื่องจาก จำนวนผู้ใช้งานครบแล้ว!');
         }else{
         $aaa=new users_in_in();
@@ -401,6 +448,13 @@ class AdminUserBackendController extends Controller
         $aaa->id_user_in=$r->id_user_in;    
         $aaa->type=$item->type;
         $aaa->save();
+
+        $aaa_his=new users_in_in_history();
+        $aaa_his->id_user=$item->id;  
+        $aaa_his->id_user_in=$r->id_user_in;    
+        $aaa_his->type=$item->type;
+        $aaa_his->save();
+
         return redirect()->back()->with('message','Sucess!');
         }
 
@@ -436,12 +490,24 @@ class AdminUserBackendController extends Controller
   
   
        //User_in//
-       public function users_in(){
-          $item=users_in ::orderby('id','desc')->cursor();
+       public function users_in(Request $r){
+          $item=users_in ::orderby('id','desc')->paginate(10);
+          $search = $r->search;
+          if (!empty($search)) {
+           $item = users_in::where(function ($query) use ($search) {
+                  $query->where('name', 'LIKE', '%' . $search . '%');
+                  $query->orwhere('email', 'LIKE', '%' . $search . '%');
+                  $query->orwhere('country', 'LIKE', '%' . $search . '%');
+          })
+          ->orderBy('id', 'desc')->paginate(10);
+          }
+
           return view('backend.users_in.index',[
               'item'=>$item,
               'page'=>"admin",
               'list'=>"users_in",
+
+              'search'=>$search,
           ]);
       }
       public function users_in_store(Request $r){
@@ -495,6 +561,24 @@ class AdminUserBackendController extends Controller
       }
       public function users_in_edit($id){
           $item=users_in::where('id',$id)->first();
+
+        // ลบเช็คเวลา
+          $ch=users_in_in::where('id_user_in',@$id)->get();
+          $date=date('Y-m-d');
+          foreach($ch as $chs){
+          $users = users::where('id',$chs->id_user)
+                  ->whereDate('date_start', '<=', $date)
+                  ->whereDate('date_end', '>=', $date)
+                  ->fisrt();
+           
+          if($users==null){
+              $accounts=users_in_in::where('id',$chs->id)->delete();
+              $item->status_account=2;
+              $item->save();
+          }
+         }
+         // ลบเช็คเวลา
+
           return view('backend.users_in.edit',[
               'item'=>$item,
               'page'=>"admin",
@@ -538,10 +622,16 @@ class AdminUserBackendController extends Controller
         $item->type=@$user->type;
 
         $user_in_in_count=users_in_in::where('id_user_in',@$item->id)->count();
-        if($user_in_in_count >= 6){
+        if($user_in_in_count >= 7){
         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
         }else{
         $item->save();
+
+        $item_his=new users_in_in_history();
+        $item_his->id_user=$r->id_user;  
+        $item_his->id_user_in=$r->id_user_in;    
+        $item_his->type=@$user->type;
+        $item_his->save();
         }
 
        
@@ -584,9 +674,10 @@ class AdminUserBackendController extends Controller
 
     // ดึง users ที่ยังไม่หมดอายุและยังไม่ถูกเชื่อมกับ user_in_in
     $users = users::whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
+                ->where('open',0)
                 ->whereDate('date_start', '<=', $date) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
                 ->whereDate('date_end', '>=', $date) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
-                ->limit(6)->get();
+                ->limit(7)->get();
 
     // เช็คว่ามี users หรือไม่
     if ($users->isEmpty()) {
@@ -602,10 +693,16 @@ class AdminUserBackendController extends Controller
         $item->type=@$aaa->type;
 
         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
-        if($user_in_in_count >= 6){
+        if($user_in_in_count >= 7){
         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
         }else{
         $item->save();
+
+        $item_his=new users_in_in_history();
+        $item_his->id_user=$user->id;  
+        $item_his->id_user_in=$r->id_user_in;    
+        $item_his->type=@$aaa->type;
+        $item_his->save();
         }
     }
 

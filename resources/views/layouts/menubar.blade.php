@@ -594,6 +594,43 @@
             $('#simpletable').dataTable({
                 order:[],
                 stateSave: true,
+                lengthChange: false,
+                language: {
+                info: "", // ปิดข้อความ "Showing X to Y of Z entries"
+                infoEmpty: "", // ปิดข้อความเมื่อไม่มีข้อมูล
+                paginate: {
+                    previous: '<i class="fa fa-angle-left"></i>', // ลูกศรซ้าย (Font Awesome)
+                    next: '<i class="fa fa-angle-right"></i>' // ลูกศรขวา (Font Awesome)
+                }
+                },
+                stateSaveCallback: function(settings,data) {
+                localStorage.setItem( 'DataTables_' + settings.sInstance, JSON.stringify(data) )
+                },
+                stateLoadCallback: function(settings) {
+                return JSON.parse( localStorage.getItem( 'DataTables_' + settings.sInstance ) )
+                }
+            });
+        } );
+    </script>
+
+
+<!-- จัดการ DATATABLE -->
+<script type="text/javascript">
+        $(document).ready(function() {
+            $('#simpletable_call').dataTable({
+                order:[],
+                stateSave: true,
+                lengthChange: false,
+                paging: false,
+                language: {
+                info: "", // ปิดข้อความ "Showing X to Y of Z entries"
+                infoEmpty: "", // ปิดข้อความเมื่อไม่มีข้อมูล
+                paginate: {
+                    previous: '<i class="fa fa-angle-left"></i>', // ลูกศรซ้าย (Font Awesome)
+                    next: '<i class="fa fa-angle-right"></i>' // ลูกศรขวา (Font Awesome)
+                }
+                },
+                "searching": false,
                 stateSaveCallback: function(settings,data) {
                 localStorage.setItem( 'DataTables_' + settings.sInstance, JSON.stringify(data) )
                 },

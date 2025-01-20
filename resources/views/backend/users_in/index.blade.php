@@ -76,10 +76,26 @@
 
                                     <a style="color:white;" class="btn btn-success" href="{{url('users_in_add')}}"> <i class="fa fa-plus"></i> Add</a>
 
+                                    
+                                        <br>
+                                        <form class="form-horizontal" action="{{url('users_in')}}" method="GET" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group row" style="display: flex; justify-content: flex-end;">
+                                            <div class="col-sm-2">
+                                                <input type="text" name="search" value="{{@$search}}">
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button type="submit" class="btn btn-warning" style="color:white;">
+                                                    <i class="fa fa-check-circle-o"></i> Search
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
-                                        <table id="simpletable" class="table table-striped table-bordered nowrap">
+                                        <table id="simpletable_call" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
                                                
@@ -137,6 +153,18 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    <!-- Pagination -->
+                                    <style>
+                                        .pagination-wrapper {
+                                            text-align: right; /* จัดให้อยู่ขวาสุด */
+                                        }
+                                    </style>
+                                    <div class="pagination-wrapper">
+                                        <div>{{ $item->appends(Request::all())->links() }}</div>
+                                    </div>
+                                    <!-- Pagination -->
+
                                 </div>
 
                                 

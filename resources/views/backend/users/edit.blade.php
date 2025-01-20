@@ -242,6 +242,64 @@
                 <!-- Page body2 end -->
 
 
+
+
+
+
+                <?php
+                 $accountsa=App\Models\users_in_in_history::where('id_user',@$item->id)->orderby('id','desc')->cursor();
+                ?>
+                 <!-- Page body2 start -->
+                 <div class="page-body">
+                 <div class="row">
+                        <div class="col-sm-12">
+                            <!-- Zero config.table start -->
+                            <div class="card">
+                                <div class="card-header">
+                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ประวัติ Account ที่เคยเชื่อมต่อ</h1>
+                                <br><br>
+
+                                </div>
+                                <div class="card-block">
+                                    <div class="dt-responsive table-responsive">
+                                        <table id="" class="table  table-bordered nowrap">
+                                        <thead>
+                                                <tr>
+                                               
+                                                    <th>#</th>
+                                                    <th>Name Account</th>
+                                                    <th>Email</th>
+                                                    <th>Password</th>
+
+                                                </tr>
+                                            </thead>
+                                            <!-- <tbody class="sortable"> -->
+                                            <tbody class="">
+                                            @foreach($accountsa as $key=>$accountsas)
+                                            <?php
+                                             $accountsass=App\Models\users_in::where('id',@$accountsas->id_user_in)->first();
+                                            ?>
+                                            <tr>
+                                                    <td>{{$key+1}}</td>
+                                                    <td>{{@$accountsass->name}}</td>
+                                                    <td>{{@$accountsass->email}}</td>
+                                                    <td>{{@$accountsass->password}}</td>
+                                                </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Page body2 end -->
+
+
             </div>
         </div>
         <!-- Main-body end -->
