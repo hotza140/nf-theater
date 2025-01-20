@@ -64,12 +64,12 @@
                                         
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Username</label>
+                                                <label class="col-form-label">Username*</label>
                                                 <input type="username" name="username" class="form-control" id=""  maxlength = "25"
                                                      required value="{{@$run}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Password</label>
+                                                <label class="col-form-label">Password*</label>
                                                 <input type="text" name="password" class="form-control" id="" required value="{{@$password}}" >
                                             </div>
                                         </div>
@@ -105,7 +105,7 @@
 
                                         <div class="form-group row">
                                         <div class="col-sm-3">
-                                        <label class="col-form-label">Package</label>
+                                        <label class="col-form-label">Package*</label>
                                         <select name="type" id="type" class="form-control add_select2" required  >
                                         <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
                                         <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
@@ -115,7 +115,7 @@
 
                                         <div class="form-group row">
                                         <div class="col-sm-2">
-                                            <label class="col-form-label">Enter Days</label>
+                                            <label class="col-form-label">Enter Days*</label>
                                             <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
                                         </div>
                                             <div class="col-sm-2">
