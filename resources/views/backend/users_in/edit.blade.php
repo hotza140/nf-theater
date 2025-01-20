@@ -189,18 +189,14 @@
                                 <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">จัดการผู้ใช้ใน Account</h1>
                                 <br><br>
 
+                               
+
+                                <div class="form-group row">
+
                                 <form method="post" id="add_user_in_in" action="{{ url('add_user_in_in') }}" enctype="multipart/form-data" >
                                 @csrf
 
                                 <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
-
-                                <div class="form-group row">
-                                    <!-- <div class="col-sm-3">
-                                        <input type="email"  name="email" class="form-control" id="email" maxlength="25" placeholder="กรอกอีเมล" required>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" name="name" class="form-control" id="name" maxlength="25" placeholder="กรอกชื่อ" required>
-                                    </div> -->
 
                                     <?php 
                                     $user=App\Models\users::where('open',0)->orderby('id','desc')->cursor();
@@ -212,14 +208,6 @@
                                      @endforeach
                                     </select>
                                     </div>
-
-                                    <!-- <div class="col-sm-3">
-                                    <select name="type" id="type" class="form-control add_select2"   >
-                                    <option value="MOBILE">ยกเว้นทีวี</option>
-                                    <option value="PC">TV</option>
-                                    </select>
-                                    </div> -->
-
                                     
                                     <div class="col-sm-1">
                                     @if($user_in_in_count >= 6)
@@ -232,36 +220,25 @@
                                         </button>
                                     @endif
                                     </div>    
-                                </div>
 
+                                    </form>  
 
-                                </form>    
+                                    <div class="col-sm-2">
+                                    <form method="post" id="autoCreateUsersInIn" action="{{ url('autoCreateUsersInIn') }}" enctype="multipart/form-data" >
+                                    @csrf
 
-
-
-
-
-
-                                <form method="post" id="autoCreateUsersInIn" action="{{ url('autoCreateUsersInIn') }}" enctype="multipart/form-data" >
-                                @csrf
-
-                                <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
-
-                                <div class="form-group row">
-                                    <button type="submit" style="color:white; float: right;" class="btn btn-danger"  onclick="javascript:return confirm('Confirm?')">
+                                    <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
+                                    <button type="submit" style="color:white;" class="btn btn-danger"  onclick="javascript:return confirm('Confirm?')">
                                         <i class="fa fa-plus"></i> Add User Auto
                                     </button>
+                                    </form>  
+                                    </div>  
+
+
                                 </div>
-
-
-                                </form>    
-
                                 </div>
 
                                 <div class="card">
-                                <div class="card-header">
-
-                                </div>
                                 <div class="card-block">
 
                                     <form method="post" id="" action="{{ url('users_store_form_in') }}"
@@ -276,7 +253,7 @@
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Name Profile</label>
                                                 <input type="text" name="name" class="form-control" id=""
-                                                      value="{{@$item->name}}">
+                                                      value="">
                                             </div>
                                         </div>
                                         
@@ -314,7 +291,7 @@
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Email</label>
                                                 <input type="email" name="email" class="form-control" id=""  
-                                                      value="{{@$item->email}}">
+                                                      value="">
                                             </div>
                                         </div>
 
@@ -322,7 +299,7 @@
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Phone</label>
                                                 <input type="text" name="phone" class="form-control" id=""  maxlength = "10"
-                                                      value="{{@$item->phone}}">
+                                                      value="">
                                             </div>
                                         </div>
 
@@ -330,12 +307,12 @@
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Line</label>
                                                 <input type="text" name="line" class="form-control" id=""  
-                                                      value="{{@$item->line}}">
+                                                      value="">
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Link Line</label>
                                                 <input type="text" name="link_line" class="form-control" id=""  
-                                                      value="{{@$item->link_line}}">
+                                                      value="">
                                             </div>
                                         </div>
 
@@ -343,8 +320,8 @@
                                         <div class="col-sm-3">
                                         <label class="col-form-label">Package*</label>
                                         <select name="type" id="type" class="form-control add_select2" required  >
-                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
-                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        <option value="MOBILE" >ยกเว้นทีวี</option>
+                                        <option value="PC" >TV</option>
                                         </select>
                                         </div>
                                         </div>
@@ -357,14 +334,47 @@
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id="date_start"
-                                                      value="{{@$item->date_start}}" readonly required >
+                                                      value="" readonly required >
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date End</label>
                                                 <input type="date" name="date_end" class="form-control" id="date_end"
-                                                      value="{{@$item->date_end}}" readonly required >
+                                                      value="" readonly required >
                                             </div>
                                         </div>
+
+
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', () => {
+                                            const dateStartInput = document.getElementById('date_start');
+                                            const dateEndInput = document.getElementById('date_end');
+                                            const dayInput = document.getElementById('day_input');
+
+                                            // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
+                                            const today = new Date().toISOString().split('T')[0];
+                                            dateStartInput.value = today;
+
+                                            // ฟังก์ชันคำนวณวันที่สิ้นสุดเมื่อผู้ใช้กรอกจำนวนวัน
+                                            dayInput.addEventListener('input', () => {
+                                                const enteredDays = parseInt(dayInput.value, 10);
+
+                                                // ตรวจสอบว่าผู้ใช้กรอกตัวเลขถูกต้อง
+                                                if (!isNaN(enteredDays) && enteredDays > 0) {
+                                                    const startDate = new Date(dateStartInput.value);
+
+                                                    // คำนวณวันสิ้นสุด
+                                                    const endDate = new Date(startDate);
+                                                    endDate.setDate(startDate.getDate() + enteredDays);
+
+                                                    // ตั้งค่าค่าวันที่สิ้นสุด
+                                                    dateEndInput.value = endDate.toISOString().split('T')[0];
+                                                } else {
+                                                    // ล้างค่าของ date_end หากกรอกตัวเลขไม่ถูกต้อง
+                                                    dateEndInput.value = '';
+                                                }
+                                            });
+                                        });
+                                    </script>
 
                                      
 
