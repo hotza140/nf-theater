@@ -388,10 +388,15 @@ class AdminUserBackendController extends Controller
       public function users_in_store(Request $r){
           $item=new users_in();
           $ch=users_in::where('email',$r->email)->orderby('id','desc')->first();
+          $nh=users_in::where('name',$r->name)->orderby('id','desc')->first();
   
           if($ch!=null){
               return redirect()->back()->with('message','Email Already Have in Data!');
               }
+
+              if($nh!=null){
+                return redirect()->back()->with('message','Name Profile Already Have in Data!');
+                }   
   
           $item->password=$r->password;
   
@@ -408,10 +413,15 @@ class AdminUserBackendController extends Controller
       public function users_in_update(Request $r,$id){
           $item=users_in::where('id',$id)->first();
           $ch=users_in::where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
+          $nh=users_in::where('id',$id)->where('name',$r->name)->orderby('id','desc')->first();
   
           if($ch!=null){
               return redirect()->back()->with('message','Email Already Have in Data!');
               }
+
+              if($nh!=null){
+                return redirect()->back()->with('message','Name Profile Already Have in Data!');
+                } 
   
            $item->password=$r->password;
   

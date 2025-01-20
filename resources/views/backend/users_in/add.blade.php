@@ -35,12 +35,24 @@
 
                                      
 
+                                        <?php
+                                        $runnum=DB::table('tb_users_in')->orderby('id','desc')->count();
+                                        $runtotal=$runnum+1;
+                                        $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
+                                        $run = "NF-{$xxxx}";
+
+                                        if(@$item->name!=null){
+                                            $run=@$item->name;
+                                        }
+
+                                        ?>
+
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Name Account</label>
                                                 <input type="text" name="name" class="form-control" id=""
-                                                      value="{{@$item->name}}">
+                                                      value="{{@$run}}">
                                             </div>
                                         </div>
                                         
@@ -56,11 +68,19 @@
                                             </div>
                                         </div>
 
+                                        <?php
+                                        $date_s=date('Y-m-d');
+                                        if(@$item->date_start!=null){
+                                            $date_s=@$item->date_start;
+                                        }
+
+                                        ?>
+
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id=""
-                                                      value="{{@$item->date_start}}">
+                                                      value="{{@$date_s}}">
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Date End</label>
