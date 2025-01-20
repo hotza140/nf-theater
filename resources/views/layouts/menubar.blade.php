@@ -570,6 +570,20 @@
 
 
 
+        <!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var table = $('#kt_ecommerce_order_table').DataTable(); // ประกาศตัวแปร table
+
+        // ค้นหาผ่าน input ที่กำหนด
+        $('#searchOrder').on('keyup', function() {
+            table.search(this.value).draw(); // ใช้ table ที่ประกาศไว้
+        });
+    });
+</script> -->
+<!-- search แบบปุ่มตรงไหนก็ได้ -->
+
+
+
 <!-- แสดงภาพตอนเลือกไฟล -->
         <script>
         function readURL(input, target) {
