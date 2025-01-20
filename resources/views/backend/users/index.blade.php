@@ -84,9 +84,9 @@
                                         <div class="col-sm-2">
                                             <select name="status_account" id="" class="form-control">
                                             <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
-                                            <option class="status-active" value="0" @if(@$status_account==0) selected  @endif >มีแอคเคาท์</option>
-                                            <option class="status-inactive" value="1" @if(@$status_account==1) selected  @endif >ไม่มีแอคเคาท์</option>
-                                            <option class="status-expired" value="2" @if(@$status_account==2) selected  @endif >หมดอายุ</option>
+                                            <option  value="0" @if(@$status_account==0) selected  @endif >มีแอคเคาท์</option>
+                                            <option  value="1" @if(@$status_account==1) selected  @endif >ไม่มีแอคเคาท์</option>
+                                            <option  value="2" @if(@$status_account==2) selected  @endif >หมดอายุ</option>
                                             </select>
                                             </div>
                                             <div class="col-sm-2">
