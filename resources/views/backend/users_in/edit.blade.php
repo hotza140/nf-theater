@@ -85,23 +85,7 @@
                                         <!-- -------EDIT---------- -->
 
 
-                                        @if(@$item->picture!=null)
-                                        <br><div><a href="{{asset('img/upload/'.@$item->picture)}}" target="_blank">
-                                        <img src="{{asset('img/upload/'.@$item->picture)}}" width="200px" id="imgA"></a></div>
-                                        @else
-                                        <br><div><img src="#" width="200px" id="imgA"></div>
-                                        @endif
-                                        <div>
-                                            <input type="file" name="picture" id="picture1" class="hidden"
-                                                onchange="readURL(this, '#imgA');">
-                                            <div class="sm:grid grid-cols-3 gap-2">
-                                                <div class="input-group mt-2 sm:mt-0">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <h6 style="color: red;" >(ขนาดรูปไม่เกิน ขนาด Width 100px Height 100px)</h6>
-                                        <label for="picture1" class="btn btn-warning " style="color:white;"> 
-                                        <i class="fa fa-picture-o"></i>Upload Picture</label><br><br>
+                                     
 
 
                                         <div class="form-group row">
