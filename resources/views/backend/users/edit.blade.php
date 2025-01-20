@@ -45,7 +45,7 @@
                                         </div>
 
                                         <?php
-                                        $runnum=DB::table('users')->orderby('id','desc')->count();
+                                        $runnum=DB::table('tb_users')->orderby('id','desc')->count();
                                         $runtotal=$runnum+1;
                                         $xxxx = str_pad($runtotal, 4, '0', STR_PAD_LEFT);
                                         $run = "NF{$xxxx}";
