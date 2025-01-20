@@ -272,6 +272,7 @@
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
+                                                    <th>Create Date</th>
 
                                                 </tr>
                                             </thead>
@@ -286,6 +287,7 @@
                                                     <td>{{@$accountsass->name}}</td>
                                                     <td>{{@$accountsass->email}}</td>
                                                     <td>{{@$accountsass->password}}</td>
+                                                    <td>{{@$accountsass->created_at}}</td>
                                                 </tr>
                                                 @endforeach
 
