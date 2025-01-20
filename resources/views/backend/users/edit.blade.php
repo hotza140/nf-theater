@@ -77,7 +77,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Email</label>
-                                                <input type="email" name="email" class="form-control" id=""  maxlength = "10"
+                                                <input type="email" name="email" class="form-control" id=""  
                                                       value="{{@$item->email}}">
                                             </div>
                                         </div>
