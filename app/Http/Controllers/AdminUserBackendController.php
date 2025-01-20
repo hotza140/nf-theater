@@ -368,7 +368,7 @@ class AdminUserBackendController extends Controller
             }elseif($ca!=null){
                 return redirect()->back()->with('message','Username Already Have in Data!');
             }
-            
+
         $item->password=$r->password;
 
         $item->username=$r->username;
@@ -390,12 +390,21 @@ class AdminUserBackendController extends Controller
 
         $item->save();
 
+        
+
+        $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
+        if($user_in_in_count >= 6){
+        return redirect()->back()->with('message','สร้างสำเร็จแต่นำเข้า Account นี้ไม่ได้เนื่องจาก จำนวนผู้ใช้งานครบแล้ว!');
+        }else{
         $aaa=new users_in_in();
         $aaa->id_user=$item->id;  
         $aaa->id_user_in=$r->id_user_in;    
         $aaa->type=$item->type;
         $aaa->save();
         return redirect()->back()->with('message','Sucess!');
+        }
+
+      
 
     }
 

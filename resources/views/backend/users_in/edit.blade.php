@@ -204,7 +204,7 @@
                                     <div class="col-sm-3">
                                     <select name="id_user" id="id_user" class="form-control add_select2"  required >
                                     @foreach($user as $key=>$users)
-                                    <option value="{{@$users->id}}" >{{@$users->name}} ({{@$users->code}})</option>
+                                    <option value="{{@$users->id}}" >{{@$users->name}}</option>
                                      @endforeach
                                     </select>
                                     </div>
