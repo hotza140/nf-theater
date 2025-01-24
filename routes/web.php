@@ -47,6 +47,9 @@ Route::group(['middleware' => ['auth:admin']],function(){
   //userss
   Route::post('users_store_form_in',[App\Http\Controllers\AdminUserBackendController::class,'users_store_form_in']);
 
+  
+  Route::post('users_update_date',[App\Http\Controllers\AdminUserBackendController::class,'users_update_date']);
+
   Route::get('users',[App\Http\Controllers\AdminUserBackendController::class,'users']);
   Route::get('users_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_destroy']);
   Route::get('users_add',[App\Http\Controllers\AdminUserBackendController::class,'users_add']);

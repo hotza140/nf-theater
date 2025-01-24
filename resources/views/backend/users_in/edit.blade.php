@@ -119,6 +119,19 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Email รอง 1</label>
+                                                <input type="email" name="email01" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$item->email01}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Email รอง 2</label>
+                                                <input type="email" name="email02" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$item->email02}}">
+                                            </div>
+                                        </div>
+
                                         <?php
                                         $date_s=date('Y-m-d');
                                         if(@$item->date_start!=null){
@@ -346,42 +359,6 @@
                                                       value="" readonly required >
                                             </div>
                                         </div>
-
-
-                                        <script>
-                                        document.addEventListener('DOMContentLoaded', () => {
-                                            const dateStartInput = document.getElementById('date_start');
-                                            const dateEndInput = document.getElementById('date_end');
-                                            const dayInput = document.getElementById('day_input');
-
-                                            // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
-                                            const today = new Date().toISOString().split('T')[0];
-                                            dateStartInput.value = today;
-
-                                            // ฟังก์ชันคำนวณวันที่สิ้นสุดเมื่อผู้ใช้กรอกจำนวนวัน
-                                            dayInput.addEventListener('input', () => {
-                                                const enteredDays = parseInt(dayInput.value, 10);
-
-                                                // ตรวจสอบว่าผู้ใช้กรอกตัวเลขถูกต้อง
-                                                if (!isNaN(enteredDays) && enteredDays > 0) {
-                                                    const startDate = new Date(dateStartInput.value);
-
-                                                    // คำนวณวันสิ้นสุด
-                                                    const endDate = new Date(startDate);
-                                                    endDate.setDate(startDate.getDate() + enteredDays);
-
-                                                    // ตั้งค่าค่าวันที่สิ้นสุด
-                                                    dateEndInput.value = endDate.toISOString().split('T')[0];
-                                                } else {
-                                                    // ล้างค่าของ date_end หากกรอกตัวเลขไม่ถูกต้อง
-                                                    dateEndInput.value = '';
-                                                }
-                                            });
-                                        });
-                                    </script>
-
-                                     
-
 
                                         <p class="text-right">
                                             <button type="submit" class="btn btn-success" style="color:white;"

@@ -110,6 +110,14 @@
                                         </div>
                                         </div>
 
+                                        <?php
+                                        $date_s=date('Y-m-d');
+                                        if(@$item->date_start!=null){
+                                            $date_s=@$item->date_start;
+                                        }
+
+                                        ?>
+
                                         <div class="form-group row">
                                         <div class="col-sm-2">
                                             <label class="col-form-label">Enter Days*</label>

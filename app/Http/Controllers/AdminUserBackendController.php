@@ -303,7 +303,6 @@ class AdminUserBackendController extends Controller
         $item->code=$r->code;
         $item->date_start=$r->date_start;
         $item->date_end=$r->date_end;
-        $item->day=$r->day;
         $item->type=$r->type;
 
         $caa=users::where('username',$r->username)->orderby('id','desc')->first();
@@ -363,7 +362,6 @@ class AdminUserBackendController extends Controller
         $item->code=$r->code;
         $item->date_start=$r->date_start;
         $item->date_end=$r->date_end;
-        $item->day=$r->day;
         $item->type=$r->type;
 
         $caa=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
@@ -373,6 +371,44 @@ class AdminUserBackendController extends Controller
         $item->save();
         return redirect()->to('users_edit/'.$id)->with('message','Sucess!');
     }
+
+    public function users_update_date(Request $r){
+        $item=users::where('id',$r->id)->first();
+        $item->date_start=$r->date_start;
+        $item->date_end=$r->date_end;
+        if($item->save()){
+            $user = (new users_in())->getEligibleUser();
+    
+            if (@$user!=null) {
+                 // ลบเช็คเวลา
+                if($item!=null){
+                    $accounts=users_in_in::where('id_user',@$r->id)->delete();
+                }
+                // ลบเช็คเวลา
+
+                $aaa=new users_in_in();
+                $aaa->id_user=$item->id;  
+                $aaa->id_user_in=$user->id;    
+                $aaa->type=$item->type;
+                $aaa->save();
+    
+                $aaa_his=new users_in_in_history();
+                $aaa_his->id_user=$item->id;  
+                $aaa_his->id_user_in=$user->id;    
+                $aaa_his->type=$item->type;
+                $aaa_his->save();
+    
+            }else{
+                $item->status_account=1;
+                $item->save();
+                return redirect()->to('users_edit/'.$item->id)->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+            }
+    
+            }
+
+        return redirect()->to('users_edit/'.$r->id)->with('message','Sucess!');
+    }
+
     public function users_edit($id){
         $item=users::where('id',$id)->first();
         
@@ -542,6 +578,9 @@ class AdminUserBackendController extends Controller
           $item->date_start=$r->date_start;
           $item->date_end=$r->date_end;
           $item->country=$r->country;
+
+          $item->email01=$r->email01;
+          $item->email02=$r->email02;
   
           $item->save();
           return redirect()->to('users_in_edit/'.$item->id)->with('message','Sucess!');
@@ -550,7 +589,7 @@ class AdminUserBackendController extends Controller
       public function users_in_update(Request $r,$id){
           $item=users_in::where('id',$id)->first();
           $ch=users_in::where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
-          $nh=users_in::where('id',$id)->where('name',$r->name)->orderby('id','desc')->first();
+          $nh=users_in::where('id','!=',$id)->where('name',$r->name)->orderby('id','desc')->first();
   
           if($ch!=null){
               return redirect()->back()->with('message','Email Already Have in Data!');
@@ -567,6 +606,9 @@ class AdminUserBackendController extends Controller
           $item->date_start=$r->date_start;
           $item->date_end=$r->date_end;
           $item->country=$r->country;
+
+          $item->email01=$r->email01;
+          $item->email02=$r->email02;
   
           $item->save();
           return redirect()->to('users_in_edit/'.$id)->with('message','Sucess!');

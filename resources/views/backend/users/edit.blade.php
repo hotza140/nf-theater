@@ -113,19 +113,23 @@
                                         </div>
                                         </div>
 
+                                        <?php
+                                        $date_s=date('Y-m-d');
+                                        if(@$item->date_start!=null){
+                                            $date_s=@$item->date_start;
+                                        }
+
+                                        ?>
+
                                         <div class="form-group row">
-                                        <div class="col-sm-2">
-                                            <label class="col-form-label">Enter Days*</label>
-                                            <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
-                                        </div>
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
-                                                <input type="date" name="date_start" class="form-control" id="date_start"
+                                                <input type="date" name="date_start" class="form-control" id=""
                                                       value="{{@$item->date_start}}" readonly required >
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date End</label>
-                                                <input type="date" name="date_end" class="form-control" id="date_end"
+                                                <input type="date" name="date_end" class="form-control" id=""
                                                       value="{{@$item->date_end}}" readonly required >
                                             </div>
                                         </div>
@@ -143,6 +147,47 @@
 
                                     </form>
                                 </div>
+
+
+                                <div class="card">
+                                <div class="card-header">
+                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ต่ออายุ Account</h1>
+                                <br><br>
+                                <form method="post" id=""
+                                        action="{{ url('users_update_date') }}"
+                                        enctype="multipart/form-data" >
+                                        @csrf
+
+                                        <input type="hidden" name="id" value="{{@$item->id}}">
+
+                                <div class="form-group row">
+                                        <div class="col-sm-2">
+                                            <label class="col-form-label">Enter Days*</label>
+                                            <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
+                                        </div>
+                                            <div class="col-sm-2">
+                                                <label class="col-form-label">Date Start</label>
+                                                <input type="date" name="date_start" class="form-control" id="date_start"
+                                                      value="" readonly required >
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <label class="col-form-label">Date End</label>
+                                                <input type="date" name="date_end" class="form-control" id="date_end"
+                                                      value="" readonly required >
+                                            </div>
+                                        </div>
+                                        <p class="">
+                                            <button type="submit" class="btn btn-danger" style="color:white;"
+                                                onclick="return confirm('Confirm!');"> <i
+                                                    class="fa fa-check-circle-o"></i> ต่ออายุ </button>
+                                        </p>
+                                        </form>
+                                        </div>
+                                        </div>
+                                        
+
+
+
                             </div>
                             <!-- Input Alignment card end -->
                         </div>
@@ -227,7 +272,7 @@
                                                     <td>{{@$accountsss->name}}</td>
                                                     <td>{{@$accountsss->email}}</td>
                                                     <td>{{@$accountsss->password}}</td>
-                                                    <td>{{@$accountsss->created_at}}</td>
+                                                    <td>{{@$accountss->created_at}}</td>
                                                 </tr>
                                                 @endforeach
 
