@@ -547,9 +547,8 @@ class AdminUserBackendController extends Controller
             }elseif($status_account == 0){
             $item = $item->where('date_end','<',$date);
             }
+            $item = $item->orderBy('id', 'desc')->paginate(10);
           }
-
-          $item = $item->orderBy('id', 'desc')->paginate(10);
 
           return view('backend.users_in.index',[
               'item'=>$item,
