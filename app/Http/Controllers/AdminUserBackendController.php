@@ -534,14 +534,22 @@ class AdminUserBackendController extends Controller
 
           $item=users_in ::orderby('id','desc')->paginate(10);
           $search = $r->search;
+          $status_account = $r->status_account;
           if (!empty($search)) {
-           $item = users_in::where(function ($query) use ($search) {
+           $item = users_in::where(function ($query) use ($search, $status_account) {
                   $query->where('name', 'LIKE', '%' . $search . '%');
                   $query->orwhere('email', 'LIKE', '%' . $search . '%');
                   $query->orwhere('country', 'LIKE', '%' . $search . '%');
-          })
-          ->orderBy('id', 'desc')->paginate(10);
+          });
+
+            if ($status_account == 0) {
+            $item = $item->where('date_end','>=',$date);
+            }elseif($status_account == 0){
+            $item = $item->where('date_end','<',$date);
+            }
           }
+
+          $item = $item->orderBy('id', 'desc')->paginate(10);
 
           return view('backend.users_in.index',[
               'item'=>$item,
