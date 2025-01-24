@@ -261,7 +261,7 @@ class AdminUserBackendController extends Controller
                       ->orWhere('line', 'LIKE', '%' . $search . '%');
             });
         
-            if ($status_account != null and $status_account != 999) {
+            if ($status_account != null and $status_account != '999') {
                 $item = $item->where('status_account', $status_account);
             }
         
@@ -535,16 +535,16 @@ class AdminUserBackendController extends Controller
           $item=users_in ::orderby('id','desc')->paginate(10);
           $search = $r->search;
           $status_account = $r->status_account;
-          if (!empty($search)) {
+          if (!empty($search) or !empty($status_account) ) {
            $item = users_in::where(function ($query) use ($search, $status_account) {
                   $query->where('name', 'LIKE', '%' . $search . '%');
                   $query->orwhere('email', 'LIKE', '%' . $search . '%');
                   $query->orwhere('country', 'LIKE', '%' . $search . '%');
           });
 
-            if ($status_account == 0) {
+            if ($status_account == '0') {
             $item = $item->where('date_end','>=',$date);
-            }elseif($status_account == 1){
+            }elseif($status_account == '1'){
             $item = $item->where('date_end','<',$date);
             }
             $item = $item->orderBy('id', 'desc')->paginate(10);
