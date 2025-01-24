@@ -279,12 +279,9 @@ class AdminUserBackendController extends Controller
     }
     public function users_store(Request $r){
         $item=new users();
-        $ch=users::where('email',$r->email)->orderby('id','desc')->first();
         $ca=users::where('username',$r->username)->orderby('id','desc')->first();
 
-        if($ch!=null){
-            return redirect()->back()->with('message','Email Already Have in Data!');
-            }elseif($ca!=null){
+        if($ca!=null){
                 return redirect()->back()->with('message','Username Already Have in Data!');
             }
 
@@ -338,12 +335,8 @@ class AdminUserBackendController extends Controller
     }
     public function users_update(Request $r,$id){
         $item=users::where('id',$id)->first();
-        $ch=users::where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
         $ca=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
-
-        if($ch!=null){
-            return redirect()->back()->with('message','Email Already Have in Data!');
-            }elseif($ca!=null){
+        if($ca!=null){
                 return redirect()->back()->with('message','Username Already Have in Data!');
             }
 
@@ -360,8 +353,8 @@ class AdminUserBackendController extends Controller
         $item->link_line=$r->link_line;
         $item->phone=$r->phone;
         $item->code=$r->code;
-        $item->date_start=$r->date_start;
-        $item->date_end=$r->date_end;
+        // $item->date_start=$r->date_start;
+        // $item->date_end=$r->date_end;
         $item->type=$r->type;
 
         $caa=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();

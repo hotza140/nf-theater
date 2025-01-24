@@ -61,7 +61,8 @@
                                             <label for="">Postion</label>
                                             <select name="type" id="" class="form-control"  >
                                                 <option @if(@$item->type == '0') selected @endif value="0">Super</option>
-                                                <option @if(@$item->type == '1') selected @endif value="1">Admin</option>
+                                                <option @if(@$item->type == '1') selected @endif value="1">Admin Netflix</option>
+                                                <option @if(@$item->type == '2') selected @endif value="2">Admin Youtube</option>
                                             </select>
                                             </div>
                                         </div>
@@ -85,7 +86,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">New Password* (ไม่เกิน 20 ตัวอักษร) (ถ้าไม่ต้องการเปลี่ยนรหัสให้ปล่อยช่องว่างเอาไว้)</label>
-                                                <input type="text" name="password" class="form-control" id=""  maxlength="20">
+                                                <input type="text" name="password" class="form-control" id=""  maxlength="20" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 

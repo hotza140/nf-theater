@@ -137,10 +137,10 @@
                                                     <th>#</th>
                                                     <th>Open/Close</th>
                                                     <!-- <th>Picture</th> -->
+                                                    <th>Username</th>
                                                     <th>Name Profile</th>
-                                                    <th>Email</th>
-                                                    <th>Phone</th>
-                                                    <th>Line</th>
+                                                    <th>เบอรโทรศัพท์</th>
+                                                    <th>ชื่อไลน์ลูกค้า</th>
                                                     <th>สถานะ Account</th>
                                                     <th>Tool</th>
 
@@ -164,8 +164,8 @@
                                                     </td>
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
+                                                    <td>{{$items->username}}</td>
                                                     <td>{{$items->name}}</td>
-                                                    <td>{{$items->email}}</td>
                                                     <td>{{$items->phone}}</td>
                                                     <td>{{$items->line}}</td>
                                                     <td>

@@ -104,7 +104,7 @@
                                                     <!-- <th>Picture</th> -->
                                                     <th>Status</th>
                                                     <th>Name Account</th>
-                                                    <th>Email</th>
+                                                    <th>Email / Password</th>
                                                     <th>Start</th>
                                                     <th>End</th>
                                                     <th>Country</th>
@@ -129,20 +129,38 @@
                                                     </form>
                                                     </td>
                                                     <td>
-                                                        <i class="fa fa-mobile" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
+                                                    <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
                                                         <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
-                                                        <i class="fa fa-mobile" style="font-size:30px;" title="ปิดการใช้งาน"></i>
-                                                        <i class="fa fa-mobile" style="font-size:30px;" title="ปิดการใช้งาน"></i>
-                                                        <i class="fa fa-desktop" style="font-size:30px;" title="ปิดการใช้งาน"></i>
-                                                        <i class="fa fa-mobile" style="font-size:30px;" title="ปิดการใช้งาน"></i>
+                                                        <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
+                                                        <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
+                                                        <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
+                                                        <i class="fa fa-desktop" style="font-size:30px; color:green;" title="ว่าง"></i>
+                                                        <i class="fa fa-desktop" style="font-size:30px; color:green;" title="ว่าง"></i>
                                                     </td>
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>{{$items->name}}</td>
-                                                    <td>{{$items->email}}</td>
-                                                    <td>{{$items->date_start}}</td>
-                                                    <td>{{$items->date_end}}</td>
-                                                    <td>{{$items->country}}</td>
+                                                    <td>{{$items->email}} / {{$items->password}}</td>
+                                                    <?php
+                                                       $date_start = $items->date_start; // วันที่เดิมในฟอร์แมต Y-m-d
+                                                       if ($date_start) {
+                                                           // แปลงรูปแบบวันที่เป็น DD/MM/YYYY
+                                                           $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                       } else {
+                                                           $formatted_date1 = null;
+                                                       }
+               
+                                                       $date_end = $items->date_end; // วันที่เดิมในฟอร์แมต Y-m-d
+                                                       if ($date_end) {
+                                                           // แปลงรูปแบบวันที่เป็น DD/MM/YYYY
+                                                           $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                       } else {
+                                                           $formatted_date2 = null;
+                                                       }
+                                                    ?>
+                                                    <td>{{@$formatted_date1}}</td>
+                                                    <td>{{@$formatted_date2}}</td>
+                                                    <!-- <td>{{$items->country}}</td> -->
                                                     <td>
                                                     <a href="{{url('users_in_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <a href="{{url('users_in_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>

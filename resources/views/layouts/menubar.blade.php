@@ -525,14 +525,14 @@
                                         <li class="{{ isset($list) && $list == 'users' ? 'active' : '' }}">
                                             <a href="{{ url('users') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">Manage Users</span>
+                                                <span class="pcoded-mtext">Manage Users Netflix</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
                                         <li class="{{ isset($list) && $list == 'users_in' ? 'active' : '' }}">
                                             <a href="{{ url('users_in') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">Manage Users Account</span>
+                                                <span class="pcoded-mtext">Manage Users Account Netflix</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -554,6 +554,7 @@
                 </div>
             </div>
         </div>
+
 
 
         <!-- // ป้องกันการกด Enter เพื่อส่งข้อมูล ในทุกฟอร์ม -->

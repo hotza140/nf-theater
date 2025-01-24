@@ -70,34 +70,34 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password*</label>
-                                                <input type="text" name="password" class="form-control" id="" required value="{{@$password}}" >
+                                                <input type="text" name="password" class="form-control" id="" required value="{{@$password}}" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
+                                        <!-- <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Email</label>
                                                 <input type="email" name="email" class="form-control" id=""  
                                                       value="{{@$item->email}}">
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
-                                                <label class="col-form-label">Phone</label>
-                                                <input type="text" name="phone" class="form-control" id=""  maxlength = "10"
+                                                <label class="col-form-label">เบอรโทรศัพท์</label>
+                                                <input type="text" name="phone" class="form-control" id=""  maxlength = "10" placeholder="เบอรโทรศัพท์"
                                                       value="{{@$item->phone}}">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Line</label>
+                                                <label class="col-form-label">ชื่อไลน์ลูกค้า</label>
                                                 <input type="text" name="line" class="form-control" id=""  
                                                       value="{{@$item->line}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Link Line</label>
+                                                <label class="col-form-label">ลิงก์ไลน์ลูกค้า</label>
                                                 <input type="text" name="link_line" class="form-control" id=""  
                                                       value="{{@$item->link_line}}">
                                             </div>
@@ -118,7 +118,6 @@
                                         if(@$item->date_start!=null){
                                             $date_s=@$item->date_start;
                                         }
-
                                         ?>
 
                                         <div class="form-group row">

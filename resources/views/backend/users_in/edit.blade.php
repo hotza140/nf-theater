@@ -115,7 +115,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password*</label>
-                                                <input type="text" name="password" class="form-control" id="" required value="{{@$item->password}}" >
+                                                <input type="text" name="password" class="form-control" id="" required value="{{@$item->password}}" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 
@@ -155,7 +155,7 @@
 
 
                                         <?php $country=DB::table('dataset_country')->orderByRaw("CONVERT(ct_nameTHA USING tis620) ASC")->cursor(); ?>
-                                        <div class="form-group row">
+                                        <!-- <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Country</label>
                                                 <select name="country" id="country" class="form-control add_select2"  >
@@ -164,7 +164,7 @@
                                                 @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         
 
                                         <p class="text-right">
@@ -300,7 +300,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password*</label>
-                                                <input type="text" name="password" class="form-control" id="" required value="{{@$password}}" >
+                                                <input type="text" name="password" class="form-control" id="" required value="{{@$password}}" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 
@@ -359,6 +359,38 @@
                                                       value="" readonly required >
                                             </div>
                                         </div>
+
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', () => {
+                                            const dateStartInput = document.getElementById('date_start');
+                                            const dateEndInput = document.getElementById('date_end');
+                                            const dayInput = document.getElementById('day_input');
+
+                                            // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
+                                            const today = new Date().toISOString().split('T')[0];
+                                            dateStartInput.value = today;
+
+                                            // ฟังก์ชันคำนวณวันที่สิ้นสุดเมื่อผู้ใช้กรอกจำนวนวัน
+                                            dayInput.addEventListener('input', () => {
+                                                const enteredDays = parseInt(dayInput.value, 10);
+
+                                                // ตรวจสอบว่าผู้ใช้กรอกตัวเลขถูกต้อง
+                                                if (!isNaN(enteredDays) && enteredDays > 0) {
+                                                    const startDate = new Date(dateStartInput.value);
+
+                                                    // คำนวณวันสิ้นสุด
+                                                    const endDate = new Date(startDate);
+                                                    endDate.setDate(startDate.getDate() + enteredDays);
+
+                                                    // ตั้งค่าค่าวันที่สิ้นสุด
+                                                    dateEndInput.value = endDate.toISOString().split('T')[0];
+                                                } else {
+                                                    // ล้างค่าของ date_end หากกรอกตัวเลขไม่ถูกต้อง
+                                                    dateEndInput.value = '';
+                                                }
+                                            });
+                                        });
+                                    </script>
 
                                         <p class="text-right">
                                             <button type="submit" class="btn btn-success" style="color:white;"

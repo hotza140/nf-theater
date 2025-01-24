@@ -64,7 +64,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password*</label>
-                                                <input type="text" name="password" class="form-control" id="" required value="{{@$item->password}}" >
+                                                <input type="text" name="password" class="form-control" id="" required value="{{@$item->password}}" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 
@@ -104,7 +104,7 @@
 
 
                                         <?php $country=DB::table('dataset_country')->orderByRaw("CONVERT(ct_nameTHA USING tis620) ASC")->cursor(); ?>
-                                        <div class="form-group row">
+                                        <!-- <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Country</label>
                                                 <select name="country" id="country" class="form-control add_select2"  >
@@ -113,7 +113,7 @@
                                                 @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
 
 
 
