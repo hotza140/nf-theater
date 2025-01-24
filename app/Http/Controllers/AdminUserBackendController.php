@@ -556,6 +556,7 @@ class AdminUserBackendController extends Controller
               'list'=>"users_in",
 
               'search'=>$search,
+              'status_account'=>$status_account,
           ]);
       }
       public function users_in_store(Request $r){
