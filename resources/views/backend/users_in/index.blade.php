@@ -80,12 +80,15 @@
                                         <br>
                                         <form class="form-horizontal" action="{{url('users_in')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
+                                       
+                                        <div class="form-group row" style="display: flex; justify-content: flex-end;">
+                                        <div class="col-sm-2">
                                         <select name="status_account" id="" class="form-control">
                                             <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
                                             <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
                                             <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option>
                                             </select>
-                                        <div class="form-group row" style="display: flex; justify-content: flex-end;">
+                                            </div>
                                             <div class="col-sm-2">
                                                 <input type="text" name="search" value="{{@$search}}">
                                             </div>
