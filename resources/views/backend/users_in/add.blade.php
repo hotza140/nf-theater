@@ -70,12 +70,12 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Email รอง 1</label>
+                                                <label class="col-form-label">Email เสริม 1</label>
                                                 <input type="email" name="email01" class="form-control" id=""  maxlength = "25"
                                                       value="{{@$item->email01}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Email รอง 2</label>
+                                                <label class="col-form-label">Email เสริม 2</label>
                                                 <input type="email" name="email02" class="form-control" id=""  maxlength = "25"
                                                       value="{{@$item->email02}}">
                                             </div>

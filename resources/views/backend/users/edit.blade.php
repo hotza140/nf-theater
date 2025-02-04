@@ -35,15 +35,6 @@
                                         <input type="hidden" name="edit" value="{{@$item->id}}">
                                         <!-- -------EDIT---------- -->
 
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <label class="col-form-label">Name Profile</label>
-                                                <input type="text" name="name" class="form-control" id=""
-                                                      value="{{@$item->name}}">
-                                            </div>
-                                        </div>
-
                                         <?php
                                         $runnum=DB::table('tb_users')->orderby('id','desc')->count();
                                         $runtotal=$runnum+1;
@@ -61,6 +52,14 @@
                                         }
 
                                         ?>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Name Profile</label>
+                                                <input type="text" name="name" class="form-control" id=""
+                                                      value="{{@$item->name}}">
+                                            </div>
+                                        </div>
                                         
                                         <div class="form-group row">
                                             <div class="col-sm-3">
@@ -85,7 +84,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">เบอรโทรศัพท์</label>
-                                                <input type="text" name="phone" class="form-control" id=""  maxlength = "10" placeholder="เบอรโทรศัพท์"
+                                                <input type="text" name="phone" class="form-control" id=""  maxlength = "10" placeholder="เบอรโทรศัพท์ (ถ้ามี)"
                                                       value="{{@$item->phone}}">
                                             </div>
                                         </div>
@@ -160,6 +159,18 @@
                                         <input type="hidden" name="id" value="{{@$item->id}}">
 
                                 <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label class="col-form-label">Select Days</label>
+                                    <select class="form-control" id="day_select">
+                                        <option value="">Select days</option>
+                                        <option value="30">30 วัน</option>
+                                        <option value="60">60 วัน</option>
+                                        <option value="90">90 วัน</option>
+                                        <option value="120">120 วัน</option>
+                                        <option value="180">180 วัน</option>
+                                        <option value="365">365 วัน</option>
+                                    </select>
+                                </div>
                                         <div class="col-sm-2">
                                             <label class="col-form-label">Enter Days*</label>
                                             <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
@@ -183,6 +194,8 @@
                                         </form>
                                         </div>
                                         </div>
+
+
                                         
 
 
@@ -199,32 +212,40 @@
                     const dateStartInput = document.getElementById('date_start');
                     const dateEndInput = document.getElementById('date_end');
                     const dayInput = document.getElementById('day_input');
+                    const daySelect = document.getElementById('day_select');
 
                     // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
                     const today = new Date().toISOString().split('T')[0];
                     dateStartInput.value = today;
 
-                    // ฟังก์ชันคำนวณวันที่สิ้นสุดเมื่อผู้ใช้กรอกจำนวนวัน
-                    dayInput.addEventListener('input', () => {
-                        const enteredDays = parseInt(dayInput.value, 10);
-
-                        // ตรวจสอบว่าผู้ใช้กรอกตัวเลขถูกต้อง
-                        if (!isNaN(enteredDays) && enteredDays > 0) {
+                    // ฟังก์ชันคำนวณวันที่สิ้นสุด
+                    function updateEndDate(days) {
+                        if (!isNaN(days) && days > 0) {
                             const startDate = new Date(dateStartInput.value);
-
-                            // คำนวณวันสิ้นสุด
-                            const endDate = new Date(startDate);
-                            endDate.setDate(startDate.getDate() + enteredDays);
-
-                            // ตั้งค่าค่าวันที่สิ้นสุด
-                            dateEndInput.value = endDate.toISOString().split('T')[0];
+                            startDate.setDate(startDate.getDate() + days);
+                            dateEndInput.value = startDate.toISOString().split('T')[0];
                         } else {
-                            // ล้างค่าของ date_end หากกรอกตัวเลขไม่ถูกต้อง
                             dateEndInput.value = '';
                         }
+                    }
+
+                    // เมื่อเลือกจำนวนวันจาก select ให้ไปใส่ใน input และคำนวณวันสิ้นสุด
+                    daySelect.addEventListener('change', () => {
+                        dayInput.value = daySelect.value;
+                        updateEndDate(parseInt(daySelect.value, 10));
+                    });
+
+                    // เมื่อกรอกจำนวนวันเอง ให้คำนวณวันสิ้นสุด
+                    dayInput.addEventListener('input', () => {
+                        updateEndDate(parseInt(dayInput.value, 10));
+                    });
+
+                    // เมื่อเปลี่ยนวันที่เริ่มต้น ให้คำนวณวันสิ้นสุดใหม่
+                    dateStartInput.addEventListener('change', () => {
+                        updateEndDate(parseInt(dayInput.value, 10));
                     });
                 });
-            </script>
+                </script>
 
 
 
@@ -243,7 +264,7 @@
                             <div class="card">
                                 <div class="card-header">
                                 <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">Account ที่เชื่อมต่อปัจจุบัน</h1>
-                                <br><br>
+                                <br>
 
                                 </div>
                                 <div class="card-block">
@@ -253,6 +274,7 @@
                                                 <tr>
                                                
                                                     <th>#</th>
+                                                    <th>Type</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
@@ -268,6 +290,13 @@
                                             ?>
                                             <tr>
                                                     <td>{{$key+1}}</td>
+                                                    <td>
+                                                        @if($accountss->type=='MOBILE' or $accountss->type=='')
+                                                        <i class="fa fa-mobile" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
+                                                        @else
+                                                        <i class="fa fa-desktop" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
+                                                        @endif
+                                                    </td>
                                                     <td>{{@$accountsss->name}}</td>
                                                     <td>{{@$accountsss->email}}</td>
                                                     <td>{{@$accountsss->password}}</td>
@@ -288,22 +317,18 @@
                 <!-- Page body2 end -->
 
 
-
-
-
-
                 <?php
-                 $accountsa=App\Models\users_in_in_history::where('id_user',@$item->id)->orderby('id','desc')->cursor();
+                 $user_r=App\Models\users::where('username',@$item->username)->orderby('id','desc')->cursor();
                 ?>
-                 <!-- Page body2 start -->
+                 <!-- Page body3 start -->
                  <div class="page-body">
                  <div class="row">
                         <div class="col-sm-12">
                             <!-- Zero config.table start -->
                             <div class="card">
                                 <div class="card-header">
-                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ประวัติ Account ที่เคยเชื่อมต่อ</h1>
-                                <br><br>
+                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">User ที่เกี่ยวข้อง</h1>
+                                <br>
 
                                 </div>
                                 <div class="card-block">
@@ -313,6 +338,108 @@
                                                 <tr>
                                                
                                                     <th>#</th>
+                                                    <th>Username</th>
+                                                    <th>Name Profile</th>
+                                                    <th>ชื่อไลน์ลูกค้า</th>
+                                                    <th>วันที่ใช้งานคงเหลือ</th>
+                                                    <th>สถานะ Account</th>
+                                                    <th>Tool</th>
+
+                                                </tr>
+                                            </thead>
+                                            <!-- <tbody class="sortable"> -->
+                                            <tbody class="">
+                                            @foreach($user_r as $key=>$user_rs)
+                                            <tr>
+                                                    <td>{{$key+1}}</td>
+                                                    <td>{{$user_rs->username}}</td>
+                                                    <td>{{$user_rs->name}}</td>
+                                                    <td>{{$user_rs->line}}</td>
+                                                    <?php
+                                                    $date_start = $user_rs->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = $user_rs->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
+
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
+
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
+                                                    ?>
+                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
+                                                    <td>
+                                                        @if($user_rs->status_account == 0)
+                                                            <span class="status-active">มีแอคเคาท์</span>
+                                                        @elseif($user_rs->status_account == 1)
+                                                            <span class="status-inactive">ไม่มีแอคเคาท์</span>
+                                                        @else
+                                                            <span class="status-expired">หมดอายุ</span>
+                                                        @endif
+                                                    </td>
+
+                                                    <td>
+                                                    <a href="{{url('users_edit/'.$user_rs->id)}}" class="btn btn-sm btn-info" target="_blank" style="color:white;"><i class="fa fa-gear"></i>View</a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Page body3 end -->
+
+
+
+
+
+
+                <?php
+                 $accountsa=App\Models\users_in_in_history::where('id_user',@$item->id)->orderby('id','desc')->cursor();
+                ?>
+                 <!-- Page body4 start -->
+                 <div class="page-body">
+                 <div class="row">
+                        <div class="col-sm-12">
+                            <!-- Zero config.table start -->
+                            <div class="card">
+                                <div class="card-header">
+                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ประวัติ Account ที่เคยเชื่อมต่อ</h1>
+                                <br>
+
+                                </div>
+                                <div class="card-block">
+                                    <div class="dt-responsive table-responsive">
+                                        <table id="" class="table  table-bordered nowrap">
+                                        <thead>
+                                                <tr>
+                                               
+                                                    <th>#</th>
+                                                    <th>Type</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
@@ -333,6 +460,13 @@
                                             @if(@$ch_his==null)
                                             <tr>
                                                     <td>{{$key+1}}</td>
+                                                    <td>
+                                                        @if($accountsas->type=='MOBILE' or $accountsas->type=='')
+                                                        <i class="fa fa-mobile" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
+                                                        @else
+                                                        <i class="fa fa-desktop" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
+                                                        @endif
+                                                    </td>
                                                     <td>{{@$accountsass->name}}</td>
                                                     <td>{{@$accountsass->email}}</td>
                                                     <td>{{@$accountsass->password}}</td>
@@ -351,7 +485,13 @@
                         </div>
                     </div>
                 </div>
-                <!-- Page body2 end -->
+                <!-- Page body4 end -->
+
+
+
+
+              
+
 
 
             </div>

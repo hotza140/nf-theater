@@ -121,12 +121,12 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Email รอง 1</label>
+                                                <label class="col-form-label">Email เสริม 1</label>
                                                 <input type="email" name="email01" class="form-control" id=""  maxlength = "25"
                                                       value="{{@$item->email01}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Email รอง 2</label>
+                                                <label class="col-form-label">Email เสริม 2</label>
                                                 <input type="email" name="email02" class="form-control" id=""  maxlength = "25"
                                                       value="{{@$item->email02}}">
                                             </div>
@@ -200,7 +200,7 @@
                             <div class="card">
                                 <div class="card-header">
                                 <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">จัดการผู้ใช้ใน Account</h1>
-                                <br><br>
+                                <br>
 
                                
 
@@ -221,13 +221,20 @@
                                     <div class="col-sm-3">
                                     <select name="id_user" id="id_user" class="form-control add_select2"  required >
                                     @foreach($user as $key=>$users)
-                                    <option value="{{@$users->id}}" >{{@$users->name}}</option>
+                                    <option value="{{@$users->id}}" >{{@$users->name}} ({{@$users->username}})</option>
                                      @endforeach
                                     </select>
                                     </div>
+
+                                    <!-- <div class="col-sm-1">
+                                    <select name="type" id="type" class="form-control add_select2" required  >
+                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
+                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        </select>
+                                        </div> -->
                                     
                                     <div class="col-sm-1">
-                                    @if($user_in_in_count >= 6)
+                                    @if($user_in_in_count >= 5)
                                         <button type="submit" style="color:white;" class="btn btn-success"  onclick="javascript:return confirm('Confirm?')" disabled title="จำนวนผู้ใช้งานครบจำนวนแล้ว">
                                             <i class="fa fa-plus"></i> Add
                                         </button>
@@ -345,6 +352,18 @@
 
                                         <div class="form-group row">
                                         <div class="col-sm-2">
+                                    <label class="col-form-label">Select Days</label>
+                                    <select class="form-control" id="day_select">
+                                        <option value="">Select days</option>
+                                        <option value="30">30 วัน</option>
+                                        <option value="60">60 วัน</option>
+                                        <option value="90">90 วัน</option>
+                                        <option value="120">120 วัน</option>
+                                        <option value="180">180 วัน</option>
+                                        <option value="365">365 วัน</option>
+                                    </select>
+                                    </div>
+                                        <div class="col-sm-2">
                                             <label class="col-form-label">Enter Days*</label>
                                             <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
                                         </div>
@@ -361,36 +380,44 @@
                                         </div>
 
                                         <script>
-                                        document.addEventListener('DOMContentLoaded', () => {
-                                            const dateStartInput = document.getElementById('date_start');
-                                            const dateEndInput = document.getElementById('date_end');
-                                            const dayInput = document.getElementById('day_input');
+                                            document.addEventListener('DOMContentLoaded', () => {
+                                                const dateStartInput = document.getElementById('date_start');
+                                                const dateEndInput = document.getElementById('date_end');
+                                                const dayInput = document.getElementById('day_input');
+                                                const daySelect = document.getElementById('day_select');
 
-                                            // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
-                                            const today = new Date().toISOString().split('T')[0];
-                                            dateStartInput.value = today;
+                                                // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
+                                                const today = new Date().toISOString().split('T')[0];
+                                                dateStartInput.value = today;
 
-                                            // ฟังก์ชันคำนวณวันที่สิ้นสุดเมื่อผู้ใช้กรอกจำนวนวัน
-                                            dayInput.addEventListener('input', () => {
-                                                const enteredDays = parseInt(dayInput.value, 10);
-
-                                                // ตรวจสอบว่าผู้ใช้กรอกตัวเลขถูกต้อง
-                                                if (!isNaN(enteredDays) && enteredDays > 0) {
-                                                    const startDate = new Date(dateStartInput.value);
-
-                                                    // คำนวณวันสิ้นสุด
-                                                    const endDate = new Date(startDate);
-                                                    endDate.setDate(startDate.getDate() + enteredDays);
-
-                                                    // ตั้งค่าค่าวันที่สิ้นสุด
-                                                    dateEndInput.value = endDate.toISOString().split('T')[0];
-                                                } else {
-                                                    // ล้างค่าของ date_end หากกรอกตัวเลขไม่ถูกต้อง
-                                                    dateEndInput.value = '';
+                                                // ฟังก์ชันคำนวณวันที่สิ้นสุด
+                                                function updateEndDate(days) {
+                                                    if (!isNaN(days) && days > 0) {
+                                                        const startDate = new Date(dateStartInput.value);
+                                                        startDate.setDate(startDate.getDate() + days);
+                                                        dateEndInput.value = startDate.toISOString().split('T')[0];
+                                                    } else {
+                                                        dateEndInput.value = '';
+                                                    }
                                                 }
+
+                                                // เมื่อเลือกจำนวนวันจาก select ให้ไปใส่ใน input และคำนวณวันสิ้นสุด
+                                                daySelect.addEventListener('change', () => {
+                                                    dayInput.value = daySelect.value;
+                                                    updateEndDate(parseInt(daySelect.value, 10));
+                                                });
+
+                                                // เมื่อกรอกจำนวนวันเอง ให้คำนวณวันสิ้นสุด
+                                                dayInput.addEventListener('input', () => {
+                                                    updateEndDate(parseInt(dayInput.value, 10));
+                                                });
+
+                                                // เมื่อเปลี่ยนวันที่เริ่มต้น ให้คำนวณวันสิ้นสุดใหม่
+                                                dateStartInput.addEventListener('change', () => {
+                                                    updateEndDate(parseInt(dayInput.value, 10));
+                                                });
                                             });
-                                        });
-                                    </script>
+                                            </script>
 
                                         <p class="text-right">
                                             <button type="submit" class="btn btn-success" style="color:white;"
@@ -412,8 +439,10 @@
                                                     <th>#</th>
                                                     <!-- <th>Open/Close</th> -->
                                                     <th>Type</th>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
+                                                    <th>Username</th>
+                                                    <th>Name Profile</th>
+                                                    <th>ชื่อไลน์ลูกค้า</th>
+                                                    <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>Tool</th>
 
@@ -422,20 +451,9 @@
                                             <!-- <tbody class="sortable"> -->
                                             <tbody class="">
                                             @foreach($user_in_in as $key=>$user_ins)
+                                            <?php $user_aa=App\Models\users::where('id',$user_ins->id_user)->first(); ?>
                                             <tr class="num" id="{{$user_ins->id}}">
                                                     <td>{{$key+1}}</td>
-
-                                                    <!-- <td>
-                                                        <form method="post" id="form{{$user_ins->id}}" name="form{{$user_ins->id}}">
-                                                        @csrf
-                                                        <label class="switch">
-                                                            <input type="checkbox" class="toggle-switch" data-id="{{$user_ins->id}}" 
-                                                                {{ $user_ins->open == 0 ? 'checked' : '' }}>
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </form>
-                                                    </td> -->
-
                                                     <td>
                                                         @if($user_ins->type=='MOBILE' or $user_ins->type=='')
                                                         <i class="fa fa-mobile" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
@@ -443,16 +461,46 @@
                                                         <i class="fa fa-desktop" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
                                                         @endif
                                                     </td>
-                                                    <?php 
-                                                    $user_aa=App\Models\users::where('id',$user_ins->id_user)->first();
-                                                    ?>
+                                                    <td>{{$user_aa->username}}</td>
+                                                    <td>{{$user_aa->name}}</td>
+                                                    <td>{{$user_aa->line}}</td>
+                                                    <?php
+                                                    $date_start = $user_aa->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = $user_aa->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
-                                                    <td>{{@$user_aa->name}}</td>
-                                                    <td>{{@$user_aa->email}}</td>
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
+
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
+                                                    ?>
+                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <td>{{@$user_ins->created_at}}</td>
                                                     <td>
                                                     <!-- <a href="{{url('users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
                                                         <a href="{{url('users_in_in_destroy/'.$user_ins->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('You Want To Delete?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user_aa->username}}', '{{$user_aa->password}}', '{{$user_aa->name}}', '{{$user_aa->type}}', '{{$user_aa->link}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -461,6 +509,18 @@
                                         </table>
                                     </div>
                                 </div>
+
+                                <script>
+                                    function copyUserInfo(username, password, name, type, link) {
+                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${type}\nลิงก์เข้าใช้งาน : ${link}`;
+                                        
+                                        navigator.clipboard.writeText(textToCopy).then(function() {
+                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                        }, function(err) {
+                                            console.error('คัดลอกไม่สำเร็จ: ', err);
+                                        });
+                                    }
+                                    </script>
 
                                 
                             </div>

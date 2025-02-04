@@ -74,7 +74,38 @@
                             <div class="card">
                                 <div class="card-header">
 
-                                    <a style="color:white;" class="btn btn-success" href="{{url('users_add')}}"> <i class="fa fa-plus"></i> Add</a>
+                                    <form class="form-horizontal" action="{{url('users_add_many')}}" method="GET" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group row" >
+                                        <div class="col-sm-1">
+                                        <input type="number" class="form-control" id="number_input" name="number" value="1" min="1" max="10" required>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button type="submit" class="btn btn-success" style="color:white;">
+                                                <i class="fa fa-plus"></i> สร้างแบบหลาย User
+                                                </button>
+                                            </div>
+
+                                            <div class="col-sm-1">
+                                            
+                                            </div>
+
+                                            <div class="col-sm-1">
+                                            <a style="color:white;" class="btn btn-success" href="{{url('users_add')}}"> <i class="fa fa-plus"></i> สร้างแบบ User เดียว</a>
+                                            </div>
+                                            
+                                        </div>
+                                        </form>
+                                        <script>
+                                        document.getElementById("number_input").addEventListener("input", function () {
+                                            if (this.value > 10) {
+                                                this.value = 10;
+                                            } else if (this.value < 1) {
+                                                this.value = 1;
+                                            }
+                                        });
+                                        </script>
+
 
                                     
                                         <br>
@@ -139,8 +170,8 @@
                                                     <!-- <th>Picture</th> -->
                                                     <th>Username</th>
                                                     <th>Name Profile</th>
-                                                    <th>เบอรโทรศัพท์</th>
                                                     <th>ชื่อไลน์ลูกค้า</th>
+                                                    <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>สถานะ Account</th>
                                                     <th>Tool</th>
 
@@ -166,8 +197,37 @@
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>{{$items->username}}</td>
                                                     <td>{{$items->name}}</td>
-                                                    <td>{{$items->phone}}</td>
                                                     <td>{{$items->line}}</td>
+                                                    <?php
+                                                    $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
+
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
+
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
+                                                    ?>
+                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <td>
                                                         @if($items->status_account == 0)
                                                             <span class="status-active">มีแอคเคาท์</span>
@@ -181,6 +241,9 @@
                                                     <td>
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{$items->type}}', '{{$items->link}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -188,6 +251,18 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    <script>
+                                    function copyUserInfo(username, password, name, type, link) {
+                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${type}\nลิงก์เข้าใช้งาน : ${link}`;
+                                        
+                                        navigator.clipboard.writeText(textToCopy).then(function() {
+                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                        }, function(err) {
+                                            console.error('คัดลอกไม่สำเร็จ: ', err);
+                                        });
+                                    }
+                                    </script>
 
                                     <!-- Pagination -->
                                     <style>

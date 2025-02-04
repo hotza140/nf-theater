@@ -53,7 +53,9 @@ Route::group(['middleware' => ['auth:admin']],function(){
   Route::get('users',[App\Http\Controllers\AdminUserBackendController::class,'users']);
   Route::get('users_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_destroy']);
   Route::get('users_add',[App\Http\Controllers\AdminUserBackendController::class,'users_add']);
+  Route::get('users_add_many',[App\Http\Controllers\AdminUserBackendController::class,'users_add_many']);
   Route::post('users_store',[App\Http\Controllers\AdminUserBackendController::class,'users_store']);
+  Route::post('users_store_many',[App\Http\Controllers\AdminUserBackendController::class,'users_store_many']);
   Route::get('users_edit/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_edit']);
   Route::post('users_update/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_update']);
   Route::post('users_open_close',[App\Http\Controllers\AdminUserBackendController::class,'users_open_close']);

@@ -32,14 +32,6 @@
                                         <!-- -------EDIT---------- -->
                                         <input type="hidden" name="edit" value="{{@$item->id}}">
                                         <!-- -------EDIT---------- -->
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <label class="col-form-label">Name Profile</label>
-                                                <input type="text" name="name" class="form-control" id=""
-                                                      value="{{@$item->name}}">
-                                            </div>
-                                        </div>
                                         
                                         <?php
                                         $runnum=DB::table('tb_users')->orderby('id','desc')->count();
@@ -58,6 +50,14 @@
                                         }
 
                                         ?>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Name Profile</label>
+                                                <input type="text" name="name" class="form-control" id=""
+                                                      value="{{@$item->name}}">
+                                            </div>
+                                        </div>
                                         
                                         <div class="form-group row">
                                             <div class="col-sm-3">
@@ -82,7 +82,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">เบอรโทรศัพท์</label>
-                                                <input type="text" name="phone" class="form-control" id=""  maxlength = "10" placeholder="เบอรโทรศัพท์"
+                                                <input type="text" name="phone" class="form-control" id=""  maxlength = "10" placeholder="เบอรโทรศัพท์ (ถ้ามี)"
                                                       value="{{@$item->phone}}">
                                             </div>
                                         </div>
@@ -119,6 +119,20 @@
                                         ?>
 
                                         <div class="form-group row">
+
+                                        <div class="col-sm-2">
+                                    <label class="col-form-label">Select Days</label>
+                                    <select class="form-control" id="day_select">
+                                        <option value="">Select days</option>
+                                        <option value="30">30 วัน</option>
+                                        <option value="60">60 วัน</option>
+                                        <option value="90">90 วัน</option>
+                                        <option value="120">120 วัน</option>
+                                        <option value="180">180 วัน</option>
+                                        <option value="365">365 วัน</option>
+                                    </select>
+                                    </div>
+                                
                                         <div class="col-sm-2">
                                             <label class="col-form-label">Enter Days*</label>
                                             <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
@@ -169,32 +183,40 @@
                     const dateStartInput = document.getElementById('date_start');
                     const dateEndInput = document.getElementById('date_end');
                     const dayInput = document.getElementById('day_input');
+                    const daySelect = document.getElementById('day_select');
 
                     // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
                     const today = new Date().toISOString().split('T')[0];
                     dateStartInput.value = today;
 
-                    // ฟังก์ชันคำนวณวันที่สิ้นสุดเมื่อผู้ใช้กรอกจำนวนวัน
-                    dayInput.addEventListener('input', () => {
-                        const enteredDays = parseInt(dayInput.value, 10);
-
-                        // ตรวจสอบว่าผู้ใช้กรอกตัวเลขถูกต้อง
-                        if (!isNaN(enteredDays) && enteredDays > 0) {
+                    // ฟังก์ชันคำนวณวันที่สิ้นสุด
+                    function updateEndDate(days) {
+                        if (!isNaN(days) && days > 0) {
                             const startDate = new Date(dateStartInput.value);
-
-                            // คำนวณวันสิ้นสุด
-                            const endDate = new Date(startDate);
-                            endDate.setDate(startDate.getDate() + enteredDays);
-
-                            // ตั้งค่าค่าวันที่สิ้นสุด
-                            dateEndInput.value = endDate.toISOString().split('T')[0];
+                            startDate.setDate(startDate.getDate() + days);
+                            dateEndInput.value = startDate.toISOString().split('T')[0];
                         } else {
-                            // ล้างค่าของ date_end หากกรอกตัวเลขไม่ถูกต้อง
                             dateEndInput.value = '';
                         }
+                    }
+
+                    // เมื่อเลือกจำนวนวันจาก select ให้ไปใส่ใน input และคำนวณวันสิ้นสุด
+                    daySelect.addEventListener('change', () => {
+                        dayInput.value = daySelect.value;
+                        updateEndDate(parseInt(daySelect.value, 10));
+                    });
+
+                    // เมื่อกรอกจำนวนวันเอง ให้คำนวณวันสิ้นสุด
+                    dayInput.addEventListener('input', () => {
+                        updateEndDate(parseInt(dayInput.value, 10));
+                    });
+
+                    // เมื่อเปลี่ยนวันที่เริ่มต้น ให้คำนวณวันสิ้นสุดใหม่
+                    dateStartInput.addEventListener('change', () => {
+                        updateEndDate(parseInt(dayInput.value, 10));
                     });
                 });
-            </script>
+                </script>
 
     @endsection
 

@@ -113,9 +113,7 @@
                                                     <th>Status</th>
                                                     <th>Name Account</th>
                                                     <th>Email / Password</th>
-                                                    <th>Start</th>
-                                                    <th>End</th>
-                                                    <th>Country</th>
+                                                    <th>วันที่ใช้งาน</th>
                                                     <th>Tool</th>
 
                                                 </tr>
@@ -148,26 +146,37 @@
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>{{$items->name}}</td>
-                                                    <td>{{$items->email}} / {{$items->password}}</td>
+                                                    <td>{{$items->email}} <br> {{$items->password}}</td>
                                                     <?php
-                                                       $date_start = $items->date_start; // วันที่เดิมในฟอร์แมต Y-m-d
-                                                       if ($date_start) {
-                                                           // แปลงรูปแบบวันที่เป็น DD/MM/YYYY
-                                                           $formatted_date1 = date('d/m/Y', strtotime($date_start));
-                                                       } else {
-                                                           $formatted_date1 = null;
-                                                       }
-               
-                                                       $date_end = $items->date_end; // วันที่เดิมในฟอร์แมต Y-m-d
-                                                       if ($date_end) {
-                                                           // แปลงรูปแบบวันที่เป็น DD/MM/YYYY
-                                                           $formatted_date2 = date('d/m/Y', strtotime($date_end));
-                                                       } else {
-                                                           $formatted_date2 = null;
-                                                       }
+                                                    $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
+
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
+
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
                                                     ?>
-                                                    <td>{{@$formatted_date1}}</td>
-                                                    <td>{{@$formatted_date2}}</td>
+                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <!-- <td>{{$items->country}}</td> -->
                                                     <td>
                                                     <a href="{{url('users_in_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>

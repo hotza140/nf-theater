@@ -256,7 +256,7 @@ class AdminUserBackendController extends Controller
         if (!empty($search) or !empty($status_account)) {
             $item = users::where(function ($query) use ($search, $status_account) {
                 $query->where('name', 'LIKE', '%' . $search . '%')
-                      ->orWhere('email', 'LIKE', '%' . $search . '%')
+                      ->orWhere('username', 'LIKE', '%' . $search . '%')
                       ->orWhere('phone', 'LIKE', '%' . $search . '%')
                       ->orWhere('line', 'LIKE', '%' . $search . '%');
             });
@@ -279,11 +279,11 @@ class AdminUserBackendController extends Controller
     }
     public function users_store(Request $r){
         $item=new users();
-        $ca=users::where('username',$r->username)->orderby('id','desc')->first();
+        // $ca=users::where('username',$r->username)->orderby('id','desc')->first();
 
-        if($ca!=null){
-                return redirect()->back()->with('message','Username Already Have in Data!');
-            }
+        // if($ca!=null){
+        //         return redirect()->back()->with('message','Username Already Have in Data!');
+        //     }
 
         // if($r->password!=null){
         //     $item->password=Hash::make($r->password);
@@ -302,10 +302,10 @@ class AdminUserBackendController extends Controller
         $item->date_end=$r->date_end;
         $item->type=$r->type;
 
-        $caa=users::where('username',$r->username)->orderby('id','desc')->first();
-        if($caa!=null){
-            return redirect()->back()->with('message','Username Already Have in Data!');
-        }
+        // $caa=users::where('username',$r->username)->orderby('id','desc')->first();
+        // if($caa!=null){
+        //     return redirect()->back()->with('message','Username Already Have in Data!');
+        // }
 
         if($item->save()){
         $user = (new users_in())->getEligibleUser();
@@ -335,10 +335,10 @@ class AdminUserBackendController extends Controller
     }
     public function users_update(Request $r,$id){
         $item=users::where('id',$id)->first();
-        $ca=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
-        if($ca!=null){
-                return redirect()->back()->with('message','Username Already Have in Data!');
-            }
+        // $ca=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
+        // if($ca!=null){
+        //         return redirect()->back()->with('message','Username Already Have in Data!');
+        //     }
 
         // if($r->password!=null){
         //     $item->password=Hash::make($r->password);
@@ -357,10 +357,10 @@ class AdminUserBackendController extends Controller
         // $item->date_end=$r->date_end;
         $item->type=$r->type;
 
-        $caa=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
-        if($caa!=null){
-            return redirect()->back()->with('message','Username Already Have in Data!');
-        }
+        // $caa=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
+        // if($caa!=null){
+        //     return redirect()->back()->with('message','Username Already Have in Data!');
+        // }
         $item->save();
         return redirect()->to('users_edit/'.$id)->with('message','Sucess!');
     }
@@ -432,6 +432,63 @@ class AdminUserBackendController extends Controller
             'list'=>"users",
         ]);
     }
+
+    public function users_add_many(Request $r){
+        if(@$r->number==null){
+            abort(404);
+        }
+        return view('backend.users.add_many',[
+            'page'=>"admin",
+            'list'=>"users",
+
+            'number'=>$r->number,
+        ]);
+    }
+
+    public function users_store_many(Request $r){
+        if (!isset($r->users) || !is_array($r->users)) {
+            return redirect()->back()->with('error', 'ไม่มีข้อมูลที่ถูกต้อง');
+        }
+    
+        foreach ($r->users as $userData) {
+            $item = new users();
+            $item->password = $userData['password'];
+            $item->username = $userData['username'];
+            $item->name = $userData['name'] ?? null;
+            $item->email = $userData['email'] ?? null;
+            $item->link_line = $userData['link_line'] ?? null;
+            $item->line = $userData['line'] ?? null;
+            $item->phone = $userData['phone'] ?? null;
+            $item->code = $userData['code'] ?? null;
+            $item->date_start = $userData['date_start'] ?? null;
+            $item->date_end = $userData['date_end'] ?? null;
+            $item->type = $userData['type'];
+    
+            if ($item->save()) {
+                $user = (new users_in())->getEligibleUser();
+    
+                if ($user !== null) {
+                    $aaa = new users_in_in();
+                    $aaa->id_user = $item->id;
+                    $aaa->id_user_in = $user->id;
+                    $aaa->type = $item->type;
+                    $aaa->save();
+    
+                    $aaa_his = new users_in_in_history();
+                    $aaa_his->id_user = $item->id;
+                    $aaa_his->id_user_in = $user->id;
+                    $aaa_his->type = $item->type;
+                    $aaa_his->save();
+                } else {
+                    $item->status_account = 1;
+                    $item->save();
+                }
+            }
+        }
+    
+        return redirect()->to('users_list')->with('message', 'สร้างผู้ใช้สำเร็จ!');
+    }
+
     //users//
 
 
@@ -472,7 +529,7 @@ class AdminUserBackendController extends Controller
         
 
         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
-        if($user_in_in_count >= 7){
+        if($user_in_in_count >= 5){
         $item->status_account=1;
         $item->save();
         return redirect()->back()->with('message','สร้างสำเร็จแต่นำเข้า Account นี้ไม่ได้เนื่องจาก จำนวนผู้ใช้งานครบแล้ว!');
@@ -672,8 +729,10 @@ class AdminUserBackendController extends Controller
         $item->id_user_in=$r->id_user_in;    
         $item->type=@$user->type;
 
+        // $item->type=$r->type;
+
         $user_in_in_count=users_in_in::where('id_user_in',@$item->id)->count();
-        if($user_in_in_count >= 7){
+        if($user_in_in_count >= 5){
         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
         }else{
         $item->save();
@@ -682,6 +741,9 @@ class AdminUserBackendController extends Controller
         $item_his->id_user=$r->id_user;  
         $item_his->id_user_in=$r->id_user_in;    
         $item_his->type=@$user->type;
+
+        // $item->type=$r->type;
+
         $item_his->save();
         }
 
@@ -728,7 +790,7 @@ class AdminUserBackendController extends Controller
                 ->where('open',0)
                 ->whereDate('date_start', '<=', $date) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
                 ->whereDate('date_end', '>=', $date) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
-                ->limit(7)->get();
+                ->limit(5)->get();
 
     // เช็คว่ามี users หรือไม่
     if ($users->isEmpty()) {
@@ -744,7 +806,7 @@ class AdminUserBackendController extends Controller
         $item->type=@$aaa->type;
 
         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
-        if($user_in_in_count >= 7){
+        if($user_in_in_count >= 5){
         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
         }else{
         $item->save();
