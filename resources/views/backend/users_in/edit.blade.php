@@ -458,7 +458,15 @@
                                                         @if($user_ins->type=='MOBILE' or $user_ins->type=='')
                                                         <i class="fa fa-mobile" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
                                                         @else
-                                                        <i class="fa fa-desktop" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
+                                                        <?php  
+                                                        if($user_ins->type_mail==1){
+                                                            $mail_r=$item->email01;
+                                                        }else{
+                                                            $mail_r=$item->email02;
+                                                        }
+                                                        
+                                                        ?>
+                                                        <i class="fa fa-desktop" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i> {{@$mail_r}}
                                                         @endif
                                                     </td>
                                                     <td>{{$user_aa->username}}</td>
