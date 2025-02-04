@@ -107,6 +107,10 @@
                                         </script>
 
 
+                                        <?php
+                                            $status_account = $status_account ?? 999;
+                                            $status_check_admin = $status_check_admin ?? 999;
+                                        ?>
                                     
                                         <br>
                                         <form class="form-horizontal" action="{{url('users')}}" method="GET" enctype="multipart/form-data">
@@ -114,12 +118,21 @@
                                         <div class="form-group row" style="display: flex; justify-content: flex-end;">
                                         <div class="col-sm-2">
                                             <select name="status_account" id="" class="form-control">
-                                            <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
+                                            <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด (สถานะแอคเคาท์)</option>
                                             <option  value="0" @if(@$status_account==0) selected  @endif >มีแอคเคาท์</option>
                                             <option  value="1" @if(@$status_account==1) selected  @endif >ไม่มีแอคเคาท์</option>
                                             <option  value="2" @if(@$status_account==2) selected  @endif >หมดอายุ</option>
                                             </select>
                                             </div>
+
+                                            <div class="col-sm-2">
+                                            <select name="status_check_admin" id="" class="form-control">
+                                            <option  value="999" @if(@$status_check_admin==999) selected  @endif >ทั้งหมด (สถานะเปลี่ยนจอ)</option>
+                                            <option  value="1" @if(@$status_check_admin==1) selected  @endif >แอคเคาท์ที่เปลี่ยนจอแล้ว</option>
+                                            <option  value="2" @if(@$status_check_admin=='2') selected  @endif >แอคเคาท์ที่ยังไม่เปลี่ยนจอ</option>
+                                            </select>
+                                            </div>
+
                                             <div class="col-sm-2">
                                                 <input type="text" name="search" value="{{@$search}}">
                                             </div>
@@ -157,6 +170,18 @@
                                                         padding: 5px 10px;
                                                         border-radius: 5px;
                                                     }
+
+                                                    @keyframes beepEffect {
+                                                            0% { opacity: 1; }
+                                                            50% { opacity: 0; }
+                                                            100% { opacity: 1; }
+                                                        }
+
+                                                        /* .beepbeep {
+                                                            animation: beepEffect 2s infinite;
+                                                            color: white; 
+                                                            font-weight: bold; 
+                                                        } */
                                                     </style>
 
                                 <div class="card-block">
@@ -174,6 +199,8 @@
                                                     <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>สถานะ Account</th>
                                                     <th>Tool</th>
+                                                    <th>Account</th>
+                                                    <th>สถานะเปลี่ยนจอ</th>
 
                                                 </tr>
                                             </thead>
@@ -238,13 +265,37 @@
                                                         @endif
                                                     </td>
 
+                                                    
+
                                                     <td>
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{$items->type}}', '{{$items->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{$items->package}}', '{{$items->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
+
+                                                    <?php
+                                                     $accounts=App\Models\users_in_in::where('id_user',@$items->id)->orderby('id','desc')->cursor();
+                                                    ?>
+                                                     <td>
+                                                    @foreach($accounts as $accountss)
+                                                    <?php
+                                                    $check_test=App\Models\users_in::where('id',@$accountss->id_user_in)->first();
+                                                    ?>
+                                                    <a href="{{url('users_in_edit/'.@$check_test->id)}}" target="_blank" >{{@$check_test->name}}</a>
+                                                    <br>
+                                                    @endforeach
+                                                     </td>
+
+                                                    <td>
+                                                        @if($items->status_check_admin == null)
+                                                            <a href="{{url('users_edit_status_check_admin/'.$items->id)}}" onclick="javascript:return confirm('Confirm?')" ><span class="status-expired beepbeep">ยังไม่ได้เปลี่ยนจอ</span></a>
+                                                        @else
+                                                           
+                                                        @endif
+                                                    </td>
+
                                                 </tr>
                                                 @endforeach
 
@@ -253,8 +304,8 @@
                                     </div>
 
                                     <script>
-                                    function copyUserInfo(username, password, name, type, link) {
-                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${type}\nลิงก์เข้าใช้งาน : ${link}`;
+                                    function copyUserInfo(username, password, name, package, link) {
+                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
                                         
                                         navigator.clipboard.writeText(textToCopy).then(function() {
                                             alert("คัดลอกข้อมูลสำเร็จ!");

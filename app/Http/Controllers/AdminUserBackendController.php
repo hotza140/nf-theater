@@ -249,23 +249,32 @@ class AdminUserBackendController extends Controller
          // ลบเช็คเวลา
 
 
-        $item=users ::orderby('id','desc')->paginate(10);
+        $item=users ::orderby('id','desc')->paginate(20);
 
         $search = $r->search;
         $status_account = $r->status_account;
-        if (!empty($search) or !empty($status_account)) {
-            $item = users::where(function ($query) use ($search, $status_account) {
+        $status_check_admin = $r->status_check_admin;
+        if (!empty($search) or ($status_account!==null) or ($status_check_admin!==null)) {
+            $item = users::where(function ($query) use ($search, $status_account,$status_check_admin) {
                 $query->where('name', 'LIKE', '%' . $search . '%')
                       ->orWhere('username', 'LIKE', '%' . $search . '%')
                       ->orWhere('phone', 'LIKE', '%' . $search . '%')
                       ->orWhere('line', 'LIKE', '%' . $search . '%');
             });
         
-            if ($status_account != null and $status_account != '999') {
+            if ($status_account == '999' and $status_account !== null) {
+            }else{
                 $item = $item->where('status_account', $status_account);
             }
+
+            if ($status_check_admin == '999' and $status_check_admin !== null) {
+            }elseif($status_check_admin == '1'){
+                $item = $item->whereNotNull('status_check_admin');
+            }else{
+                $item = $item->whereNull('status_check_admin');
+            }
         
-            $item = $item->orderBy('id', 'desc')->paginate(10);
+            $item = $item->orderBy('id', 'desc')->paginate(20);
         }
 
         return view('backend.users.index',[
@@ -275,6 +284,7 @@ class AdminUserBackendController extends Controller
 
             'search'=>$search,
             'status_account'=>$status_account,
+            'status_check_admin'=>$status_check_admin,
         ]);
     }
     public function users_store(Request $r){
@@ -301,6 +311,7 @@ class AdminUserBackendController extends Controller
         $item->date_start=$r->date_start;
         $item->date_end=$r->date_end;
         $item->type=$r->type;
+        $item->package=$r->package;
 
         // $caa=users::where('username',$r->username)->orderby('id','desc')->first();
         // if($caa!=null){
@@ -315,22 +326,28 @@ class AdminUserBackendController extends Controller
             $aaa->id_user=$item->id;  
             $aaa->id_user_in=$user->id;    
             $aaa->type=$item->type;
+
+            $aaa->date_start=$user->date_start; 
+            $aaa->date_end=$user->date_end; 
             $aaa->save();
 
             $aaa_his=new users_in_in_history();
             $aaa_his->id_user=$item->id;  
             $aaa_his->id_user_in=$user->id;    
             $aaa_his->type=$item->type;
+
+            $aaa_his->date_start=$user->date_start; 
+            $aaa_his->date_end=$user->date_end;
             $aaa_his->save();
 
         }else{
             $item->status_account=1;
             $item->save();
-            return redirect()->to('users_edit/'.$item->id)->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+            return redirect()->to('users')->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
         }
 
         }
-        return redirect()->to('users_edit/'.$item->id)->with('message','Sucess!');
+        return redirect()->to('users')->with('message','Sucess!');
 
     }
     public function users_update(Request $r,$id){
@@ -356,6 +373,7 @@ class AdminUserBackendController extends Controller
         // $item->date_start=$r->date_start;
         // $item->date_end=$r->date_end;
         $item->type=$r->type;
+        $item->package=$r->package;
 
         // $caa=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
         // if($caa!=null){
@@ -383,12 +401,18 @@ class AdminUserBackendController extends Controller
                 $aaa->id_user=$item->id;  
                 $aaa->id_user_in=$user->id;    
                 $aaa->type=$item->type;
+
+                $aaa->date_start=$user->date_start; 
+                $aaa->date_end=$user->date_end;
                 $aaa->save();
     
                 $aaa_his=new users_in_in_history();
                 $aaa_his->id_user=$item->id;  
                 $aaa_his->id_user_in=$user->id;    
                 $aaa_his->type=$item->type;
+
+                $aaa_his->date_start=$user->date_start; 
+                $aaa_his->date_end=$user->date_end;
                 $aaa_his->save();
     
             }else{
@@ -421,6 +445,15 @@ class AdminUserBackendController extends Controller
             'list'=>"users",
         ]);
     }
+
+    public function users_edit_status_check_admin($id){
+        $item=users::where('id',$id)->first();
+        $item->status_check_admin=1;
+        $item->save();
+
+        return redirect()->back()->with('message','Sucess!');
+    }
+
     public function users_destroy($id){
         $item=users::where('id',$id)->first();
         $item->delete();
@@ -450,10 +483,12 @@ class AdminUserBackendController extends Controller
             return redirect()->back()->with('error', 'ไม่มีข้อมูลที่ถูกต้อง');
         }
     
+        $check='';
         foreach ($r->users as $userData) {
             $item = new users();
             $item->password = $userData['password'];
             $item->username = $userData['username'];
+            $item->package = $userData['package'];
             $item->name = $userData['name'] ?? null;
             $item->email = $userData['email'] ?? null;
             $item->link_line = $userData['link_line'] ?? null;
@@ -466,27 +501,37 @@ class AdminUserBackendController extends Controller
     
             if ($item->save()) {
                 $user = (new users_in())->getEligibleUser();
-    
                 if ($user !== null) {
                     $aaa = new users_in_in();
                     $aaa->id_user = $item->id;
                     $aaa->id_user_in = $user->id;
                     $aaa->type = $item->type;
+
+                    $aaa->date_start=$user->date_start; 
+                    $aaa->date_end=$user->date_end;
                     $aaa->save();
     
                     $aaa_his = new users_in_in_history();
                     $aaa_his->id_user = $item->id;
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = $item->type;
+
+                    $aaa_his->date_start=$user->date_start; 
+                    $aaa_his->date_end=$user->date_end;
                     $aaa_his->save();
                 } else {
+                    $check=1;
                     $item->status_account = 1;
                     $item->save();
                 }
             }
         }
     
-        return redirect()->to('users_list')->with('message', 'สร้างผู้ใช้สำเร็จ!');
+        if($check==1){
+            return redirect()->to('users')->with('message', 'สร้างผู้ใช้สำเร็จ แต่มีบาง User ที่ไม่มี Account!');
+        }else{
+            return redirect()->to('users')->with('message', 'สร้างผู้ใช้สำเร็จ!');
+        }
     }
 
     //users//
@@ -520,6 +565,7 @@ class AdminUserBackendController extends Controller
         $item->date_end=$r->date_end;
         $item->day=$r->day;
         $item->type=$r->type;
+        $item->package=$r->package;
 
         // $caa=users::where('username',$r->username)->orderby('id','desc')->first();
         // if($caa!=null){
@@ -541,12 +587,18 @@ class AdminUserBackendController extends Controller
         $aaa->id_user=$item->id;  
         $aaa->id_user_in=$r->id_user_in;    
         $aaa->type=$item->type;
+
+        $aaa->date_start=$r->date_start; 
+        $aaa->date_end=$r->date_end;
         $aaa->save();
 
         $aaa_his=new users_in_in_history();
         $aaa_his->id_user=$item->id;  
         $aaa_his->id_user_in=$r->id_user_in;    
         $aaa_his->type=$item->type;
+
+        $aaa_his->date_start=$r->date_start; 
+        $aaa_his->date_end=$r->date_end;
         $aaa_his->save();
 
         return redirect()->back()->with('message','Sucess!');
@@ -561,6 +613,9 @@ class AdminUserBackendController extends Controller
             $aaa->id_user_in=$r->id_user_in;    
             $aaa->type='PC';
             $aaa->type_mail=$r->type_mail;
+
+            $aaa->date_start=$r->date_start; 
+            $aaa->date_end=$r->date_end;
             $aaa->save();
     
             $aaa_his=new users_in_in_history();
@@ -568,6 +623,9 @@ class AdminUserBackendController extends Controller
             $aaa_his->id_user_in=$r->id_user_in;    
             $aaa_his->type='PC';
             $aaa_his->type_mail=$r->type_mail;
+
+            $aaa_his->date_start=$r->date_start; 
+            $aaa_his->date_end=$r->date_end;
             $aaa_his->save();
             return redirect()->back()->with('message','Sucess!');
             }else{
@@ -665,6 +723,9 @@ class AdminUserBackendController extends Controller
 
           $item->email01=$r->email01;
           $item->email02=$r->email02;
+
+          $item->password01=$r->password01;
+          $item->password02=$r->password02;
   
           $item->save();
           return redirect()->to('users_in_edit/'.$item->id)->with('message','Sucess!');
@@ -693,6 +754,9 @@ class AdminUserBackendController extends Controller
 
           $item->email01=$r->email01;
           $item->email02=$r->email02;
+
+          $item->password01=$r->password01;
+          $item->password02=$r->password02;
   
           $item->save();
           return redirect()->to('users_in_edit/'.$id)->with('message','Sucess!');
@@ -767,7 +831,10 @@ class AdminUserBackendController extends Controller
         }
         // $item->type=$r->type;
 
-        $user_in_in_count=users_in_in::where('id_user_in',@$item->id)->count();
+        $item->date_start=@$user->date_start; 
+        $item->date_end=@$user->date_end;
+
+        $user_in_in_count=users_in_in::where('type','MOBILE')->where('id_user_in',@$r->id_user_in)->count();
         if($user_in_in_count >= 5){
         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
         }else{
@@ -782,6 +849,9 @@ class AdminUserBackendController extends Controller
             }else{
             $item_his->type=@$user->type;
             }
+
+            $item_his->date_start=@$user->date_start; 
+            $item_his->date_end=@$user->date_end;
 
         // $item_his->type=$r->type;
 
@@ -846,6 +916,9 @@ class AdminUserBackendController extends Controller
         $item->id_user_in=$r->id_user_in;    
         $item->type=@$aaa->type;
 
+        $item->date_start=@$aaa->date_start; 
+        $item->date_end=@$aaa->date_end;
+
         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
         if($user_in_in_count >= 5){
         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
@@ -856,6 +929,9 @@ class AdminUserBackendController extends Controller
         $item_his->id_user=$user->id;  
         $item_his->id_user_in=$r->id_user_in;    
         $item_his->type=@$aaa->type;
+
+        $item_his->date_start=@$aaa->date_start; 
+        $item_his->date_end=@$aaa->date_end;
         $item_his->save();
         }
     }

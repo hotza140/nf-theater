@@ -100,12 +100,21 @@
                                             </div>
                                         </div>
 
+
+                                        <input type="hidden" name="type"  value="MOBILE">
+                                        <!-- <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
+                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option> -->
+
                                         <div class="form-group row">
                                         <div class="col-sm-3">
                                         <label class="col-form-label">Package*</label>
-                                        <select name="type" id="type" class="form-control add_select2" required  >
-                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
-                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        <select name="package" id="package" class="form-control add_select2" required  >
+                                        <option value="30 วัน" @if(@$item->package=='30 วัน') selected  @endif >30 วัน</option>
+                                        <option value="60 วัน" @if(@$item->package=='60 วัน') selected  @endif >60 วัน</option>
+                                        <option value="90 วัน" @if(@$item->package=='90 วัน') selected  @endif >90 วัน</option>
+                                        <option value="120 วัน" @if(@$item->package=='120 วัน') selected  @endif >120 วัน</option>
+                                        <option value="180 วัน" @if(@$item->package=='180 วัน') selected  @endif >180 วัน</option>
+                                        <option value="365 วัน" @if(@$item->package=='365 วัน') selected  @endif >365 วัน</option>
                                         </select>
                                         </div>
                                         </div>
