@@ -239,10 +239,10 @@
                                     <select name="type_mail" id="type_mail" class="form-control add_select2"   >
                                         <option value="" @if(@$item->type_mail=='') selected  @endif >เมลหลัก (ยกเว้น TV)</option>
                                         @if($user_in_in_count_PC_1==0)
-                                        <option value="PC" @if(@$item->type_mail=='1') selected  @endif >เมลเสริม 1 (TV)</option>
+                                        <option value="1" @if(@$item->type_mail=='1') selected  @endif >เมลเสริม 1 (TV)</option>
                                         @endif
                                         @if($user_in_in_count_PC_2==0)
-                                        <option value="PC" @if(@$item->type_mail=='2') selected  @endif >เมลเสริม 2 (TV)</option>
+                                        <option value="2" @if(@$item->type_mail=='2') selected  @endif >เมลเสริม 2 (TV)</option>
                                         @endif
                                         </select>
                                         </div>
@@ -399,10 +399,10 @@
                                     <select name="type_mail" id="type_mail" class="form-control add_select2"   >
                                     <option value="" @if(@$item->type_mail=='') selected  @endif >เมลหลัก (ยกเว้น TV)</option>
                                         @if($user_in_in_count_PC_1==0)
-                                        <option value="PC" @if(@$item->type_mail=='1') selected  @endif >เมลเสริม 1 (TV)</option>
+                                        <option value="1" @if(@$item->type_mail=='1') selected  @endif >เมลเสริม 1 (TV)</option>
                                         @endif
                                         @if($user_in_in_count_PC_2==0)
-                                        <option value="PC" @if(@$item->type_mail=='2') selected  @endif >เมลเสริม 2 (TV)</option>
+                                        <option value="2" @if(@$item->type_mail=='2') selected  @endif >เมลเสริม 2 (TV)</option>
                                         @endif
                                         </select>
                                         </div>
