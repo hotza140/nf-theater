@@ -497,13 +497,15 @@ class AdminUserBackendController extends Controller
     public function users_store_form_in(Request $r){
         $item=new users();
         $ch=users::where('email',$r->email)->orderby('id','desc')->first();
-        $ca=users::where('username',$r->username)->orderby('id','desc')->first();
+        // $ca=users::where('username',$r->username)->orderby('id','desc')->first();
 
         if($ch!=null){
             return redirect()->back()->with('message','Email Already Have in Data!');
-            }elseif($ca!=null){
-                return redirect()->back()->with('message','Username Already Have in Data!');
             }
+            
+            // elseif($ca!=null){
+            //     return redirect()->back()->with('message','Username Already Have in Data!');
+            // }
 
         $item->password=$r->password;
 
@@ -519,15 +521,16 @@ class AdminUserBackendController extends Controller
         $item->day=$r->day;
         $item->type=$r->type;
 
-        $caa=users::where('username',$r->username)->orderby('id','desc')->first();
-        if($caa!=null){
-            return redirect()->back()->with('message','Username Already Have in Data!');
-        }
+        // $caa=users::where('username',$r->username)->orderby('id','desc')->first();
+        // if($caa!=null){
+        //     return redirect()->back()->with('message','Username Already Have in Data!');
+        // }
 
         $item->save();
 
         
 
+        if($r->type_mail==null){
         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
         if($user_in_in_count >= 5){
         $item->status_account=1;
@@ -547,6 +550,29 @@ class AdminUserBackendController extends Controller
         $aaa_his->save();
 
         return redirect()->back()->with('message','Sucess!');
+        }
+
+        }else{
+            $user_in_in_count_PC=users_in_in::where('id_user_in',$r->id_user_in)->where('type','PC')->where('type_mail',$r->type_mail)->orderby('id','desc')->count();
+
+            if($user_in_in_count_PC==0){
+            $aaa=new users_in_in();
+            $aaa->id_user=$item->id;  
+            $aaa->id_user_in=$r->id_user_in;    
+            $aaa->type='PC';
+            $aaa->type_mail=$r->type_mail;
+            $aaa->save();
+    
+            $aaa_his=new users_in_in_history();
+            $aaa_his->id_user=$item->id;  
+            $aaa_his->id_user_in=$r->id_user_in;    
+            $aaa_his->type='PC';
+            $aaa_his->type_mail=$r->type_mail;
+            $aaa_his->save();
+            return redirect()->back()->with('message','Sucess!');
+            }else{
+                return redirect()->back()->with('message','Fail มีคนใช้อีเมลนี้แล้ว!');
+            }
         }
 
       
@@ -723,12 +749,22 @@ class AdminUserBackendController extends Controller
         //     return redirect()->back()->with('message','User Already Have in Data!');
         //     }
 
+        $user_in_in_count_PC=users_in_in::where('id_user_in',$r->id_user_in)->where('type','PC')->where('type_mail',$r->type_mail)->orderby('id','desc')->count();
+
+        if($user_in_in_count_PC!=null and $r->type_mail!=null){
+            return redirect()->back()->with('message','Fail มีคนใช้อีเมลนี้แล้ว!');
+        }
+
         $user=users::where('id',$r->id_user)->first();
         $item=new users_in_in();
         $item->id_user=$r->id_user;  
-        $item->id_user_in=$r->id_user_in;    
+        $item->id_user_in=$r->id_user_in;  
+        if($r->type_mail!=null){
+        $item->type='PC';
+        $item->type_mail=$r->type_mail;
+        }else{
         $item->type=@$user->type;
-
+        }
         // $item->type=$r->type;
 
         $user_in_in_count=users_in_in::where('id_user_in',@$item->id)->count();
@@ -740,9 +776,14 @@ class AdminUserBackendController extends Controller
         $item_his=new users_in_in_history();
         $item_his->id_user=$r->id_user;  
         $item_his->id_user_in=$r->id_user_in;    
-        $item_his->type=@$user->type;
+        if($r->type_mail!=null){
+            $item_his->type='PC';
+            $item_his->type_mail=$r->type_mail;
+            }else{
+            $item_his->type=@$user->type;
+            }
 
-        // $item->type=$r->type;
+        // $item_his->type=$r->type;
 
         $item_his->save();
         }

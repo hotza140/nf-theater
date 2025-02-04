@@ -190,7 +190,9 @@
 
                 <?php
                  $user_in_in=App\Models\users_in_in::where('id_user_in',@$item->id)->orderby('name','desc')->cursor();
-                 $user_in_in_count=App\Models\users_in_in::where('id_user_in',@$item->id)->orderby('id','desc')->count();
+                 $user_in_in_count=App\Models\users_in_in::where('id_user_in',@$item->id)->where('type','MOBILE')->orderby('id','desc')->count();
+                $user_in_in_count_PC_1=App\Models\users_in_in::where('id_user_in',@$item->id)->where('type','PC')->where('type_mail',1)->orderby('id','desc')->count();
+                $user_in_in_count_PC_2=App\Models\users_in_in::where('id_user_in',@$item->id)->where('type','PC')->where('type_mail',2)->orderby('id','desc')->count();
                 ?>
                  <!-- Page body2 start -->
                  <div class="page-body">
@@ -232,6 +234,18 @@
                                         <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
                                         </select>
                                         </div> -->
+
+                                        <div class="col-sm-3">
+                                    <select name="type_mail" id="type_mail" class="form-control add_select2"   >
+                                        <option value="" @if(@$item->type_mail=='') selected  @endif >เมลหลัก (ยกเว้น TV)</option>
+                                        @if($user_in_in_count_PC_1==0)
+                                        <option value="PC" @if(@$item->type_mail=='1') selected  @endif >เมลเสริม 1 (TV)</option>
+                                        @endif
+                                        @if($user_in_in_count_PC_2==0)
+                                        <option value="PC" @if(@$item->type_mail=='2') selected  @endif >เมลเสริม 2 (TV)</option>
+                                        @endif
+                                        </select>
+                                        </div>
                                     
                                     <div class="col-sm-1">
                                     @if($user_in_in_count >= 5)
@@ -253,7 +267,7 @@
 
                                     <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
                                     <button type="submit" style="color:white;" class="btn btn-danger"  onclick="javascript:return confirm('Confirm?')">
-                                        <i class="fa fa-plus"></i> Add User Auto
+                                        <i class="fa fa-plus"></i> Add User Auto (เมลหลัก)
                                     </button>
                                     </form>  
                                     </div>  
@@ -377,6 +391,21 @@
                                                 <input type="date" name="date_end" class="form-control" id="date_end"
                                                       value="" readonly required >
                                             </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                           <div class="col-sm-3">
+                                           <label class="col-form-label">เลือกเมลที่เชื่อมต่อ</label>
+                                    <select name="type_mail" id="type_mail" class="form-control add_select2"   >
+                                    <option value="" @if(@$item->type_mail=='') selected  @endif >เมลหลัก (ยกเว้น TV)</option>
+                                        @if($user_in_in_count_PC_1==0)
+                                        <option value="PC" @if(@$item->type_mail=='1') selected  @endif >เมลเสริม 1 (TV)</option>
+                                        @endif
+                                        @if($user_in_in_count_PC_2==0)
+                                        <option value="PC" @if(@$item->type_mail=='2') selected  @endif >เมลเสริม 2 (TV)</option>
+                                        @endif
+                                        </select>
+                                        </div>
                                         </div>
 
                                         <script>
