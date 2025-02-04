@@ -319,13 +319,15 @@ class AdminUserBackendController extends Controller
         // }
 
         if($item->save()){
+
+        if($r->type=='MOBILE'){
         $user = (new users_in())->getEligibleUser();
 
         if (@$user!=null) {
             $aaa=new users_in_in();
             $aaa->id_user=$item->id;  
             $aaa->id_user_in=$user->id;    
-            $aaa->type=$item->type;
+            $aaa->type='MOBILE';
 
             $aaa->date_start=$user->date_start; 
             $aaa->date_end=$user->date_end; 
@@ -334,7 +336,7 @@ class AdminUserBackendController extends Controller
             $aaa_his=new users_in_in_history();
             $aaa_his->id_user=$item->id;  
             $aaa_his->id_user_in=$user->id;    
-            $aaa_his->type=$item->type;
+            $aaa_his->type='MOBILE';
 
             $aaa_his->date_start=$user->date_start; 
             $aaa_his->date_end=$user->date_end;
@@ -344,6 +346,43 @@ class AdminUserBackendController extends Controller
             $item->status_account=1;
             $item->save();
             return redirect()->to('users')->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+        }
+
+        }else{
+            $user = (new users_in())->getEligibleUser_pc();
+
+        if ($user !== null) {
+            // นับจำนวน users_in_in ที่มีอยู่แล้ว
+            $countExisting = users_in_in::where('id_user_in', $user->id)->count();
+
+            // คำนวณค่า type_mail (1 หรือ 2)
+            $newTypeMail = ($countExisting % 2) + 1;
+
+            $aaa = new users_in_in();
+            $aaa->id_user = $item->id;  
+            $aaa->id_user_in = $user->id;    
+            $aaa->type = 'PC';
+            $aaa->type_mail = $newTypeMail;
+            $aaa->date_start = $user->date_start; 
+            $aaa->date_end = $user->date_end; 
+            $aaa->save();
+
+            // บันทึกลงประวัติ
+            $aaa_his = new users_in_in_history();
+            $aaa_his->id_user = $item->id;  
+            $aaa_his->id_user_in = $user->id;    
+            $aaa_his->type = 'PC';
+            $aaa_his->type_mail = $newTypeMail;
+            $aaa_his->date_start = $user->date_start; 
+            $aaa_his->date_end = $user->date_end;
+            $aaa_his->save();
+
+        } else {
+            $item->status_account = 1;
+            $item->save();
+            return redirect()->to('users')->with('message', 'สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Manual');
+        }
+
         }
 
         }
@@ -388,20 +427,20 @@ class AdminUserBackendController extends Controller
         $item->date_start=$r->date_start;
         $item->date_end=$r->date_end;
         if($item->save()){
+
+            if($item->type=='MOBILE'){
+
             $user = (new users_in())->getEligibleUser();
     
             if (@$user!=null) {
-                 // ลบเช็คเวลา
-                if($item!=null){
-                    $accounts=users_in_in::where('id_user',@$r->id)->delete();
+                $aaa=users_in_in::where('id_user',@$r->id)->first();
+
+                if(@$aaa==null){
+                    $aaa=new users_in_in();
+                    $aaa->id_user=$item->id;  
+                    $aaa->id_user_in=$user->id;
                 }
-                // ลบเช็คเวลา
-
-                $aaa=new users_in_in();
-                $aaa->id_user=$item->id;  
-                $aaa->id_user_in=$user->id;    
                 $aaa->type=$item->type;
-
                 $aaa->date_start=$user->date_start; 
                 $aaa->date_end=$user->date_end;
                 $aaa->save();
@@ -419,6 +458,40 @@ class AdminUserBackendController extends Controller
                 $item->status_account=1;
                 $item->save();
                 return redirect()->to('users_edit/'.$item->id)->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+            }
+
+            }else{
+
+                $user = (new users_in())->getEligibleUser_pc();
+    
+            if (@$user!=null) {
+                $aaa=users_in_in::where('id_user',@$r->id)->first();
+
+                if(@$aaa==null){
+                    $aaa=new users_in_in();
+                    $aaa->id_user=$item->id;  
+                    $aaa->id_user_in=$user->id;
+                }
+                $aaa->type=$item->type;
+                $aaa->date_start=$user->date_start; 
+                $aaa->date_end=$user->date_end;
+                $aaa->save();
+    
+                $aaa_his=new users_in_in_history();
+                $aaa_his->id_user=$item->id;  
+                $aaa_his->id_user_in=$user->id;    
+                $aaa_his->type=$item->type;
+
+                $aaa_his->date_start=$user->date_start; 
+                $aaa_his->date_end=$user->date_end;
+                $aaa_his->save();
+    
+            }else{
+                $item->status_account=1;
+                $item->save();
+                return redirect()->to('users_edit/'.$item->id)->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+            }
+
             }
     
             }
@@ -500,12 +573,14 @@ class AdminUserBackendController extends Controller
             $item->type = $userData['type'];
     
             if ($item->save()) {
+
+                if($userData['type']=='MOBILE'){
                 $user = (new users_in())->getEligibleUser();
                 if ($user !== null) {
                     $aaa = new users_in_in();
                     $aaa->id_user = $item->id;
                     $aaa->id_user_in = $user->id;
-                    $aaa->type = $item->type;
+                    $aaa->type = $userData['type'];
 
                     $aaa->date_start=$user->date_start; 
                     $aaa->date_end=$user->date_end;
@@ -514,7 +589,7 @@ class AdminUserBackendController extends Controller
                     $aaa_his = new users_in_in_history();
                     $aaa_his->id_user = $item->id;
                     $aaa_his->id_user_in = $user->id;
-                    $aaa_his->type = $item->type;
+                    $aaa_his->type = $userData['type'];
 
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
@@ -524,9 +599,38 @@ class AdminUserBackendController extends Controller
                     $item->status_account = 1;
                     $item->save();
                 }
+
+                }else{
+                $user = (new users_in())->getEligibleUser_pc();
+                if ($user !== null) {
+                    $aaa = new users_in_in();
+                    $aaa->id_user = $item->id;
+                    $aaa->id_user_in = $user->id;
+                    $aaa->type = $userData['type'];
+
+                    $aaa->date_start=$user->date_start; 
+                    $aaa->date_end=$user->date_end;
+                    $aaa->save();
+    
+                    $aaa_his = new users_in_in_history();
+                    $aaa_his->id_user = $item->id;
+                    $aaa_his->id_user_in = $user->id;
+                    $aaa_his->type = $userData['type'];
+
+                    $aaa_his->date_start=$user->date_start; 
+                    $aaa_his->date_end=$user->date_end;
+                    $aaa_his->save();
+                } else {
+                    $check=1;
+                    $item->status_account = 1;
+                    $item->save();
+                }
+                }
+
+
             }
         }
-    
+
         if($check==1){
             return redirect()->to('users')->with('message', 'สร้างผู้ใช้สำเร็จ แต่มีบาง User ที่ไม่มี Account!');
         }else{
@@ -807,11 +911,11 @@ class AdminUserBackendController extends Controller
 
      //users_in_in//
       public function add_user_in_in(Request $r){
-        // $ch=users_in_in::where('id_user',$r->id_user)->where('id_user_in',$r->id_user_in)->first();
+        $ch=users_in_in::where('id_user',$r->id_user)->where('id_user_in',$r->id_user_in)->first();
   
-        // if($ch!=null){
-        //     return redirect()->back()->with('message','User Already Have in Data!');
-        //     }
+        if($ch!=null){
+            return redirect()->back()->with('message','User Already Have in Data!');
+            }
 
         $user_in_in_count_PC=users_in_in::where('id_user_in',$r->id_user_in)->where('type','PC')->where('type_mail',$r->type_mail)->orderby('id','desc')->count();
 
@@ -884,6 +988,9 @@ class AdminUserBackendController extends Controller
 
     public function users_in_in_destroy($id){
         $item=users_in_in::where('id',$id)->first();
+        $user=users::where('id',@$item->id_user)->first();
+        $user->status_account=1;
+        $user->save();
         $item->delete();
         return redirect()->back()->with('message','Sucess!');
     }

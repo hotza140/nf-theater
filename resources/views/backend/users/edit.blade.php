@@ -102,9 +102,14 @@
                                             </div>
                                         </div>
 
-                                        <input type="hidden" name="type"  value="MOBILE">
-
                                         <div class="form-group row">
+                                        <div class="col-sm-3">
+                                        <label class="col-form-label">รูปแบบ*</label>
+                                        <select name="type" id="type" class="form-control" required  >
+                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
+                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        </select>
+                                        </div>
                                         <div class="col-sm-3">
                                         <label class="col-form-label">Package*</label>
                                         <select name="package" id="package" class="form-control add_select2" required  >

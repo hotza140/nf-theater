@@ -22,7 +22,7 @@ class users_in extends Authenticatable
 
     public function users_in_in_pc()
     {
-        return $this->hasMany(users_in_in::class, 'id_user_in')->where('type', 'MOBILE');
+        return $this->hasMany(users_in_in::class, 'id_user_in')->where('type', 'PC');
     }
 
     // ฟังก์ชันสำหรับนับจำนวน user
@@ -100,6 +100,36 @@ class users_in extends Authenticatable
 
         return $eligibleUsers;
     }
+
+
+    public function getEligibleUser_pc()
+    {
+    $date = date('Y-m-d');
+
+    $eligibleUsers = self::where(function ($query) use ($date) {
+        $query->whereHas('users_in_in_pc', function ($subQuery) use ($date) {
+            $subQuery->whereDate('date_start', '<=', $date)
+                     ->whereDate('date_end', '>=', $date)
+                     ->where('open', 0)
+                     ->where(function ($q) {
+                         $q->whereNull('type_mail') // type_mail เป็น NULL หรือ ''
+                           ->orWhere('type_mail', '')
+                           ->orWhere(function ($pcQuery) { // หรือมี PC อยู่แค่ 1 ตัว
+                               $pcQuery->where('type', 'PC')
+                                       ->havingRaw('COUNT(*) = 1');
+                           });
+                     });
+        });
+        $query->orDoesntHave('users_in_in_pc');
+    })
+    ->withCount('users_in_in_pc')
+    ->having('users_in_in_pc_count', '<', 2) // ต้องไม่เกิน 2 ตัว
+    ->inRandomOrder()
+    ->first();
+
+    return $eligibleUsers;
+    }
+
 
 
 

@@ -88,6 +88,15 @@
                                                 <label class="col-form-label">ลิงก์ไลน์ลูกค้า</label>
                                                 <input type="text" name="users[{{ $i }}][link_line]" class="form-control">
                                             </div>
+
+                                            <div class="col-sm-3">
+                                            <label class="col-form-label">รูปแบบ*</label>
+                                            <select name="users[{{ $i }}][type]"  class="form-control" required  >
+                                            <option value="MOBILE" >ยกเว้นทีวี</option>
+                                            <option value="PC" >TV</option>
+                                            </select>
+                                            </div>
+
                                             <div class="col-sm-3">
                                             <label class="col-form-label">Package*</label>
                                             <select name="users[{{ $i }}][package]" class="form-control add_select2" required>
@@ -99,8 +108,6 @@
                                             <option value="365 วัน" >365 วัน</option>
                                             </select>
                                             </div>
-
-                                            <input type="hidden" name="users[{{ $i }}][type]"  value="MOBILE">
 
                                             </div>
 
