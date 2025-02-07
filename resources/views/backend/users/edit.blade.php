@@ -104,10 +104,21 @@
 
                                         <div class="form-group row">
                                         <div class="col-sm-3">
-                                        <label class="col-form-label">Package*</label>
-                                        <select name="type" id="type" class="form-control add_select2" required  >
+                                        <label class="col-form-label">รูปแบบ*</label>
+                                        <select name="type" id="type" class="form-control" required  >
                                         <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
                                         <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        </select>
+                                        </div>
+                                        <div class="col-sm-3">
+                                        <label class="col-form-label">Package*</label>
+                                        <select name="package" id="package" class="form-control add_select2" required  >
+                                        <option value="30 วัน" @if(@$item->package=='30 วัน') selected  @endif >30 วัน</option>
+                                        <option value="60 วัน" @if(@$item->package=='60 วัน') selected  @endif >60 วัน</option>
+                                        <option value="90 วัน" @if(@$item->package=='90 วัน') selected  @endif >90 วัน</option>
+                                        <option value="120 วัน" @if(@$item->package=='120 วัน') selected  @endif >120 วัน</option>
+                                        <option value="180 วัน" @if(@$item->package=='180 วัน') selected  @endif >180 วัน</option>
+                                        <option value="365 วัน" @if(@$item->package=='365 วัน') selected  @endif >365 วัน</option>
                                         </select>
                                         </div>
                                         </div>
@@ -298,8 +309,23 @@
                                                         @endif
                                                     </td>
                                                     <td>{{@$accountsss->name}}</td>
+                                                    @if($accountss->type=='MOBILE' or $accountss->type=='')
                                                     <td>{{@$accountsss->email}}</td>
                                                     <td>{{@$accountsss->password}}</td>
+                                                        @else
+                                                        <?php  
+                                                        if($accountss->type_mail==1){
+                                                            $mail_r=$accountsss->email01;
+                                                            $pass_r=$accountsss->password01;
+                                                        }elseif($accountss->type_mail==2){
+                                                            $mail_r=$accountsss->email02;
+                                                            $pass_r=$accountsss->password02;
+                                                        }
+                                                        
+                                                        ?>
+                                                        <td>{{@$mail_r}}</td>
+                                                        <td>{{@$pass_r}}</td>
+                                                        @endif
                                                     <td>{{@$accountss->created_at}}</td>
                                                 </tr>
                                                 @endforeach
@@ -318,7 +344,7 @@
 
 
                 <?php
-                 $user_r=App\Models\users::where('username',@$item->username)->orderby('id','desc')->cursor();
+                 $user_r=App\Models\users::where('id','!=',@$item->id)->where('username',@$item->username)->orderby('id','desc')->cursor();
                 ?>
                  <!-- Page body3 start -->
                  <div class="page-body">
@@ -468,8 +494,23 @@
                                                         @endif
                                                     </td>
                                                     <td>{{@$accountsass->name}}</td>
+                                                    @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                     <td>{{@$accountsass->email}}</td>
                                                     <td>{{@$accountsass->password}}</td>
+                                                        @else
+                                                        <?php  
+                                                        if($accountsas->type_mail==1){
+                                                            $mail_r=$accountsass->email01;
+                                                            $pass_r=$accountsass->password01;
+                                                        }elseif($accountsas->type_mail==2){
+                                                            $mail_r=$accountsass->email02;
+                                                            $pass_r=$accountsass->password02;
+                                                        }
+                                                        
+                                                        ?>
+                                                        <td>{{@$mail_r}}</td>
+                                                        <td>{{@$pass_r}}</td>
+                                                        @endif
                                                     <td>{{@$accountsass->created_at}}</td>
                                                 </tr>
                                                 @endif

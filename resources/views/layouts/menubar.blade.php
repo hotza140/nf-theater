@@ -532,7 +532,7 @@
                                         <li class="{{ isset($list) && $list == 'users_in' ? 'active' : '' }}">
                                             <a href="{{ url('users_in') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">Manage Users Account Netflix</span>
+                                                <span class="pcoded-mtext">Manage Account Netflix</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>

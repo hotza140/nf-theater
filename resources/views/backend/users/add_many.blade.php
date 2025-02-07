@@ -68,9 +68,9 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Name Profile</label>
-                                                <input type="text" name="users[{{ $i }}][name]" class="form-control"value="{{@$item->name}}">
+                                                <input type="text" name="users[{{ $i }}][name]" class="form-control" >
                                             </div>
-                                            
+
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password*</label>
                                                 <input type="text" name="users[{{ $i }}][password]" class="form-control" required value="{{ @$password }}" placeholder="รหัสผ่าน">
@@ -88,13 +88,27 @@
                                                 <label class="col-form-label">ลิงก์ไลน์ลูกค้า</label>
                                                 <input type="text" name="users[{{ $i }}][link_line]" class="form-control">
                                             </div>
+
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Package*</label>
-                                                <select name="users[{{ $i }}][type]" class="form-control add_select2" required>
-                                                    <option value="MOBILE">ยกเว้นทีวี</option>
-                                                    <option value="PC">TV</option>
-                                                </select>
+                                            <label class="col-form-label">รูปแบบ*</label>
+                                            <select name="users[{{ $i }}][type]"  class="form-control" required  >
+                                            <option value="MOBILE" >ยกเว้นทีวี</option>
+                                            <option value="PC" >TV</option>
+                                            </select>
                                             </div>
+
+                                            <div class="col-sm-3">
+                                            <label class="col-form-label">Package*</label>
+                                            <select name="users[{{ $i }}][package]" class="form-control add_select2" required>
+                                            <option value="30 วัน" >30 วัน</option>
+                                            <option value="60 วัน"  >60 วัน</option>
+                                            <option value="90 วัน"  >90 วัน</option>
+                                            <option value="120 วัน" >120 วัน</option>
+                                            <option value="180 วัน" >180 วัน</option>
+                                            <option value="365 วัน" >365 วัน</option>
+                                            </select>
+                                            </div>
+
                                             </div>
 
                                             <div class="form-group row">

@@ -126,9 +126,22 @@
                                                       value="{{@$item->email01}}">
                                             </div>
                                             <div class="col-sm-3">
+                                                <label class="col-form-label">Password เสริม 1</label>
+                                                <input type="text" name="password01" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$item->password01}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
                                                 <label class="col-form-label">Email เสริม 2</label>
                                                 <input type="email" name="email02" class="form-control" id=""  maxlength = "25"
                                                       value="{{@$item->email02}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Password เสริม 2</label>
+                                                <input type="text" name="password02" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$item->password02}}">
                                             </div>
                                         </div>
 
@@ -248,15 +261,9 @@
                                         </div>
                                     
                                     <div class="col-sm-1">
-                                    @if($user_in_in_count >= 5)
-                                        <button type="submit" style="color:white;" class="btn btn-success"  onclick="javascript:return confirm('Confirm?')" disabled title="จำนวนผู้ใช้งานครบจำนวนแล้ว">
-                                            <i class="fa fa-plus"></i> Add
-                                        </button>
-                                    @else
                                         <button type="submit" style="color:white;" class="btn btn-success"  onclick="javascript:return confirm('Confirm?')">
                                             <i class="fa fa-plus"></i> Add
                                         </button>
-                                    @endif
                                     </div>    
 
                                     </form>  
@@ -354,12 +361,18 @@
                                             </div>
                                         </div>
 
+                                        <input type="hidden" name="type"  value="MOBILE">
+
                                         <div class="form-group row">
                                         <div class="col-sm-3">
                                         <label class="col-form-label">Package*</label>
-                                        <select name="type" id="type" class="form-control add_select2" required  >
-                                        <option value="MOBILE" >ยกเว้นทีวี</option>
-                                        <option value="PC" >TV</option>
+                                        <select name="package" id="package" class="form-control add_select2" required  >
+                                        <option value="30 วัน" @if(@$item->package=='30 วัน') selected  @endif >30 วัน</option>
+                                        <option value="60 วัน" @if(@$item->package=='60 วัน') selected  @endif >60 วัน</option>
+                                        <option value="90 วัน" @if(@$item->package=='90 วัน') selected  @endif >90 วัน</option>
+                                        <option value="120 วัน" @if(@$item->package=='120 วัน') selected  @endif >120 วัน</option>
+                                        <option value="180 วัน" @if(@$item->package=='180 วัน') selected  @endif >180 วัน</option>
+                                        <option value="365 วัน" @if(@$item->package=='365 วัน') selected  @endif >365 วัน</option>
                                         </select>
                                         </div>
                                         </div>
@@ -490,8 +503,10 @@
                                                         <?php  
                                                         if($user_ins->type_mail==1){
                                                             $mail_r=$item->email01;
+                                                            $pass_r=$item->password01;
                                                         }else{
                                                             $mail_r=$item->email02;
+                                                            $pass_r=$item->password02;
                                                         }
                                                         
                                                         ?>
@@ -535,7 +550,7 @@
                                                     <td>
                                                     <!-- <a href="{{url('users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
                                                         <a href="{{url('users_in_in_destroy/'.$user_ins->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('You Want To Delete?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user_aa->username}}', '{{$user_aa->password}}', '{{$user_aa->name}}', '{{$user_aa->type}}', '{{$user_aa->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user_aa->username}}', '{{$user_aa->password}}', '{{$user_aa->name}}', '{{$user_aa->package}}', '{{$user_aa->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
@@ -548,8 +563,8 @@
                                 </div>
 
                                 <script>
-                                    function copyUserInfo(username, password, name, type, link) {
-                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${type}\nลิงก์เข้าใช้งาน : ${link}`;
+                                    function copyUserInfo(username, password, name, package, link) {
+                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
                                         
                                         navigator.clipboard.writeText(textToCopy).then(function() {
                                             alert("คัดลอกข้อมูลสำเร็จ!");
