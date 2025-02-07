@@ -76,7 +76,15 @@ Route::group(['middleware' => ['auth:admin']],function(){
     Route::post('users_in_open_close',[App\Http\Controllers\AdminUserBackendController::class,'users_in_open_close']);
     //users
 
-
+    //coupon
+    Route::get('coupon',[App\Http\Controllers\CouponBackendController::class,'coupon']);
+    Route::get('coupon_destroy/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_destroy']);
+    Route::get('coupon_add',[App\Http\Controllers\CouponBackendController::class,'coupon_add']);
+    Route::post('coupon_store',[App\Http\Controllers\CouponBackendController::class,'coupon_store']);
+    Route::get('coupon_edit/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_edit']);
+    Route::post('coupon_update/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_update']);
+    Route::post('coupon_open_close',[App\Http\Controllers\CouponBackendController::class,'coupon_open_close']);
+    //coupon
 
 
 

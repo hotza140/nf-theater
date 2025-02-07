@@ -536,6 +536,14 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+
+                                        <li class="{{ isset($list) && $list == 'coupon' ? 'active' : '' }}">
+                                            <a href="{{ url('coupon') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Coupons</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
                                     </ul>
 
                                 </li>
