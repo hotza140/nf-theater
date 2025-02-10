@@ -1,0 +1,232 @@
+@extends('frontend.layouts.frontendbase')
+@section('contentfront')
+
+    <div class="net-container">
+        <h1 class="head-pro">NF THEATER</h1>
+        <div class="profile-plans"><button class="btn btn-primary logout-bt" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="margin-right: 5px;">
+                    <path d="M8.51428 20H4.51428C3.40971 20 2.51428 19.1046 2.51428 18V6C2.51428 4.89543 3.40971 4 4.51428 4H8.51428V6H4.51428V18H8.51428V20Z" fill="currentColor"></path>
+                    <path d="M13.8418 17.385L15.262 15.9768L11.3428 12.0242L20.4857 12.0242C21.038 12.0242 21.4857 11.5765 21.4857 11.0242C21.4857 10.4719 21.038 10.0242 20.4857 10.0242L11.3236 10.0242L15.304 6.0774L13.8958 4.6572L7.5049 10.9941L13.8418 17.385Z" fill="currentColor"></path>
+                </svg>logout</button></div>
+        <div class="container profile-plans-white" style="padding-right: 24px;">
+            <div class="row">
+                <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center align-items-sm-center">
+                    <div class="img-profile-a"><img class="net-profile-icon" src="assets/img/Frame%201%20(1).png" alt="Netflix Icon">
+                        <div class="edit-icon"><a data-bs-target="#modal-edit-img" data-bs-toggle="modal"><button class="btn btn-primary edit-bt" type="button" style="padding: 6px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pencil">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
+                                    </svg></button></a></div>
+                    </div>
+                </div>
+                <div class="col d-flex align-items-center">
+                    <div class="net-plan-details">
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>User ID</h2><span class="name-profile" style="color: var(--bs-emphasis-color);">NF00080</span>
+                        <p class="mail-profile">Email: nftheater134+27@gmail.com</p>
+                        <p class="pass-profile">Password : 0123456</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center justify-content-sm-center align-items-sm-center box-back" style="padding-left: 5px;">
+                    <div class="net-plan-point" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
+                        <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;text-align: center;">คะแนนสะสม</span></div>
+                        <div style="margin: 0;padding: 0;height: auto;">
+                            <p class="net-point" style="text-align: center;height: auto;">10</p>
+                        </div>
+                        <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><button class="btn btn-primary profile-hit" type="button" data-bs-target="#modal-history" data-bs-toggle="modal">ประวัติการแลกแต้ม<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 5px;">
+                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                </svg></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="net-container">
+        <h1 class="head-pack" style="font-family: Prompt, sans-serif;">ข้อมูลแพ็กเกจ</h1>
+        <div class="net-plans">
+            <div class="net-plan">
+                <div class="net-plan-info"><img src="assets/img/logo-netflix%201.png" alt="Netflix Icon" class="net-plan-icon">
+                    <div class="net-plan-details">
+                        <h2>แพ็กเกจ NETFLIX</h2>
+                        <p>Netflix ยาวนานถึง 2 เดือน</p>
+                    </div>
+                </div>
+                <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
+                    <div style="margin: 0;padding: 0;height: auto;">
+                        <p class="net-price" style="text-align: center;height: auto;">269</p>
+                    </div>
+                    <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">บาท</span></div>
+                </div>
+            </div>
+            <div class="net-plan2">
+                <div class="net-plan-info"><img src="assets/img/logo-netflix%201%20(1).png" alt="Netflix Icon" class="net-plan-icon">
+                    <div class="net-plan-details">
+                        <h2 class="pack-h2">แพ็กเกจ Youtube</h2>
+                        <p class="pack-h3">Youtube ยาวนานถึง 2 เดือน</p>
+                    </div>
+                </div>
+                <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
+                    <div style="margin: 0;padding: 0;height: auto;">
+                        <p class="net-price" style="text-align: center;height: auto;">269</p>
+                    </div>
+                    <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">บาท</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-link">
+        <div class="d-link-in2">
+            <div class="box-link-m"><a href="/netflix-pricing.html"><img src="assets/img/NF22%20(1).png"></a></div>
+            <div class="box-link-m"><a href="/youtube-pricing.html"><img src="assets/img/NF11%20(1).png"></a></div>
+            <div class="box-link-m"><a class="cursor-box" data-bs-target="#modal-member" data-bs-toggle="modal"><img src="assets/img/NF3%20(1).png"></a></div>
+            <div class="box-link-m"><a class="cursor-box" data-bs-target="#modal-repoints" data-bs-toggle="modal"><img src="assets/img/NF5%20(1).png"></a></div>
+            <div class="box-link-m"><a class="cursor-box" data-bs-toggle="modal" data-bs-target="#modal-points"><img src="assets/img/NF4%20(1).png"></a></div>
+            <div class="box-link-m"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img src="assets/img/NF6%20(1).png"></a></div>
+        </div>
+    </div>
+    <div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-history" style="margin-top: 150px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="h-pop">
+                            <h4 class="modal-title" style="color: var(--bs-emphasis-color);">ประวัติการแลกแต้ม</h4>
+                        </div>
+                        <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="history-text"><span style="color: var(--bs-emphasis-color);">01/01/2024</span><span style="color: var(--bs-emphasis-color);">แลก Youtube 15 วัน</span></div>
+                            <hr class="hr-line">
+                        </div>
+                        <div>
+                            <div class="history-text"><span style="color: var(--bs-emphasis-color);">01/01/2024</span><span style="color: var(--bs-emphasis-color);">แลก Youtube 15 วัน</span></div>
+                            <hr class="hr-line">
+                        </div>
+                        <div>
+                            <div class="history-text"><span style="color: var(--bs-emphasis-color);">01/01/2024</span><span style="color: var(--bs-emphasis-color);">แลก Youtube 15 วัน</span></div>
+                            <hr class="hr-line">
+                        </div>
+                        <div>
+                            <div class="history-text"><span style="color: var(--bs-emphasis-color);">01/01/2024</span><span style="color: var(--bs-emphasis-color);">แลก Youtube 15 วัน</span></div>
+                            <hr class="hr-line">
+                        </div>
+                        <div>
+                            <div class="history-text"><span style="color: var(--bs-emphasis-color);">01/01/2024</span><span style="color: var(--bs-emphasis-color);">แลก Youtube 15 วัน</span></div>
+                            <hr class="hr-line">
+                        </div>
+                    </div>
+                    <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-points" style="margin-top: 150px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header m-h">
+                        <div class="h-pop">
+                            <h4 class="modal-title head-pop" style="color: var(--bs-emphasis-color);">ลุ้นรับของรางวัล</h4>
+                        </div>
+                        <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
+                    </div>
+                    <div class="modal-body m-h">
+                        <div class="point-box-div">
+                            <div class="point-box"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img class="img-po1" src="assets/img/event_theater.png"></a></div>
+                            <div class="point-box"><a href="/rewards.html"><img class="img-po1" src="assets/img/redeem_reward.png"></a></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-price" style="margin-top: 150px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="h-pop">
+                            <h4 class="modal-title" style="color: var(--bs-emphasis-color);">ชำระเงินค่าแพ็กเกจ</h4>
+                        </div>
+                        <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อ Package</label><input class="form-control form-v1" type="text" placeholder="Nextflix ยกเว้นทีวี 1 เดือน"></form>
+                        <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">จำนวนเงิน</label><input class="form-control form-v1" type="text" placeholder="139"></form>
+                        <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label><input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน"></form>
+                    </div>
+                    <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;"><button class="btn btn-primary bt-pay" type="button">ชำระเงิน</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-edit-img" style="margin-top: 150px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="h-pop">
+                            <h4 class="modal-title" style="color: var(--bs-emphasis-color);">แก้ไขโปรไฟล์</h4>
+                        </div>
+                        <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อยูสเซอร์</label><input class="form-control form-v1" type="text" placeholder="NF00080"></form>
+                        <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label><input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน"></form>
+                        <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">รูปถาพโปรไฟล์</label><input class="form-control" type="file"></form>
+                    </div>
+                    <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;"><button class="btn btn-primary bt-pay" type="button">บันทึกการแก้ไข</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-repoints" style="padding-top: 150px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header m-h">
+                        <div class="h-pop-man">
+                            <div class="img-man02"><img class="img-man" src="assets/img/man02.webp"></div>
+                        </div>
+                        <div><button class="btn-close close-bt1" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
+                    </div>
+                    <div class="modal-body m-h">
+                        <div class="point-box-div1">
+                            <div class="point-box-t1"><span class="point-num">10</span></div>
+                            <div class="point-box1">
+                                <p class="text-p1">คุณได้รับแต้ม</p>
+                                <p class="text-p2" style="text-align:">สะสมให้ครบ เพื่อแลกของรางวัล</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"><button class="btn btn-primary bt-pay" type="button">แลกของรางวัล</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-member" style="padding-top: 150px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header m-h">
+                        <div class="h-pop-man">
+                            <div class="img-man02"><img class="img-man" src="assets/img/man01.webp"></div>
+                        </div>
+                        <div><button class="btn-close close-bt1" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
+                    </div>
+                    <div class="modal-body m-h">
+                        <div class="point-box-div1">
+                            <div class="point-box2">
+                                <p class="text-p1">ยืนยันสมาชิก</p>
+                                <p class="text-p2" style="text-align:">ตรวจสอบความถูกต้องและยืนยันข้อมูล</p>
+                            </div>
+                            <div class="div-menber">
+                                <form><label class="form-label text-form-h">เบอร์โทรศัพท์</label><input class="form-control" type="text" placeholder="กรุณาระบุเบอร์โทรศัพท์เพื่อรับรหัส">
+                                    <div class="form-member-bt"><button class="btn btn-primary bt-pay" type="button">รับรหัส OTP</button></div>
+                                </form>
+                                <form><label class="form-label text-form-h">อีเมล์</label><input class="form-control" type="text" placeholder="กรุณาระบุอีเมล์">
+                                    <div class="form-member-bt"><button class="btn btn-primary bt-pay" type="button">ยืนยันอีเมล์</button></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- <div>
+        <p class="copy-r">Copyright ©&nbsp;NF Theater&nbsp;2024.</p>
+    </div> --}}
+    <script>
+        document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;
+    </script>
+@endsection

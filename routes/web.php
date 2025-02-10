@@ -116,3 +116,28 @@ Route::group(['middleware' => ['auth:admin']],function(){
 
 
 });
+
+
+Route::get('front',function(){
+  return view('frontend.login');
+});
+
+Route::get('netfix',function(){
+  return view('frontend.netflix-pricing');
+});
+
+Route::get('profile',function(){
+  return view('frontend.profile');
+});
+
+Route::get('rewards',function(){
+  return view('frontend.rewards');
+});
+
+Route::get('thankyou',function(){
+  return view('frontend.thankyou');
+});
+
+Route::get('youtube',function(){
+  return view('frontend.youtube-pricing');
+});
