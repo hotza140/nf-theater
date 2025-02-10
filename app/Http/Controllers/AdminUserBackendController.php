@@ -440,7 +440,7 @@ class AdminUserBackendController extends Controller
                     $aaa->id_user=$item->id;  
                     $aaa->id_user_in=$user->id;
                 }
-                $aaa->type=$item->type;
+                $aaa->type='MOBILE';
                 $aaa->date_start=$user->date_start; 
                 $aaa->date_end=$user->date_end;
                 $aaa->save();
@@ -448,7 +448,7 @@ class AdminUserBackendController extends Controller
                 $aaa_his=new users_in_in_history();
                 $aaa_his->id_user=$item->id;  
                 $aaa_his->id_user_in=$user->id;    
-                $aaa_his->type=$item->type;
+                $aaa_his->type='MOBILE';
 
                 $aaa_his->date_start=$user->date_start; 
                 $aaa_his->date_end=$user->date_end;
@@ -465,14 +465,22 @@ class AdminUserBackendController extends Controller
                 $user = (new users_in())->getEligibleUser_pc();
     
             if (@$user!=null) {
-                $aaa=users_in_in::where('id_user',@$r->id)->first();
+
+            // นับจำนวน users_in_in ที่มีอยู่แล้ว
+            $countExisting = users_in_in::where('id_user_in', $user->id)->count();
+
+            // คำนวณค่า type_mail (1 หรือ 2)
+            $newTypeMail = ($countExisting % 2) + 1;
+
+            $aaa=users_in_in::where('id_user',@$r->id)->first();
 
                 if(@$aaa==null){
                     $aaa=new users_in_in();
                     $aaa->id_user=$item->id;  
                     $aaa->id_user_in=$user->id;
                 }
-                $aaa->type=$item->type;
+                $aaa->type='PC';
+                $aaa->type_mail = $newTypeMail;
                 $aaa->date_start=$user->date_start; 
                 $aaa->date_end=$user->date_end;
                 $aaa->save();
@@ -480,8 +488,8 @@ class AdminUserBackendController extends Controller
                 $aaa_his=new users_in_in_history();
                 $aaa_his->id_user=$item->id;  
                 $aaa_his->id_user_in=$user->id;    
-                $aaa_his->type=$item->type;
-
+                $aaa_his->type='PC';
+                $aaa_his->type_mail = $newTypeMail;
                 $aaa_his->date_start=$user->date_start; 
                 $aaa_his->date_end=$user->date_end;
                 $aaa_his->save();
@@ -580,7 +588,7 @@ class AdminUserBackendController extends Controller
                     $aaa = new users_in_in();
                     $aaa->id_user = $item->id;
                     $aaa->id_user_in = $user->id;
-                    $aaa->type = $userData['type'];
+                    $aaa->type = 'PC';
 
                     $aaa->date_start=$user->date_start; 
                     $aaa->date_end=$user->date_end;
@@ -589,7 +597,7 @@ class AdminUserBackendController extends Controller
                     $aaa_his = new users_in_in_history();
                     $aaa_his->id_user = $item->id;
                     $aaa_his->id_user_in = $user->id;
-                    $aaa_his->type = $userData['type'];
+                    $aaa_his->type = 'MOBILE';
 
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
@@ -603,11 +611,18 @@ class AdminUserBackendController extends Controller
                 }else{
                 $user = (new users_in())->getEligibleUser_pc();
                 if ($user !== null) {
+
+                     // นับจำนวน users_in_in ที่มีอยู่แล้ว
+            $countExisting = users_in_in::where('id_user_in', $user->id)->count();
+
+            // คำนวณค่า type_mail (1 หรือ 2)
+            $newTypeMail = ($countExisting % 2) + 1;
+
                     $aaa = new users_in_in();
                     $aaa->id_user = $item->id;
                     $aaa->id_user_in = $user->id;
-                    $aaa->type = $userData['type'];
-
+                    $aaa->type = 'PC';
+                    $aaa->type_mail = $newTypeMail;
                     $aaa->date_start=$user->date_start; 
                     $aaa->date_end=$user->date_end;
                     $aaa->save();
@@ -615,8 +630,8 @@ class AdminUserBackendController extends Controller
                     $aaa_his = new users_in_in_history();
                     $aaa_his->id_user = $item->id;
                     $aaa_his->id_user_in = $user->id;
-                    $aaa_his->type = $userData['type'];
-
+                    $aaa_his->type = 'PC';
+                    $aaa_his->type_mail = $newTypeMail;
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
                     $aaa_his->save();
