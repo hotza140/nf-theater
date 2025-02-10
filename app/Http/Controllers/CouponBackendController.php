@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
-use App\Mail\Email;
+use App\Mail\Coupon_Code;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -62,9 +62,8 @@ class CouponBackendController extends Controller
     $status_account = $r->status_account;
     if (!empty($search) or !empty($status_account) ) {
         $item = Coupon::where(function ($query) use ($search, $status_account) {
-            $query->where('name', 'LIKE', '%' . $search . '%');
-            $query->orwhere('email', 'LIKE', '%' . $search . '%');
-            $query->orwhere('country', 'LIKE', '%' . $search . '%');
+            $query->where('Coupon_Name', 'LIKE', '%' . $search . '%');
+            $query->orwhere('Coupon_Code', 'LIKE', '%' . $search . '%');
         });
 
         if ($status_account == '0') {
@@ -85,63 +84,36 @@ class CouponBackendController extends Controller
     ]);
     }
     public function coupon_store(Request $r){
-    $item=new Coupon();
-    $ch=Coupon::where('email',$r->email)->orderby('id','desc')->first();
-    $nh=Coupon::where('name',$r->name)->orderby('id','desc')->first();
+        $item=new Coupon();
 
-    if($ch!=null){
-        return redirect()->back()->with('message','Email Already Have in Data!');
-        }
+        $runnum=DB::table('tb_coupon')->orderby('id','desc')->count();
+        $runtotal=$runnum+1;
+        $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
+        $run = "CNF-{$xxxx}";
 
-        if($nh!=null){
-            return redirect()->back()->with('message','Name Profile Already Have in Data!');
-            }   
-
-    $item->password=$r->password;
-
-    $item->name=$r->name;
-    $item->email=$r->email;
-    $item->date_start=$r->date_start;
-    $item->date_end=$r->date_end;
-    $item->country=$r->country;
-
-    $item->email01=$r->email01;
-    $item->email02=$r->email02;
-
-    $item->save();
-    return redirect()->to('coupon_edit/'.$item->id)->with('message','Sucess!');
+        $item->Coupon_Name=$r->Coupon_Name;
+        $item->Coupon_Code=$run;
+        $item->date_start=$r->date_start;
+        $item->date_end=$r->date_end;
+        $item->save();
+        return redirect()->to('coupon_edit/'.$item->id)->with('message','Sucess!');
 
     }
+
     public function coupon_update(Request $r,$id){
     $item=Coupon::where('id',$id)->first();
-    $ch=Coupon::where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
-    $nh=Coupon::where('id','!=',$id)->where('name',$r->name)->orderby('id','desc')->first();
 
-    if($ch!=null){
-        return redirect()->back()->with('message','Email Already Have in Data!');
-        }
-
-        if($nh!=null){
-            return redirect()->back()->with('message','Name Profile Already Have in Data!');
-            } 
-
-        $item->password=$r->password;
-
-    $item->name=$r->name;
-    $item->email=$r->email;
+    $item->Coupon_Name=$r->Coupon_Name;
+    $item->Coupon_Code=$r->Coupon_Code;
     $item->date_start=$r->date_start;
     $item->date_end=$r->date_end;
-    $item->country=$r->country;
-
-    $item->email01=$r->email01;
-    $item->email02=$r->email02;
 
     $item->save();
     return redirect()->to('coupon_edit/'.$id)->with('message','Sucess!');
     }
     public function coupon_edit($id){
     $item=Coupon::where('id',$id)->first();
-dd($item);
+
     return view('backend.coupon.edit',[
         'item'=>$item,
         'page'=>"admin",

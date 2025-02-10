@@ -1,5 +1,54 @@
 @extends('layouts.menubar')
 @section('content')
+
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 25px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 25px;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 19px;
+        width: 19px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+    }
+
+    input:checked + .slider {
+        background-color: #93D600; /* ใช้สีเขียวตามความชอบ */
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(25px);
+    }
+</style>
+
+
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <!-- Main-body start -->
@@ -8,7 +57,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">Coupon/ADD</h5>
+                        <h5 class="m-b-10">Sub Package/EDIT</h5>
 
                     </div>
                 </div>
@@ -25,19 +74,27 @@
                                 </div>
                                 <div class="card-block">
 
-                                    <form method="post" id="" action="{{ url('coupon_store') }}"
+                                    <form method="post" id=""
+                                        action="{{ url('subpackage_update/'.@$item->id) }}"
                                         enctype="multipart/form-data" >
                                         @csrf
-                                        
+                                        <input type="hidden" name="package_Code" value="{{$package_Code}}">
+                                        <input type="hidden" name="package_id" value="{{$package_id}}">
+
+                                        <!-- -------EDIT---------- -->
+                                        <input type="hidden" name="edit" value="{{@$item->id}}">
+                                        <!-- -------EDIT---------- -->
+
+
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Coupon Code*</label>
-                                                <input type="Coupon_Code" name="Coupon_Code" class="form-control" id=""  maxlength = "25"
-                                                placeholder="รหัสคูปอง"  readonly>
+                                                <label class="col-form-label">Sub Package Code*</label>
+                                                <input type="Subpackage_Code" name="Subpackage_Code" class="form-control" id=""  maxlength = "25"
+                                                placeholder="รหัสแพ็คเกจ"  required readonly value="{{$item->Subpackage_Code}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Coupon Name*</label>
-                                                <input type="text" name="Coupon_Name" class="form-control" id="" required >
+                                                <label class="col-form-label">Sub Package Name*</label>
+                                                <input type="text" name="Subpackage_Name" class="form-control" id="" required value="{{$item->Subpackage_Name}}">
                                             </div>
                                         </div>
 
@@ -74,11 +131,10 @@
                                                 </select>
                                             </div>
                                         </div> -->
-
-
+                                        
 
                                         <p class="text-right">
-                                            <a href="{{ url('coupon') }}"
+                                            <a href="{{ url('package_edit/'.$package_id) }}"
                                                 style="color:white;" class="btn btn-warning"> <i
                                                     class="fa fa-share-square-o"></i> Back </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"
@@ -94,6 +150,7 @@
                     </div>
                 </div>
                 <!-- Page body end -->
+
             </div>
         </div>
         <!-- Main-body end -->
@@ -101,6 +158,40 @@
 
         </div>
     </div>
+
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggle-switch').forEach(switchElement => {
+        switchElement.addEventListener('change', function () {
+            const id = this.getAttribute('data-id');
+            const isOpen = this.checked ? 0 : 1; // ค่าที่ส่ง 0 = เปิด, 1 = ปิด
+
+            fetch('{{ url("/coupon_in_open_close") }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id, open: isOpen }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    alert('Failed to update status.');
+                    // Revert the switch state if update fails
+                    this.checked = !this.checked;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Revert the switch state if an error occurs
+                this.checked = !this.checked;
+            });
+        });
+    });
+});
+</script>
 
 
     @endsection

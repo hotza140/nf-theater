@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable; 
 
-class Coupon extends Authenticatable
+class PackageSubwatch extends Authenticatable
 {
     // use SoftDeletes;
-    protected $table = "tb_coupon";
+    protected $table = "tb_package_subwatch";
     protected $primarykey = "id";
 
 }

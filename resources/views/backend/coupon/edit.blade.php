@@ -85,50 +85,15 @@
                                         <!-- -------EDIT---------- -->
 
 
-                                     
-                                        <?php
-                                        $runnum=DB::table('tb_coupon')->orderby('id','desc')->count();
-                                        $runtotal=$runnum+1;
-                                        $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
-                                        $run = "NF-{$xxxx}";
-
-                                        if(@$item->name!=null){
-                                            $run=@$item->name;
-                                        }
-
-                                        ?>
-
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <label class="col-form-label">Name Account</label>
-                                                <input type="text" name="name" class="form-control" id=""
-                                                      value="{{@$run}}">
-                                            </div>
-                                        </div>
-                                        
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Email*</label>
-                                                <input type="email" name="email" class="form-control" id=""  maxlength = "25"
-                                                     required value="{{@$item->email}}">
+                                                <label class="col-form-label">Coupon Code*</label>
+                                                <input type="Coupon_Code" name="Coupon_Code" class="form-control" id=""  maxlength = "25"
+                                                placeholder="รหัสคูปอง"  required readonly value="{{$item->Coupon_Code}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Password*</label>
-                                                <input type="text" name="password" class="form-control" id="" required value="{{@$item->password}}" placeholder="รหัสผ่าน" >
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Email เสริม 1</label>
-                                                <input type="email" name="email01" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->email01}}">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Email เสริม 2</label>
-                                                <input type="email" name="email02" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->email02}}">
+                                                <label class="col-form-label">Coupon Name*</label>
+                                                <input type="text" name="Coupon_Name" class="form-control" id="" required value="{{$item->Coupon_Name}}">
                                             </div>
                                         </div>
 

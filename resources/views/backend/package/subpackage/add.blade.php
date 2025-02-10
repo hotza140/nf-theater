@@ -8,7 +8,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">Coupon/ADD</h5>
+                        <h5 class="m-b-10">Sub Package/ADD</h5>
 
                     </div>
                 </div>
@@ -25,19 +25,20 @@
                                 </div>
                                 <div class="card-block">
 
-                                    <form method="post" id="" action="{{ url('coupon_store') }}"
+                                    <form method="post" id="" action="{{ url('subpackage_store') }}"
                                         enctype="multipart/form-data" >
                                         @csrf
-                                        
+                                        <input type="hidden" name="package_Code" value="{{$package_Code}}">
+                                        <input type="hidden" name="package_id" value="{{$package_id}}">
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Coupon Code*</label>
-                                                <input type="Coupon_Code" name="Coupon_Code" class="form-control" id=""  maxlength = "25"
-                                                placeholder="รหัสคูปอง"  readonly>
+                                                <label class="col-form-label">Sub Package Code*</label>
+                                                <input type="Subpackage_Code" name="Subpackage_Code" class="form-control" id=""  maxlength = "25"
+                                                placeholder="Suppackage code"  readonly>
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Coupon Name*</label>
-                                                <input type="text" name="Coupon_Name" class="form-control" id="" required >
+                                                <label class="col-form-label">Sub Package Name*</label>
+                                                <input type="text" name="Subpackage_Name" class="form-control" id="" required >
                                             </div>
                                         </div>
 
@@ -78,7 +79,7 @@
 
 
                                         <p class="text-right">
-                                            <a href="{{ url('coupon') }}"
+                                            <a href="{{ url('package_edit') }}/{{$package_id}}"
                                                 style="color:white;" class="btn btn-warning"> <i
                                                     class="fa fa-share-square-o"></i> Back </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"
