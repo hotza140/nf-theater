@@ -79,9 +79,35 @@ Route::group(['middleware' => ['auth:admin']],function(){
     Route::post('users_in_open_close',[App\Http\Controllers\AdminUserBackendController::class,'users_in_open_close']);
     //users
 
+    //coupon
+    Route::get('coupon',[App\Http\Controllers\CouponBackendController::class,'coupon']);
+    Route::get('coupon_destroy/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_destroy']);
+    Route::get('coupon_add',[App\Http\Controllers\CouponBackendController::class,'coupon_add']);
+    Route::post('coupon_store',[App\Http\Controllers\CouponBackendController::class,'coupon_store']);
+    Route::get('coupon_edit/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_edit']);
+    Route::post('coupon_update/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_update']);
+    Route::post('coupon_open_close',[App\Http\Controllers\CouponBackendController::class,'coupon_open_close']);
+    //coupon
 
+    //package
+    Route::get('package',[App\Http\Controllers\PackageBackendController::class,'package']);
+    Route::get('package_destroy/{id}',[App\Http\Controllers\PackageBackendController::class,'package_destroy']);
+    Route::get('package_add',[App\Http\Controllers\PackageBackendController::class,'package_add']);
+    Route::post('package_store',[App\Http\Controllers\PackageBackendController::class,'package_store']);
+    Route::get('package_edit/{id}',[App\Http\Controllers\PackageBackendController::class,'package_edit']);
+    Route::post('package_update/{id}',[App\Http\Controllers\PackageBackendController::class,'package_update']);
+    Route::post('package_open_close',[App\Http\Controllers\PackageBackendController::class,'package_open_close']);
+    //package
 
-
+    //subpackage
+    Route::get('subpackage',[App\Http\Controllers\PackageSubBackendController::class,'subpackage']);
+    Route::get('subpackage_destroy/{id}',[App\Http\Controllers\PackageSubBackendController::class,'subpackage_destroy']);
+    Route::get('subpackage_add',[App\Http\Controllers\PackageSubBackendController::class,'subpackage_add']);
+    Route::post('subpackage_store',[App\Http\Controllers\PackageSubBackendController::class,'subpackage_store']);
+    Route::get('subpackage_edit/{id}',[App\Http\Controllers\PackageSubBackendController::class,'subpackage_edit']);
+    Route::post('subpackage_update/{id}',[App\Http\Controllers\PackageSubBackendController::class,'subpackage_update']);
+    Route::post('subpackage_open_close',[App\Http\Controllers\PackageSubBackendController::class,'subpackage_open_close']);
+    //subpackage
 
   Route::get('/logout',[App\Http\Controllers\AdminUserBackendController::class,'logout'])->name('logout');
     Route::get('/register',[App\Http\Controllers\AdminUserBackendController::class,'register'])->name('register');
