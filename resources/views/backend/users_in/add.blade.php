@@ -68,31 +68,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Email เสริม 1</label>
-                                                <input type="email" name="email01" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->email01}}">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Password เสริม 1</label>
-                                                <input type="text" name="password01" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->password01}}">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Email เสริม 2</label>
-                                                <input type="email" name="email02" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->email02}}">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Password เสริม 2</label>
-                                                <input type="text" name="password02" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->password02}}">
-                                            </div>
-                                        </div>
+                                      
 
                                         <?php
                                         $date_s=date('Y-m-d');
@@ -127,6 +103,36 @@
                                                 </select>
                                             </div>
                                         </div> -->
+
+
+                                        <br><br>
+                                        <h3>Email เสริม สำหรับ TV</h3>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Email เสริม 1</label>
+                                                <input type="email" name="email01" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$item->email01}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Password เสริม 1</label>
+                                                <input type="text" name="password01" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$item->password01}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Email เสริม 2</label>
+                                                <input type="email" name="email02" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$item->email02}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Password เสริม 2</label>
+                                                <input type="text" name="password02" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$item->password02}}">
+                                            </div>
+                                        </div>
 
 
 

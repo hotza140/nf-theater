@@ -110,7 +110,8 @@
                                                     <th>#</th>
                                                     <th>Open/Close</th>
                                                     <!-- <th>Picture</th> -->
-                                                    <th>Status</th>
+                                                    <th>ยกเว้นทีวี</th>
+                                                    <th>TV</th>
                                                     <th>Name Account</th>
                                                     <th>Email / Password</th>
                                                     <th>วันที่ใช้งาน</th>
@@ -135,13 +136,23 @@
                                                     </form>
                                                     </td>
                                                     <td>
-                                                    <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
-                                                        <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
-                                                        <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
-                                                        <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
-                                                        <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
-                                                        <i class="fa fa-desktop" style="font-size:30px; color:green;" title="ว่าง"></i>
-                                                        <i class="fa fa-desktop" style="font-size:30px; color:green;" title="ว่าง"></i>
+                                                    <?php $nub = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'MOBILE')->count();
+                                                    $icons = 5; // จำนวนไอคอนทั้งหมด
+                                                    ?>
+
+                                                    @for ($i = 0; $i < $icons; $i++)
+                                                        <i class="fa fa-mobile" style="font-size:30px; color:{{ $i < $nub ? 'red' : 'green' }};" title="ว่าง"></i>
+                                                    @endfor
+                                                    </td>
+
+                                                    <td>
+                                                    <?php $nub_pc = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'PC')->count();
+                                                    $icons = 2; // จำนวนไอคอนทั้งหมด
+                                                    ?>
+
+                                                    @for ($i = 0; $i < $icons; $i++)
+                                                        <i class="fa fa-desktop" style="font-size:30px; color:{{ $i < $nub_pc ? 'red' : 'green' }};" title="ว่าง"></i>
+                                                    @endfor
                                                     </td>
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
