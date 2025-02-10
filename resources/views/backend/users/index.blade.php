@@ -93,6 +93,9 @@
                                             <div class="col-sm-1">
                                             <a style="color:white;" class="btn btn-success" href="{{url('users_add')}}"> <i class="fa fa-plus"></i> สร้างแบบ User เดียว</a>
                                             </div>
+
+
+                                            
                                             
                                         </div>
                                         </form>
@@ -146,6 +149,12 @@
                                         </form>
                                     
 
+
+                                        <div class="col-sm-2">
+                                            <a style="color:white;" class="btn btn-info" href="{{url('his_created')}}" target="_blank" >ประวัติการสร้าง User</a>
+                                            </div>
+
+                                            <br><br>
 
                                 </div>
 

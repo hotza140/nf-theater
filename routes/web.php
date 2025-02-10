@@ -44,6 +44,8 @@ Route::group(['middleware' => ['auth:admin']],function(){
  Route::post('admin_open_close',[App\Http\Controllers\AdminUserBackendController::class,'admin_open_close']);
  //admin
 
+ Route::get('his_created',[App\Http\Controllers\AdminUserBackendController::class,'his_created']);
+
   //userss
   Route::post('users_store_form_in',[App\Http\Controllers\AdminUserBackendController::class,'users_store_form_in']);
 
