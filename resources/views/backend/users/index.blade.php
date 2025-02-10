@@ -303,15 +303,50 @@
                                         </table>
                                     </div>
 
-                                    <script>
+                                    <!-- <script>
                                     function copyUserInfo(username, password, name, package, link) {
+                                        alert('a');
                                         let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
-                                        
+                                        alert('b');
                                         navigator.clipboard.writeText(textToCopy).then(function() {
                                             alert("คัดลอกข้อมูลสำเร็จ!");
                                         }, function(err) {
                                             console.error('คัดลอกไม่สำเร็จ: ', err);
                                         });
+                                    }
+                                    </script> -->
+
+                                    <script>
+                                    function fallbackCopyTextToClipboard(text) {
+                                        const textArea = document.createElement("textarea");
+                                        textArea.value = text;
+                                        document.body.appendChild(textArea);
+                                        textArea.focus();
+                                        textArea.select();
+                                        try {
+                                            document.execCommand("copy");
+                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                        } catch (err) {
+                                            console.error("คัดลอกไม่สำเร็จ: ", err);
+                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                                        }
+                                        document.body.removeChild(textArea);
+                                    }
+
+                                    function copyUserInfo(username, password, name, package, link) {
+                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
+
+                                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                            }).catch(err => {
+                                                console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                fallbackCopyTextToClipboard(textToCopy);
+                                            });
+                                        } else {
+                                            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+                                            fallbackCopyTextToClipboard(textToCopy);
+                                        }
                                     }
                                     </script>
 

@@ -116,7 +116,7 @@ class users_in extends Authenticatable
                            ->orWhere('type_mail', '')
                            ->orWhere(function ($pcQuery) { // หรือมี PC อยู่แค่ 1 ตัว
                                $pcQuery->where('type', 'PC')
-                                       ->havingRaw('COUNT(*) = 1');
+                                       ->havingRaw('COUNT(*) < 2');
                            });
                      });
         });
