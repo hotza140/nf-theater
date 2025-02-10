@@ -588,7 +588,7 @@ class AdminUserBackendController extends Controller
                     $aaa = new users_in_in();
                     $aaa->id_user = $item->id;
                     $aaa->id_user_in = $user->id;
-                    $aaa->type = 'PC';
+                    $aaa->type = 'MOBILE';
 
                     $aaa->date_start=$user->date_start; 
                     $aaa->date_end=$user->date_end;
@@ -932,10 +932,15 @@ class AdminUserBackendController extends Controller
             return redirect()->back()->with('message','User Already Have in Data!');
             }
 
-        $user_in_in_count_PC=users_in_in::where('id_user_in',$r->id_user_in)->where('type','PC')->where('type_mail',$r->type_mail)->orderby('id','desc')->count();
+        $user_in_in_count_PC=users_in_in::where('id_user_in',$r->id_user_in)->where('type','PC')->where('type_mail',$r->type_mail)->orderby('id','desc')->first();
 
         if($user_in_in_count_PC!=null and $r->type_mail!=null){
             return redirect()->back()->with('message','Fail มีคนใช้อีเมลนี้แล้ว!');
+        }
+
+        $check_c=users_in_in::where('id_user_in',$r->id_user_in)->where('type','PC')->orderby('id','desc')->count();
+        if($check_c>=2 and $r->type_mail!=null){
+            return redirect()->back()->with('message','Fail Email เสริมครบแล้ว!');
         }
 
         $user=users::where('id',$r->id_user)->first();
@@ -954,7 +959,7 @@ class AdminUserBackendController extends Controller
         $item->date_end=@$user->date_end;
 
         $user_in_in_count=users_in_in::where('type','MOBILE')->where('id_user_in',@$r->id_user_in)->count();
-        if($user_in_in_count >= 5){
+        if($user_in_in_count >= 5 and $r->type_mail==null){
         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
         }else{
         $item->save();
@@ -971,8 +976,6 @@ class AdminUserBackendController extends Controller
 
             $item_his->date_start=@$user->date_start; 
             $item_his->date_end=@$user->date_end;
-
-        // $item_his->type=$r->type;
 
         $item_his->save();
         }
