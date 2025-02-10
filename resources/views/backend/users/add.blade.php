@@ -102,13 +102,26 @@
 
 
                                         <div class="form-group row">
+
                                         <div class="col-sm-3">
+                                        <label class="col-form-label">Package*</label>
+                                        <select name="type" id="type" class="form-control" required  >
+                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
+                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        </select>
+                                        </div>
+
+                                        <input type="hidden" name="package" class="form-control" id="" value="10">
+
+
+                                        <!-- <div class="col-sm-3">
                                         <label class="col-form-label">รูปแบบ*</label>
                                         <select name="type" id="type" class="form-control" required  >
                                         <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
                                         <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
                                         </select>
                                         </div>
+
                                         <div class="col-sm-3">
                                         <label class="col-form-label">Package*</label>
                                         <select name="package" id="package" class="form-control add_select2" required  >
@@ -119,7 +132,8 @@
                                         <option value="180 วัน" @if(@$item->package=='180 วัน') selected  @endif >180 วัน</option>
                                         <option value="365 วัน" @if(@$item->package=='365 วัน') selected  @endif >365 วัน</option>
                                         </select>
-                                        </div>
+                                        </div> -->
+
                                         </div>
 
                                         <?php

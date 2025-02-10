@@ -87,9 +87,11 @@ class users_in extends Authenticatable
         $date = date('Y-m-d');
         $eligibleUsers = self::where(function ($query) use ($date) {
             $query->whereHas('users_in_in_mobile', function ($subQuery) use ($date) {
-                $subQuery->whereDate('date_start', '<=', $date)
-                        ->whereDate('date_end', '>=', $date)
-                        ->where('open', 0);
+                $subQuery->whereHas('user', function ($userQuery) use ($date) {
+                    $userQuery->whereDate('date_start', '<=', $date)
+                              ->whereDate('date_end', '>=', $date)
+                              ->where('open', 0);
+                });
             });
             $query->orDoesntHave('users_in_in_mobile');
         })
@@ -108,7 +110,8 @@ class users_in extends Authenticatable
 
     $eligibleUsers = self::where(function ($query) use ($date) {
         $query->whereHas('users_in_in_pc', function ($subQuery) use ($date) {
-            $subQuery->whereDate('date_start', '<=', $date)
+            $subQuery->whereHas('user', function ($userQuery) use ($date) {
+            $userQuery->whereDate('date_start', '<=', $date)
                      ->whereDate('date_end', '>=', $date)
                      ->where('open', 0)
                      ->where(function ($q) {
@@ -119,6 +122,7 @@ class users_in extends Authenticatable
                                        ->havingRaw('COUNT(*) < 2');
                            });
                      });
+                    });
         });
         $query->orDoesntHave('users_in_in_pc');
     })

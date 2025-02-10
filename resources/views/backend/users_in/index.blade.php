@@ -141,7 +141,7 @@
                                                     ?>
 
                                                     @for ($i = 0; $i < $icons; $i++)
-                                                        <i class="fa fa-mobile" style="font-size:30px; color:{{ $i < $nub ? 'red' : 'green' }};" title="ว่าง"></i>
+                                                        <i class="fa fa-mobile" style="font-size:30px; color:{{ $i < $nub ? 'red' : 'green' }};" title="{{ $i < $nub ? 'ไม่ว่าง' : 'ว่าง' }}"></i>
                                                     @endfor
                                                     </td>
 
@@ -151,7 +151,7 @@
                                                     ?>
 
                                                     @for ($i = 0; $i < $icons; $i++)
-                                                        <i class="fa fa-desktop" style="font-size:30px; color:{{ $i < $nub_pc ? 'red' : 'green' }};" title="ว่าง"></i>
+                                                        <i class="fa fa-desktop" style="font-size:30px; color:{{ $i < $nub_pc ? 'red' : 'green' }};" title="{{ $i < $nub ? 'ไม่ว่าง' : 'ว่าง' }}"></i>
                                                     @endfor
                                                     </td>
 

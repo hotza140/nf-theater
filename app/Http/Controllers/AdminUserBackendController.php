@@ -249,7 +249,9 @@ class AdminUserBackendController extends Controller
          // ลบเช็คเวลา
 
 
-        $item=users ::orderby('id','desc')->paginate(20);
+        $item=users ::orderByRaw(
+            '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
+        )->paginate(20);
 
         $search = $r->search;
         $status_account = $r->status_account;
@@ -274,7 +276,9 @@ class AdminUserBackendController extends Controller
                 $item = $item->whereNull('status_check_admin');
             }
         
-            $item = $item->orderBy('id', 'desc')->paginate(20);
+            $item = $item->orderByRaw(
+                '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
+            )>paginate(20);
         }
 
         return view('backend.users.index',[
@@ -926,11 +930,17 @@ class AdminUserBackendController extends Controller
 
      //users_in_in//
       public function add_user_in_in(Request $r){
-        $ch=users_in_in::where('id_user',$r->id_user)->where('id_user_in',$r->id_user_in)->first();
+        $ch=users_in_in::where('id_user',$r->id_user)->where('type','MOBILE')->where('id_user_in',$r->id_user_in)->first();
   
         if($ch!=null){
             return redirect()->back()->with('message','User Already Have in Data!');
             }
+
+            $ch2=users_in_in::where('id_user',$r->id_user)->where('type','PC')->where('id_user_in',$r->id_user_in)->first();
+  
+            if($ch2!=null){
+                return redirect()->back()->with('message','User Already Have in Data!');
+                }
 
         $user_in_in_count_PC=users_in_in::where('id_user_in',$r->id_user_in)->where('type','PC')->where('type_mail',$r->type_mail)->orderby('id','desc')->first();
 
