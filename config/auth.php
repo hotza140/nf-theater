@@ -18,6 +18,12 @@ return [
         'passwords' => 'users',
     ],
 
+
+    'redirects' => [
+        'admin' => '/login',
+        'user' => '/fontendlogin',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
