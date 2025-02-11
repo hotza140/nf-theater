@@ -366,20 +366,39 @@
                                             </div>
                                         </div>
 
-                                        <input type="hidden" name="type"  value="MOBILE">
-
                                         <div class="form-group row">
+
+                                        <div class="col-sm-3">
+                                        <label class="col-form-label">Package*</label>
+                                        <select name="type" id="type" class="form-control" required  >
+                                        <option value="MOBILE" @if(@$none->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
+                                        <option value="PC" @if(@$none->type=='PC') selected  @endif >TV</option>
+                                        </select>
+                                        </div>
+
+                                        <input type="hidden" name="package" class="form-control" id="" value="10">
+
+
+                                        <!-- <div class="col-sm-3">
+                                        <label class="col-form-label">รูปแบบ*</label>
+                                        <select name="type" id="type" class="form-control" required  >
+                                        <option value="MOBILE" @if(@$none->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
+                                        <option value="PC" @if(@$none->type=='PC') selected  @endif >TV</option>
+                                        </select>
+                                        </div>
+
                                         <div class="col-sm-3">
                                         <label class="col-form-label">Package*</label>
                                         <select name="package" id="package" class="form-control add_select2" required  >
-                                        <option value="30 วัน" @if(@$item->package=='30 วัน') selected  @endif >30 วัน</option>
-                                        <option value="60 วัน" @if(@$item->package=='60 วัน') selected  @endif >60 วัน</option>
-                                        <option value="90 วัน" @if(@$item->package=='90 วัน') selected  @endif >90 วัน</option>
-                                        <option value="120 วัน" @if(@$item->package=='120 วัน') selected  @endif >120 วัน</option>
-                                        <option value="180 วัน" @if(@$item->package=='180 วัน') selected  @endif >180 วัน</option>
-                                        <option value="365 วัน" @if(@$item->package=='365 วัน') selected  @endif >365 วัน</option>
+                                        <option value="30 วัน" @if(@$none->package=='30 วัน') selected  @endif >30 วัน</option>
+                                        <option value="60 วัน" @if(@$none->package=='60 วัน') selected  @endif >60 วัน</option>
+                                        <option value="90 วัน" @if(@$none->package=='90 วัน') selected  @endif >90 วัน</option>
+                                        <option value="120 วัน" @if(@$none->package=='120 วัน') selected  @endif >120 วัน</option>
+                                        <option value="180 วัน" @if(@$none->package=='180 วัน') selected  @endif >180 วัน</option>
+                                        <option value="365 วัน" @if(@$none->package=='365 วัน') selected  @endif >365 วัน</option>
                                         </select>
-                                        </div>
+                                        </div> -->
+
                                         </div>
 
                                         <div class="form-group row">
@@ -553,9 +572,17 @@
                                                     <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <td>{{@$user_ins->created_at}}</td>
                                                     <td>
+
+                                                    <?php
+                                                    if($user_aa->type=='MOBILR'){
+                                                        $type_coppy='ยกเว้นทีวี';
+                                                    }else{
+                                                        $type_coppy='TV';
+                                                    }
+                                                    ?>
                                                     <!-- <a href="{{url('users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
                                                         <a href="{{url('users_in_in_destroy/'.$user_ins->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('You Want To Delete?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user_aa->username}}', '{{$user_aa->password}}', '{{$user_aa->name}}', '{{$user_aa->package}}', '{{$user_aa->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user_aa->username}}', '{{$user_aa->password}}', '{{$user_aa->name}}', '{{@$type_coppy}}', '{{$user_aa->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>

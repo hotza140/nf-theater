@@ -29,6 +29,8 @@ use App\Models\users_in_in;
 use App\Models\users_in_in_history;
 use App\Models\admin;
 
+use App\Models\created_history;
+
 class AdminUserBackendController extends Controller
 {
 
@@ -79,6 +81,21 @@ class AdminUserBackendController extends Controller
             return redirect()->to('/login')->with('message','Email Wrong!');
         }
     }
+
+
+     ///login---------------
+   public function his_created(){
+    $item = created_history::selectRaw('MAX(id) as id, number, MAX(created_at) as created_at, MAX(id_admin) as id_admin')
+    ->groupBy('number')  // กรุ๊ปข้อมูลตาม number
+    ->orderBy('id', 'desc')
+    ->paginate(10);
+   return view('backend.users.his_created',[
+    'item'=>$item,
+    'page'=>"admin",
+    'list'=>"users",
+   ]);
+   }
+
 
 
      // OPEN/CLOSE-------admin
@@ -249,7 +266,9 @@ class AdminUserBackendController extends Controller
          // ลบเช็คเวลา
 
 
-        $item=users ::orderby('id','desc')->paginate(20);
+        $item=users ::orderByRaw(
+            '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
+        )->paginate(20);
 
         $search = $r->search;
         $status_account = $r->status_account;
@@ -274,7 +293,9 @@ class AdminUserBackendController extends Controller
                 $item = $item->whereNull('status_check_admin');
             }
         
-            $item = $item->orderBy('id', 'desc')->paginate(20);
+            $item = $item->orderByRaw(
+                '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
+            )>paginate(20);
         }
 
         return view('backend.users.index',[
@@ -288,6 +309,7 @@ class AdminUserBackendController extends Controller
         ]);
     }
     public function users_store(Request $r){
+        $acc=null;
         $item=new users();
         // $ca=users::where('username',$r->username)->orderby('id','desc')->first();
 
@@ -317,7 +339,7 @@ class AdminUserBackendController extends Controller
         // if($caa!=null){
         //     return redirect()->back()->with('message','Username Already Have in Data!');
         // }
-
+        
         if($item->save()){
 
         if($r->type=='MOBILE'){
@@ -341,6 +363,8 @@ class AdminUserBackendController extends Controller
             $aaa_his->date_start=$user->date_start; 
             $aaa_his->date_end=$user->date_end;
             $aaa_his->save();
+
+            $acc=$user->id;
 
         }else{
             $item->status_account=1;
@@ -377,6 +401,8 @@ class AdminUserBackendController extends Controller
             $aaa_his->date_end = $user->date_end;
             $aaa_his->save();
 
+            $acc=$user->id;
+
         } else {
             $item->status_account = 1;
             $item->save();
@@ -386,6 +412,26 @@ class AdminUserBackendController extends Controller
         }
 
         }
+
+        if($acc!=null){
+            $gg=users_in::where('id',$acc)->first();
+            $acc=@$gg->name;
+            @$acc_id=$gg->id;
+        }else{
+            $acc='Account เต็ม';
+        }
+
+        $randomNumber = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        $his=new created_history();
+        $his->id_admin=Auth::guard('admin')->user()->id;
+        $his->id_user=$item->id;
+        $his->id_user_in=@$acc_id;
+        $his->id_user_in_in=@$aaa->id;
+        $his->number=$randomNumber;
+        $his->detail='สร้าง'.$item->name.'__'.$item->email.'__'.$item->type.'__เข้าสู่ Account__'.$acc;
+        $his->save();
+
         return redirect()->to('users')->with('message','Sucess!');
 
     }
@@ -564,8 +610,11 @@ class AdminUserBackendController extends Controller
             return redirect()->back()->with('error', 'ไม่มีข้อมูลที่ถูกต้อง');
         }
     
+        $randomNumber = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
         $check='';
         foreach ($r->users as $userData) {
+            $acc=null;
+
             $item = new users();
             $item->password = $userData['password'];
             $item->username = $userData['username'];
@@ -602,6 +651,9 @@ class AdminUserBackendController extends Controller
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
                     $aaa_his->save();
+
+                    $acc=$user->id;
+
                 } else {
                     $check=1;
                     $item->status_account = 1;
@@ -635,12 +687,35 @@ class AdminUserBackendController extends Controller
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
                     $aaa_his->save();
+
+                    $acc=$user->id;
+
                 } else {
                     $check=1;
                     $item->status_account = 1;
                     $item->save();
                 }
                 }
+
+
+
+                if($acc!=null){
+                    $gg=users_in::where('id',$acc)->first();
+                    $acc=@$gg->name;
+                    @$acc_id=$gg->id;
+                }else{
+                    $acc='Account เต็ม';
+                }
+        
+        
+                $his=new created_history();
+                $his->id_admin=Auth::guard('admin')->user()->id;
+                $his->id_user=$item->id;
+                $his->id_user_in=@$acc_id;
+                $his->id_user_in_in=@$aaa->id;
+                $his->number=$randomNumber;
+                $his->detail='สร้าง'.$item->name.'__'.$item->email.'__'.$item->type.'__เข้าสู่ Account__'.$acc;
+                $his->save();
 
 
             }
@@ -926,11 +1001,17 @@ class AdminUserBackendController extends Controller
 
      //users_in_in//
       public function add_user_in_in(Request $r){
-        $ch=users_in_in::where('id_user',$r->id_user)->where('id_user_in',$r->id_user_in)->first();
+        $ch=users_in_in::where('id_user',$r->id_user)->where('type','MOBILE')->where('id_user_in',$r->id_user_in)->first();
   
         if($ch!=null){
             return redirect()->back()->with('message','User Already Have in Data!');
             }
+
+            $ch2=users_in_in::where('id_user',$r->id_user)->where('type','PC')->where('id_user_in',$r->id_user_in)->first();
+  
+            if($ch2!=null){
+                return redirect()->back()->with('message','User Already Have in Data!');
+                }
 
         $user_in_in_count_PC=users_in_in::where('id_user_in',$r->id_user_in)->where('type','PC')->where('type_mail',$r->type_mail)->orderby('id','desc')->first();
 

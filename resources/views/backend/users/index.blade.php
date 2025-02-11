@@ -93,6 +93,9 @@
                                             <div class="col-sm-1">
                                             <a style="color:white;" class="btn btn-success" href="{{url('users_add')}}"> <i class="fa fa-plus"></i> สร้างแบบ User เดียว</a>
                                             </div>
+
+
+                                            
                                             
                                         </div>
                                         </form>
@@ -147,6 +150,12 @@
                                     
 
 
+                                        <div class="col-sm-2">
+                                            <a style="color:white;" class="btn btn-info" href="{{url('his_created')}}" target="_blank" >ประวัติการสร้าง User</a>
+                                            </div>
+
+                                            <br><br>
+
                                 </div>
 
                                 <style>
@@ -186,7 +195,7 @@
 
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
-                                        <table id="simpletable_call" class="table table-striped table-bordered nowrap">
+                                        <table id="" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
                                                
@@ -267,10 +276,18 @@
 
                                                     
 
+                                                    <?php
+                                                    if($items->type=='MOBILR'){
+                                                        $type_coppy='ยกเว้นทีวี';
+                                                    }else{
+                                                        $type_coppy='TV';
+                                                    }
+                                                    ?>
+
                                                     <td>
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{$items->package}}', '{{$items->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$type_coppy}}', '{{$items->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
