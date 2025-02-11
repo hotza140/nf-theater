@@ -19,6 +19,8 @@ class Admin
     {
         if(auth()->guard('admin')->check()){
         return $next($request);
+        }else{
+            return redirect('/login');
         }
         abort(401);
     }

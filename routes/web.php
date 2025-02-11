@@ -31,7 +31,41 @@ Route::post('/login_backend',[App\Http\Controllers\AdminUserBackendController::c
 
 
 
-Route::group(['middleware' => ['auth:admin']],function(){
+
+// ------------------------
+
+Route::get('/',function(){
+  return view('frontend.login');
+})->name('frontend.login');
+
+Route::get('frontlogin',function(){
+  return view('frontend.login');
+})->name('frontend.login');
+
+Route::group(['middleware' => ['users']],function(){
+
+Route::get('netflix',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.netflix');
+
+Route::get('youtube',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.youtube');
+
+Route::get('profile',function(){
+  return view('frontend.profile');
+})->name('frontend.profile');
+
+Route::get('rewards',[App\Http\Controllers\UserFrontendController::class,'rewardsRead'])->name('frontend.rewards');
+
+Route::get('thankyou',function(){
+  return view('frontend.thankyou');
+})->name('frontend.thankyou');
+
+});
+
+
+// ------------------------
+
+
+
+Route::group(['middleware' => ['admin']],function(){
     Route::get('/backend',[App\Http\Controllers\AdminUserBackendController::class,'users']);
  //admin
  Route::get('admin',[App\Http\Controllers\AdminUserBackendController::class,'admin']);
@@ -134,39 +168,6 @@ Route::group(['middleware' => ['auth:admin']],function(){
     Route::get('/register',[App\Http\Controllers\AdminUserBackendController::class,'register'])->name('register');
     Route::get('/verify',[App\Http\Controllers\AdminUserBackendController::class,'verify'])->name('verify');
 
-
-
-
-
-
-Route::get('/',function(){
-  return view('frontend.login');
-})->name('frontend.login');
-
-Route::get('frontlogin',function(){
-  return view('frontend.login');
-})->name('frontend.login');
-
-Route::group(['middleware' => ['auth:users']],function(){
-
-Route::get('netflix',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.netflix');
-
-Route::get('youtube',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.youtube');
-
-Route::get('profile',function(){
-  return view('frontend.profile');
-})->name('frontend.profile');
-
-Route::get('rewards',[App\Http\Controllers\UserFrontendController::class,'rewardsRead'])->name('frontend.rewards');
-
-Route::get('thankyou',function(){
-  return view('frontend.thankyou');
-})->name('frontend.thankyou');
-
-});
-
-
-
-});
+  });
 
 

@@ -21,7 +21,7 @@ return [
 
     'redirects' => [
         'admin' => '/login',
-        'user' => '/fontendlogin',
+        'users' => '/fontendlogin',
     ],
 
     /*
