@@ -64,20 +64,20 @@ class UserFrontendController extends Controller
  ///frontend Login---------------
     public function login_frontend(Request $r)
     {
-        $users=users::where('email',$r->email)->first();
+        $users=users::where('username',$r->username)->first();
         if($users){
         if(Hash::check($r->password, $users->password)){
-            // if($users->open==0){
+            if($users->open==0){
                 Auth::guard('users')->login($users);
-                return redirect("/frontend");
-            // }else{
-            //     return redirect()->to('/login')->with('message','You User Are Close!');
-            // }
+                return redirect("/profile");
+            }else{
+                return redirect()->to('/frontlogin')->with('message','You User Are Close!');
+            }
         }else{
-            return redirect()->to('/login')->with('message','Password Wrong!');
+            return redirect()->to('/frontlogin')->with('message','Password Wrong!');
         }
         }else{
-            return redirect()->to('/login')->with('message','Email Wrong!');
+            return redirect()->to('/frontlogin')->with('message','Username Wrong!');
         }
     }
 

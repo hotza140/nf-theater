@@ -32,7 +32,6 @@ Route::post('/login_backend',[App\Http\Controllers\AdminUserBackendController::c
 
 
 Route::group(['middleware' => ['auth:admin']],function(){
-    Route::get('/',[App\Http\Controllers\AdminUserBackendController::class,'users']);
     Route::get('/backend',[App\Http\Controllers\AdminUserBackendController::class,'users']);
  //admin
  Route::get('admin',[App\Http\Controllers\AdminUserBackendController::class,'admin']);
@@ -137,12 +136,18 @@ Route::group(['middleware' => ['auth:admin']],function(){
 
 
 
-});
 
+
+
+Route::get('/',function(){
+  return view('frontend.login');
+})->name('frontend.login');
 
 Route::get('frontlogin',function(){
   return view('frontend.login');
 })->name('frontend.login');
+
+Route::group(['middleware' => ['auth:users']],function(){
 
 Route::get('netflix',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.netflix');
 
@@ -157,4 +162,11 @@ Route::get('rewards',[App\Http\Controllers\UserFrontendController::class,'reward
 Route::get('thankyou',function(){
   return view('frontend.thankyou');
 })->name('frontend.thankyou');
+
+});
+
+
+
+});
+
 
