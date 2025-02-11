@@ -105,9 +105,9 @@ class PackageBackendController extends Controller
     $item=Packagewatch::where('id',$id)->first();
 
     $item->package_Name=$r->package_Name;
-    $item->package_Code=$r->package_Code;
-    $item->date_start=$r->date_start;
-    $item->date_end=$r->date_end;
+    // $item->package_Code=$r->package_Code;
+    // $item->date_start=$r->date_start;
+    // $item->date_end=$r->date_end;
 
     $item->save();
     return redirect()->to('package_edit/'.$id)->with('message','Sucess!');

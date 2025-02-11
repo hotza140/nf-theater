@@ -10,8 +10,8 @@
     </div>
     <div class="d-link">
         <div class="d-link-in">
-            <div class="box-link-m"><a href="/netflix-pricing.html"><img src="assets/img/NF22%20(1).png"></a></div>
-            <div class="box-link-m"><a href="/youtube-pricing.html"><img src="assets/img/NF11%20(1).png"></a></div>
+            <div class="box-link-m"><a href="{{route('frontend.netflix')}}?id=1"><img src="assets/img/NF22%20(1).png"></a></div>
+            <div class="box-link-m"><a href="{{route('frontend.youtube')}}?id=2"><img src="assets/img/NF11%20(1).png"></a></div>
             <div class="box-link-m"><a class="cursor-box" data-bs-target="#modal-member" data-bs-toggle="modal"><img src="assets/img/NF3%20(1).png"></a></div>
             <div class="box-link-m"><a class="cursor-box" data-bs-target="#modal-repoints" data-bs-toggle="modal"><img src="assets/img/NF5%20(1).png"></a></div>
             <div class="box-link-m"><a class="cursor-box" data-bs-toggle="modal" data-bs-target="#modal-points"><img src="assets/img/NF4%20(1).png"></a></div>
@@ -22,6 +22,49 @@
         <h1 class="head-pack" style="font-family: Prompt, sans-serif;">รายการแลกของรางวัล</h1>
         <div class="net-plans">
             <div class="row">
+                @foreach ($Reward as $itemRw)
+                    @if(strlen($itemRw->reward_Score)<4)
+                        <div class="col reward-card">
+                            <div class="change-card">
+                                <div class="change-points"><img class="img-m-v1" src="assets/img/logo-man-v3.png">
+                                    <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
+                                        <div style="margin: 0;padding: 0;height: auto;">
+                                            <p class="net-price" style="text-align: center;height: auto;">{{$itemRw->reward_Score}}</p>
+                                        </div>
+                                        <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">แต้ม</span></div>
+                                    </div>
+                                </div>
+                                <div class="change-reward-text">
+                                    <div class="inside-re"><span>{{$itemRw->reward_Name}}</span><button class="change-button">แลกแต้ม</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="row">
+                @foreach ($Reward as $itemRw)
+                    @if(strlen($itemRw->reward_Score)>3)
+                        <div class="col reward-card">
+                            <div class="change-card-a">
+                                <div class="change-points-a"><img class="img-m-v2" src="assets/img/logo-man-v3.png">
+                                    <div class="net-plan-price-v" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
+                                        <div style="margin: 0;padding: 0;height: auto;">
+                                            <p class="net-price" style="text-align: center;height: auto;">{{number_format($itemRw->reward_Score,0,".",",")}}</p>
+                                        </div>
+                                        <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">แต้ม</span></div>
+                                    </div>
+                                </div>
+                                <div class="change-reward-text-v">
+                                    <div class="inside-re"><span>{{$itemRw->reward_Name}}</span><button class="change-button">แลกแต้ม</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+
+            {{-- <div class="row">
                 <div class="col reward-card">
                     <div class="change-card">
                         <div class="change-points"><img class="img-m-v1" src="assets/img/logo-man-v3.png">
@@ -112,8 +155,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
+            </div> --}}
+            {{-- <div class="row">
                 <div class="col reward-card">
                     <div class="change-card-a">
                         <div class="change-points-a"><img class="img-m-v2" src="assets/img/logo-man-v3.png">
@@ -144,7 +187,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div>
@@ -242,5 +285,6 @@
     </div> --}}
     <script>
         document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;
+        document.getElementById('RewardsBtn').style = `display:none;`;
     </script>
 @endsection

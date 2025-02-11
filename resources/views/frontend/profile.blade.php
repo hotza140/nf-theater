@@ -3,10 +3,13 @@
 
     <div class="net-container">
         <h1 class="head-pro">NF THEATER</h1>
-        <div class="profile-plans"><button class="btn btn-primary logout-bt" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="margin-right: 5px;">
+        <div class="profile-plans">
+            <button class="btn btn-primary logout-bt" type="button" onclick="document.location.href=`{{route('frontend.login')}}`;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="margin-right: 5px;">
                     <path d="M8.51428 20H4.51428C3.40971 20 2.51428 19.1046 2.51428 18V6C2.51428 4.89543 3.40971 4 4.51428 4H8.51428V6H4.51428V18H8.51428V20Z" fill="currentColor"></path>
                     <path d="M13.8418 17.385L15.262 15.9768L11.3428 12.0242L20.4857 12.0242C21.038 12.0242 21.4857 11.5765 21.4857 11.0242C21.4857 10.4719 21.038 10.0242 20.4857 10.0242L11.3236 10.0242L15.304 6.0774L13.8958 4.6572L7.5049 10.9941L13.8418 17.385Z" fill="currentColor"></path>
-                </svg>logout</button></div>
+                </svg>logout</button>
+        </div>
         <div class="container profile-plans-white" style="padding-right: 24px;">
             <div class="row">
                 <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center align-items-sm-center">
@@ -72,8 +75,8 @@
     </div>
     <div class="d-link">
         <div class="d-link-in2">
-            <div class="box-link-m"><a href="/netflix-pricing.html"><img src="assets/img/NF22%20(1).png"></a></div>
-            <div class="box-link-m"><a href="/youtube-pricing.html"><img src="assets/img/NF11%20(1).png"></a></div>
+            <div class="box-link-m"><a href="{{route('frontend.netflix')}}?id=1"><img src="assets/img/NF22%20(1).png"></a></div>
+            <div class="box-link-m"><a href="{{route('frontend.youtube')}}?id=2"><img src="assets/img/NF11%20(1).png"></a></div>
             <div class="box-link-m"><a class="cursor-box" data-bs-target="#modal-member" data-bs-toggle="modal"><img src="assets/img/NF3%20(1).png"></a></div>
             <div class="box-link-m"><a class="cursor-box" data-bs-target="#modal-repoints" data-bs-toggle="modal"><img src="assets/img/NF5%20(1).png"></a></div>
             <div class="box-link-m"><a class="cursor-box" data-bs-toggle="modal" data-bs-target="#modal-points"><img src="assets/img/NF4%20(1).png"></a></div>
@@ -228,5 +231,6 @@
     </div> --}}
     <script>
         document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;
+        document.getElementById('ProfileBtn').style = `display:none;`;
     </script>
 @endsection

@@ -537,6 +537,7 @@
                                             </a>
                                         </li>
 
+                                        <!--DJ page-->
                                         {{-- <li class="{{ isset($list) && $list == 'coupon' ? 'active' : '' }}">
                                             <a href="{{ url('coupon') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -551,9 +552,25 @@
                                                 <span class="pcoded-mtext">Manage Packages</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                        </li> --}}
-                                    </ul>
+                                        </li>
 
+                                        <li class="{{ isset($list) && $list == 'reward' ? 'active' : '' }}">
+                                            <a href="{{ url('reward') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Rewards</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+
+                                        <li class="{{ isset($list) && $list == 'marking' ? 'active' : '' }}">
+                                            <a href="{{ url('marking') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Markings</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul> --}}
+                                    <!--DJ page-->
                                 </li>
                             </ul>
                             <!-- admin Page-->

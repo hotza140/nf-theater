@@ -13,9 +13,12 @@
 </head>
 
 <body id="bodystart">
-
+    <div style="position:absolute;right: 0;padding:5px;" id="btnMenuS1">
+        <button class="btn btn-primary logout-bt" type="button" id="RewardsBtn" onclick="document.location.href=`{{route('frontend.rewards')}}`;">Rewards</button>
+        <button class="btn btn-primary logout-bt" type="button" id="ProfileBtn" onclick="document.location.href=`{{route('frontend.profile')}}`;">Profile</button>
+    </div>
     @yield('contentfront')
-
+    
     <div>
         <p class="copy-r">Copyright ©&nbsp;NF Theater&nbsp;2024.</p>
     </div>

@@ -59,7 +59,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">Package BACKEND</h5>
+                        <h5 class="m-b-10">Markings BACKEND</h5>
 
                     </div>
                 </div>
@@ -72,23 +72,23 @@
                         <div class="col-sm-12">
                             <!-- Zero config.table start -->
                             <div class="card">
-                                {{-- <div class="card-header">
+                                <div class="card-header">
 
-                                    <a style="color:white;" class="btn btn-success" href="{{url('package_add')}}"> <i class="fa fa-plus"></i> Add</a>
+                                    <a style="color:white;" class="btn btn-success" href="{{url('marking_add')}}"> <i class="fa fa-plus"></i> Add</a>
 
                                     
                                         <br>
-                                        <form class="form-horizontal" action="{{url('package')}}" method="GET" enctype="multipart/form-data">
+                                        <form class="form-horizontal" action="{{url('marking')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
                                        
                                         <div class="form-group row" style="display: flex; justify-content: flex-end;">
-                                        <div class="col-sm-2">
+                                        {{-- <div class="col-sm-2">
                                         <select name="status_account" id="" class="form-control">
                                             <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
                                             <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
                                             <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option>
                                             </select>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-sm-2">
                                                 <input type="text" name="search" value="{{@$search}}">
                                             </div>
@@ -100,7 +100,7 @@
                                         </div>
                                     </form>
 
-                                </div> --}}
+                                </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
                                         <table id="simpletable_call" class="table table-striped table-bordered nowrap">
@@ -108,10 +108,12 @@
                                                 <tr>
                                                
                                                     <th>#</th>
-                                                    {{-- <th>Open/Close</th> --}}
-                                                    {{-- <th>package Code</th> --}}
-                                                    <th>package Name</th>
-                                                    {{-- <th>วันที่ใช้งาน</th> --}}
+                                                    <th>Open/Close</th>
+                                                    <th>Marking Name</th>
+                                                    {{-- <th>Marking Code</th> --}}
+                                                    <th>Markings Payment</th>
+                                                    <th>Markings Score</th>
+                                                    {{-- <th>Reware Gift</th> --}}
                                                     <th>Tool</th>
 
                                                 </tr>
@@ -122,7 +124,7 @@
                                             <tr class="num" id="{{$items->id}}">
                                                     <td>{{$key+1}}</td>
 
-                                                    {{-- <td>
+                                                    <td>
                                                     <form method="post" id="form{{$items->id}}" name="form{{$items->id}}">
                                                         @csrf
                                                         <label class="switch">
@@ -131,45 +133,16 @@
                                                             <span class="slider"></span>
                                                         </label>
                                                     </form>
-                                                    </td> --}}
-                                                    {{-- <td>{{$items->package_Code}}</td> --}}
-                                                    <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
-                                                    <td>{{$items->package_Name}}</td>
-                                                    
-                                                    <?php
-                                                    // $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
-                                                    // $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
-                                                    // $today = date('Y-m-d'); // วันที่ปัจจุบัน
+                                                    </td>
 
-                                                    // if ($date_start && $date_end) {
-                                                    //     if (strtotime($today) < strtotime($date_start)) {
-                                                    //         $status = "ยังไม่เข้าช่วง";
-                                                    //     } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
-                                                    //         $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
-                                                    //         $status = "เหลืออีก $days_remaining วัน";
-                                                    //     } else {
-                                                    //         $status = "หมดอายุแล้ว";
-                                                    //     }
-                                                    // } else {
-                                                    //     $status = "ไม่มีข้อมูลวันที่";
-                                                    // }
-
-                                                    // if ($date_start) {
-                                                    //     $formatted_date1 = date('d/m/Y', strtotime($date_start));
-                                                    // } else {
-                                                    //     $formatted_date1 = null;
-                                                    // }
-                                                    // if ($date_end) {
-                                                    //     $formatted_date2 = date('d/m/Y', strtotime($date_end));
-                                                    // } else {
-                                                    //     $formatted_date2 = null;
-                                                    // }
-                                                    ?>
-                                                    {{-- <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td> --}}
-                                                    <!-- <td>{{$items->country}}</td> -->
+                                                    <td>{{$items->Marking_Name}}</td>
+                                                    {{-- <td>{{$items->Marking_Code}}</td> --}}
+                                                    <td>{{$items->Marking_Payment}}</td>
+                                                    <td>{{$items->Marking_Score}}</td>
+                                                    {{-- <td>{{$items->Marking_giftName}}</td> --}}
                                                     <td>
-                                                    <a href="{{url('package_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>จัดการ Package</a>
-                                                        {{-- <a href="{{url('package_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a> --}}
+                                                    <a href="{{url('marking_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
+                                                        <a href="{{url('marking_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -198,7 +171,6 @@
                 </div>
                 <!-- Page-body end -->
             </div>
-
         </div>
         <!-- Main-body end -->
 
@@ -224,7 +196,7 @@
             const id = this.getAttribute('data-id');
             const isOpen = this.checked ? 0 : 1; // ค่าที่ส่ง 0 = เปิด, 1 = ปิด
 
-            fetch('{{ url("/package_open_close") }}', {
+            fetch('{{ url("/marking_open_close") }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

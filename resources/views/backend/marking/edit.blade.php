@@ -57,7 +57,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">Sub Package/EDIT</h5>
+                        <h5 class="m-b-10">Marking /EDIT</h5>
 
                     </div>
                 </div>
@@ -75,11 +75,10 @@
                                 <div class="card-block">
 
                                     <form method="post" id=""
-                                        action="{{ url('subpackage_update/'.@$item->id) }}"
+                                        action="{{ url('marking_update/'.@$item->id) }}"
                                         enctype="multipart/form-data" >
                                         @csrf
-                                        <input type="hidden" name="package_Code" value="{{$package_Code}}">
-                                        <input type="hidden" name="package_id" value="{{$package_id}}">
+
 
                                         <!-- -------EDIT---------- -->
                                         <input type="hidden" name="edit" value="{{@$item->id}}">
@@ -88,40 +87,30 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Sub Package Code*</label>
-                                                <input type="Subpackage_Code" name="Subpackage_Code" class="form-control" id=""  maxlength = "25"
-                                                placeholder="รหัสแพ็คเกจ"  required readonly value="{{$item->Subpackage_Code}}">
+                                                <label class="col-form-label">Marking Code*</label>
+                                                <input type="Marking_Code" name="Marking_Code" class="form-control" id=""  maxlength = "25"
+                                                placeholder="รหัสคูปอง"  required readonly value="{{$item->Marking_Code}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Sub Package Name*</label>
-                                                <input type="text" name="Subpackage_Name" class="form-control" id="" required value="{{$item->Subpackage_Name}}">
+                                                <label class="col-form-label">Marking Name*</label>
+                                                <input type="text" name="Marking_Name" class="form-control" id="" required value="{{$item->Marking_Name}}">
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">จำนวนวัน</label>
-                                                <input type="number" name="Subpackage_Dayuse" class="form-control" id=""
-                                                      value="{{@$item->Subpackage_Dayuse}}">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">ราคา</label>
-                                                <input type="number" name="Subpackage_Paymoney" class="form-control" id=""
-                                                      value="{{@$item->Subpackage_Paymoney}}">
-                                            </div>
-                                        </div>
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">รูปแบบ*</label>
-                                                <select name="type" id="type" class="form-control" required="">
-                                                    <option value="MOBILE" {{@$item->type=="MOBILE"?'selected':''}}>ยกเว้นทีวี</option>
-                                                    <option value="PC" {{@$item->type=="PC"?'selected':''}}>TV</option>
-                                                </select>
+                                                <label class="col-form-label">Marking Payment</label>
+                                                <input type="number" name="Marking_Payment" class="form-control" id=""
+                                                      value="{{$item->Marking_Payment}}" required>
                                             </div>
                                             <div class="col-sm-3">
+                                                <label class="col-form-label">Marking Score</label>
+                                                <input type="text" name="Marking_Score" class="form-control" id=""
+                                                      value="{{$item->Marking_Score}}">
                                             </div>
                                         </div>
+
 
                                         <?php $country=DB::table('dataset_country')->orderByRaw("CONVERT(ct_nameTHA USING tis620) ASC")->cursor(); ?>
                                         <!-- <div class="form-group row">
@@ -137,7 +126,7 @@
                                         
 
                                         <p class="text-right">
-                                            <a href="{{ url('package_edit/'.$package_id) }}"
+                                            <a href="{{ url('marking') }}"
                                                 style="color:white;" class="btn btn-warning"> <i
                                                     class="fa fa-share-square-o"></i> Back </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"
@@ -170,7 +159,7 @@
             const id = this.getAttribute('data-id');
             const isOpen = this.checked ? 0 : 1; // ค่าที่ส่ง 0 = เปิด, 1 = ปิด
 
-            fetch('{{ url("/coupon_in_open_close") }}', {
+            fetch('{{ url("/marking_in_open_close") }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

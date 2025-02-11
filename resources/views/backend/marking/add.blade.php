@@ -8,7 +8,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">Sub Package/ADD</h5>
+                        <h5 class="m-b-10">Marking /ADD</h5>
 
                     </div>
                 </div>
@@ -25,45 +25,32 @@
                                 </div>
                                 <div class="card-block">
 
-                                    <form method="post" id="" action="{{ url('subpackage_store') }}"
+                                    <form method="post" id="" action="{{ url('marking_store') }}"
                                         enctype="multipart/form-data" >
                                         @csrf
-                                        <input type="hidden" name="package_Code" value="{{$package_Code}}">
-                                        <input type="hidden" name="package_id" value="{{$package_id}}">
+                                        
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Sub Package Auto Code</label>
-                                                <input type="Subpackage_Code" name="Subpackage_Code" class="form-control" id=""  maxlength = "25"
-                                                placeholder="Suppackage code"  readonly>
+                                                <label class="col-form-label">Marking Code*</label>
+                                                <input type="text" name="Marking_Code" class="form-control" id=""  maxlength = "25"
+                                                placeholder="รหัส"  readonly>
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Sub Package Name*</label>
-                                                <input type="text" name="Subpackage_Name" class="form-control" id="" required >
+                                                <label class="col-form-label">Marking Name*</label>
+                                                <input type="text" name="Marking_Name" class="form-control" id="" required >
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">จำนวนวัน</label>
-                                                <input type="number" name="Subpackage_Dayuse" class="form-control" id=""
-                                                      value="0">
+                                                <label class="col-form-label">Marking Payment</label>
+                                                <input type="number" name="Marking_Payment" class="form-control" id=""
+                                                      value="0" required>
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">ราคา</label>
-                                                <input type="number" name="Subpackage_Paymoney" class="form-control" id=""
-                                                      value="0">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">รูปแบบ*</label>
-                                                <select name="type" id="type" class="form-control" required="">
-                                                    <option value="MOBILE" selected>ยกเว้นทีวี</option>
-                                                    <option value="PC">TV</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Marking Score</label>
+                                                <input type="text" name="Marking_Score" class="form-control" id=""
+                                                      value="">
                                             </div>
                                         </div>
 
@@ -83,7 +70,7 @@
 
 
                                         <p class="text-right">
-                                            <a href="{{ url('package_edit') }}/{{$package_id}}"
+                                            <a href="{{ url('marking') }}"
                                                 style="color:white;" class="btn btn-warning"> <i
                                                     class="fa fa-share-square-o"></i> Back </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"

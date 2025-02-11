@@ -72,7 +72,7 @@
                         <div class="col-sm-12">
                             <!-- Zero config.table start -->
                             <div class="card">
-                                {{-- <div class="card-header">
+                                <div class="card-header">
 
                                     <a style="color:white;" class="btn btn-success" href="{{url('package_add')}}"> <i class="fa fa-plus"></i> Add</a>
 
@@ -100,7 +100,7 @@
                                         </div>
                                     </form>
 
-                                </div> --}}
+                                </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
                                         <table id="simpletable_call" class="table table-striped table-bordered nowrap">
@@ -108,10 +108,10 @@
                                                 <tr>
                                                
                                                     <th>#</th>
-                                                    {{-- <th>Open/Close</th> --}}
-                                                    {{-- <th>package Code</th> --}}
+                                                    <th>Open/Close</th>
+                                                    <th>package Code</th>
                                                     <th>package Name</th>
-                                                    {{-- <th>วันที่ใช้งาน</th> --}}
+                                                    <th>วันที่ใช้งาน</th>
                                                     <th>Tool</th>
 
                                                 </tr>
@@ -122,7 +122,7 @@
                                             <tr class="num" id="{{$items->id}}">
                                                     <td>{{$key+1}}</td>
 
-                                                    {{-- <td>
+                                                    <td>
                                                     <form method="post" id="form{{$items->id}}" name="form{{$items->id}}">
                                                         @csrf
                                                         <label class="switch">
@@ -131,45 +131,45 @@
                                                             <span class="slider"></span>
                                                         </label>
                                                     </form>
-                                                    </td> --}}
-                                                    {{-- <td>{{$items->package_Code}}</td> --}}
+                                                    </td>
+                                                    <td>{{$items->package_Code}}</td>
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>{{$items->package_Name}}</td>
                                                     
                                                     <?php
-                                                    // $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
-                                                    // $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
-                                                    // $today = date('Y-m-d'); // วันที่ปัจจุบัน
+                                                    $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
-                                                    // if ($date_start && $date_end) {
-                                                    //     if (strtotime($today) < strtotime($date_start)) {
-                                                    //         $status = "ยังไม่เข้าช่วง";
-                                                    //     } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
-                                                    //         $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
-                                                    //         $status = "เหลืออีก $days_remaining วัน";
-                                                    //     } else {
-                                                    //         $status = "หมดอายุแล้ว";
-                                                    //     }
-                                                    // } else {
-                                                    //     $status = "ไม่มีข้อมูลวันที่";
-                                                    // }
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
 
-                                                    // if ($date_start) {
-                                                    //     $formatted_date1 = date('d/m/Y', strtotime($date_start));
-                                                    // } else {
-                                                    //     $formatted_date1 = null;
-                                                    // }
-                                                    // if ($date_end) {
-                                                    //     $formatted_date2 = date('d/m/Y', strtotime($date_end));
-                                                    // } else {
-                                                    //     $formatted_date2 = null;
-                                                    // }
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
                                                     ?>
-                                                    {{-- <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td> --}}
+                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <!-- <td>{{$items->country}}</td> -->
                                                     <td>
-                                                    <a href="{{url('package_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>จัดการ Package</a>
-                                                        {{-- <a href="{{url('package_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a> --}}
+                                                    <a href="{{url('package_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
+                                                        <a href="{{url('package_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -198,7 +198,6 @@
                 </div>
                 <!-- Page-body end -->
             </div>
-
         </div>
         <!-- Main-body end -->
 

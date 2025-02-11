@@ -109,6 +109,26 @@ Route::group(['middleware' => ['auth:admin']],function(){
     Route::post('subpackage_open_close',[App\Http\Controllers\PackageSubBackendController::class,'subpackage_open_close']);
     //subpackage
 
+    //reward
+    Route::get('reward',[App\Http\Controllers\RewardBackendController::class,'reward']);
+    Route::get('reward_destroy/{id}',[App\Http\Controllers\RewardBackendController::class,'reward_destroy']);
+    Route::get('reward_add',[App\Http\Controllers\RewardBackendController::class,'reward_add']);
+    Route::post('reward_store',[App\Http\Controllers\RewardBackendController::class,'reward_store']);
+    Route::get('reward_edit/{id}',[App\Http\Controllers\RewardBackendController::class,'reward_edit']);
+    Route::post('reward_update/{id}',[App\Http\Controllers\RewardBackendController::class,'reward_update']);
+    Route::post('reward_open_close',[App\Http\Controllers\RewardBackendController::class,'reward_open_close']);
+    //reward
+
+    //marking
+    Route::get('marking',[App\Http\Controllers\MarkingBackendController::class,'marking']);
+    Route::get('marking_destroy/{id}',[App\Http\Controllers\MarkingBackendController::class,'marking_destroy']);
+    Route::get('marking_add',[App\Http\Controllers\MarkingBackendController::class,'marking_add']);
+    Route::post('marking_store',[App\Http\Controllers\MarkingBackendController::class,'marking_store']);
+    Route::get('marking_edit/{id}',[App\Http\Controllers\MarkingBackendController::class,'marking_edit']);
+    Route::post('marking_update/{id}',[App\Http\Controllers\MarkingBackendController::class,'marking_update']);
+    Route::post('marking_open_close',[App\Http\Controllers\MarkingBackendController::class,'marking_open_close']);
+    //marking
+
   Route::get('/logout',[App\Http\Controllers\AdminUserBackendController::class,'logout'])->name('logout');
     Route::get('/register',[App\Http\Controllers\AdminUserBackendController::class,'register'])->name('register');
     Route::get('/verify',[App\Http\Controllers\AdminUserBackendController::class,'verify'])->name('verify');
@@ -118,26 +138,21 @@ Route::group(['middleware' => ['auth:admin']],function(){
 });
 
 
-Route::get('front',function(){
+Route::get('frontlogin',function(){
   return view('frontend.login');
-});
+})->name('frontend.login');
 
-Route::get('netfix',function(){
-  return view('frontend.netflix-pricing');
-});
+Route::get('netflix',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.netflix');
+
+Route::get('youtube',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.youtube');
 
 Route::get('profile',function(){
   return view('frontend.profile');
-});
+})->name('frontend.profile');
 
-Route::get('rewards',function(){
-  return view('frontend.rewards');
-});
+Route::get('rewards',[App\Http\Controllers\UserFrontendController::class,'rewardsRead'])->name('frontend.rewards');
 
 Route::get('thankyou',function(){
   return view('frontend.thankyou');
-});
+})->name('frontend.thankyou');
 
-Route::get('youtube',function(){
-  return view('frontend.youtube-pricing');
-});

@@ -86,26 +86,26 @@
 
 
                                         <div class="form-group row">
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Coupon Code*</label>
+                                            {{-- <div class="col-sm-3">
+                                                <label class="col-form-label">Package Code*</label>
                                                 <input type="text" name="package_Code" class="form-control" id=""  maxlength = "25"
                                                 placeholder="รหัสแพ็คเกจ"  required readonly value="{{$item->package_Code}}">
-                                            </div>
+                                            </div> --}}
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Coupon Name*</label>
+                                                <label class="col-form-label">Package Name*</label>
                                                 <input type="text" name="package_Name" class="form-control" id="" required value="{{$item->package_Name}}">
                                             </div>
                                         </div>
 
                                         <?php
-                                        $date_s=date('Y-m-d');
-                                        if(@$item->date_start!=null){
-                                            $date_s=@$item->date_start;
-                                        }
+                                        // $date_s=date('Y-m-d');
+                                        // if(@$item->date_start!=null){
+                                        //     $date_s=@$item->date_start;
+                                        // }
 
                                         ?>
 
-                                        <div class="form-group row">
+                                        {{-- <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id=""
@@ -116,7 +116,7 @@
                                                 <input type="date" name="date_end" class="form-control" id=""
                                                       value="{{@$item->date_end}}">
                                             </div>
-                                        </div>                                        
+                                        </div>                                         --}}
 
                                         <p class="text-right">
                                             <a href="{{ url('package') }}"
@@ -175,13 +175,13 @@
                                                 @csrf
                                                 
                                                 <div class="form-group row" style="display: flex; justify-content: flex-end;">
-                                                <div class="col-sm-2">
+                                                {{-- <div class="col-sm-2">
                                                 <select name="status_account" id="" class="form-control">
                                                     <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
                                                     <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
                                                     <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option>
                                                     </select>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="col-sm-2">
                                                         <input type="text" name="search" value="{{@$search}}">
                                                     </div>
@@ -202,9 +202,11 @@
                                                         
                                                             <th>#</th>
                                                             <th>Open/Close</th>
+                                                            {{-- <th>Sub Package Code</th> --}}
                                                             <th>Sub Package Name</th>
-                                                            <th>Sub Package Code</th>
-                                                            <th>วันที่ใช้งาน</th>
+                                                            <th>จำนวนวัน</th>
+                                                            <th>ราคา</th>
+                                                            <th>รูปแบบ</th>
                                                             <th>Tool</th>
         
                                                         </tr>
@@ -225,41 +227,10 @@
                                                                 </label>
                                                             </form>
                                                             </td>
-        
-                                                            <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                             <td>{{$items->Subpackage_Name}}</td>
-                                                            <td>{{$items->Subpackage_Code}}</td>
-                                                            <?php
-                                                            $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
-                                                            $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
-                                                            $today = date('Y-m-d'); // วันที่ปัจจุบัน
-        
-                                                            if ($date_start && $date_end) {
-                                                                if (strtotime($today) < strtotime($date_start)) {
-                                                                    $status = "ยังไม่เข้าช่วง";
-                                                                } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
-                                                                    $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
-                                                                    $status = "เหลืออีก $days_remaining วัน";
-                                                                } else {
-                                                                    $status = "หมดอายุแล้ว";
-                                                                }
-                                                            } else {
-                                                                $status = "ไม่มีข้อมูลวันที่";
-                                                            }
-        
-                                                            if ($date_start) {
-                                                                $formatted_date1 = date('d/m/Y', strtotime($date_start));
-                                                            } else {
-                                                                $formatted_date1 = null;
-                                                            }
-                                                            if ($date_end) {
-                                                                $formatted_date2 = date('d/m/Y', strtotime($date_end));
-                                                            } else {
-                                                                $formatted_date2 = null;
-                                                            }
-                                                            ?>
-                                                            <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
-                                                            <!-- <td>{{$items->country}}</td> -->
+                                                            <td>{{$items->Subpackage_Dayuse}} วัน</td>
+                                                            <td>{{$items->Subpackage_Paymoney}} บาท</td>
+                                                            <td>{{$items->type=='MOBILE'?'ยกเว้นทีวี':'TV'}}</td>
                                                             <td>
                                                             <a href="{{url('subpackage_edit/'.$items->id)}}?package_Code={{$item->package_Code}}&package_id={{$item->id}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                                 <a href="{{url('subpackage_destroy/'.$items->id)}}?package_Code={{$item->package_Code}}&package_id={{$item->id}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>

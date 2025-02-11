@@ -17,8 +17,8 @@ class User
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->guard('user')->check()){
-        return $next($request);
+        if(auth()->guard('users')->check()){
+            return $next($request);
         }
         abort(401);
     }
