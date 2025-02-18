@@ -222,11 +222,20 @@
                                                     </form>
                                                     </td>
 
+                                                    <?php
+                                                    if($items->type=='PC'){
+                                                        $paga='TV '.@$items->package;
+                                                    }else{
+                                                        $paga='ยกเว้นทีวี '.@$items->package;
+                                                    }
+
+                                                    ?>
+
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>{{$items->username}}</td>
                                                     <td>{{$items->name}}</td>
                                                     <td>{{$items->line}}</td>
-                                                    <td>{{$items->package}}</td>
+                                                    <td>{{@$paga}} {{$items->package}}</td>
                                                     <?php
                                                     $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
@@ -256,6 +265,9 @@
                                                         $formatted_date2 = null;
                                                     }
                                                     ?>
+
+                                                    
+
                                                     <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <td>
                                                         @if($items->status_account == 0)
@@ -266,17 +278,6 @@
                                                             <span class="status-expired">หมดอายุ</span>
                                                         @endif
                                                     </td>
-
-
-                                                    <?php
-                                                    if($items->type=='PC'){
-                                                        $paga='TV '.@$items->package;
-                                                    }else{
-                                                        $paga='ยกเว้นทีวี '.@$items->package;
-                                                    }
-
-                                                    ?>
-
 
                                                     <td>
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>

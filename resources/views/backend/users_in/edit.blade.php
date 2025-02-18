@@ -541,6 +541,7 @@
                                                     <th>Username</th>
                                                     <th>Name Profile</th>
                                                     <th>ชื่อไลน์ลูกค้า</th>
+                                                    <th>Package</th>
                                                     <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>Tool</th>
@@ -570,9 +571,20 @@
                                                         <i class="fa fa-desktop" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i> {{@$mail_r}}
                                                         @endif
                                                     </td>
+
+                                                    <?php
+                                                    if($user_aa->type=='PC'){
+                                                        $paga='TV '.@$user_aa->package;
+                                                    }else{
+                                                        $paga='ยกเว้นทีวี '.@$user_aa->package;
+                                                    }
+
+                                                    ?>
+                                                    
                                                     <td>{{$user_aa->username}}</td>
                                                     <td>{{$user_aa->name}}</td>
                                                     <td>{{$user_aa->line}}</td>
+                                                    <td>{{@$user_aa}} {{$user_aa->package}}</td>
                                                     <?php
                                                     $date_start = $user_aa->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = $user_aa->date_end; // วันที่สิ้นสุด (Y-m-d)
@@ -605,14 +617,7 @@
                                                     <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <td>{{@$user_ins->created_at}}</td>
 
-                                                    <?php
-                                                    if($user_aa->type=='PC'){
-                                                        $paga='TV '.@$user_aa->package;
-                                                    }else{
-                                                        $paga='ยกเว้นทีวี '.@$user_aa->package;
-                                                    }
-
-                                                    ?>
+                                                    
 
                                                     <td>
                                                     <!-- <a href="{{url('users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
