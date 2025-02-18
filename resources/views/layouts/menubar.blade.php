@@ -504,7 +504,7 @@
                             <!-- admin Page-->
                             <ul class="pcoded-item pcoded-left-item">
                                 <!-- Start-->
-                                <li class="pcoded-hasmenu {{ isset($page) && $page == 'admin' ? 'active pcoded-trigger' : '' }}">
+                                <li class="pcoded-hasmenu {{ isset($page) && $page == 'all' ? 'active pcoded-trigger' : '' }}">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="ti-user"></i><b>D</b></span>
                                         <span class="pcoded-mtext">ADMIN&USERS</span>
@@ -536,6 +536,27 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+                                    </ul>
+                                    <!--DJ page-->
+                                </li>
+                            </ul>
+                            <!-- admin Page-->
+
+
+
+
+                              <!-- admin Page-->
+                              <ul class="pcoded-item pcoded-left-item">
+                                <!-- Start-->
+                                <li class="pcoded-hasmenu {{ isset($page) && $page == 'admin' ? 'active pcoded-trigger' : '' }}">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="ti-user"></i><b>D</b></span>
+                                        <span class="pcoded-mtext">MENU</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+
+                                  
+                                    <ul class="pcoded-submenu">
 
                                         <!--DJ page-->
                                         {{-- <li class="{{ isset($list) && $list == 'coupon' ? 'active' : '' }}">

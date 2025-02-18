@@ -92,7 +92,7 @@ class AdminUserBackendController extends Controller
     ->paginate(10);
    return view('backend.users.his_created',[
     'item'=>$item,
-    'page'=>"admin",
+    'page'=>"all",
     'list'=>"users",
    ]);
    }
@@ -125,7 +125,7 @@ class AdminUserBackendController extends Controller
         $item=admin ::orderby('id','desc')->cursor();
         return view('backend.admin.index',[
             'item'=>$item,
-            'page'=>"admin",
+            'page'=>"all",
             'list'=>"admin",
         ]);
     }
@@ -212,7 +212,7 @@ class AdminUserBackendController extends Controller
         $item=admin::where('id',$id)->first();
         return view('backend.admin.edit',[
             'item'=>$item,
-            'page'=>"admin",
+            'page'=>"all",
             'list'=>"admin",
         ]);
     }
@@ -227,7 +227,7 @@ class AdminUserBackendController extends Controller
     }
     public function admin_add(){
         return view('backend.admin.add',[
-            'page'=>"admin",
+            'page'=>"all",
             'list'=>"admin",
         ]);
     }
@@ -304,7 +304,7 @@ class AdminUserBackendController extends Controller
 
         return view('backend.users.index',[
             'item'=>$item,
-            'page'=>"admin",
+            'page'=>"all",
             'list'=>"users",
 
             'search'=>$search,
@@ -594,7 +594,7 @@ class AdminUserBackendController extends Controller
 
         return view('backend.users.edit',[
             'item'=>$item,
-            'page'=>"admin",
+            'page'=>"all",
             'list'=>"users",
         ]);
     }
@@ -620,7 +620,7 @@ class AdminUserBackendController extends Controller
     }
     public function users_add(){
         return view('backend.users.add',[
-            'page'=>"admin",
+            'page'=>"all",
             'list'=>"users",
         ]);
     }
@@ -630,7 +630,7 @@ class AdminUserBackendController extends Controller
             abort(404);
         }
         return view('backend.users.add_many',[
-            'page'=>"admin",
+            'page'=>"all",
             'list'=>"users",
 
             'number'=>$r->number,
@@ -937,7 +937,7 @@ class AdminUserBackendController extends Controller
 
           return view('backend.users_in.index',[
               'item'=>$item,
-              'page'=>"admin",
+              'page'=>"all",
               'list'=>"users_in",
 
               'search'=>$search,
@@ -1023,7 +1023,7 @@ class AdminUserBackendController extends Controller
 
           return view('backend.users_in.edit',[
               'item'=>$item,
-              'page'=>"admin",
+              'page'=>"all",
               'list'=>"users_in",
           ]);
       }
@@ -1034,7 +1034,7 @@ class AdminUserBackendController extends Controller
       }
       public function users_in_add(){
           return view('backend.users_in.add',[
-              'page'=>"admin",
+              'page'=>"all",
               'list'=>"users_in",
           ]);
       }
