@@ -370,34 +370,67 @@
 
                                         <div class="col-sm-3">
                                         <label class="col-form-label">Package*</label>
-                                        <select name="type" id="type" class="form-control" required  >
-                                        <option value="MOBILE" @if(@$none->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
-                                        <option value="PC" @if(@$none->type=='PC') selected  @endif >TV</option>
-                                        </select>
-                                        </div>
-
-                                        <input type="hidden" name="package" class="form-control" id="" value="10">
-
-
-                                        <!-- <div class="col-sm-3">
-                                        <label class="col-form-label">รูปแบบ*</label>
-                                        <select name="type" id="type" class="form-control" required  >
+                                        <select name="type" id="type" class="form-control" required onchange="updatePackage()"  >
                                         <option value="MOBILE" @if(@$none->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
                                         <option value="PC" @if(@$none->type=='PC') selected  @endif >TV</option>
                                         </select>
                                         </div>
 
                                         <div class="col-sm-3">
-                                        <label class="col-form-label">Package*</label>
-                                        <select name="package" id="package" class="form-control add_select2" required  >
-                                        <option value="30 วัน" @if(@$none->package=='30 วัน') selected  @endif >30 วัน</option>
-                                        <option value="60 วัน" @if(@$none->package=='60 วัน') selected  @endif >60 วัน</option>
-                                        <option value="90 วัน" @if(@$none->package=='90 วัน') selected  @endif >90 วัน</option>
-                                        <option value="120 วัน" @if(@$none->package=='120 วัน') selected  @endif >120 วัน</option>
-                                        <option value="180 วัน" @if(@$none->package=='180 วัน') selected  @endif >180 วัน</option>
-                                        <option value="365 วัน" @if(@$none->package=='365 วัน') selected  @endif >365 วัน</option>
-                                        </select>
-                                        </div> -->
+                                            <label class="col-form-label">แพ็คเกจ*</label>
+                                            <select name="package" id="package" class="form-control" required>
+                                                <!-- ตัวเลือกจะแสดงผลอัตโนมัติ -->
+                                            </select>
+                                        </div>
+
+                                        <script>
+                                        function updatePackage() {
+                                            var type = document.getElementById("type").value;
+                                            var packageSelect = document.getElementById("package");
+                                            var selectedPackage = "{{ @$item->package }}"; // นำค่าจากฐานข้อมูลมาใช้
+
+                                            // ล้างค่าเดิม
+                                            packageSelect.innerHTML = "";
+
+                                            // กำหนดตัวเลือกแพ็กเกจ
+                                            var options;
+                                            if (type === "PC") {
+                                                options = [
+                                                    { value: "1 เดือน 139 บาท", text: "1 เดือน 139 บาท" },
+                                                    { value: "2 เดือน 269 บาท", text: "2 เดือน 269 บาท" },
+                                                    { value: "3 เดือน 400 บาท", text: "3 เดือน 400 บาท" },
+                                                    { value: "4 เดือน 535 บาท", text: "4 เดือน 535 บาท" },
+                                                    { value: "6 เดือน 800 บาท", text: "6 เดือน 800 บาท" },
+                                                    { value: "1 ปี 1,590 บาท", text: "1 ปี 1,590 บาท" }
+                                                ];
+                                            } else {
+                                                options = [
+                                                    { value: "1 เดือน 189 บาท", text: "1 เดือน 189 บาท" },
+                                                    { value: "2 เดือน 369 บาท", text: "2 เดือน 369 บาท" },
+                                                    { value: "3 เดือน 550 บาท", text: "3 เดือน 550 บาท" },
+                                                    { value: "4 เดือน 729 บาท", text: "4 เดือน 729 บาท" },
+                                                    { value: "6 เดือน 1,099 บาท", text: "6 เดือน 1,099 บาท" },
+                                                    { value: "1 ปี 2,090 บาท", text: "1 ปี 2,090 บาท" }
+                                                ];
+                                            }
+
+                                            // เพิ่ม option ลงใน select และกำหนดค่าที่เลือกไว้
+                                            options.forEach(option => {
+                                                var opt = document.createElement("option");
+                                                opt.value = option.value;
+                                                opt.textContent = option.text;
+                                                if (option.value === selectedPackage) {
+                                                    opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
+                                                }
+                                                packageSelect.appendChild(opt);
+                                            });
+                                        }
+
+                                        // เรียกใช้เมื่อโหลดหน้าเว็บ
+                                        window.onload = function () {
+                                            updatePackage();
+                                        };
+                                    </script>
 
                                         </div>
 
@@ -571,18 +604,20 @@
                                                     ?>
                                                     <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <td>{{@$user_ins->created_at}}</td>
-                                                    <td>
 
                                                     <?php
-                                                    if($user_aa->type=='MOBILR'){
-                                                        $type_coppy='ยกเว้นทีวี';
+                                                    if($user_aa->type=='PC'){
+                                                        $paga='TV '.@$user_aa->package;
                                                     }else{
-                                                        $type_coppy='TV';
+                                                        $paga='ยกเว้นทีวี '.@$user_aa->package;
                                                     }
+
                                                     ?>
+
+                                                    <td>
                                                     <!-- <a href="{{url('users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
                                                         <a href="{{url('users_in_in_destroy/'.$user_ins->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('You Want To Delete?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user_aa->username}}', '{{$user_aa->password}}', '{{$user_aa->name}}', '{{@$type_coppy}}', '{{$user_aa->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user_aa->username}}', '{{$user_aa->password}}', '{{$user_aa->name}}', '{{@$paga}}', '{{$user_aa->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
@@ -593,19 +628,6 @@
                                         </table>
                                     </div>
                                 </div>
-
-                                <!-- <script>
-                                    function copyUserInfo(username, password, name, package, link) {
-                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
-                                        
-                                        navigator.clipboard.writeText(textToCopy).then(function() {
-                                            alert("คัดลอกข้อมูลสำเร็จ!");
-                                        }, function(err) {
-                                            console.error('คัดลอกไม่สำเร็จ: ', err);
-                                        });
-                                    }
-                                    </script> -->
-
                                     <script>
                                     function fallbackCopyTextToClipboard(text) {
                                         const textArea = document.createElement("textarea");

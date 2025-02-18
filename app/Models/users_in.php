@@ -15,6 +15,13 @@ class users_in extends Authenticatable
     protected $table = "tb_users_in";
     protected $primarykey = "id";
 
+    // UserIn.php
+    public function usersInIns()
+    {
+        return $this->hasMany(users_in_in::class, 'id_user_in');
+    }
+
+
     public function users_in_in_mobile()
     {
         return $this->hasMany(users_in_in::class, 'id_user_in')->where('type', 'MOBILE');
@@ -97,7 +104,6 @@ class users_in extends Authenticatable
         })
         ->withCount('users_in_in_mobile') // นับเฉพาะ MOBILE
         ->having('users_in_in_mobile_count', '<', 5)
-        ->inRandomOrder()
         ->first();
 
         return $eligibleUsers;
@@ -128,14 +134,13 @@ class users_in extends Authenticatable
     })
     ->withCount('users_in_in_pc')
     ->having('users_in_in_pc_count', '<', 2) // ต้องไม่เกิน 2 ตัว
-    ->inRandomOrder()
     ->first();
 
     return $eligibleUsers;
     }
 
 
-
+    // ->inRandomOrder()
 
 
     // ฟังก์ชันสำหรับเรียก user

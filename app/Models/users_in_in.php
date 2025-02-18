@@ -19,4 +19,9 @@ class users_in_in extends Authenticatable
     {
         return $this->belongsTo(users::class, 'id_user');
     }
+
+    public function userIn()
+    {
+        return $this->belongsTo(users_in::class, 'id_user_in');
+    }
 }

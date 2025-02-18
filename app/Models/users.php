@@ -16,4 +16,16 @@ class users extends Authenticatable
     {
         return $this->hasMany(users_in_in::class, 'id_user');
     }
+
+    public function userIn()
+    {
+        return $this->hasManyThrough(
+            users_in::class, // โมเดลที่เราต้องการดึงข้อมูล
+            users_in_in::class, // โมเดลที่เชื่อมกลาง
+            'id_user', // คอลัมน์ที่เชื่อมจาก UsersInIn ไปยัง User
+            'id', // คอลัมน์ที่เชื่อมจาก UserIn ไปยัง UsersInIn
+            'id', // คอลัมน์ที่เชื่อมจาก User ไปยัง UsersInIn
+            'id_user_in' // คอลัมน์ที่เชื่อมจาก UsersInIn ไปยัง UserIn
+        );
+    }
 }

@@ -90,35 +90,72 @@
                                             </div>
 
 
-                                             <div class="col-sm-3">
-                                            <label class="col-form-label">Package*</label>
-                                            <select name="users[{{ $i }}][type]"  class="form-control" required  >
-                                            <option value="MOBILE" >ยกเว้นทีวี</option>
-                                            <option value="PC" >TV</option>
-                                            </select>
-                                            </div>
-
-                                            <input type="hidden" name="users[{{ $i }}][package]" class="form-control" id="" value="10">
-
-                                            <!-- <div class="col-sm-3">
-                                            <label class="col-form-label">รูปแบบ*</label>
-                                            <select name="users[{{ $i }}][type]"  class="form-control" required  >
-                                            <option value="MOBILE" >ยกเว้นทีวี</option>
-                                            <option value="PC" >TV</option>
-                                            </select>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Package*</label>
+                                                <select name="users[{{ $i }}][type]" class="form-control" required onchange="updatePackage(this)">
+                                                    <option value="MOBILE">ยกเว้นทีวี</option>
+                                                    <option value="PC">TV</option>
+                                                </select>
                                             </div>
 
                                             <div class="col-sm-3">
-                                            <label class="col-form-label">Package*</label>
-                                            <select name="users[{{ $i }}][package]" class="form-control add_select2" required>
-                                            <option value="30 วัน" >30 วัน</option>
-                                            <option value="60 วัน"  >60 วัน</option>
-                                            <option value="90 วัน"  >90 วัน</option>
-                                            <option value="120 วัน" >120 วัน</option>
-                                            <option value="180 วัน" >180 วัน</option>
-                                            <option value="365 วัน" >365 วัน</option>
+                                            <label class="col-form-label">แพ็คเกจ*</label>
+                                            <select name="users[{{ $i }}][package]" id="package" class="form-control" required>
+                                                <!-- ตัวเลือกจะแสดงผลอัตโนมัติ -->
                                             </select>
-                                            </div> -->
+                                        </div>
+
+                                        <script>
+                                        function updatePackage(selectElement) {
+                                            var formGroup = selectElement.closest('.form-group'); // ค้นหาฟอร์มที่เกี่ยวข้อง
+                                            var packageSelect = formGroup.querySelector("select[name^='users'][name$='[package]']");
+                                            var selectedPackage = "{{ @$item->package }}"; // ค่าที่เลือกไว้ในฐานข้อมูล
+
+                                            // ล้างค่าเดิม
+                                            packageSelect.innerHTML = "";
+
+                                            // กำหนดตัวเลือกแพ็กเกจ
+                                            var options;
+                                            if (selectElement.value === "PC") {
+                                                options = [
+                                                    { value: "1 เดือน 139 บาท", text: "1 เดือน 139 บาท" },
+                                                    { value: "2 เดือน 269 บาท", text: "2 เดือน 269 บาท" },
+                                                    { value: "3 เดือน 400 บาท", text: "3 เดือน 400 บาท" },
+                                                    { value: "4 เดือน 535 บาท", text: "4 เดือน 535 บาท" },
+                                                    { value: "6 เดือน 800 บาท", text: "6 เดือน 800 บาท" },
+                                                    { value: "1 ปี 1,590 บาท", text: "1 ปี 1,590 บาท" }
+                                                ];
+                                            } else {
+                                                options = [
+                                                    { value: "1 เดือน 189 บาท", text: "1 เดือน 189 บาท" },
+                                                    { value: "2 เดือน 369 บาท", text: "2 เดือน 369 บาท" },
+                                                    { value: "3 เดือน 550 บาท", text: "3 เดือน 550 บาท" },
+                                                    { value: "4 เดือน 729 บาท", text: "4 เดือน 729 บาท" },
+                                                    { value: "6 เดือน 1,099 บาท", text: "6 เดือน 1,099 บาท" },
+                                                    { value: "1 ปี 2,090 บาท", text: "1 ปี 2,090 บาท" }
+                                                ];
+                                            }
+
+                                            // เพิ่ม option ลงใน select
+                                            options.forEach(option => {
+                                                var opt = document.createElement("option");
+                                                opt.value = option.value;
+                                                opt.textContent = option.text;
+                                                if (option.value === selectedPackage) {
+                                                    opt.selected = true;
+                                                }
+                                                packageSelect.appendChild(opt);
+                                            });
+                                        }
+
+                                        // เรียกใช้อัตโนมัติเมื่อหน้าโหลดเสร็จ
+                                        window.onload = function () {
+                                            document.querySelectorAll("select[name^='users'][name$='[type]']").forEach(select => {
+                                                updatePackage(select); // โหลดค่าเริ่มต้น
+                                            });
+                                        };
+                                    </script>
+
 
                                             </div>
 
