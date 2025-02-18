@@ -53,6 +53,24 @@
 
                                         ?>
 
+
+                                        <?php $check_edit=Auth::guard('admin')->user()->id; ?>
+
+                                        @if(@$item->status_edit != @$check_edit or @$item->status_edit == null)
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <h1 class="col-form-label" style="color:red">กำลังมีการแก้ใขอยู่ในขณะนี้</h1>
+                                                <h1 class="col-form-label" style="color:red">กำลังมีการแก้ใขอยู่ในขณะนี้</h1>
+                                                <h1 class="col-form-label" style="color:red">กำลังมีการแก้ใขอยู่ในขณะนี้</h1>
+                                                <h1 class="col-form-label" style="color:red">กำลังมีการแก้ใขอยู่ในขณะนี้</h1>
+                                                <h1 class="col-form-label" style="color:red">กำลังมีการแก้ใขอยู่ในขณะนี้</h1>
+                                                <h1 class="col-form-label" style="color:red">กำลังมีการแก้ใขอยู่ในขณะนี้</h1>
+                                                <h1 class="col-form-label" style="color:red">กำลังมีการแก้ใขอยู่ในขณะนี้</h1>
+                                                <h1 class="col-form-label" style="color:red">กำลังมีการแก้ใขอยู่ในขณะนี้</h1>
+                                            </div>
+                                        </div>
+                                        @endif
+
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Name Profile</label>
@@ -82,10 +100,16 @@
                                         </div> -->
 
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3">
                                                 <label class="col-form-label">เบอรโทรศัพท์</label>
                                                 <input type="text" name="phone" class="form-control" id=""  maxlength = "10" placeholder="เบอรโทรศัพท์ (ถ้ามี)"
                                                       value="{{@$item->phone}}">
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Email</label>
+                                                <input type="text" name="email" class="form-control" id=""   placeholder="Email (ถ้ามี)"
+                                                      value="{{@$item->email}}">
                                             </div>
                                         </div>
 
@@ -106,35 +130,70 @@
                                         <div class="form-group row">
 
                                         <div class="col-sm-3">
-                                        <label class="col-form-label">Package*</label>
-                                        <select name="type" id="type" class="form-control" required  >
-                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
-                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
-                                        </select>
-                                        </div>
-
-                                        <input type="hidden" name="package" class="form-control" id="" value="10">
-
-
-                                        <!-- <div class="col-sm-3">
-                                        <label class="col-form-label">รูปแบบ*</label>
-                                        <select name="type" id="type" class="form-control" required  >
+                                        <label class="col-form-label">Package Type*</label>
+                                        <select name="type" id="type" class="form-control" required onchange="updatePackage()" >
                                         <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
                                         <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
                                         </select>
                                         </div>
 
                                         <div class="col-sm-3">
-                                        <label class="col-form-label">Package*</label>
-                                        <select name="package" id="package" class="form-control add_select2" required  >
-                                        <option value="30 วัน" @if(@$item->package=='30 วัน') selected  @endif >30 วัน</option>
-                                        <option value="60 วัน" @if(@$item->package=='60 วัน') selected  @endif >60 วัน</option>
-                                        <option value="90 วัน" @if(@$item->package=='90 วัน') selected  @endif >90 วัน</option>
-                                        <option value="120 วัน" @if(@$item->package=='120 วัน') selected  @endif >120 วัน</option>
-                                        <option value="180 วัน" @if(@$item->package=='180 วัน') selected  @endif >180 วัน</option>
-                                        <option value="365 วัน" @if(@$item->package=='365 วัน') selected  @endif >365 วัน</option>
-                                        </select>
-                                        </div> -->
+                                            <label class="col-form-label">แพ็คเกจ*</label>
+                                            <select name="package" id="package" class="form-control" required>
+                                                <!-- ตัวเลือกจะแสดงผลอัตโนมัติ -->
+                                            </select>
+                                        </div>
+
+                                        <script>
+                                        function updatePackage() {
+                                            var type = document.getElementById("type").value;
+                                            var packageSelect = document.getElementById("package");
+                                            var selectedPackage = "{{ @$item->package }}"; // นำค่าจากฐานข้อมูลมาใช้
+
+                                            // ล้างค่าเดิม
+                                            packageSelect.innerHTML = "";
+
+                                            // กำหนดตัวเลือกแพ็กเกจ
+                                            var options;
+                                            if (type === "PC") {
+                                                options = [
+                                                    { value: "1 เดือน 139 บาท", text: "1 เดือน 139 บาท" },
+                                                    { value: "2 เดือน 269 บาท", text: "2 เดือน 269 บาท" },
+                                                    { value: "3 เดือน 400 บาท", text: "3 เดือน 400 บาท" },
+                                                    { value: "4 เดือน 535 บาท", text: "4 เดือน 535 บาท" },
+                                                    { value: "6 เดือน 800 บาท", text: "6 เดือน 800 บาท" },
+                                                    { value: "1 ปี 1,590 บาท", text: "1 ปี 1,590 บาท" }
+                                                ];
+                                            } else {
+                                                options = [
+                                                    { value: "1 เดือน 189 บาท", text: "1 เดือน 189 บาท" },
+                                                    { value: "2 เดือน 369 บาท", text: "2 เดือน 369 บาท" },
+                                                    { value: "3 เดือน 550 บาท", text: "3 เดือน 550 บาท" },
+                                                    { value: "4 เดือน 729 บาท", text: "4 เดือน 729 บาท" },
+                                                    { value: "6 เดือน 1,099 บาท", text: "6 เดือน 1,099 บาท" },
+                                                    { value: "1 ปี 2,090 บาท", text: "1 ปี 2,090 บาท" }
+                                                ];
+                                            }
+
+                                            // เพิ่ม option ลงใน select และกำหนดค่าที่เลือกไว้
+                                            options.forEach(option => {
+                                                var opt = document.createElement("option");
+                                                opt.value = option.value;
+                                                opt.textContent = option.text;
+                                                if (option.value === selectedPackage) {
+                                                    opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
+                                                }
+                                                packageSelect.appendChild(opt);
+                                            });
+                                        }
+
+                                        // เรียกใช้เมื่อโหลดหน้าเว็บ
+                                        window.onload = function () {
+                                            updatePackage();
+                                            updatePackage_a();
+                                        };
+                                    </script>
+
                                         
                                         </div>
 
@@ -161,9 +220,9 @@
                                      
 
                                         <p class="text-right">
-                                            <a href="{{ url('users') }}"
+                                            <a href="{{ url('users_status_edit/'.@$item->id) }}"
                                                 style="color:white;" class="btn btn-warning"> <i
-                                                    class="fa fa-share-square-o"></i> Back </a>
+                                                    class="fa fa-share-square-o"></i> ยกเลิกแก้ใข/ย้อนกลับ </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"
                                                 onclick="return confirm('Confirm!');"> <i
                                                     class="fa fa-check-circle-o"></i> Save </button>
@@ -183,6 +242,74 @@
                                         @csrf
 
                                         <input type="hidden" name="id" value="{{@$item->id}}">
+
+                                        <div class="form-group row">
+
+                                        <div class="col-sm-3">
+                                        <label class="col-form-label">Package Type*</label>
+                                        <select name="type" id="type_a" class="form-control" required onchange="updatePackage_a()" >
+                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
+                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        </select>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label class="col-form-label">แพ็คเกจ*</label>
+                                            <select name="package" id="package_a" class="form-control" required>
+                                                <!-- ตัวเลือกจะแสดงผลอัตโนมัติ -->
+                                            </select>
+                                        </div>
+                                        </div>
+
+                                        <script>
+                                        function updatePackage_a() {
+                                            var type = document.getElementById("type_a").value;
+                                            var packageSelect = document.getElementById("package_a");
+                                            var selectedPackage = "{{ @$item->package }}"; // นำค่าจากฐานข้อมูลมาใช้
+
+                                            // ล้างค่าเดิม
+                                            packageSelect.innerHTML = "";
+
+                                            // กำหนดตัวเลือกแพ็กเกจ
+                                            var options;
+                                            if (type === "PC") {
+                                                options = [
+                                                    { value: "1 เดือน 139 บาท", text: "1 เดือน 139 บาท" },
+                                                    { value: "2 เดือน 269 บาท", text: "2 เดือน 269 บาท" },
+                                                    { value: "3 เดือน 400 บาท", text: "3 เดือน 400 บาท" },
+                                                    { value: "4 เดือน 535 บาท", text: "4 เดือน 535 บาท" },
+                                                    { value: "6 เดือน 800 บาท", text: "6 เดือน 800 บาท" },
+                                                    { value: "1 ปี 1,590 บาท", text: "1 ปี 1,590 บาท" }
+                                                ];
+                                            } else {
+                                                options = [
+                                                    { value: "1 เดือน 189 บาท", text: "1 เดือน 189 บาท" },
+                                                    { value: "2 เดือน 369 บาท", text: "2 เดือน 369 บาท" },
+                                                    { value: "3 เดือน 550 บาท", text: "3 เดือน 550 บาท" },
+                                                    { value: "4 เดือน 729 บาท", text: "4 เดือน 729 บาท" },
+                                                    { value: "6 เดือน 1,099 บาท", text: "6 เดือน 1,099 บาท" },
+                                                    { value: "1 ปี 2,090 บาท", text: "1 ปี 2,090 บาท" }
+                                                ];
+                                            }
+
+                                            // เพิ่ม option ลงใน select และกำหนดค่าที่เลือกไว้
+                                            options.forEach(option => {
+                                                var opt = document.createElement("option");
+                                                opt.value = option.value;
+                                                opt.textContent = option.text;
+                                                if (option.value === selectedPackage) {
+                                                    opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
+                                                }
+                                                packageSelect.appendChild(opt);
+                                            });
+                                        }
+
+                                        // เรียกใช้เมื่อโหลดหน้าเว็บ
+                                        window.onload = function () {
+                                            updatePackage_a();
+                                            updatePackage();
+                                        };
+                                    </script>
 
                                 <div class="form-group row">
                                 <div class="col-sm-2">
@@ -359,7 +486,7 @@
 
 
                 <?php
-                 $user_r=App\Models\users::where('id','!=',@$item->id)->where('username',@$item->username)->orderby('id','desc')->cursor();
+                 $user_r=App\Models\users::where('id','!=',@$item->id)->where('username',@$item->username)->where('password',@$item->password)->orderby('id','desc')->cursor();
                 ?>
                  <!-- Page body3 start -->
                  <div class="page-body">
@@ -557,6 +684,25 @@
 
         </div>
     </div>
+
+
+    <script>
+    window.addEventListener('beforeunload', function (e) {
+        // Send an AJAX request to Laravel route when the user is leaving the page
+        fetch('{{ route('updateStatusOnExit') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Add CSRF token for security
+            },
+            body: JSON.stringify({
+                userId: '{{ $item->id }}' // Pass the user ID dynamically
+            })
+        }).catch((error) => {
+            console.log("Error:", error);
+        });
+    });
+</script>
 
 
 

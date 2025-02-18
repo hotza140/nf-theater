@@ -112,7 +112,6 @@
 
                                         <?php
                                             $status_account = $status_account ?? 999;
-                                            $status_check_admin = $status_check_admin ?? 999;
                                         ?>
                                     
                                         <br>
@@ -125,14 +124,6 @@
                                             <option  value="0" @if(@$status_account==0) selected  @endif >มีแอคเคาท์</option>
                                             <option  value="1" @if(@$status_account==1) selected  @endif >ไม่มีแอคเคาท์</option>
                                             <option  value="2" @if(@$status_account==2) selected  @endif >หมดอายุ</option>
-                                            </select>
-                                            </div>
-
-                                            <div class="col-sm-2">
-                                            <select name="status_check_admin" id="" class="form-control">
-                                            <option  value="999" @if(@$status_check_admin==999) selected  @endif >ทั้งหมด (สถานะเปลี่ยนจอ)</option>
-                                            <option  value="1" @if(@$status_check_admin==1) selected  @endif >แอคเคาท์ที่เปลี่ยนจอแล้ว</option>
-                                            <option  value="2" @if(@$status_check_admin=='2') selected  @endif >แอคเคาท์ที่ยังไม่เปลี่ยนจอ</option>
                                             </select>
                                             </div>
 
@@ -205,11 +196,12 @@
                                                     <th>Username</th>
                                                     <th>Name Profile</th>
                                                     <th>ชื่อไลน์ลูกค้า</th>
+                                                    <th>Package</th>
                                                     <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>สถานะ Account</th>
                                                     <th>Tool</th>
                                                     <th>Account</th>
-                                                    <th>สถานะเปลี่ยนจอ</th>
+                                                    <th>สถานะแก้ใข</th>
 
                                                 </tr>
                                             </thead>
@@ -230,10 +222,20 @@
                                                     </form>
                                                     </td>
 
+                                                    <?php
+                                                    if($items->type=='PC'){
+                                                        $paga='TV '.@$items->package;
+                                                    }else{
+                                                        $paga='ยกเว้นทีวี '.@$items->package;
+                                                    }
+
+                                                    ?>
+
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>{{$items->username}}</td>
                                                     <td>{{$items->name}}</td>
                                                     <td>{{$items->line}}</td>
+                                                    <td>{{@$paga}} {{$items->package}}</td>
                                                     <?php
                                                     $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
@@ -263,6 +265,9 @@
                                                         $formatted_date2 = null;
                                                     }
                                                     ?>
+
+                                                    
+
                                                     <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <td>
                                                         @if($items->status_account == 0)
@@ -274,20 +279,10 @@
                                                         @endif
                                                     </td>
 
-                                                    
-
-                                                    <?php
-                                                    if($items->type=='MOBILR'){
-                                                        $type_coppy='ยกเว้นทีวี';
-                                                    }else{
-                                                        $type_coppy='TV';
-                                                    }
-                                                    ?>
-
                                                     <td>
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$type_coppy}}', '{{$items->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$paga}}', '{{$items->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
@@ -306,8 +301,8 @@
                                                      </td>
 
                                                     <td>
-                                                        @if($items->status_check_admin == null)
-                                                            <a href="{{url('users_edit_status_check_admin/'.$items->id)}}" onclick="javascript:return confirm('Confirm?')" ><span class="status-expired beepbeep">ยังไม่ได้เปลี่ยนจอ</span></a>
+                                                        @if($items->status_edit == 1)
+                                                            <span class="status-expired beepbeep">กำลังมีการแก้ใข</span>
                                                         @else
                                                            
                                                         @endif
@@ -319,19 +314,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-
-                                    <!-- <script>
-                                    function copyUserInfo(username, password, name, package, link) {
-                                        alert('a');
-                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
-                                        alert('b');
-                                        navigator.clipboard.writeText(textToCopy).then(function() {
-                                            alert("คัดลอกข้อมูลสำเร็จ!");
-                                        }, function(err) {
-                                            console.error('คัดลอกไม่สำเร็จ: ', err);
-                                        });
-                                    }
-                                    </script> -->
 
                                     <script>
                                     function fallbackCopyTextToClipboard(text) {

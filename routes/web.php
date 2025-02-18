@@ -82,14 +82,16 @@ Route::group(['middleware' => ['admin']],function(){
 
  Route::get('his_created',[App\Http\Controllers\AdminUserBackendController::class,'his_created']);
 
+
+ Route::post('users_update_date',[App\Http\Controllers\AdminUserBackendController::class,'users_update_date']);
   //userss
   Route::post('users_store_form_in',[App\Http\Controllers\AdminUserBackendController::class,'users_store_form_in']);
-
-  
-  Route::post('users_update_date',[App\Http\Controllers\AdminUserBackendController::class,'users_update_date']);
+  Route::post('updateStatusOnExit',[App\Http\Controllers\AdminUserBackendController::class,'updateStatusOnExit']);
+  Route::post('/update-status-on-exit', [App\Http\Controllers\AdminUserBackendController::class,'updateStatusOnExit'])->name('updateStatusOnExit');
 
   
   Route::get('users_edit_status_check_admin/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_edit_status_check_admin']);
+  Route::get('users_edit_status_check_admin_all/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_edit_status_check_admin_all']);
 
   Route::get('users',[App\Http\Controllers\AdminUserBackendController::class,'users']);
   Route::get('users_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_destroy']);

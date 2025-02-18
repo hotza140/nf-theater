@@ -258,6 +258,12 @@ class AdminUserBackendController extends Controller
 
 
      //User//
+     public function updateStatusOnExit(Request $r){
+        $item=users::where('id',$r->userId)->first();
+        $item->status_edit=null;
+        $item->save();
+     }
+     
      public function users(Request $r){
          // ลบเช็คเวลา
          $date=date('Y-m-d');
@@ -273,30 +279,27 @@ class AdminUserBackendController extends Controller
 
         $search = $r->search;
         $status_account = $r->status_account;
-        $status_check_admin = $r->status_check_admin;
-        if (!empty($search) or ($status_account!==null) or ($status_check_admin!==null)) {
-            $item = users::where(function ($query) use ($search, $status_account,$status_check_admin) {
+        
+        if (!empty($search) or ($status_account !== null)) {
+            $item = users::where(function ($query) use ($search, $status_account) {
                 $query->where('name', 'LIKE', '%' . $search . '%')
                       ->orWhere('username', 'LIKE', '%' . $search . '%')
                       ->orWhere('phone', 'LIKE', '%' . $search . '%')
-                      ->orWhere('line', 'LIKE', '%' . $search . '%');
+                      ->orWhere('line', 'LIKE', '%' . $search . '%')
+                      ->orWhereHas('userIn', function($query) use ($search) {
+                          $query->where('tb_users_in.name', 'LIKE', '%' . $search . '%'); // ระบุชื่อคอลัมน์จากตาราง tb_users_in
+                      });
             });
         
             if ($status_account == '999' and $status_account !== null) {
-            }else{
+                // ไม่มีการกรอง
+            } else {
                 $item = $item->where('status_account', $status_account);
-            }
-
-            if ($status_check_admin == '999' and $status_check_admin !== null) {
-            }elseif($status_check_admin == '1'){
-                $item = $item->whereNotNull('status_check_admin');
-            }else{
-                $item = $item->whereNull('status_check_admin');
             }
         
             $item = $item->orderByRaw(
                 '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
-            )>paginate(20);
+            )->paginate(20);
         }
 
         return view('backend.users.index',[
@@ -306,7 +309,6 @@ class AdminUserBackendController extends Controller
 
             'search'=>$search,
             'status_account'=>$status_account,
-            'status_check_admin'=>$status_check_admin,
         ]);
     }
     public function users_store(Request $r){
@@ -417,9 +419,28 @@ class AdminUserBackendController extends Controller
         if($acc!=null){
             $gg=users_in::where('id',$acc)->first();
             $acc=@$gg->name;
+
+            if($aaa->type_mail!=null){
+                if($aaa->type_mail==1){
+                    $email=@$gg->email01;
+                    $pa=@$gg->password01;
+                }else{
+                    $email=@$gg->email02;
+                    $pa=@$gg->password02;
+                }
+            }else{
+                $email=@$gg->email;
+                $pa=@$gg->password;
+            }
             @$acc_id=$gg->id;
         }else{
             $acc='Account เต็ม';
+        }
+
+        if($r->type=='PC'){
+            $e_type='TV';
+        }else{
+            $e_type='ยกเว้นทีวี';
         }
 
         $randomNumber = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
@@ -430,7 +451,7 @@ class AdminUserBackendController extends Controller
         $his->id_user_in=@$acc_id;
         $his->id_user_in_in=@$aaa->id;
         $his->number=$randomNumber;
-        $his->detail='สร้าง'.$item->name.'__'.$item->email.'__'.$item->type.'__เข้าสู่ Account__'.$acc;
+        $his->detail='สร้าง Account:'.$acc.'  Profile:'.$item->name.'  Package:'.@$e_type.' '.$item->package.'  Email:'.@$email.'  Password:'.@$pa;
         $his->save();
 
         return redirect()->to('users')->with('message','Sucess!');
@@ -466,13 +487,15 @@ class AdminUserBackendController extends Controller
         //     return redirect()->back()->with('message','Username Already Have in Data!');
         // }
         $item->save();
-        return redirect()->to('users_edit/'.$id)->with('message','Sucess!');
+        return redirect()->back()->with('message','Sucess!');
     }
 
     public function users_update_date(Request $r){
         $item=users::where('id',$r->id)->first();
         $item->date_start=$r->date_start;
         $item->date_end=$r->date_end;
+        $item->type=$r->type;
+        $item->package=$r->package;
         if($item->save()){
 
             if($item->type=='MOBILE'){
@@ -504,7 +527,7 @@ class AdminUserBackendController extends Controller
             }else{
                 $item->status_account=1;
                 $item->save();
-                return redirect()->to('users_edit/'.$item->id)->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+                return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
             }
 
             }else{
@@ -544,18 +567,20 @@ class AdminUserBackendController extends Controller
             }else{
                 $item->status_account=1;
                 $item->save();
-                return redirect()->to('users_edit/'.$item->id)->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+                return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
             }
 
             }
     
             }
 
-        return redirect()->to('users_edit/'.$r->id)->with('message','Sucess!');
+        return redirect()->back()->with('message','Sucess!');
     }
 
     public function users_edit($id){
         $item=users::where('id',$id)->first();
+        $item->status_edit=Auth::guard('admin')->user()->id;
+        $item->save();
         
         // ลบเช็คเวลา
         $date=date('Y-m-d');
@@ -575,9 +600,15 @@ class AdminUserBackendController extends Controller
     }
 
     public function users_edit_status_check_admin($id){
-        $item=users::where('id',$id)->first();
-        $item->status_check_admin=1;
+        $item=created_history::where('id',$id)->first();
+        $item->status=1;
         $item->save();
+
+        return redirect()->back()->with('message','Sucess!');
+    }
+
+    public function users_edit_status_check_admin_all($id){
+        $item = created_history::where('number', $id)->update(['status' => 1]);
 
         return redirect()->back()->with('message','Sucess!');
     }
@@ -703,9 +734,27 @@ class AdminUserBackendController extends Controller
                 if($acc!=null){
                     $gg=users_in::where('id',$acc)->first();
                     $acc=@$gg->name;
+                    if($aaa->type_mail!=null){
+                        if($aaa->type_mail==1){
+                            $email=@$gg->email01;
+                            $pa=@$gg->password01;
+                        }else{
+                            $email=@$gg->email02;
+                            $pa=@$gg->password02;
+                        }
+                    }else{
+                        $email=@$gg->email;
+                        $pa=@$gg->password;
+                    }
                     @$acc_id=$gg->id;
                 }else{
                     $acc='Account เต็ม';
+                }
+
+                if($r->type=='PC'){
+                    $e_type='TV';
+                }else{
+                    $e_type='ยกเว้นทีวี';
                 }
         
         
@@ -715,7 +764,7 @@ class AdminUserBackendController extends Controller
                 $his->id_user_in=@$acc_id;
                 $his->id_user_in_in=@$aaa->id;
                 $his->number=$randomNumber;
-                $his->detail='สร้าง'.$item->name.'__'.$item->email.'__'.$item->type.'__เข้าสู่ Account__'.$acc;
+                $his->detail='สร้าง Account:'.$acc.'  Profile:'.$item->name.'  Package:'.@$e_type.' '.$item->package.'  Email:'.@$email.'  Password:'.@$pa;
                 $his->save();
 
 
