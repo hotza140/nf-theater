@@ -100,10 +100,16 @@
                                         </div> -->
 
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3">
                                                 <label class="col-form-label">เบอรโทรศัพท์</label>
                                                 <input type="text" name="phone" class="form-control" id=""  maxlength = "10" placeholder="เบอรโทรศัพท์ (ถ้ามี)"
                                                       value="{{@$item->phone}}">
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Email</label>
+                                                <input type="text" name="email" class="form-control" id=""   placeholder="Email (ถ้ามี)"
+                                                      value="{{@$item->email}}">
                                             </div>
                                         </div>
 
@@ -480,7 +486,7 @@
 
 
                 <?php
-                 $user_r=App\Models\users::where('id','!=',@$item->id)->where('username',@$item->username)->orderby('id','desc')->cursor();
+                 $user_r=App\Models\users::where('id','!=',@$item->id)->where('username',@$item->username)->where('password',@$item->password)->orderby('id','desc')->cursor();
                 ?>
                  <!-- Page body3 start -->
                  <div class="page-body">
