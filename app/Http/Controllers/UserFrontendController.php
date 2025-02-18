@@ -31,6 +31,7 @@ use App\Models\admin;
 use App\Models\Packagewatch;
 use App\Models\PackageSubwatch;
 use App\Models\Reward;
+use App\Models\RewardUserLog;
 
 class UserFrontendController extends Controller
 {
@@ -39,11 +40,12 @@ class UserFrontendController extends Controller
     return view('frontend.login');
     }
 
-//  ///LOGOUT---------------
-//     public function logout(){
-//         Auth::logout();
-//         return redirect()->to('/login')->with('message','Sucess!');
-//     }
+ ///LOGOUT---------------
+    public function logoutfrontend(){
+        // Auth::logout();
+        Auth::guard('users')->logout();
+        return redirect()->route('frontend.login')->with('message','Sucess!');
+    }
 
 //      ///register---------------
 //    public function register(){
@@ -66,9 +68,9 @@ class UserFrontendController extends Controller
     {
         $users=users::where('username',$r->username)->first();
         if($users){
-            if(Hash::check($r->password, $users->password)||$r->password==$users->password){
-                if($users->open==0){
-                    Auth::guard('users')->login($users);
+            if($r->password==$users->password){ // ||Hash::check($r->password, $users->password)
+                if($users->open==1){
+                    Auth::guard('users')->login($users); 
                     return redirect("/profile");
                 }else{
                     return redirect()->to('/frontlogin')->with('message','You User Are Close!');
@@ -91,5 +93,24 @@ class UserFrontendController extends Controller
     public function rewardsRead(Request $r) {
         $Reward = Reward::select('*')->orderby('reward_Score')->get();
         return view('frontend.rewards',compact('Reward'));
+    }
+
+    public function RewardUserLog_store(Request $r) {
+        $userIs = \Auth::guard('users')->user();
+        $RewardUserLog = new RewardUserLog();
+
+        $RewardUserLog->username = $userIs->username;
+        $RewardUserLog->reward_Name = $r->reward_Name;
+        $RewardUserLog->reward_Code = $r->reward_Code;
+
+        $RewardUserLog->save();
+
+        return redirect()->back()->with('message','Sucess!');
+    }
+
+    public function profileRdSh (Request $request) {
+        $users = Auth::guard('users')->user();
+        $RewardUserLog = RewardUserLog::where('username',$users->username)->get();
+        return view('frontend.profile',compact('users','RewardUserLog'));
     }
 }

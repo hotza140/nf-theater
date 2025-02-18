@@ -29,6 +29,7 @@ use App\Models\users_in_in;
 use App\Models\users_in_in_history;
 use App\Models\admin;
 use App\Models\Reward;
+use App\Models\RewardUserLog;
 
 class RewardBackendController extends Controller
 {
@@ -94,7 +95,7 @@ class RewardBackendController extends Controller
         $item->reward_Name=$r->reward_Name;
         $item->reward_Code=$run;
         $item->reward_Day=$r->reward_Day;
-        $item->reward_giftName=$r->reward_giftName;
+        // $item->reward_giftName=$r->reward_giftName;
         $item->reward_Score=$r->reward_Score;
         $item->package_Code=$r->package_Code;
         $item->save();
@@ -108,7 +109,7 @@ class RewardBackendController extends Controller
     $item->reward_Name=$r->reward_Name;
     $item->reward_Code=$r->reward_Code;
     $item->reward_Day=$r->reward_Day;
-    $item->reward_giftName=$r->reward_giftName;
+    // $item->reward_giftName=$r->reward_giftName;
     $item->reward_Score=$r->reward_Score;
     $item->package_Code=$r->package_Code;
     $item->save();
@@ -135,4 +136,5 @@ class RewardBackendController extends Controller
     ]);
     }
     //reward//
+
 }

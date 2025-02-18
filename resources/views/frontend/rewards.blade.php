@@ -35,7 +35,13 @@
                                     </div>
                                 </div>
                                 <div class="change-reward-text">
-                                    <div class="inside-re"><span>{{$itemRw->reward_Name}}</span><button class="change-button">แลกแต้ม</button></div>
+                                    <div class="inside-re"><span>{{$itemRw->reward_Name}}</span>
+                                        <button class="change-button" 
+                                             onclick="if(confirm('คุณต้องการแลกแต้มใช่หรือไม่'))  { rewardsclick('{{$itemRw->reward_Name}}','{{$itemRw->reward_Code}}'); }"
+                                        >
+                                            แลกแต้ม
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -56,14 +62,24 @@
                                     </div>
                                 </div>
                                 <div class="change-reward-text-v">
-                                    <div class="inside-re"><span>{{$itemRw->reward_Name}}</span><button class="change-button">แลกแต้ม</button></div>
+                                    <div class="inside-re"><span>{{$itemRw->reward_Name}}</span>
+                                        <button class="change-button" 
+                                            onclick="if(confirm('คุณต้องการแลกแต้มใช่หรือไม่')) { rewardsclick('{{$itemRw->reward_Name}}','{{$itemRw->reward_Code}}'); }"
+                                        >
+                                            แลกแต้ม
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endif
                 @endforeach
             </div>
-
+            <script>
+                function rewardsclick(reward_Name,reward_Code) {
+                    document.location.href=`{{route('frontend.RewardUserLog_store')}}?reward_Name=${reward_Name}&reward_Code=${reward_Code}`;
+                }
+            </script>
             {{-- <div class="row">
                 <div class="col reward-card">
                     <div class="change-card">
@@ -287,4 +303,10 @@
         document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;
         document.getElementById('RewardsBtn').style = `display:none;`;
     </script>
+
+    @if(session('message'))
+        <script>
+            alert('{{ session('message') }}');
+        </script>
+    @endif
 @endsection

@@ -118,6 +118,23 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Type Coupon</label>
+                                                <select name="type" id="type" class="form-control add_select2">
+                                                    <option value="" selected>กรุณาเลือกประเภทคูปอง</option>
+                                                    <option value="ลดราคา" {{$item->type=='ลดราคา'?'selected':''}}>ลดราคา</option>
+                                                    <option value="ฟรี" {{$item->type=='ฟรี'?'selected':''}}>ฟรี</option>
+                                                    <option value="ของขวัญ" {{$item->type=='ของขวัญ'?'selected':''}}>ของขวัญ</option>
+                                                    <option value="อื่นๆ" {{$item->type=='อื่นๆ'?'selected':''}}>อื่นๆ</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">เงื่อนไข</label>
+                                                <input type="text" name="conditional" class="form-control" id="conditional"
+                                                      value="{{@$item->conditional}}">
+                                            </div>
+                                        </div>
 
                                         <?php $country=DB::table('dataset_country')->orderByRaw("CONVERT(ct_nameTHA USING tis620) ASC")->cursor(); ?>
                                         <!-- <div class="form-group row">

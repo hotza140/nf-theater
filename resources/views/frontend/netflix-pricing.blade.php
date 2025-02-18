@@ -28,7 +28,7 @@
                         <p>{{$itemPs->Subpackage_Name}}</p>
                     </div>
                 </div>
-                <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
+                <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px; height:70px;width:90px;">
                     <div style="margin: 0;padding: 0;height: auto;">
                         <p class="net-price" style="text-align: center;height: auto;margin-bottom: 0;">{{$itemPs->Subpackage_Paymoney}}</p>
                     </div>

@@ -42,7 +42,8 @@ class AdminUserBackendController extends Controller
 
  ///LOGOUT---------------
     public function logout(){
-        Auth::logout();
+        // Auth::logout();
+        Auth::guard('admin')->logout();
         return redirect()->to('/login')->with('message','Sucess!');
     }
 

@@ -544,7 +544,7 @@
                                                 <span class="pcoded-mtext">Manage Coupons</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                        </li>
+                                        </li> --}}
 
                                         <li class="{{ isset($list) && $list == 'package' ? 'active' : '' }}">
                                             <a href="{{ url('package') }}">
@@ -569,7 +569,15 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
-                                    </ul> --}}
+
+                                        <li class="{{ isset($list) && $list == 'gift' ? 'active' : '' }}">
+                                            <a href="{{ url('gift') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Gifts</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                     <!--DJ page-->
                                 </li>
                             </ul>

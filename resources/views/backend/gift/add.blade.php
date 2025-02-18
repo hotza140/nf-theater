@@ -8,7 +8,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">Coupon/ADD</h5>
+                        <h5 class="m-b-10">Gift/ADD</h5>
 
                     </div>
                 </div>
@@ -25,19 +25,37 @@
                                 </div>
                                 <div class="card-block">
 
-                                    <form method="post" id="" action="{{ url('coupon_store') }}"
+                                    <form method="post" id="" action="{{ url('gift_store') }}"
                                         enctype="multipart/form-data" >
                                         @csrf
+
+                                        @if(@$item->picture!=null)
+                                            <br><div><a href="{{asset('img/upload/'.@$item->picture)}}" target="_blank">
+                                            <img src="{{asset('img/upload/'.@$item->picture)}}" width="200px" id="imgA"></a></div>
+                                        @else
+                                            <br><div><img src="#" width="200px" id="imgA"></div>
+                                        @endif
+                                        <div>
+                                            <input type="file" name="picture" id="picture1" class="hidden"
+                                                onchange="readURL(this, '#imgA');">
+                                            <div class="sm:grid grid-cols-3 gap-2">
+                                                <div class="input-group mt-2 sm:mt-0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h6 style="color: red;" >(ขนาดรูปไม่เกิน ขนาด Width 100px Height 100px)</h6>
+                                        <label for="picture1" class="btn btn-warning " style="color:white;"> 
+                                        <i class="fa fa-picture-o"></i>Upload Picture</label><br><br>
                                         
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Coupon Code*</label>
-                                                <input type="Coupon_Code" name="Coupon_Code" class="form-control" id=""  maxlength = "25"
+                                                <label class="col-form-label">Gift Code*</label>
+                                                <input type="Gift_Code" name="Gift_Code" class="form-control" id=""  maxlength = "25"
                                                 placeholder="รหัสคูปอง"  readonly>
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Coupon Name*</label>
-                                                <input type="text" name="Coupon_Name" class="form-control" id="" required >
+                                                <label class="col-form-label">Gift Name*</label>
+                                                <input type="text" name="Gift_Name" class="form-control" id="" required >
                                             </div>
                                         </div>
 
@@ -63,8 +81,8 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Type Coupon</label>
+                                            {{-- <div class="col-sm-3">
+                                                <label class="col-form-label">Type Gift</label>
                                                 <select name="type" id="type" class="form-control add_select2">
                                                     <option value="">กรุณาเลือกประเภทคูปอง</option>
                                                     <option value="ลดราคา">ลดราคา</option>
@@ -72,12 +90,13 @@
                                                     <option value="ของขวัญ">ของขวัญ</option>
                                                     <option value="อื่นๆ">อื่นๆ</option>
                                                 </select>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">เงื่อนไข</label>
                                                 <input type="text" name="conditional" class="form-control" id="conditional"
                                                       value="{{@$item->conditional}}">
                                             </div>
+                                            <div class="col-sm-3"></div>
                                         </div>
 
 
@@ -96,7 +115,7 @@
 
 
                                         <p class="text-right">
-                                            <a href="{{ url('coupon') }}"
+                                            <a href="{{ url('gift') }}"
                                                 style="color:white;" class="btn btn-warning"> <i
                                                     class="fa fa-share-square-o"></i> Back </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"

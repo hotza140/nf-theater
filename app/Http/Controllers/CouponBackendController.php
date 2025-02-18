@@ -95,6 +95,8 @@ class CouponBackendController extends Controller
         $item->Coupon_Code=$run;
         $item->date_start=$r->date_start;
         $item->date_end=$r->date_end;
+        $item->type=$r->type;
+        $item->conditional=$r->conditional;
         $item->save();
         return redirect()->to('coupon_edit/'.$item->id)->with('message','Sucess!');
 
@@ -107,6 +109,8 @@ class CouponBackendController extends Controller
     $item->Coupon_Code=$r->Coupon_Code;
     $item->date_start=$r->date_start;
     $item->date_end=$r->date_end;
+    $item->type=$r->type;
+    $item->conditional=$r->conditional;
 
     $item->save();
     return redirect()->to('coupon_edit/'.$id)->with('message','Sucess!');

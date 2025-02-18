@@ -4,7 +4,7 @@
     <div class="net-container">
         <h1 class="head-pro">NF THEATER</h1>
         <div class="profile-plans">
-            <button class="btn btn-primary logout-bt" type="button" onclick="document.location.href=`{{route('frontend.login')}}`;">
+            <button class="btn btn-primary logout-bt" type="button" onclick="document.location.href=`{{route('logoutfrontend')}}`;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="margin-right: 5px;">
                     <path d="M8.51428 20H4.51428C3.40971 20 2.51428 19.1046 2.51428 18V6C2.51428 4.89543 3.40971 4 4.51428 4H8.51428V6H4.51428V18H8.51428V20Z" fill="currentColor"></path>
                     <path d="M13.8418 17.385L15.262 15.9768L11.3428 12.0242L20.4857 12.0242C21.038 12.0242 21.4857 11.5765 21.4857 11.0242C21.4857 10.4719 21.038 10.0242 20.4857 10.0242L11.3236 10.0242L15.304 6.0774L13.8958 4.6572L7.5049 10.9941L13.8418 17.385Z" fill="currentColor"></path>
@@ -21,9 +21,9 @@
                 </div>
                 <div class="col d-flex align-items-center">
                     <div class="net-plan-details">
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>User ID</h2><span class="name-profile" style="color: var(--bs-emphasis-color);">NF00080</span>
-                        <p class="mail-profile">Email: nftheater134+27@gmail.com</p>
-                        <p class="pass-profile">Password : 0123456</p>
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>User ID</h2><span class="name-profile" style="color: var(--bs-emphasis-color);">{{$users->username}}</span> <!--NF00080-->
+                        <p class="mail-profile">Email: {{$users->email}}</p> <!--nftheater134+27@gmail.com-->
+                        <p class="pass-profile">Password : {{$users->password}}</p> <!--0123456-->
                     </div>
                 </div>
                 <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center justify-content-sm-center align-items-sm-center box-back" style="padding-left: 5px;">
@@ -94,7 +94,14 @@
                         <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
                     </div>
                     <div class="modal-body">
-                        <div>
+                        @foreach ($RewardUserLog as $itemRw)  
+                            <div>
+                                <div class="history-text"><span style="color: var(--bs-emphasis-color);">{{date('d-m-Y',strtotime($itemRw->created_at))}}</span><span style="color: var(--bs-emphasis-color);">{{$itemRw->reward_Name}}</span></div>
+                                <hr class="hr-line">
+                            </div>
+                        @endforeach
+                        
+                        {{-- <div>
                             <div class="history-text"><span style="color: var(--bs-emphasis-color);">01/01/2024</span><span style="color: var(--bs-emphasis-color);">แลก Youtube 15 วัน</span></div>
                             <hr class="hr-line">
                         </div>
@@ -109,11 +116,7 @@
                         <div>
                             <div class="history-text"><span style="color: var(--bs-emphasis-color);">01/01/2024</span><span style="color: var(--bs-emphasis-color);">แลก Youtube 15 วัน</span></div>
                             <hr class="hr-line">
-                        </div>
-                        <div>
-                            <div class="history-text"><span style="color: var(--bs-emphasis-color);">01/01/2024</span><span style="color: var(--bs-emphasis-color);">แลก Youtube 15 วัน</span></div>
-                            <hr class="hr-line">
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;"></div>
                 </div>

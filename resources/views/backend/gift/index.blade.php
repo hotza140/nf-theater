@@ -59,7 +59,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">Coupon BACKEND</h5>
+                        <h5 class="m-b-10">Gift BACKEND</h5>
 
                     </div>
                 </div>
@@ -74,11 +74,11 @@
                             <div class="card">
                                 <div class="card-header">
 
-                                    <a style="color:white;" class="btn btn-success" href="{{url('coupon_add')}}"> <i class="fa fa-plus"></i> Add</a>
+                                    <a style="color:white;" class="btn btn-success" href="{{url('gift_add')}}"> <i class="fa fa-plus"></i> Add</a>
 
                                     
                                         <br>
-                                        <form class="form-horizontal" action="{{url('coupon')}}" method="GET" enctype="multipart/form-data">
+                                        <form class="form-horizontal" action="{{url('gift')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
                                        
                                         <div class="form-group row" style="display: flex; justify-content: flex-end;">
@@ -109,7 +109,7 @@
                                                
                                                     <th>#</th>
                                                     <th>Open/Close</th>
-                                                    <th>Coupon Name</th>
+                                                    <th>Gift Name</th>
                                                     <th>ชนิดคูปอง</th>
                                                     <th>เนื้อหาคูปอง</th>
                                                     <th>วันที่ใช้งาน</th>
@@ -135,7 +135,7 @@
                                                     </td>
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
-                                                    <td>{{$items->Coupon_Name}}</td>
+                                                    <td>{{$items->Gift_Name}}</td>
                                                     <td>{{$items->type}}</td>
                                                     <td>{{$items->conditional}}</td>
                                                     <?php
@@ -170,8 +170,8 @@
                                                     <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <!-- <td>{{$items->country}}</td> -->
                                                     <td>
-                                                    <a href="{{url('coupon_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
-                                                        <a href="{{url('coupon_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
+                                                    <a href="{{url('gift_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
+                                                        <a href="{{url('gift_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -225,7 +225,7 @@
             const id = this.getAttribute('data-id');
             const isOpen = this.checked ? 0 : 1; // ค่าที่ส่ง 0 = เปิด, 1 = ปิด
 
-            fetch('{{ url("/coupon_open_close") }}', {
+            fetch('{{ url("/Gift_open_close") }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

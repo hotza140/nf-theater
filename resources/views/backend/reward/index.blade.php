@@ -113,7 +113,7 @@
                                                     {{-- <th>Reward Code</th> --}}
                                                     <th>Rewards Score</th>
                                                     <th>Reware Day</th>
-                                                    <th>Reware Gift</th>
+                                                    {{-- <th>Reware Gift</th> --}}
                                                     <th>Tool</th>
 
                                                 </tr>
@@ -139,7 +139,7 @@
                                                     {{-- <td>{{$items->reward_Code}}</td> --}}
                                                     <td>{{$items->reward_Score}}</td>
                                                     <td>{{$items->reward_Day}}</td>
-                                                    <td>{{$items->reward_giftName}}</td>
+                                                    {{-- <td>{{$items->reward_giftName}}</td> --}}
                                                     <td>
                                                     <a href="{{url('reward_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <a href="{{url('reward_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>

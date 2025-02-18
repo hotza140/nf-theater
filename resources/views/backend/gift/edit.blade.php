@@ -57,7 +57,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">Reward /EDIT</h5>
+                        <h5 class="m-b-10">Gift/EDIT</h5>
 
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                                 <div class="card-block">
 
                                     <form method="post" id=""
-                                        action="{{ url('reward_update/'.@$item->id) }}"
+                                        action="{{ url('gift_update/'.@$item->id) }}"
                                         enctype="multipart/form-data" >
                                         @csrf
 
@@ -85,58 +85,77 @@
                                         <!-- -------EDIT---------- -->
 
 
+                                        @if(@$item->picture!=null)
+                                            <br><div><a href="{{asset('img/upload/'.@$item->picture)}}" target="_blank">
+                                            <img src="{{asset('img/upload/'.@$item->picture)}}" width="200px" id="imgA"></a></div>
+                                        @else
+                                            <br><div><img src="#" width="200px" id="imgA"></div>
+                                        @endif
+                                        <div>
+                                            <input type="file" name="picture" id="picture1" class="hidden"
+                                                onchange="readURL(this, '#imgA');">
+                                            <div class="sm:grid grid-cols-3 gap-2">
+                                                <div class="input-group mt-2 sm:mt-0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h6 style="color: red;" >(ขนาดรูปไม่เกิน ขนาด Width 100px Height 100px)</h6>
+                                        <label for="picture1" class="btn btn-warning " style="color:white;"> 
+                                        <i class="fa fa-picture-o"></i>Upload Picture</label><br><br>
+
+                                        
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Reward Code*</label>
-                                                <input type="reward_Code" name="reward_Code" class="form-control" id=""  maxlength = "25"
-                                                placeholder="รหัสคูปอง"  required readonly value="{{$item->reward_Code}}">
+                                                <label class="col-form-label">Gift Code*</label>
+                                                <input type="Gift_Code" name="Gift_Code" class="form-control" id=""  maxlength = "25"
+                                                placeholder="รหัสคูปอง"  required readonly value="{{$item->Gift_Code}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Reward Name*</label>
-                                                <input type="text" name="reward_Name" class="form-control" id="" required value="{{$item->reward_Name}}">
+                                                <label class="col-form-label">Gift Name*</label>
+                                                <input type="text" name="Gift_Name" class="form-control" id="" required value="{{$item->Gift_Name}}">
+                                            </div>
+                                        </div>
+
+                                        <?php
+                                        $date_s=date('Y-m-d');
+                                        if(@$item->date_start!=null){
+                                            $date_s=@$item->date_start;
+                                        }
+
+                                        ?>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Date Start</label>
+                                                <input type="date" name="date_start" class="form-control" id=""
+                                                      value="{{@$date_s}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Date End</label>
+                                                <input type="date" name="date_end" class="form-control" id=""
+                                                      value="{{@$item->date_end}}">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <div class="col-sm-3"> 
-                                                {{-- <label class="col-form-label">Package Use*</label> --}}
-                                                {{-- <input type="package_Code" name="package_Code" class="form-control" id=""  maxlength = "25"
-                                                placeholder="กำหนดค่าแต้ม"  readonly> --}}
-                                                @php
-                                                    $Packagewatch = App\Models\Packagewatch::all();
-                                                @endphp
-                                                <label class="col-form-label">Package Use*</label>
-                                                <select name="package_Code" id="package_Code" class="form-control" required>
-                                                    {{-- <option value="MOBILE" selected="">ยกเว้นทีวี</option>
-                                                    <option value="PC">TV</option> --}}
-                                                    <option value="" selected>กรุณาเลือก</option>
-                                                    @foreach ($Packagewatch as $itemPK)
-                                                        <option value="{{$itemPK->package_Code}}" {{$itemPK->package_Code==$item->package_Code?'selected':''}}>{{$itemPK->package_Name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Rewards Score(แต้ม)*</label>
-                                                <input type="reward_Score" name="reward_Score" class="form-control" id=""  maxlength = "25"
-                                                placeholder="กำหนดค่าแต้ม" value="{{$item->reward_Score}}" required>
-                                            </div>
                                             {{-- <div class="col-sm-3">
+                                                <label class="col-form-label">Type Gift</label>
+                                                <select name="type" id="type" class="form-control add_select2">
+                                                    <option value="" selected>กรุณาเลือกประเภทคูปอง</option>
+                                                    <option value="ลดราคา" {{$item->type=='ลดราคา'?'selected':''}}>ลดราคา</option>
+                                                    <option value="ฟรี" {{$item->type=='ฟรี'?'selected':''}}>ฟรี</option>
+                                                    <option value="ของขวัญ" {{$item->type=='ของขวัญ'?'selected':''}}>ของขวัญ</option>
+                                                    <option value="อื่นๆ" {{$item->type=='อื่นๆ'?'selected':''}}>อื่นๆ</option>
+                                                </select>
                                             </div> --}}
-                                        </div>
-
-                                        <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Reward Day</label>
-                                                <input type="number" name="reward_Day" class="form-control" id=""
-                                                      value="{{$item->reward_Day}}" required>
+                                                <label class="col-form-label">เงื่อนไข</label>
+                                                <input type="text" name="conditional" class="form-control" id="conditional"
+                                                      value="{{@$item->conditional}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                {{-- <label class="col-form-label">Reward Gift Name</label>
-                                                <input type="text" name="reward_giftName" class="form-control" id=""
-                                                      value="{{$item->reward_giftName}}"> --}}
                                             </div>
                                         </div>
-
 
                                         <?php $country=DB::table('dataset_country')->orderByRaw("CONVERT(ct_nameTHA USING tis620) ASC")->cursor(); ?>
                                         <!-- <div class="form-group row">
@@ -152,7 +171,7 @@
                                         
 
                                         <p class="text-right">
-                                            <a href="{{ url('reward') }}"
+                                            <a href="{{ url('gift') }}"
                                                 style="color:white;" class="btn btn-warning"> <i
                                                     class="fa fa-share-square-o"></i> Back </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"
@@ -185,7 +204,7 @@
             const id = this.getAttribute('data-id');
             const isOpen = this.checked ? 0 : 1; // ค่าที่ส่ง 0 = เปิด, 1 = ปิด
 
-            fetch('{{ url("/reward_in_open_close") }}', {
+            fetch('{{ url("/gift_in_open_close") }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

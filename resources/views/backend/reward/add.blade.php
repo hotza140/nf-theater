@@ -73,9 +73,9 @@
                                                       value="0" required>
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Reward Gift Name</label>
+                                                {{-- <label class="col-form-label">Reward Gift Name</label>
                                                 <input type="text" name="reward_giftName" class="form-control" id=""
-                                                      value="">
+                                                      value=""> --}}
                                             </div>
                                         </div>
 

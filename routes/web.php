@@ -42,22 +42,25 @@ Route::get('frontlogin',function(){
   return view('frontend.login');
 })->name('frontend.login');
 
+Route::get('logoutfrontend',[App\Http\Controllers\UserFrontendController::class, 'logoutfrontend'])->name('logoutfrontend');
+
+Route::post('login_frontend',[App\Http\Controllers\UserFrontendController::class, 'login_frontend'])->name('login_frontend');
+
 Route::group(['middleware' => ['users']],function(){
 
-Route::get('netflix',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.netflix');
+    Route::get('netflix',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.netflix');
 
-Route::get('youtube',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.youtube');
+    Route::get('youtube',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.youtube');
 
-Route::get('profile',function(){
-  return view('frontend.profile');
-})->name('frontend.profile');
+    Route::get('profile',[App\Http\Controllers\UserFrontendController::class,'profileRdSh'])->name('frontend.profile');
 
-Route::get('rewards',[App\Http\Controllers\UserFrontendController::class,'rewardsRead'])->name('frontend.rewards');
+    Route::get('rewards',[App\Http\Controllers\UserFrontendController::class,'rewardsRead'])->name('frontend.rewards');
 
-Route::get('thankyou',function(){
-  return view('frontend.thankyou');
-})->name('frontend.thankyou');
+    Route::get('thankyou',function(){
+      return view('frontend.thankyou');
+    })->name('frontend.thankyou');
 
+    Route::get('RewardUserLog_store',[App\Http\Controllers\UserFrontendController::class,'RewardUserLog_store'])->name('frontend.RewardUserLog_store');
 });
 
 
@@ -114,15 +117,15 @@ Route::group(['middleware' => ['admin']],function(){
     Route::post('users_in_open_close',[App\Http\Controllers\AdminUserBackendController::class,'users_in_open_close']);
     //users
 
-    //coupon
-    Route::get('coupon',[App\Http\Controllers\CouponBackendController::class,'coupon']);
-    Route::get('coupon_destroy/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_destroy']);
-    Route::get('coupon_add',[App\Http\Controllers\CouponBackendController::class,'coupon_add']);
-    Route::post('coupon_store',[App\Http\Controllers\CouponBackendController::class,'coupon_store']);
-    Route::get('coupon_edit/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_edit']);
-    Route::post('coupon_update/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_update']);
-    Route::post('coupon_open_close',[App\Http\Controllers\CouponBackendController::class,'coupon_open_close']);
-    //coupon
+    // //coupon
+    // Route::get('coupon',[App\Http\Controllers\CouponBackendController::class,'coupon']);
+    // Route::get('coupon_destroy/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_destroy']);
+    // Route::get('coupon_add',[App\Http\Controllers\CouponBackendController::class,'coupon_add']);
+    // Route::post('coupon_store',[App\Http\Controllers\CouponBackendController::class,'coupon_store']);
+    // Route::get('coupon_edit/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_edit']);
+    // Route::post('coupon_update/{id}',[App\Http\Controllers\CouponBackendController::class,'coupon_update']);
+    // Route::post('coupon_open_close',[App\Http\Controllers\CouponBackendController::class,'coupon_open_close']);
+    // //coupon
 
     //package
     Route::get('package',[App\Http\Controllers\PackageBackendController::class,'package']);
@@ -163,6 +166,16 @@ Route::group(['middleware' => ['admin']],function(){
     Route::post('marking_update/{id}',[App\Http\Controllers\MarkingBackendController::class,'marking_update']);
     Route::post('marking_open_close',[App\Http\Controllers\MarkingBackendController::class,'marking_open_close']);
     //marking
+
+    //gift
+    Route::get('gift',[App\Http\Controllers\GiftBackendController::class,'gift']);
+    Route::get('gift_destroy/{id}',[App\Http\Controllers\GiftBackendController::class,'gift_destroy']);
+    Route::get('gift_add',[App\Http\Controllers\GiftBackendController::class,'gift_add']);
+    Route::post('gift_store',[App\Http\Controllers\GiftBackendController::class,'gift_store']);
+    Route::get('gift_edit/{id}',[App\Http\Controllers\GiftBackendController::class,'gift_edit']);
+    Route::post('gift_update/{id}',[App\Http\Controllers\GiftBackendController::class,'gift_update']);
+    Route::post('gift_open_close',[App\Http\Controllers\GiftBackendController::class,'gift_open_close']);
+    //gift
 
   Route::get('/logout',[App\Http\Controllers\AdminUserBackendController::class,'logout'])->name('logout');
     Route::get('/register',[App\Http\Controllers\AdminUserBackendController::class,'register'])->name('register');
