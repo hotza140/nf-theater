@@ -337,6 +337,7 @@ class AdminUserBackendController extends Controller
         $item->date_end=$r->date_end;
         $item->type=$r->type;
         $item->package=$r->package;
+        $item->type_netflix=1;
 
         // $caa=users::where('username',$r->username)->orderby('id','desc')->first();
         // if($caa!=null){
@@ -660,6 +661,7 @@ class AdminUserBackendController extends Controller
             $item->date_start = $userData['date_start'] ?? null;
             $item->date_end = $userData['date_end'] ?? null;
             $item->type = $userData['type'];
+            $item->type_netflix = 1;
     
             if ($item->save()) {
 
