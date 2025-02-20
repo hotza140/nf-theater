@@ -617,6 +617,7 @@ class AdminUserBackendController extends Controller
     public function users_destroy($id){
         $item=users::where('id',$id)->first();
         $item->delete();
+        $de = users_in_in::where('id_user', $id)->delete();
         return redirect()->back()->with('message','Sucess!');
     }
     public function users_add(){
@@ -1140,8 +1141,11 @@ class AdminUserBackendController extends Controller
     public function users_in_in_destroy($id){
         $item=users_in_in::where('id',$id)->first();
         $user=users::where('id',@$item->id_user)->first();
-        $user->status_account=1;
-        $user->save();
+        if($user!=null){
+            $user->status_account=1;
+            $user->save();
+        }
+        
         $item->delete();
         return redirect()->back()->with('message','Sucess!');
     }

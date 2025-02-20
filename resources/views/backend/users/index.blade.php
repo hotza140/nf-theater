@@ -235,7 +235,7 @@
                                                     <td>{{$items->username}}</td>
                                                     <td>{{$items->name}}</td>
                                                     <td>{{$items->line}}</td>
-                                                    <td>{{@$paga}} {{$items->package}}</td>
+                                                    <td>{{@$paga}}</td>
                                                     <?php
                                                     $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)

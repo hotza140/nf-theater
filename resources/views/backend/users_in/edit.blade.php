@@ -551,7 +551,7 @@
                                             <!-- <tbody class="sortable"> -->
                                             <tbody class="">
                                             @foreach($user_in_in as $key=>$user_ins)
-                                            <?php @$user_aa=App\Models\users::where('id',$user_ins->id_user)->first(); ?>
+                                            <?php @$user_aa=DB::table('tb_users')->where('id',$user_ins->id_user)->first(); ?>
                                             <tr class="num" id="{{$user_ins->id}}">
                                                     <td>{{$key+1}}</td>
                                                     <td>
@@ -584,7 +584,7 @@
                                                     <td>{{@$user_aa->username}}</td>
                                                     <td>{{@$user_aa->name}}</td>
                                                     <td>{{@$user_aa->line}}</td>
-                                                    <td>{{@@$user_aa}} {{@$user_aa->package}}</td>
+                                                    <td>{{@$paga}}</td>
                                                     <?php
                                                     $date_start = @$user_aa->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = @$user_aa->date_end; // วันที่สิ้นสุด (Y-m-d)
