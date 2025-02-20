@@ -551,7 +551,7 @@
                                             <!-- <tbody class="sortable"> -->
                                             <tbody class="">
                                             @foreach($user_in_in as $key=>$user_ins)
-                                            <?php $user_aa=App\Models\users::where('id',$user_ins->id_user)->first(); ?>
+                                            <?php @$user_aa=App\Models\users::where('id',$user_ins->id_user)->first(); ?>
                                             <tr class="num" id="{{$user_ins->id}}">
                                                     <td>{{$key+1}}</td>
                                                     <td>
@@ -573,21 +573,21 @@
                                                     </td>
 
                                                     <?php
-                                                    if($user_aa->type=='PC'){
-                                                        $paga='TV '.@$user_aa->package;
+                                                    if(@$user_aa->type=='PC'){
+                                                        $paga='TV '.@@$user_aa->package;
                                                     }else{
-                                                        $paga='ยกเว้นทีวี '.@$user_aa->package;
+                                                        $paga='ยกเว้นทีวี '.@@$user_aa->package;
                                                     }
 
                                                     ?>
                                                     
-                                                    <td>{{$user_aa->username}}</td>
-                                                    <td>{{$user_aa->name}}</td>
-                                                    <td>{{$user_aa->line}}</td>
-                                                    <td>{{@$user_aa}} {{$user_aa->package}}</td>
+                                                    <td>{{@$user_aa->username}}</td>
+                                                    <td>{{@$user_aa->name}}</td>
+                                                    <td>{{@$user_aa->line}}</td>
+                                                    <td>{{@@$user_aa}} {{@$user_aa->package}}</td>
                                                     <?php
-                                                    $date_start = $user_aa->date_start; // วันที่เริ่มต้น (Y-m-d)
-                                                    $date_end = $user_aa->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $date_start = @$user_aa->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = @$user_aa->date_end; // วันที่สิ้นสุด (Y-m-d)
                                                     $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
                                                     if ($date_start && $date_end) {
@@ -622,7 +622,7 @@
                                                     <td>
                                                     <!-- <a href="{{url('users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
                                                         <a href="{{url('users_in_in_destroy/'.$user_ins->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('You Want To Delete?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user_aa->username}}', '{{$user_aa->password}}', '{{$user_aa->name}}', '{{@$paga}}', '{{$user_aa->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{@$user_aa->username}}', '{{@$user_aa->password}}', '{{@$user_aa->name}}', '{{@$paga}}', '{{@$user_aa->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
