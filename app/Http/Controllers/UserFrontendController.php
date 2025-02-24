@@ -69,12 +69,8 @@ class UserFrontendController extends Controller
         $users=users::where('username',$r->username)->first();
         if($users){
             if($r->password==$users->password){ // ||Hash::check($r->password, $users->password)
-                if($users->open==1){
-                    Auth::guard('users')->login($users); 
-                    return redirect("/profile");
-                }else{
-                    return redirect()->to('/frontlogin')->with('message','You User Are Close!');
-                }
+                Auth::guard('users')->login($users); 
+                return redirect("/profile");
             }else{
                 return redirect()->to('/frontlogin')->with('message','Password Wrong!');
             }
