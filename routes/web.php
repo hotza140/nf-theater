@@ -61,6 +61,9 @@ Route::group(['middleware' => ['users']],function(){
     })->name('frontend.thankyou');
 
     Route::get('RewardUserLog_store',[App\Http\Controllers\UserFrontendController::class,'RewardUserLog_store'])->name('frontend.RewardUserLog_store');
+
+    Route::get('SendMailSMTPT1',[App\Http\Controllers\UserFrontendController::class,'SendMailSMTPT1'])->name('frontend.SendMailSMTPT1');
+    
 });
 
 
