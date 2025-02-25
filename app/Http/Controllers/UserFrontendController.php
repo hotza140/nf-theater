@@ -32,6 +32,7 @@ use App\Models\Packagewatch;
 use App\Models\PackageSubwatch;
 use App\Models\Reward;
 use App\Models\RewardUserLog;
+use App\Mail\CustConfirmMail;
 
 class UserFrontendController extends Controller
 {
@@ -69,12 +70,8 @@ class UserFrontendController extends Controller
         $users=users::where('username',$r->username)->first();
         if($users){
             if($r->password==$users->password){ // ||Hash::check($r->password, $users->password)
-                if($users->open==1){
-                    Auth::guard('users')->login($users); 
-                    return redirect("/profile");
-                }else{
-                    return redirect()->to('/frontlogin')->with('message','You User Are Close!');
-                }
+                Auth::guard('users')->login($users); 
+                return redirect("/profile");
             }else{
                 return redirect()->to('/frontlogin')->with('message','Password Wrong!');
             }
@@ -112,5 +109,35 @@ class UserFrontendController extends Controller
         $users = Auth::guard('users')->user();
         $RewardUserLog = RewardUserLog::where('username',$users->username)->get();
         return view('frontend.profile',compact('users','RewardUserLog'));
+    }
+
+    public function SendMailSMTPT1() {
+        // 'from' => array('address' => 'myusername@gmail.com', 'name' => 'hawle'),
+        // $mailData = '';
+        // $apply_email = 'egchai.pookham.org@gmail.com';// $value->apply_email;
+        // $MailSend = Mail::to($apply_email);
+        // if(@$ccEmails) $MailSend->cc($ccEmails);
+        // if(@$bccEmails) $MailSend->bcc($bccEmails);
+        // $MailSend->send(new CustConfirmMail($mailData));
+
+        // Mail::send('frontend.mailcus.mailtocusauto', [ 'content' => 'testmail'],    
+        // function ($m) {
+        //     $m->from('abc@gmail.com', 'ABC'); 
+        //     $m->to('egchai.pookham.org@gmail.com', 'XYZ')->subject('TestMailSubject!');
+        // }
+        
+        // );
+    
+        // if (Mail::failures()) {
+        //         return response()->Fail('Sorry! Please try again latter');
+        //         // return redirect()->back()->withErrors(['name' => 'The name is required']);
+        // }else{
+        //         return response()->success('Great! Successfully send in your mail');
+        //         // return redirect()->back()->withSuccess(['name' => 'The name is required']);
+        // }
+
+        Mail::to('egachai.pookham.org@gmail.com')->send(new CustConfirmMail());
+
+        return 'Test email sent!';
     }
 }

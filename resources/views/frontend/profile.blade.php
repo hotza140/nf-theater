@@ -21,9 +21,15 @@
                 </div>
                 <div class="col d-flex align-items-center">
                     <div class="net-plan-details">
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>User ID</h2><span class="name-profile" style="color: var(--bs-emphasis-color);">{{$users->username}}</span> <!--NF00080-->
-                        <p class="mail-profile">Email: {{$users->email}}</p> <!--nftheater134+27@gmail.com-->
-                        <p class="pass-profile">Password : {{$users->password}}</p> <!--0123456-->
+                        <div id="showUNetflix">
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Netflix Package.</h2>
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>User ID</h2><span class="name-profile" style="color: var(--bs-emphasis-color);">{{$users->username}}</span> <!--NF00080-->
+                            <p class="pass-profile">Password : {{$users->password}}</p> <!--0123456-->
+                        </div>
+                        <div id="showUYoutube" style="display: none;">
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Youtube Package.</h2>
+                            <p class="mail-profile">Email: nftheater134+27@gmail.com {{--$users->email--}}</p> <!--nftheater134+27@gmail.com-->
+                        </div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center justify-content-sm-center align-items-sm-center box-back" style="padding-left: 5px;">
@@ -36,6 +42,17 @@
                                     <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
                                 </svg></button></div>
                     </div>
+                </div>
+            </div>
+            <div class="row" style="margin-right:-20px;">
+                <div class="col d-flex justify-content-end">
+                    <button class="btn btn-danger btn-sm" 
+                        onclick="document.getElementById('showUNetflix').style='display:block';document.getElementById('showUYoutube').style='display:none';"
+                        style="height: 30px;padding:5px;width:80px;">Netflix</button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-danger btn-sm" 
+                        onclick="document.getElementById('showUNetflix').style='display:none';document.getElementById('showUYoutube').style='display:block';"
+                        style="height: 30px;padding:5px;width:80px;">Youtube</button>
                 </div>
             </div>
         </div>
