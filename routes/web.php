@@ -72,7 +72,7 @@ Route::group(['middleware' => ['users']],function(){
 
 
 Route::group(['middleware' => ['admin']],function(){
-    Route::get('/backend',[App\Http\Controllers\AdminUserBackendController::class,'users']);
+    Route::get('/backend',[App\Http\Controllers\AdminUserBackendController::class,'users_all']);
  //admin
  Route::get('admin',[App\Http\Controllers\AdminUserBackendController::class,'admin']);
  Route::get('admin_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'admin_destroy']);
@@ -85,6 +85,7 @@ Route::group(['middleware' => ['admin']],function(){
 
  Route::get('his_created',[App\Http\Controllers\AdminUserBackendController::class,'his_created']);
 
+ Route::get('users_all',[App\Http\Controllers\AdminUserBackendController::class,'users_all']);
 
  Route::post('users_update_date',[App\Http\Controllers\AdminUserBackendController::class,'users_update_date']);
   //userss

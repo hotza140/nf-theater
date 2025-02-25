@@ -128,6 +128,13 @@
                                             </div>
 
                                             <div class="col-sm-2">
+                                            <select name="status_user" id="" class="form-control">
+                                            <option  value="1" @if(@$status_user==1) selected  @endif >สถานะตัวแทน (ทั้งหมด)</option>
+                                            <option  value="2" @if(@$status_user==2) selected  @endif >เฉพาะตัวแทน</option>
+                                            </select>
+                                            </div>
+
+                                            <div class="col-sm-2">
                                                 <input type="text" name="search" value="{{@$search}}">
                                             </div>
                                             <div class="col-sm-1">
@@ -171,17 +178,25 @@
                                                         border-radius: 5px;
                                                     }
 
+
+                                                    .status-oo {
+                                                        color: white;
+                                                        background-color: #ea7500; /* สีเทา */
+                                                        padding: 5px 10px;
+                                                        border-radius: 5px;
+                                                    }
+
                                                     @keyframes beepEffect {
                                                             0% { opacity: 1; }
                                                             50% { opacity: 0; }
                                                             100% { opacity: 1; }
                                                         }
 
-                                                        /* .beepbeep {
+                                                        .beepbeep {
                                                             animation: beepEffect 2s infinite;
                                                             color: white; 
                                                             font-weight: bold; 
-                                                        } */
+                                                        }
                                                     </style>
 
                                 <div class="card-block">
@@ -192,6 +207,7 @@
                                                
                                                     <th>#</th>
                                                     <th>Open/Close</th>
+                                                    <th>สถานะแก้ใข</th>
                                                     <!-- <th>Picture</th> -->
                                                     <th>Username</th>
                                                     <th>Name Profile</th>
@@ -201,7 +217,8 @@
                                                     <th>สถานะ Account</th>
                                                     <th>Tool</th>
                                                     <th>Account</th>
-                                                    <th>สถานะแก้ใข</th>
+                                                   
+                                                    
 
                                                 </tr>
                                             </thead>
@@ -222,6 +239,14 @@
                                                     </form>
                                                     </td>
 
+                                                    <td>
+                                                        @if($items->status_edit == 1)
+                                                            <span class="status-oo beepbeep">กำลังมีการแก้ใข</span>
+                                                        @else
+                                                           
+                                                        @endif
+                                                    </td>
+
                                                     <?php
                                                     if($items->type=='PC'){
                                                         $paga='TV '.@$items->package;
@@ -232,7 +257,12 @@
                                                     ?>
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
-                                                    <td>{{$items->username}}</td>
+                                                    <td>
+                                                    @if($items->username == null and $items->password==null)
+                                                            <span class="status-expired">ตัวแทน</span>
+                                                        @endif
+                                                        {{$items->username}}
+                                                    </td>
                                                     <td>{{$items->name}}</td>
                                                     <td>{{$items->line}}</td>
                                                     <td>{{@$paga}}</td>
@@ -300,13 +330,9 @@
                                                     @endforeach
                                                      </td>
 
-                                                    <td>
-                                                        @if($items->status_edit == 1)
-                                                            <span class="status-expired beepbeep">กำลังมีการแก้ใข</span>
-                                                        @else
-                                                           
-                                                        @endif
-                                                    </td>
+                                                   
+
+                                                  
 
                                                 </tr>
                                                 @endforeach

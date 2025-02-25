@@ -60,11 +60,13 @@
 
                                         ?>
 
+                                        <div class="more_add">
+
                                         <div class="form-group row">
                                         
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Username (User {{ $i + 1 }})*</label>
-                                                <input type="text" name="users[{{ $i }}][username]" class="form-control" required value="{{ @$run }}">
+                                                <input type="text" name="users[{{ $i }}][username]" class="form-control"  value="{{ @$run }}">
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Name Profile</label>
@@ -73,7 +75,7 @@
 
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password*</label>
-                                                <input type="text" name="users[{{ $i }}][password]" class="form-control" required value="{{ @$password }}" placeholder="รหัสผ่าน">
+                                                <input type="text" name="users[{{ $i }}][password]" class="form-control"  value="{{ @$password }}" placeholder="รหัสผ่าน">
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">เบอร์โทรศัพท์</label>
@@ -135,6 +137,8 @@
                                             </div>
                                         </div>
 
+                                        </div>
+
                                         <br><br>
                                     @endfor
 
@@ -152,9 +156,10 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001
     };
 
     function updatePackage(selectElement) {
-    var formGroup = selectElement.closest('.form-group');
+    var formGroup = selectElement.closest('.more_add');
     var packageSelect = formGroup.querySelector("select[name^='users'][name$='[package]']");
     var dayInput = formGroup.querySelector("input[name^='users'][name$='[day]']");
+    var dateEndInput = formGroup.querySelector("input[name^='users'][name$='[date_end]']"); // เพิ่ม Date End
 
     // Clear existing options
     if (packageSelect) {
@@ -172,21 +177,20 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001
             packageSelect.appendChild(opt);
         });
 
-        // Update the day input if options exist
+        // Update the day input and Date End if options exist
         if (options.length > 0) {
             packageSelect.value = packageSelect.options[0].value; // Select first option
             var days = packageSelect.options[0].getAttribute('data-day');
             if (dayInput) {
                 dayInput.value = days; // Update days
             }
-        } else {
-            if (dayInput) {
-                dayInput.value = ''; // Clear day input if no options
+            if (dateEndInput) {
+                dateEndInput.value = calculateDateEnd(days); // อัปเดต Date End
             }
+        } else {
+            if (dayInput) dayInput.value = ''; // Clear day input if no options
+            if (dateEndInput) dateEndInput.value = ''; // Clear Date End
         }
-
-        // Alert to check when a package is selected
-        // alert("Selected package: " + selectElement.value);
 
         // Add event listener for package selection change
         packageSelect.addEventListener('change', function() {
@@ -195,16 +199,21 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001
             if (dayInput) {
                 dayInput.value = days || ''; // Update days
             }
-            // alert("Days for selected package: " + days); // Alert to check the days
+            if (dateEndInput) {
+                dateEndInput.value = calculateDateEnd(days || 0); // อัปเดต Date End
+            }
         });
     } else {
         console.error("Package select element not found!");
     }
 }
 
-
-
-
+// ฟังก์ชันคำนวณวันหมดอายุ (Date End)
+function calculateDateEnd(days) {
+    var today = new Date();
+    today.setDate(today.getDate() + parseInt(days)); // บวกจำนวนวันที่ Subpackage_Dayuse
+    return today.toISOString().split('T')[0]; // แปลงเป็นรูปแบบ YYYY-MM-DD
+}
 
 // เรียกใช้อัตโนมัติเมื่อหน้าโหลดเสร็จ
 window.onload = function () {
@@ -212,6 +221,8 @@ window.onload = function () {
         updatePackage(select);
     });
 };
+
+
 
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.date_start').forEach((input) => {

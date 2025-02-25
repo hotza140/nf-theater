@@ -522,6 +522,13 @@
                                             </a>
                                         </li>
                                         @endif
+                                        <li class="{{ isset($list) && $list == 'users_all' ? 'active' : '' }}">
+                                            <a href="{{ url('users_all') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Users All</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
                                         <li class="{{ isset($list) && $list == 'users' ? 'active' : '' }}">
                                             <a href="{{ url('users') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>

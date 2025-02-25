@@ -263,6 +263,46 @@ class AdminUserBackendController extends Controller
         $item->status_edit=null;
         $item->save();
      }
+
+     public function users_all(Request $r){
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users = users::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $accounts=users_in_in::whereIn('id_user',@$users)->delete();
+        $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
+
+
+       $item=users ::orderByRaw(
+           '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
+       )->paginate(20);
+
+       $search = $r->search;
+       
+       if (!empty($search)) {
+           $item = users::where(function ($query) use ($search) {
+               $query->where('name', 'LIKE', '%' . $search . '%')
+                     ->orWhere('username', 'LIKE', '%' . $search . '%')
+                     ->orWhere('phone', 'LIKE', '%' . $search . '%')
+                     ->orWhere('line', 'LIKE', '%' . $search . '%')
+                     ->orWhereHas('userIn', function($query) use ($search) {
+                         $query->where('tb_users_in.name', 'LIKE', '%' . $search . '%'); // ระบุชื่อคอลัมน์จากตาราง tb_users_in
+                     });
+           });
+       
+           $item = $item->orderByRaw(
+               '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
+           )->paginate(20);
+       }
+
+       return view('backend.users_all.index',[
+           'item'=>$item,
+           'page'=>"all",
+           'list'=>"users_all",
+
+           'search'=>$search,
+       ]);
+   }
      
      public function users(Request $r){
          // ลบเช็คเวลา
@@ -279,6 +319,7 @@ class AdminUserBackendController extends Controller
 
         $search = $r->search;
         $status_account = $r->status_account;
+        $status_user = $r->status_user;
         
         if (!empty($search) or ($status_account !== null)) {
             $item = users::whereNotNull('type_netflix')->where(function ($query) use ($search, $status_account) {
@@ -296,6 +337,10 @@ class AdminUserBackendController extends Controller
             } else {
                 $item = $item->where('status_account', $status_account);
             }
+
+            if ($status_user == 2) {
+                $item = $item->whereNull('username')->whereNull('password');
+            }
         
             $item = $item->orderByRaw(
                 '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
@@ -309,6 +354,7 @@ class AdminUserBackendController extends Controller
 
             'search'=>$search,
             'status_account'=>$status_account,
+            'status_user'=>$status_user,
         ]);
     }
     public function users_store(Request $r){
@@ -349,6 +395,7 @@ class AdminUserBackendController extends Controller
         if($r->type=='MOBILE'){
         $user = (new users_in())->getEligibleUser();
 
+        if($r->username!=null and $r->password!=null){
         if (@$user!=null) {
             $aaa=new users_in_in();
             $aaa->id_user=$item->id;  
@@ -375,10 +422,12 @@ class AdminUserBackendController extends Controller
             $item->save();
             return redirect()->to('users')->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
         }
+        }
 
         }else{
             $user = (new users_in())->getEligibleUser_pc();
 
+        if($r->username!=null and $r->password!=null){
         if ($user !== null) {
             // นับจำนวน users_in_in ที่มีอยู่แล้ว
             $countExisting = users_in_in::where('id_user_in', $user->id)->count();
@@ -412,6 +461,7 @@ class AdminUserBackendController extends Controller
             $item->save();
             return redirect()->to('users')->with('message', 'สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Manual');
         }
+        }
 
         }
 
@@ -435,7 +485,11 @@ class AdminUserBackendController extends Controller
             }
             @$acc_id=$gg->id;
         }else{
+            if($r->username!=null and $r->password!=null){
             $acc='Account เต็ม';
+            }else{
+            $acc='ตัวแทน';
+            }
         }
 
         if($r->type=='PC'){
@@ -504,6 +558,7 @@ class AdminUserBackendController extends Controller
 
             $user = (new users_in())->getEligibleUser();
     
+            if($r->username!=null and $r->password!=null){
             if (@$user!=null) {
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
 
@@ -531,11 +586,13 @@ class AdminUserBackendController extends Controller
                 $item->save();
                 return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
             }
+            }
 
             }else{
 
                 $user = (new users_in())->getEligibleUser_pc();
     
+            if($r->username!=null and $r->password!=null){
             if (@$user!=null) {
 
             // นับจำนวน users_in_in ที่มีอยู่แล้ว
@@ -570,6 +627,7 @@ class AdminUserBackendController extends Controller
                 $item->status_account=1;
                 $item->save();
                 return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+            }
             }
 
             }
@@ -621,10 +679,12 @@ class AdminUserBackendController extends Controller
         $de = users_in_in::where('id_user', $id)->delete();
         return redirect()->back()->with('message','Sucess!');
     }
-    public function users_add(){
+    public function users_add(Request $r){
         return view('backend.users.add',[
             'page'=>"all",
             'list'=>"users",
+
+            'check'=>$r->id,
         ]);
     }
 
@@ -669,6 +729,8 @@ class AdminUserBackendController extends Controller
 
                 if($userData['type']=='MOBILE'){
                 $user = (new users_in())->getEligibleUser();
+
+                if(@$userData['username']!=null and @$userData['password']!=null ){
                 if ($user !== null) {
                     $aaa = new users_in_in();
                     $aaa->id_user = $item->id;
@@ -695,11 +757,13 @@ class AdminUserBackendController extends Controller
                     $item->status_account = 1;
                     $item->save();
                 }
+                }
 
                 }else{
                 $user = (new users_in())->getEligibleUser_pc();
-                if ($user !== null) {
 
+                if(@$userData['username']!=null and @$userData['password']!=null ){
+                if ($user !== null) {
                      // นับจำนวน users_in_in ที่มีอยู่แล้ว
             $countExisting = users_in_in::where('id_user_in', $user->id)->count();
 
@@ -730,6 +794,7 @@ class AdminUserBackendController extends Controller
                     $check=1;
                     $item->status_account = 1;
                     $item->save();
+                }
                 }
                 }
 
@@ -825,6 +890,7 @@ class AdminUserBackendController extends Controller
 
         
 
+        if($r->username!=null and $r->password!=null ){
         if($r->type_mail==null){
         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
         if($user_in_in_count >= 5){
@@ -880,6 +946,7 @@ class AdminUserBackendController extends Controller
             }else{
                 return redirect()->back()->with('message','Fail มีคนใช้อีเมลนี้แล้ว!');
             }
+        }
         }
 
       
@@ -956,6 +1023,16 @@ class AdminUserBackendController extends Controller
   
           if($ch!=null){
               return redirect()->back()->with('message','Email Already Have in Data!');
+              }else{
+                $ch=users_in::where('email01',$r->email)->orderby('id','desc')->first();
+                if($ch!=null){
+                return redirect()->back()->with('message','Email Already Have in Data!');
+                }else{
+                    $ch=users_in::where('email02',$r->email)->orderby('id','desc')->first();
+                    if($ch!=null){
+                    return redirect()->back()->with('message','Email Already Have in Data!');
+                    } 
+                }
               }
 
               if($nh!=null){
@@ -986,8 +1063,18 @@ class AdminUserBackendController extends Controller
           $nh=users_in::where('id','!=',$id)->where('name',$r->name)->orderby('id','desc')->first();
   
           if($ch!=null){
+            return redirect()->back()->with('message','Email Already Have in Data!');
+            }else{
+              $ch=users_in::where('id','!=',$id)->where('email01',$r->email)->orderby('id','desc')->first();
+              if($ch!=null){
               return redirect()->back()->with('message','Email Already Have in Data!');
+              }else{
+                  $ch=users_in::where('id','!=',$id)->where('email02',$r->email)->orderby('id','desc')->first();
+                  if($ch!=null){
+                  return redirect()->back()->with('message','Email Already Have in Data!');
+                  } 
               }
+            }
 
               if($nh!=null){
                 return redirect()->back()->with('message','Name Profile Already Have in Data!');
@@ -1163,6 +1250,8 @@ class AdminUserBackendController extends Controller
     // ดึง users ที่ยังไม่หมดอายุและยังไม่ถูกเชื่อมกับ user_in_in
     $users = users::whereNotNull('type_netflix')->whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
                 ->where('open',0)
+                ->whereNotNull('username')
+                ->whereNotNull('password')
                 ->whereDate('date_start', '<=', $date) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
                 ->whereDate('date_end', '>=', $date) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
                 ->limit(5)->get();

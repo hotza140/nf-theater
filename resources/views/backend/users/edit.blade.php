@@ -81,13 +81,13 @@
                                         
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Username*</label>
-                                                <input type="username" name="username" class="form-control" id=""  maxlength = "25"
-                                                     required value="{{@$run}}">
+                                                <label class="col-form-label">Username</label>
+                                                <input type="text" name="username" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$run}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Password*</label>
-                                                <input type="text" name="password" class="form-control" id="" required value="{{@$password}}" placeholder="รหัสผ่าน" >
+                                                <label class="col-form-label">Password</label>
+                                                <input type="text" name="password" class="form-control" id=""  value="{{@$password}}" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 

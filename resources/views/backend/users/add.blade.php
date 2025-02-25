@@ -21,6 +21,7 @@
                             <!-- Basic Form Inputs card start -->
                             <div class="card">
                                 <div class="card-header">
+                                    <?php $item=DB::table('tb_users')->where('id',@$check)->first(); ?>
 
                                 </div>
                                 <div class="card-block">
@@ -28,10 +29,6 @@
                                     <form method="post" id="" action="{{ url('users_store') }}"
                                         enctype="multipart/form-data" >
                                         @csrf
-
-                                        <!-- -------EDIT---------- -->
-                                        <input type="hidden" name="edit" value="{{@$item->id}}">
-                                        <!-- -------EDIT---------- -->
                                         
                                         <?php
                                         $runnum=DB::table('tb_users')->orderby('id','desc')->count();
@@ -61,13 +58,13 @@
                                         
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Username*</label>
-                                                <input type="username" name="username" class="form-control" id=""  maxlength = "25"
-                                                     required value="{{@$run}}">
+                                                <label class="col-form-label">Username</label>
+                                                <input type="text" name="username" class="form-control" id=""  maxlength = "25"
+                                                      value="{{@$run}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Password*</label>
-                                                <input type="text" name="password" class="form-control" id="" required value="{{@$password}}" placeholder="รหัสผ่าน" >
+                                                <label class="col-form-label">Password</label>
+                                                <input type="text" name="password" class="form-control" id=""  value="{{@$password}}" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 

@@ -57,7 +57,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">USERS Account/EDIT</h5>
+                        <h5 class="m-b-10">USERS NETFLIX/EDIT</h5>
 
                     </div>
                 </div>
@@ -234,6 +234,8 @@
                                     <?php 
                                     $date_ch_in=date('Y-m-d');
                                     $user=App\Models\users::where('open',0)
+                                    ->whereNotNull('username')
+                                    ->whereNotNull('password')
                                     ->whereDate('date_start', '<=',$date_ch_in) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
                                     ->whereDate('date_end', '>=',$date_ch_in) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
                                     ->orderby('id','desc')->cursor();
@@ -328,7 +330,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Username*</label>
-                                                <input type="username" name="username" class="form-control" id=""  maxlength = "25"
+                                                <input type="text" name="username" class="form-control" id=""  maxlength = "25"
                                                      required value="{{@$run}}">
                                             </div>
                                             <div class="col-sm-3">
