@@ -618,6 +618,16 @@
         </div>
 
 
+        <!-- คลุมดำ -->
+        <script>
+        document.querySelectorAll('input[type="text"]').forEach(function(input) {
+            input.addEventListener('click', function() {
+                this.select();
+            });
+        });
+        </script>
+
+
 
         <!-- // ป้องกันการกด Enter เพื่อส่งข้อมูล ในทุกฟอร์ม -->
         <script>
