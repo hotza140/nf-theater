@@ -186,7 +186,7 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001
         }
 
         // Alert to check when a package is selected
-        alert("Selected package: " + selectElement.value);
+        // alert("Selected package: " + selectElement.value);
 
         // Add event listener for package selection change
         packageSelect.addEventListener('change', function() {
@@ -195,7 +195,7 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001
             if (dayInput) {
                 dayInput.value = days || ''; // Update days
             }
-            alert("Days for selected package: " + days); // Alert to check the days
+            // alert("Days for selected package: " + days); // Alert to check the days
         });
     } else {
         console.error("Package select element not found!");
