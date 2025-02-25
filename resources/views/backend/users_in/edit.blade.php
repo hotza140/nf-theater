@@ -287,6 +287,19 @@
                                     </div>  
 
 
+
+                                    <div class="col-sm-2">
+                                    <form method="post" id="autoCreateUsersInIn_aaa" action="{{ url('autoCreateUsersInIn_aaa') }}" enctype="multipart/form-data" >
+                                    @csrf
+
+                                    <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
+                                    <button type="submit" style="color:white;" class="btn btn-danger"  onclick="javascript:return confirm('Confirm?')">
+                                        <i class="fa fa-plus"></i> เพิ่มตัวแทน Auto
+                                    </button>
+                                    </form>  
+                                    </div>  
+
+
                                 </div>
                                 </div>
 
@@ -554,7 +567,13 @@
                                                     <td>{{$key+1}}</td>
                                                     <td>
                                                         @if($user_ins->type=='MOBILE' or $user_ins->type=='')
+
+                                                        @if($user_ins->tan==null)
                                                         <i class="fa fa-mobile" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>
+                                                        @else
+                                                        <i class="fa fa-mobile" style="font-size:30px; color:blue;" title="ตัวแทน"></i>
+                                                        @endif
+
                                                         @else
                                                         <?php  
                                                         if($user_ins->type_mail==1){

@@ -113,6 +113,7 @@ Route::group(['middleware' => ['admin']],function(){
   //users
 
   Route::post('autoCreateUsersInIn',[App\Http\Controllers\AdminUserBackendController::class,'autoCreateUsersInIn']);
+  Route::post('autoCreateUsersInIn_aaa',[App\Http\Controllers\AdminUserBackendController::class,'autoCreateUsersInIn_aaa']);
     //users
     Route::get('users_in',[App\Http\Controllers\AdminUserBackendController::class,'users_in']);
     Route::get('users_in_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_in_destroy']);

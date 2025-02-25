@@ -992,20 +992,34 @@ class AdminUserBackendController extends Controller
           $item=users_in ::orderby('id','desc')->paginate(10);
           $search = $r->search;
           $status_account = $r->status_account;
-          if (!empty($search) or !empty($status_account) ) {
-           $item = users_in::where(function ($query) use ($search, $status_account) {
-                  $query->where('name', 'LIKE', '%' . $search . '%');
-                  $query->orwhere('email', 'LIKE', '%' . $search . '%');
-                  $query->orwhere('country', 'LIKE', '%' . $search . '%');
-          });
 
-            if ($status_account == '0') {
-            $item = $item->where('date_end','>=',$date);
-            }elseif($status_account == '1'){
-            $item = $item->where('date_end','<',$date);
+          // ตรวจสอบว่า search เป็นวันที่ในรูปแบบ 14/03/2025 หรือไม่
+            $date_new = null;
+            if (!empty($search) && preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $search)) {
+                $date_parts = explode('/', $search);
+                $date_new = $date_parts[2] . '-' . $date_parts[1] . '-' . $date_parts[0]; // แปลงเป็น Y-m-d
             }
-            $item = $item->orderBy('id', 'desc')->paginate(10);
-          }
+
+            if (!empty($search) or !empty($status_account)) {
+                $item = users_in::where(function ($query) use ($search, $status_account, $date_new) {
+                    // ถ้า search เป็นวันที่ ให้ใช้ date_new แทน search
+                    if ($date_new !== null) {
+                        $query->where('date_end', 'LIKE', '%' . $date_new . '%');
+                    } else {
+                        $query->where('name', 'LIKE', '%' . $search . '%')
+                            ->orWhere('email', 'LIKE', '%' . $search . '%')
+                            ->orWhere('country', 'LIKE', '%' . $search . '%');
+                    }
+                });
+
+                if ($status_account == '0') {
+                    $item = $item->where('date_end', '>=', $date);
+                } elseif ($status_account == '1') {
+                    $item = $item->where('date_end', '<', $date);
+                }
+
+                $item = $item->orderBy('id', 'desc')->paginate(10);
+            }
 
           return view('backend.users_in.index',[
               'item'=>$item,
@@ -1293,6 +1307,62 @@ class AdminUserBackendController extends Controller
 }
 // Auto
 
+
+
+
+
+ // Auto
+ public function autoCreateUsersInIn_aaa(Request $r)
+ {
+     $date = date('Y-m-d'); // วันที่ปัจจุบัน
+ 
+     // ดึง users ที่ยังไม่หมดอายุและยังไม่ถูกเชื่อมกับ user_in_in
+     $users = users::whereNotNull('type_netflix')->whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
+                 ->where('open',0)
+                 ->whereNull('username')
+                 ->whereNull('password')
+                 ->whereDate('date_start', '<=', $date) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
+                 ->whereDate('date_end', '>=', $date) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
+                 ->limit(2)->get();
+ 
+     // เช็คว่ามี users หรือไม่
+     if ($users->isEmpty()) {
+         return redirect()->back()->with('message','ไม่มี User ที่ใช้ได้ในขณะนี้');
+     }
+ 
+     // สร้างข้อมูลใน users_in_in แบบอัตโนมัติ
+     foreach ($users as $user) {
+         $aaa=users::where('id',$user->id)->first();
+         $item=new users_in_in();
+         $item->id_user=$user->id;  
+         $item->id_user_in=$r->id_user_in;    
+         $item->type=@$aaa->type;
+         $item->tan=1;
+ 
+         $item->date_start=@$aaa->date_start; 
+         $item->date_end=@$aaa->date_end;
+ 
+         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
+         if($user_in_in_count >= 5){
+         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
+         }else{
+         $item->save();
+ 
+         $item_his=new users_in_in_history();
+         $item_his->id_user=$user->id;  
+         $item_his->id_user_in=$r->id_user_in;    
+         $item_his->type=@$aaa->type;
+         $item_his->tan=1;
+ 
+         $item_his->date_start=@$aaa->date_start; 
+         $item_his->date_end=@$aaa->date_end;
+         $item_his->save();
+         }
+     }
+ 
+     return redirect()->back()->with('message','Sucess!');
+ }
+ // Auto
     
 
 

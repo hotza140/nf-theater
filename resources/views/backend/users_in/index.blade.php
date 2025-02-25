@@ -74,6 +74,10 @@
                             <div class="card">
                                 <div class="card-header">
 
+                                <?php
+                                            $status_account = $status_account ?? 999;
+                                        ?>
+
                                     <a style="color:white;" class="btn btn-success" href="{{url('users_in_add')}}"> <i class="fa fa-plus"></i> Add</a>
 
                                     
@@ -136,13 +140,20 @@
                                                     </form>
                                                     </td>
                                                     <td>
-                                                    <?php $nub = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'MOBILE')->count();
+                                                    <?php $nub = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'MOBILE')->whereNull('tan')->count();
+                                                    $nub_tan = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'MOBILE')->whereNotNull('tan')->count();
                                                     $icons = 5; // จำนวนไอคอนทั้งหมด
                                                     ?>
 
                                                     @for ($i = 0; $i < $icons; $i++)
-                                                        <i class="fa fa-mobile" style="font-size:30px; color:{{ $i < $nub ? 'red' : 'green' }};" title="{{ $i < $nub ? 'ไม่ว่าง' : 'ว่าง' }}"></i>
-                                                    @endfor
+                                                            @if ($i < $nub)
+                                                                <i class="fa fa-mobile" style="font-size:30px; color:red;" title="ไม่ว่าง"></i>
+                                                            @elseif ($i < $nub + $nub_tan)
+                                                                <i class="fa fa-mobile" style="font-size:30px; color:blue;" title="ตัวแทน"></i>
+                                                            @else
+                                                                <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
+                                                            @endif
+                                                        @endfor
                                                     </td>
 
                                                     <td>
