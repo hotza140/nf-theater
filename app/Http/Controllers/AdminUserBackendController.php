@@ -267,7 +267,7 @@ class AdminUserBackendController extends Controller
      public function users(Request $r){
          // ลบเช็คเวลา
          $date=date('Y-m-d');
-         $users = users::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+         $users = users::whereNotNull('type_netflix')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
          $accounts=users_in_in::whereIn('id_user',@$users)->delete();
          $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
          // ลบเช็คเวลา
@@ -281,7 +281,7 @@ class AdminUserBackendController extends Controller
         $status_account = $r->status_account;
         
         if (!empty($search) or ($status_account !== null)) {
-            $item = users::where(function ($query) use ($search, $status_account) {
+            $item = users::whereNotNull('type_netflix')->where(function ($query) use ($search, $status_account) {
                 $query->where('name', 'LIKE', '%' . $search . '%')
                       ->orWhere('username', 'LIKE', '%' . $search . '%')
                       ->orWhere('phone', 'LIKE', '%' . $search . '%')
@@ -452,7 +452,8 @@ class AdminUserBackendController extends Controller
         $his->id_user_in=@$acc_id;
         $his->id_user_in_in=@$aaa->id;
         $his->number=$randomNumber;
-        $his->detail='สร้าง Account:'.$acc.'  Profile:'.$item->name.'  Package:'.@$e_type.' '.$item->package.'  Email:'.@$email.'  Password:'.@$pa;
+        $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile: '.$item->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Package: '.@$e_type.' '.$item->package.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;Password: '.@$pa;
+
         $his->save();
 
         return redirect()->to('users')->with('message','Sucess!');
@@ -767,7 +768,8 @@ class AdminUserBackendController extends Controller
                 $his->id_user_in=@$acc_id;
                 $his->id_user_in_in=@$aaa->id;
                 $his->number=$randomNumber;
-                $his->detail='สร้าง Account:'.$acc.'  Profile:'.$item->name.'  Package:'.@$e_type.' '.$item->package.'  Email:'.@$email.'  Password:'.@$pa;
+                $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile: '.$item->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Package: '.@$e_type.' '.$item->package.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;Password: '.@$pa;
+
                 $his->save();
 
 
@@ -915,9 +917,9 @@ class AdminUserBackendController extends Controller
        public function users_in(Request $r){
          // ลบเช็คเวลา
          $date=date('Y-m-d');
-         $users = users::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+         $users = users::whereNotNull('type_netflix')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
          $accounts=users_in_in::whereIn('id_user',@$users)->delete();
-         $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+         $users_update = users::whereNotNull('type_netflix')->whereDate('date_end', '<', $date)->update(['status_account' => 2]);
          // ลบเช็คเวลา
 
           $item=users_in ::orderby('id','desc')->paginate(10);
@@ -1159,7 +1161,7 @@ class AdminUserBackendController extends Controller
     $date = date('Y-m-d'); // วันที่ปัจจุบัน
 
     // ดึง users ที่ยังไม่หมดอายุและยังไม่ถูกเชื่อมกับ user_in_in
-    $users = users::whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
+    $users = users::whereNotNull('type_netflix')->whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
                 ->where('open',0)
                 ->whereDate('date_start', '<=', $date) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
                 ->whereDate('date_end', '>=', $date) // ยังไม่หมดอายุ (end >= ปัจจุบัน)

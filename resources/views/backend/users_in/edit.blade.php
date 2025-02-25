@@ -383,55 +383,6 @@
                                             </select>
                                         </div>
 
-                                        <script>
-                                        function updatePackage() {
-                                            var type = document.getElementById("type").value;
-                                            var packageSelect = document.getElementById("package");
-                                            var selectedPackage = "{{ @$item->package }}"; // นำค่าจากฐานข้อมูลมาใช้
-
-                                            // ล้างค่าเดิม
-                                            packageSelect.innerHTML = "";
-
-                                            // กำหนดตัวเลือกแพ็กเกจ
-                                            var options;
-                                            if (type === "PC") {
-                                                options = [
-                                                    { value: "1 เดือน 139 บาท", text: "1 เดือน 139 บาท" },
-                                                    { value: "2 เดือน 269 บาท", text: "2 เดือน 269 บาท" },
-                                                    { value: "3 เดือน 400 บาท", text: "3 เดือน 400 บาท" },
-                                                    { value: "4 เดือน 535 บาท", text: "4 เดือน 535 บาท" },
-                                                    { value: "6 เดือน 800 บาท", text: "6 เดือน 800 บาท" },
-                                                    { value: "1 ปี 1,590 บาท", text: "1 ปี 1,590 บาท" }
-                                                ];
-                                            } else {
-                                                options = [
-                                                    { value: "1 เดือน 189 บาท", text: "1 เดือน 189 บาท" },
-                                                    { value: "2 เดือน 369 บาท", text: "2 เดือน 369 บาท" },
-                                                    { value: "3 เดือน 550 บาท", text: "3 เดือน 550 บาท" },
-                                                    { value: "4 เดือน 729 บาท", text: "4 เดือน 729 บาท" },
-                                                    { value: "6 เดือน 1,099 บาท", text: "6 เดือน 1,099 บาท" },
-                                                    { value: "1 ปี 2,090 บาท", text: "1 ปี 2,090 บาท" }
-                                                ];
-                                            }
-
-                                            // เพิ่ม option ลงใน select และกำหนดค่าที่เลือกไว้
-                                            options.forEach(option => {
-                                                var opt = document.createElement("option");
-                                                opt.value = option.value;
-                                                opt.textContent = option.text;
-                                                if (option.value === selectedPackage) {
-                                                    opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
-                                                }
-                                                packageSelect.appendChild(opt);
-                                            });
-                                        }
-
-                                        // เรียกใช้เมื่อโหลดหน้าเว็บ
-                                        window.onload = function () {
-                                            updatePackage();
-                                        };
-                                    </script>
-
                                         </div>
 
                                         <div class="form-group row">
@@ -478,45 +429,90 @@
                                         </div>
                                         </div>
 
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', () => {
-                                                const dateStartInput = document.getElementById('date_start');
-                                                const dateEndInput = document.getElementById('date_end');
-                                                const dayInput = document.getElementById('day_input');
-                                                const daySelect = document.getElementById('day_select');
+                                        <?php 
+                                        $pag_PC=DB::table('tb_package_subwatch')->where('package_Code','PNF-00001')->where('type','PC')->orderBy('Subpackage_Dayuse','asc')->get();
+                                        $pag_MOBILE=DB::table('tb_package_subwatch')->where('package_Code','PNF-00001')->where('type','MOBILE')->orderBy('Subpackage_Dayuse','asc')->get();  
+                                         ?>
 
-                                                // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
-                                                const today = new Date().toISOString().split('T')[0];
-                                                dateStartInput.value = today;
+    <script>
+    var packages = {
+        PC: @json($pag_PC),
+        MOBILE: @json($pag_MOBILE)
+    };
 
-                                                // ฟังก์ชันคำนวณวันที่สิ้นสุด
-                                                function updateEndDate(days) {
-                                                    if (!isNaN(days) && days > 0) {
-                                                        const startDate = new Date(dateStartInput.value);
-                                                        startDate.setDate(startDate.getDate() + days);
-                                                        dateEndInput.value = startDate.toISOString().split('T')[0];
-                                                    } else {
-                                                        dateEndInput.value = '';
-                                                    }
-                                                }
+    document.addEventListener('DOMContentLoaded', () => {
+        const dateStartInput = document.getElementById('date_start');
+        const dateEndInput = document.getElementById('date_end');
+        const dayInput = document.getElementById('day_input');
+        const daySelect = document.getElementById('day_select');
+        const typeSelect = document.getElementById("type");
+        const packageSelect = document.getElementById("package");
 
-                                                // เมื่อเลือกจำนวนวันจาก select ให้ไปใส่ใน input และคำนวณวันสิ้นสุด
-                                                daySelect.addEventListener('change', () => {
-                                                    dayInput.value = daySelect.value;
-                                                    updateEndDate(parseInt(daySelect.value, 10));
-                                                });
+        // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
+        const today = new Date().toISOString().split('T')[0];
+        dateStartInput.value = today;
 
-                                                // เมื่อกรอกจำนวนวันเอง ให้คำนวณวันสิ้นสุด
-                                                dayInput.addEventListener('input', () => {
-                                                    updateEndDate(parseInt(dayInput.value, 10));
-                                                });
+        function updatePackage() {
+            var type = typeSelect.value;
+            var selectedPackage = "{{ @$item->package }}"; // ค่าจากฐานข้อมูล
 
-                                                // เมื่อเปลี่ยนวันที่เริ่มต้น ให้คำนวณวันสิ้นสุดใหม่
-                                                dateStartInput.addEventListener('change', () => {
-                                                    updateEndDate(parseInt(dayInput.value, 10));
-                                                });
-                                            });
-                                            </script>
+            // ล้างค่าของ select
+            packageSelect.innerHTML = "";
+
+            // เพิ่มตัวเลือกจากฐานข้อมูล
+            packages[type].forEach(pkg => {
+                var opt = document.createElement("option");
+                opt.value = pkg.Subpackage_Name;
+                opt.textContent = opt.value;
+                opt.dataset.dayuse = pkg.Subpackage_Dayuse; // เก็บจำนวนวันไว้ใน dataset
+
+                if (opt.value === selectedPackage) {
+                    opt.selected = true;
+                }
+                packageSelect.appendChild(opt);
+            });
+
+            updateDays(); // อัปเดตค่าจำนวนวันใน `day_input`
+        }
+
+        function updateDays() {
+            var selectedOption = packageSelect.options[packageSelect.selectedIndex];
+
+            if (selectedOption) {
+                var days = selectedOption.dataset.dayuse || 0;
+                dayInput.value = days;
+                updateEndDate(parseInt(days, 10));
+            }
+        }
+
+        function updateEndDate(days) {
+            if (!isNaN(days) && days > 0) {
+                const startDate = new Date(dateStartInput.value);
+                startDate.setDate(startDate.getDate() + days);
+                dateEndInput.value = startDate.toISOString().split('T')[0];
+            } else {
+                dateEndInput.value = '';
+            }
+        }
+
+        // โหลดข้อมูลเริ่มต้น
+        updatePackage();
+
+        // Event Listeners
+        typeSelect.addEventListener("change", updatePackage);
+        packageSelect.addEventListener("change", updateDays);
+        daySelect.addEventListener("change", () => {
+            dayInput.value = daySelect.value;
+            updateEndDate(parseInt(daySelect.value, 10));
+        });
+        dayInput.addEventListener("input", () => {
+            updateEndDate(parseInt(dayInput.value, 10));
+        });
+        dateStartInput.addEventListener("change", () => {
+            updateEndDate(parseInt(dayInput.value, 10));
+        });
+    });
+</script>
 
                                         <p class="text-right">
                                             <button type="submit" class="btn btn-success" style="color:white;"

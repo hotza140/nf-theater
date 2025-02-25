@@ -117,7 +117,8 @@ class users_in extends Authenticatable
     $eligibleUsers = self::where(function ($query) use ($date) {
         $query->whereHas('users_in_in_pc', function ($subQuery) use ($date) {
             $subQuery->whereHas('user', function ($userQuery) use ($date) {
-            $userQuery->whereDate('date_start', '<=', $date)
+            $userQuery->whereNotNull('type_netflix')
+                     ->whereDate('date_start', '<=', $date)
                      ->whereDate('date_end', '>=', $date)
                      ->where('open', 0)
                      ->where(function ($q) {

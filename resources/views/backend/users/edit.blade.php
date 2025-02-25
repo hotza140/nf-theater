@@ -144,7 +144,18 @@
                                             </select>
                                         </div>
 
-                                        <script>
+
+                                        <?php 
+                                        $pag_PCa = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
+                                        $pag_MOBILEa = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
+                                    ?>
+
+                                    <script>
+                                        var packages = {
+                                            PC: @json($pag_PCa),
+                                            MOBILE: @json($pag_MOBILEa)
+                                        };
+                                        
                                         function updatePackage() {
                                             var type = document.getElementById("type").value;
                                             var packageSelect = document.getElementById("package");
@@ -153,45 +164,20 @@
                                             // ล้างค่าเดิม
                                             packageSelect.innerHTML = "";
 
-                                            // กำหนดตัวเลือกแพ็กเกจ
-                                            var options;
-                                            if (type === "PC") {
-                                                options = [
-                                                    { value: "1 เดือน 139 บาท", text: "1 เดือน 139 บาท" },
-                                                    { value: "2 เดือน 269 บาท", text: "2 เดือน 269 บาท" },
-                                                    { value: "3 เดือน 400 บาท", text: "3 เดือน 400 บาท" },
-                                                    { value: "4 เดือน 535 บาท", text: "4 เดือน 535 บาท" },
-                                                    { value: "6 เดือน 800 บาท", text: "6 เดือน 800 บาท" },
-                                                    { value: "1 ปี 1,590 บาท", text: "1 ปี 1,590 บาท" }
-                                                ];
-                                            } else {
-                                                options = [
-                                                    { value: "1 เดือน 189 บาท", text: "1 เดือน 189 บาท" },
-                                                    { value: "2 เดือน 369 บาท", text: "2 เดือน 369 บาท" },
-                                                    { value: "3 เดือน 550 บาท", text: "3 เดือน 550 บาท" },
-                                                    { value: "4 เดือน 729 บาท", text: "4 เดือน 729 บาท" },
-                                                    { value: "6 เดือน 1,099 บาท", text: "6 เดือน 1,099 บาท" },
-                                                    { value: "1 ปี 2,090 บาท", text: "1 ปี 2,090 บาท" }
-                                                ];
-                                            }
+                                            // กำหนดตัวเลือกแพ็กเกจจากข้อมูลที่ดึงมาจาก Laravel
+                                            var options = packages[type] || []; // Get the options based on the selected type
 
                                             // เพิ่ม option ลงใน select และกำหนดค่าที่เลือกไว้
                                             options.forEach(option => {
                                                 var opt = document.createElement("option");
-                                                opt.value = option.value;
-                                                opt.textContent = option.text;
-                                                if (option.value === selectedPackage) {
+                                                opt.value = option.Subpackage_Name; // Assuming Subpackage_Name is the value you want to use
+                                                opt.textContent = option.Subpackage_Name; // Update this if you want to display a different text
+                                                if (option.Subpackage_Name === selectedPackage) {
                                                     opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
                                                 }
                                                 packageSelect.appendChild(opt);
                                             });
                                         }
-
-                                        // เรียกใช้เมื่อโหลดหน้าเว็บ
-                                        window.onload = function () {
-                                            updatePackage();
-                                            updatePackage_a();
-                                        };
                                     </script>
 
                                         
@@ -261,56 +247,6 @@
                                         </div>
                                         </div>
 
-                                        <script>
-                                        function updatePackage_a() {
-                                            var type = document.getElementById("type_a").value;
-                                            var packageSelect = document.getElementById("package_a");
-                                            var selectedPackage = "{{ @$item->package }}"; // นำค่าจากฐานข้อมูลมาใช้
-
-                                            // ล้างค่าเดิม
-                                            packageSelect.innerHTML = "";
-
-                                            // กำหนดตัวเลือกแพ็กเกจ
-                                            var options;
-                                            if (type === "PC") {
-                                                options = [
-                                                    { value: "1 เดือน 139 บาท", text: "1 เดือน 139 บาท" },
-                                                    { value: "2 เดือน 269 บาท", text: "2 เดือน 269 บาท" },
-                                                    { value: "3 เดือน 400 บาท", text: "3 เดือน 400 บาท" },
-                                                    { value: "4 เดือน 535 บาท", text: "4 เดือน 535 บาท" },
-                                                    { value: "6 เดือน 800 บาท", text: "6 เดือน 800 บาท" },
-                                                    { value: "1 ปี 1,590 บาท", text: "1 ปี 1,590 บาท" }
-                                                ];
-                                            } else {
-                                                options = [
-                                                    { value: "1 เดือน 189 บาท", text: "1 เดือน 189 บาท" },
-                                                    { value: "2 เดือน 369 บาท", text: "2 เดือน 369 บาท" },
-                                                    { value: "3 เดือน 550 บาท", text: "3 เดือน 550 บาท" },
-                                                    { value: "4 เดือน 729 บาท", text: "4 เดือน 729 บาท" },
-                                                    { value: "6 เดือน 1,099 บาท", text: "6 เดือน 1,099 บาท" },
-                                                    { value: "1 ปี 2,090 บาท", text: "1 ปี 2,090 บาท" }
-                                                ];
-                                            }
-
-                                            // เพิ่ม option ลงใน select และกำหนดค่าที่เลือกไว้
-                                            options.forEach(option => {
-                                                var opt = document.createElement("option");
-                                                opt.value = option.value;
-                                                opt.textContent = option.text;
-                                                if (option.value === selectedPackage) {
-                                                    opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
-                                                }
-                                                packageSelect.appendChild(opt);
-                                            });
-                                        }
-
-                                        // เรียกใช้เมื่อโหลดหน้าเว็บ
-                                        window.onload = function () {
-                                            updatePackage_a();
-                                            updatePackage();
-                                        };
-                                    </script>
-
                                 <div class="form-group row">
                                 <div class="col-sm-2">
                                     <label class="col-form-label">Select Days</label>
@@ -360,45 +296,117 @@
                 </div>
                 <!-- Page body end -->
 
-                <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const dateStartInput = document.getElementById('date_start');
-                    const dateEndInput = document.getElementById('date_end');
-                    const dayInput = document.getElementById('day_input');
-                    const daySelect = document.getElementById('day_select');
+                <?php 
+    // ดึงข้อมูลแพ็กเกจจากฐานข้อมูล
+    $pag_PC = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
+    $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
+?>
 
-                    // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
-                    const today = new Date().toISOString().split('T')[0];
-                    dateStartInput.value = today;
+<script>
+    var packages = {
+        PC: @json($pag_PC),
+        MOBILE: @json($pag_MOBILE)
+    };
 
-                    // ฟังก์ชันคำนวณวันที่สิ้นสุด
-                    function updateEndDate(days) {
-                        if (!isNaN(days) && days > 0) {
-                            const startDate = new Date(dateStartInput.value);
-                            startDate.setDate(startDate.getDate() + days);
-                            dateEndInput.value = startDate.toISOString().split('T')[0];
-                        } else {
-                            dateEndInput.value = '';
-                        }
-                    }
+    function updatePackage_a() {
+        var type = document.getElementById("type_a").value;
+        var packageSelect = document.getElementById("package_a");
+        var selectedPackage = "{{ @$item->package }}"; // นำค่าจากฐานข้อมูลมาใช้
 
-                    // เมื่อเลือกจำนวนวันจาก select ให้ไปใส่ใน input และคำนวณวันสิ้นสุด
-                    daySelect.addEventListener('change', () => {
-                        dayInput.value = daySelect.value;
-                        updateEndDate(parseInt(daySelect.value, 10));
-                    });
+        // ล้างค่าเดิม
+        packageSelect.innerHTML = "";
 
-                    // เมื่อกรอกจำนวนวันเอง ให้คำนวณวันสิ้นสุด
-                    dayInput.addEventListener('input', () => {
-                        updateEndDate(parseInt(dayInput.value, 10));
-                    });
+        // เพิ่มตัวเลือกจากฐานข้อมูล
+        packages[type].forEach(pkg => {
+            var opt = document.createElement("option");
+            opt.value = pkg.Subpackage_Name;
+            opt.textContent = opt.value;
+            opt.dataset.dayuse = pkg.Subpackage_Dayuse; // เก็บจำนวนวันไว้ใน dataset
+            if (opt.value === selectedPackage) {
+                opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
+            }
+            packageSelect.appendChild(opt);
+        });
 
-                    // เมื่อเปลี่ยนวันที่เริ่มต้น ให้คำนวณวันสิ้นสุดใหม่
-                    dateStartInput.addEventListener('change', () => {
-                        updateEndDate(parseInt(dayInput.value, 10));
-                    });
-                });
-                </script>
+        // อัปเดตวันและวันที่สิ้นสุดหลังจากเพิ่มตัวเลือก
+        updateDaysAndEndDate();
+    }
+
+    function updateDaysAndEndDate() {
+        var packageSelect = document.getElementById("package_a");
+        var dayInput = document.getElementById('day_input');
+        var dateEndInput = document.getElementById('date_end');
+
+        // หากไม่มีการเลือก ให้ใช้ค่าจากตัวเลือกแรก
+        var selectedOption = packageSelect.options[packageSelect.selectedIndex];
+        if (!selectedOption) {
+            selectedOption = packageSelect.options[0];
+        }
+
+        if (selectedOption) {
+            var days = selectedOption.dataset.dayuse || 0; // ใช้ dataset วัน
+            dayInput.value = days;
+
+            // คำนวณวันสิ้นสุด
+            updateEndDate(parseInt(days, 10));
+        }
+    }
+
+    function updateEndDate(days) {
+        const dateStartInput = document.getElementById('date_start');
+        const dateEndInput = document.getElementById('date_end');
+
+        if (!isNaN(days) && days > 0) {
+            const startDate = new Date(dateStartInput.value);
+            startDate.setDate(startDate.getDate() + days);
+            dateEndInput.value = startDate.toISOString().split('T')[0];
+        } else {
+            dateEndInput.value = '';
+        }
+    }
+
+    // เรียกใช้เมื่อโหลดหน้าเว็บ
+    window.onload = function () {
+        updatePackage_a();
+        // ตรวจสอบว่ามีค่า type ที่ถูกเซฟไว้หรือไม่
+        var savedType = "{{ @$item->type }}"; // ค่าประเภทที่เซฟไว้
+        document.getElementById("type").value = savedType; // ตั้งค่าให้ dropdown เป็นค่าที่เซฟไว้
+        updatePackage(); // อัปเดตแพ็คเกจตามประเภทที่เซฟไว้
+    };
+
+    // เพิ่ม Event Listener สำหรับการเปลี่ยนแพ็กเกจ
+    document.getElementById("package_a").addEventListener("change", updateDaysAndEndDate);
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dateStartInput = document.getElementById('date_start');
+        const daySelect = document.getElementById('day_select');
+        const dayInput = document.getElementById('day_input');
+
+        // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
+        const today = new Date().toISOString().split('T')[0];
+        dateStartInput.value = today;
+
+        // เมื่อเลือกจำนวนวันจาก select ให้ไปใส่ใน input และคำนวณวันสิ้นสุด
+        daySelect.addEventListener('change', () => {
+            dayInput.value = daySelect.value;
+            updateEndDate(parseInt(daySelect.value, 10));
+        });
+
+        // เมื่อกรอกจำนวนวันเอง ให้คำนวณวันสิ้นสุด
+        dayInput.addEventListener('input', () => {
+            updateEndDate(parseInt(dayInput.value, 10));
+        });
+
+        // เมื่อเปลี่ยนวันที่เริ่มต้น ให้คำนวณวันสิ้นสุดใหม่
+        dateStartInput.addEventListener('change', () => {
+            updateEndDate(parseInt(dayInput.value, 10));
+        });
+    });
+</script>
+
+
 
 
 

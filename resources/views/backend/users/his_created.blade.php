@@ -144,8 +144,8 @@
                                                     <td>{{$key+1}}</td>
                                                     <td>{{@$admin->name}} 
                                                         @if(@$check_all!=null)
-                                                    <a href="{{url('users_edit_status_check_admin_all/'.$items->number)}}" onclick="javascript:return confirm('Confirm?')" >
-                                                                <span class="status-expired beepbeep">เปลี่ยนทั้งหมด</span>
+                                                    <a href="{{url('users_edit_status_check_admin_all/'.$items->number)}}" class="btn btn-danger" style="color:white;" onclick="javascript:return confirm('Confirm?')" >
+                                                                <span >เปลี่ยนทั้งหมด</span>
                                                             </a> 
                                                             @endif 
                                                     </td>
@@ -155,20 +155,18 @@
                                                     @endphp
 
                                                     @foreach($all as $alls)
-                                                    <br>
                                                         @if ($previousGroup !== null && $previousGroup != $alls->id_user_in)
-                                                            <br> <!-- เว้นบรรทัดเมื่อเปลี่ยนกลุ่ม -->
+                                                            <li style="margin-top: 10px; border-top: 2px solid #ccc; padding-top: 10px;"></li> 
                                                         @endif
 
-                                                        <span>{{ @$alls->detail }}</span> <!-- แสดงรายละเอียด -->
-                                                        
-                                                        @if($alls->status == 0)
-                                                            <a href="{{url('users_edit_status_check_admin/'.$alls->id)}}" onclick="javascript:return confirm('Confirm?')" >
-                                                                <span class="status-expired beepbeep">ยังไม่ได้เปลี่ยนจอ</span>
-                                                            </a>
-                                                        @else
-                                                            <!-- สามารถเพิ่มเงื่อนไขหรือข้อความอื่นๆ ที่ต้องการแสดงเมื่อ status != 0 -->
-                                                        @endif
+                                                        <li>
+                                                            {!! @$alls->detail !!} 
+                                                            @if($alls->status == 0)
+                                                                <a href="{{url('users_edit_status_check_admin/'.$alls->id)}}" onclick="return confirm('Confirm?')">
+                                                                    <span style="color: red; font-weight: bold;">&nbsp&nbsp ยังไม่ได้เปลี่ยนจอ</span>
+                                                                </a>
+                                                            @endif
+                                                        </li>
 
                                                         @php 
                                                             $previousGroup = $alls->id_user_in;

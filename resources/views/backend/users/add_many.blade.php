@@ -105,58 +105,6 @@
                                             </select>
                                         </div>
 
-                                        <script>
-                                        function updatePackage(selectElement) {
-                                            var formGroup = selectElement.closest('.form-group'); // ค้นหาฟอร์มที่เกี่ยวข้อง
-                                            var packageSelect = formGroup.querySelector("select[name^='users'][name$='[package]']");
-                                            var selectedPackage = "{{ @$item->package }}"; // ค่าที่เลือกไว้ในฐานข้อมูล
-
-                                            // ล้างค่าเดิม
-                                            packageSelect.innerHTML = "";
-
-                                            // กำหนดตัวเลือกแพ็กเกจ
-                                            var options;
-                                            if (selectElement.value === "PC") {
-                                                options = [
-                                                    { value: "1 เดือน 139 บาท", text: "1 เดือน 139 บาท" },
-                                                    { value: "2 เดือน 269 บาท", text: "2 เดือน 269 บาท" },
-                                                    { value: "3 เดือน 400 บาท", text: "3 เดือน 400 บาท" },
-                                                    { value: "4 เดือน 535 บาท", text: "4 เดือน 535 บาท" },
-                                                    { value: "6 เดือน 800 บาท", text: "6 เดือน 800 บาท" },
-                                                    { value: "1 ปี 1,590 บาท", text: "1 ปี 1,590 บาท" }
-                                                ];
-                                            } else {
-                                                options = [
-                                                    { value: "1 เดือน 189 บาท", text: "1 เดือน 189 บาท" },
-                                                    { value: "2 เดือน 369 บาท", text: "2 เดือน 369 บาท" },
-                                                    { value: "3 เดือน 550 บาท", text: "3 เดือน 550 บาท" },
-                                                    { value: "4 เดือน 729 บาท", text: "4 เดือน 729 บาท" },
-                                                    { value: "6 เดือน 1,099 บาท", text: "6 เดือน 1,099 บาท" },
-                                                    { value: "1 ปี 2,090 บาท", text: "1 ปี 2,090 บาท" }
-                                                ];
-                                            }
-
-                                            // เพิ่ม option ลงใน select
-                                            options.forEach(option => {
-                                                var opt = document.createElement("option");
-                                                opt.value = option.value;
-                                                opt.textContent = option.text;
-                                                if (option.value === selectedPackage) {
-                                                    opt.selected = true;
-                                                }
-                                                packageSelect.appendChild(opt);
-                                            });
-                                        }
-
-                                        // เรียกใช้อัตโนมัติเมื่อหน้าโหลดเสร็จ
-                                        window.onload = function () {
-                                            document.querySelectorAll("select[name^='users'][name$='[type]']").forEach(select => {
-                                                updatePackage(select); // โหลดค่าเริ่มต้น
-                                            });
-                                        };
-                                    </script>
-
-
                                             </div>
 
                                             <div class="form-group row">
@@ -190,38 +138,114 @@
                                         <br><br>
                                     @endfor
 
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', () => {
-                                            document.querySelectorAll('.date_start').forEach((input) => {
-                                                const index = input.dataset.index;
-                                                const today = new Date().toISOString().split('T')[0];
-                                                input.value = today;
 
-                                                const updateEndDate = (index, days) => {
-                                                    if (!isNaN(days) && days > 0) {
-                                                        const startDate = new Date(document.querySelector(`.date_start[data-index="${index}"]`).value);
-                                                        startDate.setDate(startDate.getDate() + days);
-                                                        document.querySelector(`.date_end[data-index="${index}"]`).value = startDate.toISOString().split('T')[0];
-                                                    } else {
-                                                        document.querySelector(`.date_end[data-index="${index}"]`).value = '';
-                                                    }
-                                                };
+                                    <?php 
+$pag_PC = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
+$pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
+?>
 
-                                                document.querySelector(`.day_select[data-index="${index}"]`).addEventListener('change', function() {
-                                                    document.querySelector(`.day_input[data-index="${index}"]`).value = this.value;
-                                                    updateEndDate(index, parseInt(this.value, 10));
-                                                });
+<script>
+    // สร้างอ็อบเจ็กต์สำหรับเก็บแพ็กเกจจาก PHP
+    var packages = {
+        PC: <?php echo json_encode($pag_PC->map(function($item) { return ['value' => $item->Subpackage_Name, 'text' => $item->Subpackage_Name, 'Subpackage_Dayuse' => $item->Subpackage_Dayuse]; })); ?>,
+        MOBILE: <?php echo json_encode($pag_MOBILE->map(function($item) { return ['value' => $item->Subpackage_Name, 'text' => $item->Subpackage_Name, 'Subpackage_Dayuse' => $item->Subpackage_Dayuse]; })); ?>
+    };
 
-                                                document.querySelector(`.day_input[data-index="${index}"]`).addEventListener('input', function() {
-                                                    updateEndDate(index, parseInt(this.value, 10));
-                                                });
+    function updatePackage(selectElement) {
+    var formGroup = selectElement.closest('.form-group');
+    var packageSelect = formGroup.querySelector("select[name^='users'][name$='[package]']");
+    var dayInput = formGroup.querySelector("input[name^='users'][name$='[day]']");
 
-                                                input.addEventListener('change', function() {
-                                                    updateEndDate(index, parseInt(document.querySelector(`.day_input[data-index="${index}"]`).value, 10));
-                                                });
-                                            });
-                                        });
-                                    </script>
+    // Clear existing options
+    if (packageSelect) {
+        packageSelect.innerHTML = "";
+
+        // Get packages based on selected value
+        var options = packages[selectElement.value] || [];
+
+        // Add options to the select
+        options.forEach(option => {
+            var opt = document.createElement("option");
+            opt.value = option.value;
+            opt.textContent = option.text;
+            opt.setAttribute('data-day', option.Subpackage_Dayuse);
+            packageSelect.appendChild(opt);
+        });
+
+        // Update the day input if options exist
+        if (options.length > 0) {
+            packageSelect.value = packageSelect.options[0].value; // Select first option
+            var days = packageSelect.options[0].getAttribute('data-day');
+            if (dayInput) {
+                dayInput.value = days; // Update days
+            }
+        } else {
+            if (dayInput) {
+                dayInput.value = ''; // Clear day input if no options
+            }
+        }
+
+        // Alert to check when a package is selected
+        alert("Selected package: " + selectElement.value);
+
+        // Add event listener for package selection change
+        packageSelect.addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var days = selectedOption.getAttribute('data-day');
+            if (dayInput) {
+                dayInput.value = days || ''; // Update days
+            }
+            alert("Days for selected package: " + days); // Alert to check the days
+        });
+    } else {
+        console.error("Package select element not found!");
+    }
+}
+
+
+
+
+
+// เรียกใช้อัตโนมัติเมื่อหน้าโหลดเสร็จ
+window.onload = function () {
+    document.querySelectorAll("select[name^='users'][name$='[type]']").forEach(select => {
+        updatePackage(select);
+    });
+};
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.date_start').forEach((input) => {
+            const index = input.dataset.index;
+            const today = new Date().toISOString().split('T')[0];
+            input.value = today;
+
+            const updateEndDate = (index, days) => {
+                if (!isNaN(days) && days > 0) {
+                    const startDate = new Date(document.querySelector(`.date_start[data-index="${index}"]`).value);
+                    startDate.setDate(startDate.getDate() + days);
+                    document.querySelector(`.date_end[data-index="${index}"]`).value = startDate.toISOString().split('T')[0];
+                } else {
+                    document.querySelector(`.date_end[data-index="${index}"]`).value = '';
+                }
+            };
+
+            document.querySelector(`.day_select[data-index="${index}"]`).addEventListener('change', function() {
+                document.querySelector(`.day_input[data-index="${index}"]`).value = this.value;
+                updateEndDate(index, parseInt(this.value, 10));
+            });
+
+            document.querySelector(`.day_input[data-index="${index}"]`).addEventListener('input', function() {
+                updateEndDate(index, parseInt(this.value, 10));
+            });
+
+            input.addEventListener('change', function() {
+                updateEndDate(index, parseInt(document.querySelector(`.day_input[data-index="${index}"]`).value, 10));
+            });
+        });
+    });
+</script>
+
+
 
                                      
 
