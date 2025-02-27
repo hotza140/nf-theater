@@ -59,7 +59,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">USERS ALL</h5>
+                        <h5 class="m-b-10">USERS YOUTUBE BACKEND</h5>
 
                     </div>
                 </div>
@@ -74,16 +74,25 @@
                             <div class="card">
                                 <div class="card-header">
 
-
-                                        <?php
+                                <?php
                                             $status_account = $status_account ?? 999;
                                         ?>
+
+                                    <a style="color:white;" class="btn btn-success" href="{{url('y_users_in_add')}}"> <i class="fa fa-plus"></i> Add</a>
+
                                     
                                         <br>
-                                        <form class="form-horizontal" action="{{url('users_all')}}" method="GET" enctype="multipart/form-data">
+                                        <form class="form-horizontal" action="{{url('y_users_in')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
+                                       
                                         <div class="form-group row" style="display: flex; justify-content: flex-end;">
-
+                                        <div class="col-sm-2">
+                                        <select name="status_account" id="" class="form-control">
+                                            <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
+                                            <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
+                                            <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option>
+                                            </select>
+                                            </div>
                                             <div class="col-sm-2">
                                                 <input type="text" name="search" value="{{@$search}}">
                                             </div>
@@ -92,59 +101,25 @@
                                                     <i class="fa fa-check-circle-o"></i> Search
                                                 </button>
                                             </div>
-                                            
                                         </div>
-                                        </form>
+                                    </form>
 
-                                <style>
-                                                    .status-active {
-                                                        color: white;
-                                                        background-color: #dc3545; /* สีแดง */
-                                                        padding: 5px 10px;
-                                                        border-radius: 5px;
-                                                    }
-
-                                                    .status-inactive {
-                                                        color: white;
-                                                        background-color: #28a745; /* สีเขียว */
-                                                        padding: 5px 10px;
-                                                        border-radius: 5px;
-                                                    }
-
-                                                    .status-expired {
-                                                        color: white;
-                                                        background-color: #6c757d; /* สีเทา */
-                                                        padding: 5px 10px;
-                                                        border-radius: 5px;
-                                                    }
-
-                                                    @keyframes beepEffect {
-                                                            0% { opacity: 1; }
-                                                            50% { opacity: 0; }
-                                                            100% { opacity: 1; }
-                                                        }
-
-                                                        /* .beepbeep {
-                                                            animation: beepEffect 2s infinite;
-                                                            color: white; 
-                                                            font-weight: bold; 
-                                                        } */
-                                                    </style>
-
+                                </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
-                                        <table id="" class="table table-striped table-bordered nowrap">
+                                        <table id="simpletable_call" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
                                                
                                                     <th>#</th>
+                                                    <th>Open/Close</th>
                                                     <!-- <th>Picture</th> -->
-                                                    <th>Username</th>
-                                                    <th>ชื่อไลน์ลูกค้า</th>
-                                                    <th>Package</th>
-                                                    <th>Type</th>
-                                                    <th>Type Netflix</th>
-                                                    <th>Type Youtube</th>
+                                                    <th>จำนวนคน</th>
+                                                    <th>Name Account</th>
+                                                    <th>Email</th>
+                                                    <th>Password</th>
+                                                    <th>วันที่ใช้งาน</th>
+                                                    <th>Tool</th>
 
                                                 </tr>
                                             </thead>
@@ -154,50 +129,83 @@
                                             <tr class="num" id="{{$items->id}}">
                                                     <td>{{$key+1}}</td>
 
-                                                    <?php
-                                                    if($items->type=='PC'){
-                                                        $paga='TV '.@$items->package;
-                                                    }else{
-                                                        $paga='ยกเว้นทีวี '.@$items->package;
-                                                    }
-
-                                                    ?>
-
-                                                    <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
-                                                    <td>{{$items->username}}</td>
-                                                    <td>{{$items->line}}</td>
-                                                    <td>{{@$paga}}</td>
-
-                                                    @if($items->type_netflix!=null)
-                                                    <td>NETFLIX</td>
-                                                    @else
-                                                    <td>YOUTUBE</td>
-                                                    @endif
-
-
                                                     <td>
-                                                    <form method="GET" action="{{url('users_add')}}" id="form{{$items->id}}" name="form{{$items->id}}" target="_blank">
+                                                    <form method="post" id="form{{$items->id}}" name="form{{$items->id}}">
                                                         @csrf
-                                                        <input type="hidden" name="id" value="{{@$items->id}}">
-                                                        <button type="submit" class="btn btn-sm btn-success" style="color:white;" target="_blank"><i class="fa fa-gear"></i>NETFLIX</button>
+                                                        <label class="switch">
+                                                            <input type="checkbox" class="toggle-switch" data-id="{{$items->id}}" 
+                                                                {{ $items->open == 0 ? 'checked' : '' }}> <!-- ค่าที่เปิดจะเป็น 0 -->
+                                                            <span class="slider"></span>
+                                                        </label>
                                                     </form>
                                                     </td>
+                                                    <td>
+                                                    <?php $nub = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'MOBILE')->whereNull('tan')->count();
+                                                    $nub_tan = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'MOBILE')->whereNotNull('tan')->count();
+                                                    $icons = 5; // จำนวนไอคอนทั้งหมด
+                                                    ?>
 
+                                                    @for ($i = 0; $i < $icons; $i++)
+                                                            @if ($i < $nub)
+                                                                <i class="fa fa-mobile" style="font-size:30px; color:red;" title="ไม่ว่าง"></i>
+                                                            @elseif ($i < $nub + $nub_tan)
+                                                                <i class="fa fa-mobile" style="font-size:30px; color:blue;" title="ตัวแทน"></i>
+                                                            @else
+                                                                <i class="fa fa-mobile" style="font-size:30px; color:green;" title="ว่าง"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </td>
 
-                                                <td>
-                                                     <form method="GET" action="{{url('y_users_add')}}" id="form{{$items->id}}" name="form{{$items->id}}" target="_blank">
-                                                        @csrf
-                                                        <input type="hidden" name="id" value="{{@$items->id}}">
-                                                        <button type="submit" class="btn btn-sm btn-info" style="color:white;" target="_blank"><i class="fa fa-gear"></i>YOUTUBE</button>
-                                                    </form>
-                                                </td>
+                                                    <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
+                                                    <td>{{$items->name}}</td>
+                                                    <td>{{$items->email}}</td>
+                                                    <td>{{$items->password}}</td>
+                                                    <?php
+                                                    $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
+
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
+                                                    ?>
+                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
+                                                    <!-- <td>{{$items->country}}</td> -->
+                                                    <td>
+                                                    <a href="{{url('y_users_in_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
+                                                        <a href="{{url('y_users_in_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->email}}', '{{$items->password}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                                 @endforeach
 
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    <!-- Pagination -->
 
                                     <script>
                                     function fallbackCopyTextToClipboard(text) {
@@ -216,8 +224,8 @@
                                         document.body.removeChild(textArea);
                                     }
 
-                                    function copyUserInfo(username, password, name, package, link) {
-                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
+                                    function copyUserInfo(email, password) {
+                                        let textToCopy = `${email}\n${password}`;
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
                                             navigator.clipboard.writeText(textToCopy).then(() => {
@@ -233,7 +241,6 @@
                                     }
                                     </script>
 
-                                    <!-- Pagination -->
                                     <style>
                                         .pagination-wrapper {
                                             text-align: right; /* จัดให้อยู่ขวาสุด */
@@ -245,8 +252,6 @@
                                     <!-- Pagination -->
 
                                 </div>
-
-
 
                                 
                             </div>
@@ -272,6 +277,7 @@
 
 @section('script')
 
+
 <script>
    document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.toggle-switch').forEach(switchElement => {
@@ -279,7 +285,7 @@
             const id = this.getAttribute('data-id');
             const isOpen = this.checked ? 0 : 1; // ค่าที่ส่ง 0 = เปิด, 1 = ปิด
 
-            fetch('{{ url("/users_open_close") }}', {
+            fetch('{{ url("/users_in_open_close") }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

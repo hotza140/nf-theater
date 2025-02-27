@@ -59,7 +59,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">USERS NETFLIX BACKEND</h5>
+                        <h5 class="m-b-10">USERS YOUTUBE BACKEND</h5>
 
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                             <div class="card">
                                 <div class="card-header">
 
-                                    <form class="form-horizontal" action="{{url('users_add_many')}}" method="GET" enctype="multipart/form-data">
+                                    <form class="form-horizontal" action="{{url('y_users_add_many')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row" >
                                         <div class="col-sm-1">
@@ -91,7 +91,7 @@
                                             </div>
 
                                             <div class="col-sm-1">
-                                            <a style="color:white;" class="btn btn-success" href="{{url('users_add')}}"> <i class="fa fa-plus"></i> สร้างแบบ User เดียว</a>
+                                            <a style="color:white;" class="btn btn-success" href="{{url('y_users_add')}}"> <i class="fa fa-plus"></i> สร้างแบบ User เดียว</a>
                                             </div>
 
 
@@ -115,7 +115,7 @@
                                         ?>
                                     
                                         <br>
-                                        <form class="form-horizontal" action="{{url('users')}}" method="GET" enctype="multipart/form-data">
+                                        <form class="form-horizontal" action="{{url('y_users')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row" style="display: flex; justify-content: flex-end;">
                                         <div class="col-sm-2">
@@ -149,7 +149,7 @@
 
 
                                         <div class="col-sm-2">
-                                            <a style="color:white;" class="btn btn-info" href="{{url('his_created')}}" target="_blank" >ประวัติการสร้าง User</a>
+                                            <a style="color:white;" class="btn btn-info" href="{{url('y_his_created')}}" target="_blank" >ประวัติการสร้าง User</a>
                                             </div>
 
                                             <br><br>
@@ -210,7 +210,7 @@
                                                     <th>สถานะแก้ใข</th>
                                                     <!-- <th>Picture</th> -->
                                                     <th>Username</th>
-                                                    <th>Name Profile</th>
+                                                    <th>Email</th>
                                                     <th>ชื่อไลน์ลูกค้า</th>
                                                     <th>Package</th>
                                                     <th>วันที่ใช้งานคงเหลือ</th>
@@ -251,7 +251,7 @@
                                                     if($items->type=='PC'){
                                                         $paga='TV '.@$items->package;
                                                     }else{
-                                                        $paga='ยกเว้นทีวี '.@$items->package;
+                                                        $paga='จำนวนลูกค้า '.@$items->package;
                                                     }
 
                                                     ?>
@@ -263,7 +263,7 @@
                                                         @endif
                                                         {{$items->username}}
                                                     </td>
-                                                    <td>{{$items->name}}</td>
+                                                    <td>{{$items->email}}</td>
                                                     <td>{{$items->line}}</td>
                                                     <td>{{@$paga}}</td>
                                                     <?php
@@ -310,9 +310,9 @@
                                                     </td>
 
                                                     <td>
-                                                    <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
-                                                        <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$paga}}', '{{$items->link}}')">
+                                                    <a href="{{url('y_users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
+                                                        <a href="{{url('y_users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->email}}', '{{@$paga}}', '{{$items->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
@@ -325,7 +325,7 @@
                                                     <?php
                                                     $check_test=App\Models\users_in::where('id',@$accountss->id_user_in)->first();
                                                     ?>
-                                                    <a href="{{url('users_in_edit/'.@$check_test->id)}}" target="_blank" >{{@$check_test->name}}</a>
+                                                    <a href="{{url('y_users_in_edit/'.@$check_test->id)}}" target="_blank" >{{@$check_test->name}}</a>
                                                     <br>
                                                     @endforeach
                                                      </td>

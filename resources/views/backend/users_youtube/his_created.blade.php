@@ -59,7 +59,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">ประวัติการสร้าง USERS NETFLIX BACKEND</h5>
+                        <h5 class="m-b-10">ประวัติการสร้าง USERS YOUTUBE BACKEND</h5>
 
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                             <!-- Zero config.table start -->
                             <div class="card">
                                 <div class="card-header">
-                                            <a style="color:white;" class="btn btn-warning" href="{{url('users')}}">ย้อนกลับ</a>
+                                            <a style="color:white;" class="btn btn-warning" href="{{url('y_users')}}">ย้อนกลับ</a>
                                             
                                         </div>
                                 </div>
@@ -144,7 +144,7 @@
                                                     <td>{{$key+1}}</td>
                                                     <td>{{@$admin->name}} 
                                                         @if(@$check_all!=null)
-                                                    <a href="{{url('users_edit_status_check_admin_all/'.$items->number)}}" class="btn btn-danger" style="color:white;" onclick="javascript:return confirm('Confirm?')" >
+                                                    <a href="{{url('y_users_edit_status_check_admin_all/'.$items->number)}}" class="btn btn-danger" style="color:white;" onclick="javascript:return confirm('Confirm?')" >
                                                                 <span >เปลี่ยนทั้งหมด</span>
                                                             </a> 
                                                             @endif 
@@ -162,7 +162,7 @@
                                                         <li>
                                                             {!! @$alls->detail !!} 
                                                             @if($alls->status == 0)
-                                                                <a href="{{url('users_edit_status_check_admin/'.$alls->id)}}" onclick="return confirm('Confirm?')">
+                                                                <a href="{{url('y_users_edit_status_check_admin/'.$alls->id)}}" onclick="return confirm('Confirm?')">
                                                                     <span style="color: red; font-weight: bold;">&nbsp&nbsp ยังไม่ได้เปลี่ยนจอ</span>
                                                                 </a>
                                                             @endif

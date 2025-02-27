@@ -31,7 +31,7 @@ use App\Models\admin;
 
 use App\Models\created_history;
 
-class AdminUserBackendController extends Controller
+class YoutubeBackendController extends Controller
 {
 
     public function change_user($id){
@@ -41,7 +41,7 @@ class AdminUserBackendController extends Controller
             $aaa=users_in_in::where('id',$items->id)->first();
 
             if($userData['type']=='MOBILE'){
-                $user = (new users_in())->getEligibleUser();
+                $user = (new users_in())->getEligibleUser_youtube();
 
                 if(@$userData['username']!=null and @$userData['password']!=null ){
                 if ($user !== null) {
@@ -160,13 +160,13 @@ class AdminUserBackendController extends Controller
     $item = created_history::selectRaw('MAX(id) as id, number, MAX(created_at) as created_at, MAX(id_admin) as id_admin')
     ->groupBy('number')  // กรุ๊ปข้อมูลตาม number
     ->orderBy('id', 'desc')
-    ->with('netflix') // โหลดความสัมพันธ์ youtube มาด้วย
-    ->whereHas('netflix')
+    ->with('youtube') // โหลดความสัมพันธ์ youtube มาด้วย
+    ->whereHas('youtube')
     ->paginate(10);
-   return view('backend.users.his_created',[
+   return view('backend.users_youtube.his_created',[
     'item'=>$item,
     'page'=>"all",
-    'list'=>"users",
+    'list'=>"users_youtube",
    ]);
    }
 
@@ -380,13 +380,13 @@ class AdminUserBackendController extends Controller
      public function users(Request $r){
          // ลบเช็คเวลา
          $date=date('Y-m-d');
-         $users = users::whereNotNull('type_netflix')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
+         $users = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
          $accounts=users_in_in::whereIn('id_user',@$users)->delete();
          $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
          // ลบเช็คเวลา
 
 
-        $item=users ::whereNotNull('type_netflix')->orderByRaw(
+        $item=users ::whereNotNull('type_youtube')->orderByRaw(
             '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
         )->paginate(20);
 
@@ -395,7 +395,7 @@ class AdminUserBackendController extends Controller
         $status_user = $r->status_user;
         
         if (!empty($search) or ($status_account !== null)) {
-            $item = users::whereNotNull('type_netflix')->where(function ($query) use ($search, $status_account) {
+            $item = users::whereNotNull('type_youtube')->where(function ($query) use ($search, $status_account) {
                 $query->where('name', 'LIKE', '%' . $search . '%')
                       ->orWhere('username', 'LIKE', '%' . $search . '%')
                       ->orWhere('phone', 'LIKE', '%' . $search . '%')
@@ -420,10 +420,10 @@ class AdminUserBackendController extends Controller
             )->paginate(20);
         }
 
-        return view('backend.users.index',[
+        return view('backend.users_youtube.index',[
             'item'=>$item,
             'page'=>"all",
-            'list'=>"users",
+            'list'=>"users_youtube",
 
             'search'=>$search,
             'status_account'=>$status_account,
@@ -433,11 +433,11 @@ class AdminUserBackendController extends Controller
     public function users_store(Request $r){
         $acc=null;
         $item=new users();
-        // $ca=users::where('username',$r->username)->orderby('id','desc')->first();
+        $ca=users::where('email',$r->email)->orderby('id','desc')->first();
 
-        // if($ca!=null){
-        //         return redirect()->back()->with('message','Username Already Have in Data!');
-        //     }
+        if($ca!=null){
+                return redirect()->back()->with('message','Email Already Have in Data!');
+            }
 
         // if($r->password!=null){
         //     $item->password=Hash::make($r->password);
@@ -456,7 +456,7 @@ class AdminUserBackendController extends Controller
         $item->date_end=$r->date_end;
         $item->type=$r->type;
         $item->package=$r->package;
-        $item->type_netflix=1;
+        $item->type_youtube=1;
 
         // $caa=users::where('username',$r->username)->orderby('id','desc')->first();
         // if($caa!=null){
@@ -466,7 +466,7 @@ class AdminUserBackendController extends Controller
         if($item->save()){
 
         if($r->type=='MOBILE'){
-        $user = (new users_in())->getEligibleUser();
+        $user = (new users_in())->getEligibleUser_youtube();
 
         if($r->username!=null and $r->password!=null){
         if (@$user!=null) {
@@ -493,7 +493,7 @@ class AdminUserBackendController extends Controller
         }else{
             $item->status_account=1;
             $item->save();
-            return redirect()->to('users')->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+            return redirect()->to('y_users')->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
         }
         }
 
@@ -532,7 +532,7 @@ class AdminUserBackendController extends Controller
         } else {
             $item->status_account = 1;
             $item->save();
-            return redirect()->to('users')->with('message', 'สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Manual');
+            return redirect()->to('y_users')->with('message', 'สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Manual');
         }
         }
 
@@ -583,15 +583,15 @@ class AdminUserBackendController extends Controller
 
         $his->save();
 
-        return redirect()->to('users')->with('message','Sucess!');
+        return redirect()->to('y_users')->with('message','Sucess!');
 
     }
     public function users_update(Request $r,$id){
         $item=users::where('id',$id)->first();
-        // $ca=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
-        // if($ca!=null){
-        //         return redirect()->back()->with('message','Username Already Have in Data!');
-        //     }
+        $ca=users::where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
+        if($ca!=null){
+                return redirect()->back()->with('message','Email Already Have in Data!');
+            }
 
         // if($r->password!=null){
         //     $item->password=Hash::make($r->password);
@@ -629,7 +629,7 @@ class AdminUserBackendController extends Controller
 
             if($item->type=='MOBILE'){
 
-            $user = (new users_in())->getEligibleUser();
+            $user = (new users_in())->getEligibleUser_youtube();
     
             if($r->username!=null and $r->password!=null){
             if (@$user!=null) {
@@ -725,10 +725,10 @@ class AdminUserBackendController extends Controller
         }
         // ลบเช็คเวลา
 
-        return view('backend.users.edit',[
+        return view('backend.users_youtube.edit',[
             'item'=>$item,
             'page'=>"all",
-            'list'=>"users",
+            'list'=>"users_youtube",
         ]);
     }
 
@@ -753,9 +753,9 @@ class AdminUserBackendController extends Controller
         return redirect()->back()->with('message','Sucess!');
     }
     public function users_add(Request $r){
-        return view('backend.users.add',[
+        return view('backend.users_youtube.add',[
             'page'=>"all",
-            'list'=>"users",
+            'list'=>"users_youtube",
 
             'check'=>$r->id,
         ]);
@@ -765,9 +765,9 @@ class AdminUserBackendController extends Controller
         if(@$r->number==null){
             abort(404);
         }
-        return view('backend.users.add_many',[
+        return view('backend.users_youtube.add_many',[
             'page'=>"all",
-            'list'=>"users",
+            'list'=>"users_youtube",
 
             'number'=>$r->number,
         ]);
@@ -796,12 +796,12 @@ class AdminUserBackendController extends Controller
             $item->date_start = $userData['date_start'] ?? null;
             $item->date_end = $userData['date_end'] ?? null;
             $item->type = $userData['type'];
-            $item->type_netflix = 1;
+            $item->type_youtube = 1;
     
             if ($item->save()) {
 
                 if($userData['type']=='MOBILE'){
-                $user = (new users_in())->getEligibleUser();
+                $user = (new users_in())->getEligibleUser_youtube();
 
                 if(@$userData['username']!=null and @$userData['password']!=null ){
                 if ($user !== null) {
@@ -915,9 +915,9 @@ class AdminUserBackendController extends Controller
         }
 
         if($check==1){
-            return redirect()->to('users')->with('message', 'สร้างผู้ใช้สำเร็จ แต่มีบาง User ที่ไม่มี Account!');
+            return redirect()->to('y_users')->with('message', 'สร้างผู้ใช้สำเร็จ แต่มีบาง User ที่ไม่มี Account!');
         }else{
-            return redirect()->to('users')->with('message', 'สร้างผู้ใช้สำเร็จ!');
+            return redirect()->to('y_users')->with('message', 'สร้างผู้ใช้สำเร็จ!');
         }
     }
 
@@ -1057,12 +1057,12 @@ class AdminUserBackendController extends Controller
        public function users_in(Request $r){
          // ลบเช็คเวลา
          $date=date('Y-m-d');
-         $users = users::whereNotNull('type_netflix')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
+         $users = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
          $accounts=users_in_in::whereIn('id_user',@$users)->delete();
-         $users_update = users::whereNotNull('type_netflix')->whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+         $users_update = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->update(['status_account' => 2]);
          // ลบเช็คเวลา
 
-          $item=users_in::whereNull('type_f')->orderby('id','desc')->paginate(10);
+          $item=users_in::whereNotNull('type_f')->orderby('id','desc')->paginate(10);
           $search = $r->search;
           $status_account = $r->status_account;
 
@@ -1074,7 +1074,7 @@ class AdminUserBackendController extends Controller
             }
 
             if (!empty($search) or !empty($status_account)) {
-                $item = users_in::whereNull('type_f')->where(function ($query) use ($search, $status_account, $date_new) {
+                $item = users_in::whereNotNull('type_f')->where(function ($query) use ($search, $status_account, $date_new) {
                     // ถ้า search เป็นวันที่ ให้ใช้ date_new แทน search
                     if ($date_new !== null) {
                         $query->where('date_end', 'LIKE', '%' . $date_new . '%');
@@ -1094,10 +1094,10 @@ class AdminUserBackendController extends Controller
                 $item = $item->orderBy('id', 'desc')->paginate(10);
             }
 
-          return view('backend.users_in.index',[
+          return view('backend.users_in_youtube.index',[
               'item'=>$item,
               'page'=>"all",
-              'list'=>"users_in",
+              'list'=>"users_in_youtube",
 
               'search'=>$search,
               'status_account'=>$status_account,
@@ -1110,21 +1110,11 @@ class AdminUserBackendController extends Controller
   
           if($ch!=null){
               return redirect()->back()->with('message','Email Already Have in Data!');
-              }else{
-                $ch=users_in::where('email01',$r->email)->orderby('id','desc')->first();
-                if($ch!=null){
-                return redirect()->back()->with('message','Email Already Have in Data!');
-                }else{
-                    $ch=users_in::where('email02',$r->email)->orderby('id','desc')->first();
-                    if($ch!=null){
-                    return redirect()->back()->with('message','Email Already Have in Data!');
-                    } 
-                }
               }
 
-              if($nh!=null){
-                return redirect()->back()->with('message','Name Profile Already Have in Data!');
-                }   
+            //   if($nh!=null){
+            //     return redirect()->back()->with('message','Name Profile Already Have in Data!');
+            //     }   
   
           $item->password=$r->password;
   
@@ -1139,9 +1129,11 @@ class AdminUserBackendController extends Controller
 
           $item->password01=$r->password01;
           $item->password02=$r->password02;
+
+          $item->type_f=1;
   
           $item->save();
-          return redirect()->to('users_in_edit/'.$item->id)->with('message','Sucess!');
+          return redirect()->to('y_users_in_edit/'.$item->id)->with('message','Sucess!');
   
       }
       public function users_in_update(Request $r,$id){
@@ -1151,21 +1143,11 @@ class AdminUserBackendController extends Controller
   
           if($ch!=null){
             return redirect()->back()->with('message','Email Already Have in Data!');
-            }else{
-              $ch=users_in::where('id','!=',$id)->where('email01',$r->email)->orderby('id','desc')->first();
-              if($ch!=null){
-              return redirect()->back()->with('message','Email Already Have in Data!');
-              }else{
-                  $ch=users_in::where('id','!=',$id)->where('email02',$r->email)->orderby('id','desc')->first();
-                  if($ch!=null){
-                  return redirect()->back()->with('message','Email Already Have in Data!');
-                  } 
-              }
             }
 
-              if($nh!=null){
-                return redirect()->back()->with('message','Name Profile Already Have in Data!');
-                } 
+            //   if($nh!=null){
+            //     return redirect()->back()->with('message','Name Profile Already Have in Data!');
+            //     } 
   
            $item->password=$r->password;
   
@@ -1180,9 +1162,11 @@ class AdminUserBackendController extends Controller
 
           $item->password01=$r->password01;
           $item->password02=$r->password02;
+
+          $item->type_f=1;
   
           $item->save();
-          return redirect()->to('users_in_edit/'.$id)->with('message','Sucess!');
+          return redirect()->to('y_users_in_edit/'.$id)->with('message','Sucess!');
       }
       public function users_in_edit($id){
           $item=users_in::where('id',$id)->first();
@@ -1200,10 +1184,10 @@ class AdminUserBackendController extends Controller
          }
          // ลบเช็คเวลา
 
-          return view('backend.users_in.edit',[
+          return view('backend.users_in_youtube.edit',[
               'item'=>$item,
               'page'=>"all",
-              'list'=>"users_in",
+              'list'=>"users_in_youtube",
           ]);
       }
       public function users_in_destroy($id){
@@ -1212,9 +1196,9 @@ class AdminUserBackendController extends Controller
           return redirect()->back()->with('message','Sucess!');
       }
       public function users_in_add(){
-          return view('backend.users_in.add',[
+          return view('backend.users_in_youtube.add',[
               'page'=>"all",
-              'list'=>"users_in",
+              'list'=>"users_in_youtube",
           ]);
       }
       //users_in//
@@ -1337,7 +1321,7 @@ class AdminUserBackendController extends Controller
     $date = date('Y-m-d'); // วันที่ปัจจุบัน
 
     // ดึง users ที่ยังไม่หมดอายุและยังไม่ถูกเชื่อมกับ user_in_in
-    $users = users::whereNotNull('type_netflix')->whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
+    $users = users::whereNotNull('type_youtube')->whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
                 ->where('open',0)
                 ->whereNotNull('username')
                 ->whereNotNull('password')
@@ -1392,7 +1376,7 @@ class AdminUserBackendController extends Controller
      $date = date('Y-m-d'); // วันที่ปัจจุบัน
  
      // ดึง users ที่ยังไม่หมดอายุและยังไม่ถูกเชื่อมกับ user_in_in
-     $users = users::whereNotNull('type_netflix')->whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
+     $users = users::whereNotNull('type_youtube')->whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
                  ->where('open',0)
                  ->whereNull('username')
                  ->whereNull('password')

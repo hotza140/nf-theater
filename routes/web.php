@@ -83,6 +83,8 @@ Route::group(['middleware' => ['admin']],function(){
  Route::post('admin_open_close',[App\Http\Controllers\AdminUserBackendController::class,'admin_open_close']);
  //admin
 
+
+//  NETFLIX///
  Route::get('his_created',[App\Http\Controllers\AdminUserBackendController::class,'his_created']);
 
  Route::get('users_all',[App\Http\Controllers\AdminUserBackendController::class,'users_all']);
@@ -112,6 +114,8 @@ Route::group(['middleware' => ['admin']],function(){
   Route::get('users_in_in_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_in_in_destroy']);
   //users
 
+  Route::get('change_user/{id}',[App\Http\Controllers\AdminUserBackendController::class,'change_user']);
+
   Route::post('autoCreateUsersInIn',[App\Http\Controllers\AdminUserBackendController::class,'autoCreateUsersInIn']);
   Route::post('autoCreateUsersInIn_aaa',[App\Http\Controllers\AdminUserBackendController::class,'autoCreateUsersInIn_aaa']);
     //users
@@ -123,6 +127,56 @@ Route::group(['middleware' => ['admin']],function(){
     Route::post('users_in_update/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_in_update']);
     Route::post('users_in_open_close',[App\Http\Controllers\AdminUserBackendController::class,'users_in_open_close']);
     //users
+//  NETFLIX///
+
+
+
+
+//  YOUTUBE///
+    Route::get('y_his_created',[App\Http\Controllers\YoutubeBackendController::class,'his_created']);
+
+    Route::get('y_users_all',[App\Http\Controllers\YoutubeBackendController::class,'users_all']);
+   
+    Route::post('y_users_update_date',[App\Http\Controllers\YoutubeBackendController::class,'users_update_date']);
+     //userss
+     Route::post('y_users_store_form_in',[App\Http\Controllers\YoutubeBackendController::class,'users_store_form_in']);
+     Route::post('y_updateStatusOnExit',[App\Http\Controllers\YoutubeBackendController::class,'updateStatusOnExit']);
+     Route::post('/y_update-status-on-exit', [App\Http\Controllers\YoutubeBackendController::class,'updateStatusOnExit'])->name('updateStatusOnExit');
+   
+     
+     Route::get('y_users_edit_status_check_admin/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_edit_status_check_admin']);
+     Route::get('y_users_edit_status_check_admin_all/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_edit_status_check_admin_all']);
+   
+     Route::get('y_users',[App\Http\Controllers\YoutubeBackendController::class,'users']);
+     Route::get('y_users_destroy/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_destroy']);
+     Route::get('y_users_add',[App\Http\Controllers\YoutubeBackendController::class,'users_add']);
+     Route::get('y_users_add_many',[App\Http\Controllers\YoutubeBackendController::class,'users_add_many']);
+     Route::post('y_users_store',[App\Http\Controllers\YoutubeBackendController::class,'users_store']);
+     Route::post('y_users_store_many',[App\Http\Controllers\YoutubeBackendController::class,'users_store_many']);
+     Route::get('y_users_edit/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_edit']);
+     Route::post('y_users_update/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_update']);
+     Route::post('y_users_open_close',[App\Http\Controllers\YoutubeBackendController::class,'users_open_close']);
+   
+     Route::post('y_users_in_in_open_close',[App\Http\Controllers\YoutubeBackendController::class,'users_in_in_open_close']);
+     Route::post('y_add_user_in_in',[App\Http\Controllers\YoutubeBackendController::class,'add_user_in_in']);
+     Route::get('y_users_in_in_destroy/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_in_in_destroy']);
+     //users
+   
+     Route::get('y_change_user/{id}',[App\Http\Controllers\YoutubeBackendController::class,'change_user']);
+   
+     Route::post('y_autoCreateUsersInIn',[App\Http\Controllers\YoutubeBackendController::class,'autoCreateUsersInIn']);
+     Route::post('y_autoCreateUsersInIn_aaa',[App\Http\Controllers\YoutubeBackendController::class,'autoCreateUsersInIn_aaa']);
+       //users
+       Route::get('y_users_in',[App\Http\Controllers\YoutubeBackendController::class,'users_in']);
+       Route::get('y_users_in_destroy/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_in_destroy']);
+       Route::get('y_users_in_add',[App\Http\Controllers\YoutubeBackendController::class,'users_in_add']);
+       Route::post('y_users_in_store',[App\Http\Controllers\YoutubeBackendController::class,'users_in_store']);
+       Route::get('y_users_in_edit/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_in_edit']);
+       Route::post('y_users_in_update/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_in_update']);
+       Route::post('y_users_in_open_close',[App\Http\Controllers\YoutubeBackendController::class,'users_in_open_close']);
+       //users
+
+//  YOUTUBE///
 
     // //coupon
     // Route::get('coupon',[App\Http\Controllers\CouponBackendController::class,'coupon']);

@@ -92,7 +92,7 @@ class users_in extends Authenticatable
     public function getEligibleUser()
     {
         $date = date('Y-m-d');
-        $eligibleUsers = self::where('open',0)->where(function ($query) use ($date) {
+        $eligibleUsers = self::where('open',0)->whereNull('type_f')->where(function ($query) use ($date) {
             $query->whereHas('users_in_in_mobile', function ($subQuery) use ($date) {
                 $subQuery->whereHas('user', function ($userQuery) use ($date) {
                     $userQuery->whereNotNull('type_netflix')
@@ -115,7 +115,7 @@ class users_in extends Authenticatable
     {
     $date = date('Y-m-d');
 
-    $eligibleUsers = self::where('open',0)->where(function ($query) use ($date) {
+    $eligibleUsers = self::where('open',0)->whereNull('type_f')->where(function ($query) use ($date) {
         $query->whereHas('users_in_in_pc', function ($subQuery) use ($date) {
             $subQuery->whereHas('user', function ($userQuery) use ($date) {
             $userQuery->whereNotNull('type_netflix')
@@ -149,6 +149,30 @@ class users_in extends Authenticatable
     public function get_in_in()
     {
         return users_in_in::where('id_user_in', $this->id)->get();
+    }
+
+
+
+
+    public function getEligibleUser_youtube()
+    {
+        $date = date('Y-m-d');
+        $eligibleUsers = self::where('open',0)->whereNotNull('type_f')->where(function ($query) use ($date) {
+            $query->whereHas('users_in_in_mobile', function ($subQuery) use ($date) {
+                $subQuery->whereHas('user', function ($userQuery) use ($date) {
+                    $userQuery->whereNotNull('type_youtube')
+                              ->whereDate('date_start', '<=', $date)
+                              ->whereDate('date_end', '>=', $date)
+                              ->where('open', 0);
+                });
+            });
+            $query->orDoesntHave('users_in_in_mobile');
+        })
+        ->withCount('users_in_in_mobile') // นับเฉพาะ MOBILE
+        ->having('users_in_in_mobile_count', '<', 5)
+        ->first();
+
+        return $eligibleUsers;
     }
 
 

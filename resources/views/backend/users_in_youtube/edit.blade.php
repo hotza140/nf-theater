@@ -57,7 +57,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">USERS NETFLIX/EDIT</h5>
+                        <h5 class="m-b-10">USERS YOUTUBE/EDIT</h5>
 
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                                 <div class="card-block">
 
                                     <form method="post" id=""
-                                        action="{{ url('users_in_update/'.@$item->id) }}"
+                                        action="{{ url('y_users_in_update/'.@$item->id) }}"
                                         enctype="multipart/form-data" >
                                         @csrf
 
@@ -131,12 +131,12 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Date Start</label>
+                                                <label class="col-form-label">วันต่ออายุ</label>
                                                 <input type="date" name="date_start" class="form-control" id=""
                                                       value="{{@$date_s}}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Date End</label>
+                                                <label class="col-form-label">เวลา</label>
                                                 <input type="date" name="date_end" class="form-control" id=""
                                                       value="{{@$item->date_end}}">
                                             </div>
@@ -144,7 +144,7 @@
 
 
                                         <?php $country=DB::table('dataset_country')->orderByRaw("CONVERT(ct_nameTHA USING tis620) ASC")->cursor(); ?>
-                                        <!-- <div class="form-group row">
+                                        <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Country</label>
                                                 <select name="country" id="country" class="form-control add_select2"  >
@@ -153,40 +153,19 @@
                                                 @endforeach
                                                 </select>
                                             </div>
-                                        </div> -->
-
-                                        <br><br>
-                                        <h3>Email เสริม สำหรับ TV</h3>
-                                        
-                                        <div class="form-group row">
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Email เสริม 1</label>
-                                                <input type="email" name="email01" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->email01}}">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Password เสริม 1</label>
-                                                <input type="text" name="password01" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->password01}}">
-                                            </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Email เสริม 2</label>
-                                                <input type="email" name="email02" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->email02}}">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">Password เสริม 2</label>
-                                                <input type="text" name="password02" class="form-control" id=""  maxlength = "25"
-                                                      value="{{@$item->password02}}">
+                                                <label class="col-form-label">รหัส 8 หลัก</label>
+                                                <input type="test" name="code" class="form-control" id=""
+                                                      value="{{@$item->code}}">
                                             </div>
                                         </div>
                                         
 
                                         <p class="text-right">
-                                            <a href="{{ url('users_in') }}"
+                                            <a href="{{ url('y_users_in') }}"
                                                 style="color:white;" class="btn btn-warning"> <i
                                                     class="fa fa-share-square-o"></i> Back </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"
@@ -234,7 +213,7 @@
                                     <?php 
                                     $date_ch_in=date('Y-m-d');
                                     $user=App\Models\users::where('open',0)
-                                    ->whereNotNull('type_netflix')
+                                    ->whereNotNull('type_youtube')
                                     ->whereNotNull('username')
                                     ->whereNotNull('password')
                                     ->whereDate('date_start', '<=',$date_ch_in) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
@@ -646,8 +625,8 @@
                                                     
 
                                                     <td>
-                                                    <!-- <a href="{{url('users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
-                                                        <a href="{{url('users_in_in_destroy/'.$user_ins->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('You Want To Delete?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
+                                                    <!-- <a href="{{url('y_users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
+                                                        <a href="{{url('y_users_in_in_destroy/'.$user_ins->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('You Want To Delete?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
                                                         <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{@$user_aa->username}}', '{{@$user_aa->password}}', '{{@$user_aa->name}}', '{{@$paga}}', '{{@$user_aa->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>

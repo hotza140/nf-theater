@@ -8,7 +8,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">USERS NETFLIX /ADD</h5>
+                        <h5 class="m-b-10">USERS YOUTUBE /ADD</h5>
 
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="card-block">
 
-                                    <form method="post" id="" action="{{ url('users_store_many') }}"
+                                    <form method="post" id="" action="{{ url('y_users_store_many') }}"
                                         enctype="multipart/form-data" >
                                         @csrf
 
@@ -69,8 +69,8 @@
                                                 <input type="text" name="users[{{ $i }}][username]" class="form-control"  value="{{ @$run }}">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Name Profile</label>
-                                                <input type="text" name="users[{{ $i }}][name]" class="form-control" >
+                                                <label class="col-form-label">Email</label>
+                                                <input type="text" name="users[{{ $i }}][email]" class="form-control" >
                                             </div>
 
                                             <div class="col-sm-3">
@@ -95,8 +95,8 @@
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Package*</label>
                                                 <select name="users[{{ $i }}][type]" class="form-control" required onchange="updatePackage(this)">
-                                                    <option value="MOBILE">ยกเว้นทีวี</option>
-                                                    <option value="PC">TV</option>
+                                                    <option value="MOBILE">จำนวนลูกค้า</option>
+                                                    <!-- <option value="PC">TV</option> -->
                                                 </select>
                                             </div>
 
@@ -144,8 +144,8 @@
 
 
                                     <?php 
-$pag_PC = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
-$pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
+$pag_PC = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
+$pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
 ?>
 
 <script>
@@ -262,7 +262,7 @@ window.onload = function () {
 
 
                                         <p class="text-right">
-                                            <a href="{{ url('users') }}"
+                                            <a href="{{ url('y_users') }}"
                                                 style="color:white;" class="btn btn-warning"> <i
                                                     class="fa fa-share-square-o"></i> Back </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"

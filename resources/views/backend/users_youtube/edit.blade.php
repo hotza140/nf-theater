@@ -8,7 +8,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">USERS NETFLIX /EDIT</h5>
+                        <h5 class="m-b-10">USERS YOUTUBE /EDIT</h5>
 
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                                 <div class="card-block">
 
                                     <form method="post" id=""
-                                        action="{{ url('users_update/'.@$item->id) }}"
+                                        action="{{ url('y_users_update/'.@$item->id) }}"
                                         enctype="multipart/form-data" >
                                         @csrf
 
@@ -73,9 +73,9 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
-                                                <label class="col-form-label">Name Profile</label>
-                                                <input type="text" name="name" class="form-control" id=""
-                                                      value="{{@$item->name}}">
+                                                <label class="col-form-label">Email</label>
+                                                <input type="text" name="email" class="form-control" id=""
+                                                      value="{{@$item->email}}">
                                             </div>
                                         </div>
                                         
@@ -132,8 +132,8 @@
                                         <div class="col-sm-3">
                                         <label class="col-form-label">Package Type*</label>
                                         <select name="type" id="type" class="form-control" required onchange="updatePackage()" >
-                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
-                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >จำนวนลูกค้า</option>
+                                        <!-- <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option> -->
                                         </select>
                                         </div>
 
@@ -146,8 +146,8 @@
 
 
                                         <?php 
-                                        $pag_PCa = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
-                                        $pag_MOBILEa = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
+                                        $pag_PCa = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
+                                        $pag_MOBILEa = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
                                     ?>
 
                                     <script>
@@ -206,7 +206,7 @@
                                      
 
                                         <p class="text-right">
-                                            <a href="{{ url('users_status_edit/'.@$item->id) }}"
+                                            <a href="{{ url('y_users_status_edit/'.@$item->id) }}"
                                                 style="color:white;" class="btn btn-warning"> <i
                                                     class="fa fa-share-square-o"></i> ยกเลิกแก้ใข/ย้อนกลับ </a>
                                             <button type="submit" class="btn btn-success" style="color:white;"
@@ -223,7 +223,7 @@
                                 <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ต่ออายุ Account</h1>
                                 <br><br>
                                 <form method="post" id=""
-                                        action="{{ url('users_update_date') }}"
+                                        action="{{ url('y_users_update_date') }}"
                                         enctype="multipart/form-data" >
                                         @csrf
 
@@ -234,8 +234,8 @@
                                         <div class="col-sm-3">
                                         <label class="col-form-label">Package Type*</label>
                                         <select name="type" id="type_a" class="form-control" required onchange="updatePackage_a()" >
-                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
-                                        <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
+                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >จำนวนลูกค้า</option>
+                                        <!-- <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option> -->
                                         </select>
                                         </div>
 
@@ -298,8 +298,8 @@
 
                 <?php 
     // ดึงข้อมูลแพ็กเกจจากฐานข้อมูล
-    $pag_PC = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
-    $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
+    $pag_PC = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
+    $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
 ?>
 
 <script>
@@ -572,7 +572,7 @@
                                                     </td>
 
                                                     <td>
-                                                    <a href="{{url('users_edit/'.$user_rs->id)}}" class="btn btn-sm btn-info" target="_blank" style="color:white;"><i class="fa fa-gear"></i>View</a>
+                                                    <a href="{{url('y_users_edit/'.$user_rs->id)}}" class="btn btn-sm btn-info" target="_blank" style="color:white;"><i class="fa fa-gear"></i>View</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach

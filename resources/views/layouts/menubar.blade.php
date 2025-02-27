@@ -543,6 +543,30 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+
+                                        <li class="">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext"></span>
+                                                <span class="pcoded-mcaret"></span>
+                                        </li>
+
+                                        <li class="{{ isset($list) && $list == 'users_youtube' ? 'active' : '' }}">
+                                            <a href="{{ url('y_users') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Users Youtube</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+
+                                        <li class="{{ isset($list) && $list == 'users_in_youtube' ? 'active' : '' }}">
+                                            <a href="{{ url('y_users_in') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Account Youtube</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+
+
                                     </ul>
                                     <!--DJ page-->
                                 </li>

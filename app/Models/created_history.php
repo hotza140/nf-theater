@@ -14,4 +14,15 @@ class created_history extends Authenticatable
     // use SoftDeletes;
     protected $table = "tb_his_created_user";
     protected $primarykey = "id";
+
+    public function youtube()
+{
+    return $this->hasMany(users_in::class, 'id', 'id_user_in')->whereNotNull('type_f');
+}
+
+public function netflix()
+{
+    return $this->hasMany(users_in::class, 'id', 'id_user_in')->whereNull('type_f');
+}
+
 }
