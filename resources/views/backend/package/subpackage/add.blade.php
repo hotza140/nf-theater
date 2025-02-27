@@ -55,7 +55,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
+                                        {{-- <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">รูปแบบ*</label>
                                                 <select name="type" id="type" class="form-control" required="">
@@ -65,7 +65,8 @@
                                             </div>
                                             <div class="col-sm-3">
                                             </div>
-                                        </div>
+                                        </div> --}}
+                                        <input type="hidden" name="type" id="type" value="MOBILE">
 
 
                                         <?php $country=DB::table('dataset_country')->orderByRaw("CONVERT(ct_nameTHA USING tis620) ASC")->cursor(); ?>
