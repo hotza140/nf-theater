@@ -21,7 +21,7 @@
     <div class="net-plans">
         {{-- 'Packagewatch','PackageSubwatch' --}}
         @foreach ($PackageSubwatch as $itemPs)
-            <div class="net-plan" data-bs-toggle="modal" data-bs-target="#modal-price">
+            <div class="net-plan" data-bs-toggle="modal" data-bs-target="#modal-price" onclick="showPackageOrder('{{$itemPs->Subpackage_Code}}','{{$itemPs->Subpackage_Name}}','{{$itemPs->Subpackage_Paymoney}}');">
                 <div class="net-plan-info"><img class="net-plan-icon" src="assets/img/logo-netflix%201.png" alt="Netflix Icon" />
                     <div class="net-plan-details">
                         <h2>{{$Packagewatch->package_Name}}</h2>
@@ -120,15 +120,39 @@
                     </div>
                     <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
                 </div>
-                <div class="modal-body">
-                    <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อ Package</label><input class="form-control form-v1" type="text" placeholder="Nextflix ยกเว้นทีวี 1 เดือน"></form>
-                    <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">จำนวนเงิน</label><input class="form-control form-v1" type="text" placeholder="139"></form>
-                    <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label><input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน"></form>
+                <form action="{{route('frontend.SaveOrderPackage')}}" method="post" enctype="multipart/form-data" id="SaveOrderPackageFront">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-div">
+                            <input type="hidden" name="id" value="{{$id}}">
+                            <input type="hidden" name="Subpackage_Code" id="Subpackage_Code">
+                            <label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อ Package</label>
+                            <input class="form-control form-v1" type="text" placeholder="Nextflix ยกเว้นทีวี 1 เดือน" name="Subpackage_Name" id="Subpackage_Name">
+                        </div>
+                        <div class="form-div">
+                            <label class="form-label" style="color: var(--bs-emphasis-color);">จำนวนเงิน</label>
+                            <input class="form-control form-v1" type="text" placeholder="139" name="Subpackage_Paymoney" id="Subpackage_Paymoney">
+                        </div>
+                        <div class="form-div">
+                            <label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label>
+                            <input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน" name="Orderemail" id="Orderemail">
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;">
+                    <button class="btn btn-primary bt-pay" type="button" onclick="document.getElementById('SaveOrderPackageFront').submit();">ชำระเงิน</button>
                 </div>
-                <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;"><button class="btn btn-primary bt-pay" type="button">ชำระเงิน</button></div>
             </div>
         </div>
     </div>
+    <script>
+        function showPackageOrder(Subpackage_Code ,Subpackage_Name ,Subpackage_Paymoney) {
+            document.getElementById('Subpackage_Code').value=Subpackage_Code;
+            document.getElementById('Subpackage_Name').value=Subpackage_Name;
+            document.getElementById('Subpackage_Paymoney').value=Subpackage_Paymoney;
+            document.getElementById('Orderemail').value='test@gmail.com';
+        }
+    </script>
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-points" style="margin-top: 150px;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -209,3 +233,9 @@
 
 </script>
 @endsection
+
+@if(session('message'))
+    <script>
+        alert('บันทึกรายการสั่งซื้อ Package เรียบร้อยแล้ว.')
+    </script>
+@endif

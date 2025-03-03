@@ -81,10 +81,11 @@ class UserFrontendController extends Controller
     }
 
     public function nFYtPackage(Request $r) {
-        $Packagewatch = Packagewatch::find($r->id); 
+        $id = $r->id;
+        $Packagewatch = Packagewatch::find($id); 
         $PackageSubwatch = PackageSubwatch::where('package_Code',$Packagewatch->package_Code)->get();
-        if($r->id==1) return view('frontend.netflix-pricing',compact('Packagewatch','PackageSubwatch'));
-        else if($r->id==2) return view('frontend.youtube-pricing',compact('Packagewatch','PackageSubwatch'));
+        if($r->id==1) return view('frontend.netflix-pricing',compact('Packagewatch','PackageSubwatch','id'));
+        else if($r->id==2) return view('frontend.youtube-pricing',compact('Packagewatch','PackageSubwatch','id'));
     }
 
     public function rewardsRead(Request $r) {
@@ -109,6 +110,11 @@ class UserFrontendController extends Controller
         $users = Auth::guard('users')->user();
         $RewardUserLog = RewardUserLog::where('username',$users->username)->get();
         return view('frontend.profile',compact('users','RewardUserLog'));
+    }
+
+    public function SaveOrderPackage (Request $request) {
+        $id = $request->id;
+        return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess!');
     }
 
     public function SendMailSMTPT1() {

@@ -62,6 +62,9 @@ Route::group(['middleware' => ['users']],function(){
 
     Route::get('RewardUserLog_store',[App\Http\Controllers\UserFrontendController::class,'RewardUserLog_store'])->name('frontend.RewardUserLog_store');
 
+    // Order Package Youtube & Netflix...
+    Route::post('SaveOrderPackage',[App\Http\Controllers\UserFrontendController::class,'SaveOrderPackage'])->name('frontend.SaveOrderPackage');
+
     Route::get('SendMailSMTPT1',[App\Http\Controllers\UserFrontendController::class,'SendMailSMTPT1'])->name('frontend.SendMailSMTPT1');
     
 });
