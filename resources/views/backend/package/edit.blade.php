@@ -207,6 +207,7 @@
                                                             <th>จำนวนวัน</th>
                                                             <th>ราคา</th>
                                                             <th>รูปแบบ</th>
+                                                            <th>แต้มของ Package</th>
                                                             <th>Tool</th>
         
                                                         </tr>
@@ -231,6 +232,7 @@
                                                             <td>{{$items->Subpackage_Dayuse}} วัน</td>
                                                             <td>{{$items->Subpackage_Paymoney}} บาท</td>
                                                             <td>{{$items->type=='MOBILE'?'ยกเว้นทีวี':'TV'}}</td>
+                                                            <td>{{$items->Making_Scoring}} แต้ม</td>
                                                             <td>
                                                             <a href="{{url('subpackage_edit/'.$items->id)}}?package_Code={{$item->package_Code}}&package_id={{$item->id}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                                 <a href="{{url('subpackage_destroy/'.$items->id)}}?package_Code={{$item->package_Code}}&package_id={{$item->id}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>

@@ -97,6 +97,7 @@ class PackageSubBackendController extends Controller
         $item->Subpackage_Dayuse=$r->Subpackage_Dayuse;
         $item->Subpackage_Paymoney=$r->Subpackage_Paymoney;
         $item->type=$r->type;
+        $item->Making_Scoring=$r->Making_Scoring;
         $item->save();
         return redirect()->to('package_edit/'.$r->package_id)->with('message','Sucess!');
 
@@ -112,7 +113,7 @@ class PackageSubBackendController extends Controller
     $item->Subpackage_Dayuse=$r->Subpackage_Dayuse;
     $item->Subpackage_Paymoney=$r->Subpackage_Paymoney;
     $item->type=$r->type;
-
+    $item->Making_Scoring=$r->Making_Scoring;
     $item->save();
     return redirect()->to('package_edit/'.$package_id)->with('message','Sucess!');
     }

@@ -614,21 +614,21 @@
                                             </a>
                                         </li>
 
-                                        <li class="{{ isset($list) && $list == 'marking' ? 'active' : '' }}">
+                                        {{-- <li class="{{ isset($list) && $list == 'marking' ? 'active' : '' }}">
                                             <a href="{{ url('marking') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext">Manage Markings</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                        </li>
+                                        </li> --}}
 
-                                        <li class="{{ isset($list) && $list == 'gift' ? 'active' : '' }}">
+                                        {{-- <li class="{{ isset($list) && $list == 'gift' ? 'active' : '' }}">
                                             <a href="{{ url('gift') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext">Manage Gifts</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                     <!--DJ page-->
                                 </li>

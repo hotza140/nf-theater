@@ -55,6 +55,14 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">แต้มของ Package</label>
+                                                <input type="number" name="Making_Scoring" class="form-control" id="Making_Scoring">
+                                            </div>
+                                            <div class="col-sm-3"></div>
+                                        </div>
+
                                         {{-- <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">รูปแบบ*</label>
