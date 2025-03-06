@@ -120,18 +120,19 @@
                     </div>
                     <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
                 </div>
-                <form action="{{route('frontend.SaveOrderPackage')}}" method="post" enctype="multipart/form-data" id="SaveOrderPackageFront">
+                <form action="{{route('frontend.SendOrderPackage')}}" method="post" enctype="multipart/form-data" id="SendOrderPackageFront">
                     @csrf
                     <div class="modal-body">
                         <div class="form-div">
                             <input type="hidden" name="id" value="{{$id}}">
                             <input type="hidden" name="Subpackage_Code" id="Subpackage_Code">
+                            <input type="hidden" name="package_Name" value="Netflix">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อ Package</label>
-                            <input class="form-control form-v1" type="text" placeholder="Nextflix ยกเว้นทีวี 1 เดือน" name="Subpackage_Name" id="Subpackage_Name">
+                            <input class="form-control form-v1" type="text" placeholder="Nextflix ยกเว้นทีวี 1 เดือน" name="Subpackage_Name" id="Subpackage_Name" readonly>
                         </div>
                         <div class="form-div">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">จำนวนเงิน</label>
-                            <input class="form-control form-v1" type="text" placeholder="139" name="Subpackage_Paymoney" id="Subpackage_Paymoney">
+                            <input class="form-control form-v1" type="text" placeholder="139" name="Subpackage_Paymoney" id="Subpackage_Paymoney" readonly>
                         </div>
                         <div class="form-div">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label>
@@ -140,7 +141,7 @@
                     </div>
                 </form>
                 <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;">
-                    <button class="btn btn-primary bt-pay" type="button" onclick="document.getElementById('SaveOrderPackageFront').submit();">ชำระเงิน</button>
+                    <button class="btn btn-primary bt-pay" type="button" onclick="document.getElementById('SendOrderPackageFront').submit();">ชำระเงิน</button>
                 </div>
             </div>
         </div>
@@ -152,7 +153,34 @@
             document.getElementById('Subpackage_Paymoney').value=Subpackage_Paymoney;
             document.getElementById('Orderemail').value='test@gmail.com';
         }
+        // function checkPayment() {
+        //     var myModal = new bootstrap.Modal(document.getElementById('modal-payment'));
+        //     myModal.show();
+        // }
     </script>
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-payment" style="margin-top: 150px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header m-h">
+                    <div class="h-pop">
+                        <h4 class="modal-title head-pop" style="color: var(--bs-emphasis-color);">ส่วนของการชำระเงินระบบ Payment.</h4>
+                    </div>
+                    <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
+                </div>
+                <div class="modal-body m-h">
+                    <div class="point-box-div">
+                        <div class="point-box"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img class="img-po1" src="assets/img/event_theater.png"></a></div>
+                        <div class="point-box"><a href="/rewards.html"><img class="img-po1" src="assets/img/redeem_reward.png"></a></div>
+                    </div>
+                </div>
+                <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"></div>
+            </div>
+            <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;">
+                <button class="btn btn-primary bt-pay" type="button" onclick="document.getElementById('SaveOrderPackageFront').submit();">ชำระเงินสำเร็จ</button>
+            </div>
+        </div>
+    </div>
+    
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-points" style="margin-top: 150px;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

@@ -62,13 +62,24 @@ Route::group(['middleware' => ['users']],function(){
 
     Route::get('RewardUserLog_store',[App\Http\Controllers\UserFrontendController::class,'RewardUserLog_store'])->name('frontend.RewardUserLog_store');
 
+    // SendOrderPackage Youtube & Netflix...
+    Route::post('SendOrderPackage',[App\Http\Controllers\UserFrontendController::class,'SendOrderPackage'])->name('frontend.SendOrderPackage');
+
     // Order Package Youtube & Netflix...
     Route::post('SaveOrderPackage',[App\Http\Controllers\UserFrontendController::class,'SaveOrderPackage'])->name('frontend.SaveOrderPackage');
+
+    // upCheckQR SlipOK....& Save data slip.....
+    Route::post('upCheckQR',[App\Http\Controllers\UserFrontendController::class,'upCheckQR'])->name('frontend.upCheckQR');
+
+    // afterSaveOrderPackage ....
+    Route::post('afterSaveOrderPackage',[App\Http\Controllers\UserFrontendController::class,'afterSaveOrderPackage'])->name('frontend.afterSaveOrderPackage');
 
     Route::get('SendMailSMTPT1',[App\Http\Controllers\UserFrontendController::class,'SendMailSMTPT1'])->name('frontend.SendMailSMTPT1');
     
 });
 
+// image Slip Base64
+Route::post('getimgSlipBase64',[App\Http\Controllers\UserFrontendController::class,'getimgSlipBase64'])->name('frontend.getimgSlipBase64');
 
 // ------------------------
 
@@ -240,6 +251,16 @@ Route::group(['middleware' => ['admin']],function(){
     Route::post('gift_update/{id}',[App\Http\Controllers\GiftBackendController::class,'gift_update']);
     Route::post('gift_open_close',[App\Http\Controllers\GiftBackendController::class,'gift_open_close']);
     //gift
+
+    //gift
+    Route::get('orderpaypackage',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage']);
+    Route::get('orderpaypackage_destroy/{id}',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_destroy']);
+    Route::get('orderpaypackage_add',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_add']);
+    Route::post('orderpaypackage_store',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_store']);
+    Route::get('orderpaypackage_edit/{id}',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_edit']);
+    Route::post('orderpaypackage_update/{id}',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_update']);
+    Route::post('orderpaypackage_open_close',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_open_close']);
+    //orderpaypackage
 
   Route::get('/logout',[App\Http\Controllers\AdminUserBackendController::class,'logout'])->name('logout');
     Route::get('/register',[App\Http\Controllers\AdminUserBackendController::class,'register'])->name('register');

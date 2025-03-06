@@ -119,12 +119,13 @@
                     </div>
                     <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
                 </div>
-                <form action="{{route('frontend.SaveOrderPackage')}}" method="post" enctype="multipart/form-data" id="SaveOrderPackageFront">
+                <form action="{{route('frontend.SendOrderPackage')}}" method="post" enctype="multipart/form-data" id="SendOrderPackageFront">
                     @csrf
                     <div class="modal-body">
                         <div class="form-div">
                             <input type="hidden" name="id" value="{{$id}}">
                             <input type="hidden" name="Subpackage_Code" id="Subpackage_Code">
+                            <input type="hidden" name="package_Name" value="Youtube">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อ Package</label>
                             <input class="form-control form-v1" type="text" placeholder="Youtube ยกเว้นทีวี 1 เดือน" name="Subpackage_Name" id="Subpackage_Name">
                         </div>
@@ -139,7 +140,7 @@
                     </div>
                 </form>
                 <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;">
-                    <button class="btn btn-primary bt-pay" type="button" onclick="document.getElementById('SaveOrderPackageFront').submit();">ชำระเงิน</button>
+                    <button class="btn btn-primary bt-pay" type="button" onclick="document.getElementById('SendOrderPackageFront').submit();">ชำระเงิน</button>
                 </div>
             </div>
         </div>

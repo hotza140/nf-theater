@@ -629,6 +629,14 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li> --}}
+
+                                        <li class="{{ isset($list) && $list == 'orderpaypackage' ? 'active' : '' }}">
+                                            <a href="{{ url('orderpaypackage') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Payment</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
                                     </ul>
                                     <!--DJ page-->
                                 </li>
