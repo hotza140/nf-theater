@@ -262,8 +262,8 @@
 </script>
 @endsection
 
-@if(session('message'))
+{{-- @if(session('message'))
     <script>
         alert('บันทึกรายการสั่งซื้อ Package เรียบร้อยแล้ว.')
     </script>
-@endif
+@endif --}}
