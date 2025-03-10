@@ -220,7 +220,7 @@
 
                                 <div class="card">
                                 <div class="card-header">
-                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ต่ออายุ Account</h1>
+                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ต่ออายุ หรือปรับวันที่ Account</h1>
                                 <br><br>
                                 <form method="post" id=""
                                         action="{{ url('users_update_date') }}"
@@ -267,12 +267,12 @@
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id="date_start"
-                                                      value="" readonly required >
+                                                      value=""  required >
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date End</label>
                                                 <input type="date" name="date_end" class="form-control" id="date_end"
-                                                      value="" readonly required >
+                                                      value=""  required >
                                             </div>
                                         </div>
                                         <p class="">
@@ -694,7 +694,7 @@
     </div>
 
 
-    <script>
+    <!-- <script>
     window.addEventListener('beforeunload', function (e) {
         // Send an AJAX request to Laravel route when the user is leaving the page
         fetch('{{ route('updateStatusOnExit') }}', {
@@ -710,7 +710,38 @@
             console.log("Error:", error);
         });
     });
+</script> -->
+
+<script>
+    window.addEventListener('load', function () {
+        // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที) ก่อนแสดงหน้า
+        setTimeout(function () {
+            // ทำการรีโหลดหน้าหรือให้มีการแสดงผลตามปกติ
+            // โค้ดที่ต้องการให้ทำหลังจากหน่วงเวลา
+        }, 3000);
+    });
+
+    window.addEventListener('beforeunload', function (e) {
+        // ตรวจสอบว่าไม่ใช่การรีเฟรชหน้า
+        if (performance.getEntriesByType("navigation")[0]?.type !== "reload") {
+            fetch('{{ route('updateStatusOnExit') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({
+                    userId: '{{ $item->id }}'
+                })
+            }).catch((error) => {
+                console.log("Error:", error);
+            });
+        }
+    });
 </script>
+
+
+
 
 
 

@@ -113,8 +113,10 @@
 
                                                     @if($items->type==0)
                                                     <td style="color: #dfce00;" >SUPER ADMIN</td>
-                                                    @elseif($items->type!=0)
-                                                    <td style="color: #d712b5;" >ADMIN</td>
+                                                    @elseif($items->type==1)
+                                                    <td style="color: #d712b5;" >Admin Netflix</td>
+                                                    @else
+                                                    <td style="color: #ff0000;" >Admin Youtube</td>
                                                     @endif
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->

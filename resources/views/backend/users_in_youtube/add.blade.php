@@ -86,8 +86,8 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">เวลา</label>
-                                                <input type="date" name="date_end" class="form-control" id=""
-                                                      value="{{@$item->date_end}}">
+                                                <input type="time" name="time" class="form-control" id=""
+                                                      value="{{@$item->time}}">
                                             </div>
                                         </div>
 

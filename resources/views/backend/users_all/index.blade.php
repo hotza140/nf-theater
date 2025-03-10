@@ -175,6 +175,7 @@
                                                     @endif
 
 
+                                                    @if(Auth::guard('admin')->user()->type == 1 or Auth::guard('admin')->user()->type == 0)
                                                     <td>
                                                     <form method="GET" action="{{url('users_add')}}" id="form{{$items->id}}" name="form{{$items->id}}" target="_blank">
                                                         @csrf
@@ -182,8 +183,12 @@
                                                         <button type="submit" class="btn btn-sm btn-success" style="color:white;" target="_blank"><i class="fa fa-gear"></i>NETFLIX</button>
                                                     </form>
                                                     </td>
+                                                    @else
+                                                    <td></td>
+                                                    @endif
 
 
+                                                    @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0)
                                                 <td>
                                                      <form method="GET" action="{{url('y_users_add')}}" id="form{{$items->id}}" name="form{{$items->id}}" target="_blank">
                                                         @csrf
@@ -191,6 +196,10 @@
                                                         <button type="submit" class="btn btn-sm btn-info" style="color:white;" target="_blank"><i class="fa fa-gear"></i>YOUTUBE</button>
                                                     </form>
                                                 </td>
+                                                @else
+                                                    <td></td>
+
+                                                @endif
 
                                                 </tr>
                                                 @endforeach
