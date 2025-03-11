@@ -157,9 +157,17 @@ class UserFrontendController extends Controller
         $run = "ORF{$YY}{$mm}{$xxxx}";
         $filename = $run.'_'.date('YmdHis').'.'.$request->file('qr_code_image')->getClientOriginalExtension();
         $userIs = \Auth::guard('users')->user();
+
+        $users = users::where('id', $userIs->id)->first();
+
         $OrderPayPackage = new OrderPayPackage();
         $OrderPayPackage->OrderPayCode =$run;
-        $OrderPayPackage->username =$userIs->username;
+
+        $OrderPayPackage->username =@$users->username;
+        $OrderPayPackage->id_users =@$users->id;
+        $OrderPayPackage->profile =@$users->name;
+        $OrderPayPackage->id_users_backup =$userIs->id;
+
         $OrderPayPackage->package_Name =$request->package_Name;
         $OrderPayPackage->Subpackage_Code =$request->Subpackage_Code;
         $OrderPayPackage->Subpackage_Name =$request->Subpackage_Name;
@@ -175,6 +183,8 @@ class UserFrontendController extends Controller
         \Storage::disk('frongdrv')->put('Frongdrv/'.$filename, file_get_contents($request->file('qr_code_image')));
         
         // return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess!');
+
+        
     }
     public function afterSaveOrderPackage (Request $request) {
         $id = $request->id;

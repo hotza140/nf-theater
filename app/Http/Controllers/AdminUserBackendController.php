@@ -498,6 +498,8 @@ class AdminUserBackendController extends Controller
         // if($r->password!=null){
         //     $item->password=Hash::make($r->password);
         // }
+        $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$r->package)->first();
+        $item->id_package=@$pack_id->id;
 
         $item->password=$r->password;
 
@@ -653,6 +655,9 @@ class AdminUserBackendController extends Controller
         //     $item->password=Hash::make($r->password);
         // }
 
+        $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$r->package)->first();
+        $item->id_package=@$pack_id->id;
+
         $item->password=$r->password;
 
         $item->username=$r->username;
@@ -681,6 +686,10 @@ class AdminUserBackendController extends Controller
         $item->date_end=$r->date_end;
         $item->type=$r->type;
         $item->package=$r->package;
+
+        $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$r->package)->first();
+        $item->id_package=@$pack_id->id;
+
         if($item->save()){
 
             if($item->type=='MOBILE'){
@@ -853,6 +862,9 @@ class AdminUserBackendController extends Controller
             $item->date_end = $userData['date_end'] ?? null;
             $item->type = $userData['type'];
             $item->type_netflix = 1;
+
+            $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$userData['package'])->first();
+            $item->id_package=@$pack_id->id;
     
             if ($item->save()) {
 
@@ -1009,6 +1021,9 @@ class AdminUserBackendController extends Controller
         $item->day=$r->day;
         $item->type=$r->type;
         $item->package=$r->package;
+
+        $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$r->package)->first();
+        $item->id_package=@$pack_id->id;
 
         // $caa=users::where('username',$r->username)->orderby('id','desc')->first();
         // if($caa!=null){

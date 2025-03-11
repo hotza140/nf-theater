@@ -452,6 +452,9 @@ class YoutubeBackendController extends Controller
         //     $item->password=Hash::make($r->password);
         // }
 
+        $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$r->package)->first();
+        $item->id_package=@$pack_id->id;
+
         $item->password=$r->password;
 
         $item->username=$r->username;
@@ -605,6 +608,9 @@ class YoutubeBackendController extends Controller
         // if($r->password!=null){
         //     $item->password=Hash::make($r->password);
         // }
+
+        $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$r->package)->first();
+        $item->id_package=@$pack_id->id;
 
         $item->password=$r->password;
 
@@ -806,6 +812,9 @@ class YoutubeBackendController extends Controller
             $item->date_end = $userData['date_end'] ?? null;
             $item->type = $userData['type'];
             $item->type_youtube = 1;
+
+            $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$userData['package'])->first();
+            $item->id_package=@$pack_id->id;
     
             if ($item->save()) {
 
@@ -962,6 +971,9 @@ class YoutubeBackendController extends Controller
         $item->day=$r->day;
         $item->type=$r->type;
         $item->package=$r->package;
+
+        $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$r->package)->first();
+        $item->id_package=@$pack_id->id;
 
         // $caa=users::where('username',$r->username)->orderby('id','desc')->first();
         // if($caa!=null){
