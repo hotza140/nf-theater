@@ -163,7 +163,7 @@
                                                             {!! @$alls->detail !!} 
                                                             @if($alls->status == 0)
                                                                 <a href="{{url('users_edit_status_check_admin/'.$alls->id)}}" onclick="return confirm('Confirm?')">
-                                                                    <span style="color: red; font-weight: bold;">&nbsp&nbsp รอส่งคำเชิญ</span>
+                                                                    <span style="color: red; font-weight: bold;">&nbsp&nbsp เปลี่ยนจอ</span>
                                                                 </a>
                                                             @endif
                                                         </li>

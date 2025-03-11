@@ -1198,6 +1198,7 @@ class AdminUserBackendController extends Controller
           $ch=users_in::where('email',$r->email)->orderby('id','desc')->first();
           $nh=users_in::where('name',$r->name)->orderby('id','desc')->first();
   
+  
           if($ch!=null){
               return redirect()->back()->with('message','Email Already Have in Data!');
               }else{
@@ -1273,6 +1274,33 @@ class AdminUserBackendController extends Controller
           $item=users_in::where('id',$id)->first();
           $ch=users_in::where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
           $nh=users_in::where('id','!=',$id)->where('name',$r->name)->orderby('id','desc')->first();
+
+          $qr = users_in::where(function($query) use ($r) {
+            $query->where('email', $r->email01)
+                  ->whereNotNull('email');
+        })
+        ->orWhere(function($query) use ($r) {
+            $query->where('email', $r->email02)
+                  ->whereNotNull('email');
+        })
+        ->first();
+          if($qr!=null){
+            return redirect()->back()->with('message','Email Already Have in Data!');
+          }
+          $qr = users_in::where(function($query) use ($r) {
+            $query->where('email01', $r->email)
+                  ->whereNotNull('email01');
+        })
+        ->orWhere(function($query) use ($r) {
+            $query->where('email02', $r->email)
+                  ->whereNotNull('email02');
+        })
+        ->first();
+          if($qr!=null){
+            return redirect()->back()->with('message','Email Already Have in Data!');
+          }
+
+          
   
           if($ch!=null){
             return redirect()->back()->with('message','Email Already Have in Data!');
@@ -1288,6 +1316,7 @@ class AdminUserBackendController extends Controller
               }
             }
 
+            if($r->email01!=null){
             $ch1=users_in::where('id','!=',$id)->where('email',$r->email01)->orderby('id','desc')->first();
 
             if($ch1!=null){
@@ -1303,7 +1332,10 @@ class AdminUserBackendController extends Controller
                     } 
                 }
               }
+                }
 
+
+                if($r->email02!=null){
               $ch2=users_in::where('id','!=',$id)->where('email',$r->email02)->orderby('id','desc')->first();
 
               if($ch2!=null){
@@ -1318,6 +1350,7 @@ class AdminUserBackendController extends Controller
                       return redirect()->back()->with('message','Email Already Have in Data!');
                       } 
                   }
+                }
                 }
 
               if($nh!=null){

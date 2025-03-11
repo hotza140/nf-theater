@@ -580,13 +580,13 @@
                                             </a>
                                         </li>
 
-                                        <li class="{{ isset($list) && $list == 'country' ? 'active' : '' }}">
+                                        <!-- <li class="{{ isset($list) && $list == 'alert' ? 'active' : '' }}">
                                             <a href="{{ url('alert') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext">แจ้งเตือนปัญหา</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                        </li>
+                                        </li> -->
 
 
                                     </ul>
