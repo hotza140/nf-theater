@@ -161,6 +161,9 @@ Route::get('users_status_edit/{id}',[App\Http\Controllers\AdminUserBackendContro
 
 
 //  YOUTUBE///
+Route::post('y_autoCreateUsersInIn',[App\Http\Controllers\AdminUserBackendController::class,'autoCreateUsersInIn']);
+Route::post('y_autoCreateUsersInIn_aaa',[App\Http\Controllers\AdminUserBackendController::class,'autoCreateUsersInIn_aaa']);
+
 Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendController::class,'y_users_status_edit']);
 
     Route::get('y_his_created',[App\Http\Controllers\YoutubeBackendController::class,'his_created']);

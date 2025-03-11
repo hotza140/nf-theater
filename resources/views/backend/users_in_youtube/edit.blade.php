@@ -220,13 +220,13 @@
                                     ->whereDate('date_end', '>=',$date_ch_in) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
                                     ->orderby('id','desc')->cursor();
                                     ?>
-                                    <div class="col-sm-3">
+                                    <!-- <div class="col-sm-3">
                                     <select name="id_user" id="id_user" class="form-control add_select2"  required >
                                     @foreach($user as $key=>$users)
                                     <option value="{{@$users->id}}" >{{@$users->name}} ({{@$users->username}})</option>
                                      @endforeach
                                     </select>
-                                    </div>
+                                    </div> -->
 
                                     <!-- <div class="col-sm-1">
                                     <select name="type" id="type" class="form-control add_select2" required  >
@@ -235,7 +235,7 @@
                                         </select>
                                         </div> -->
 
-                                        <div class="col-sm-3">
+                                        <!-- <div class="col-sm-3">
                                     <select name="type_mail" id="type_mail" class="form-control add_select2"   >
                                         <option value="" @if(@$item->type_mail=='') selected  @endif >เมลหลัก (ยกเว้น TV)</option>
                                         @if($user_in_in_count_PC_1==0)
@@ -245,31 +245,31 @@
                                         <option value="2" @if(@$item->type_mail=='2') selected  @endif >เมลเสริม 2 (TV)</option>
                                         @endif
                                         </select>
-                                        </div>
+                                        </div> -->
                                     
-                                    <div class="col-sm-1">
+                                    <!-- <div class="col-sm-1">
                                         <button type="submit" style="color:white;" class="btn btn-success"  onclick="javascript:return confirm('Confirm?')">
                                             <i class="fa fa-plus"></i> Add
                                         </button>
-                                    </div>    
+                                    </div>     -->
 
                                     </form>  
 
                                     <div class="col-sm-2">
-                                    <form method="post" id="autoCreateUsersInIn" action="{{ url('autoCreateUsersInIn') }}" enctype="multipart/form-data" >
+                                    <form method="post" id="y_autoCreateUsersInIn" action="{{ url('y_autoCreateUsersInIn') }}" enctype="multipart/form-data" >
                                     @csrf
 
                                     <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
                                     <button type="submit" style="color:white;" class="btn btn-danger"  onclick="javascript:return confirm('Confirm?')">
-                                        <i class="fa fa-plus"></i> Add User Auto (เมลหลัก)
+                                        <i class="fa fa-plus"></i> Add User Auto
                                     </button>
                                     </form>  
                                     </div>  
 
 
 
-                                    <div class="col-sm-2">
-                                    <form method="post" id="autoCreateUsersInIn_aaa" action="{{ url('autoCreateUsersInIn_aaa') }}" enctype="multipart/form-data" >
+                                    <!-- <div class="col-sm-2">
+                                    <form method="post" id="y_autoCreateUsersInIn_aaa" action="{{ url('y_autoCreateUsersInIn_aaa') }}" enctype="multipart/form-data" >
                                     @csrf
 
                                     <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
@@ -277,7 +277,7 @@
                                         <i class="fa fa-plus"></i> เพิ่มตัวแทน Auto
                                     </button>
                                     </form>  
-                                    </div>  
+                                    </div>   -->
 
 
                                 </div>
@@ -296,8 +296,8 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
-                                                <label class="col-form-label">Name Profile</label>
-                                                <input type="text" name="name" class="form-control" id=""
+                                                <label class="col-form-label">Email</label>
+                                                <input type="email" name="email" class="form-control" id=""  
                                                       value="">
                                             </div>
                                         </div>
@@ -332,13 +332,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <label class="col-form-label">Email</label>
-                                                <input type="email" name="email" class="form-control" id=""  
-                                                      value="">
-                                            </div>
-                                        </div>
+                                        
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
@@ -363,11 +357,11 @@
 
                                         <div class="form-group row">
 
-                                        <div class="col-sm-3">
-                                        <label class="col-form-label">Package*</label>
-                                        <select name="type" id="type" class="form-control" required onchange="updatePackage()"  >
-                                        <option value="MOBILE" @if(@$none->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
-                                        <option value="PC" @if(@$none->type=='PC') selected  @endif >TV</option>
+                                        <div class="col-sm-3" style="display:none;">
+                                        <label class="col-form-label">Package Type*</label>
+                                        <select name="type" id="type" class="form-control" required onchange="updatePackage()" >
+                                        <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >จำนวนลูกค้า</option>
+                                        <!-- <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option> -->
                                         </select>
                                         </div>
 
@@ -409,25 +403,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                           <div class="col-sm-3">
-                                           <label class="col-form-label">เลือกเมลที่เชื่อมต่อ</label>
-                                    <select name="type_mail" id="type_mail" class="form-control add_select2"   >
-                                    <option value="" @if(@$item->type_mail=='') selected  @endif >เมลหลัก (ยกเว้น TV)</option>
-                                        @if($user_in_in_count_PC_1==0)
-                                        <option value="1" @if(@$item->type_mail=='1') selected  @endif >เมลเสริม 1 (TV)</option>
-                                        @endif
-                                        @if($user_in_in_count_PC_2==0)
-                                        <option value="2" @if(@$item->type_mail=='2') selected  @endif >เมลเสริม 2 (TV)</option>
-                                        @endif
-                                        </select>
-                                        </div>
-                                        </div>
-
                                         <?php 
-                                        $pag_PC=DB::table('tb_package_subwatch')->where('package_Code','PNF-00001')->where('type','PC')->orderBy('Subpackage_Dayuse','asc')->get();
-                                        $pag_MOBILE=DB::table('tb_package_subwatch')->where('package_Code','PNF-00001')->where('type','MOBILE')->orderBy('Subpackage_Dayuse','asc')->get();  
-                                         ?>
+                                        $pag_PC = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002')->where('type', 'PC')->orderBy('Subpackage_Dayuse', 'asc')->get();
+                                        $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002')->where('type', 'MOBILE')->orderBy('Subpackage_Dayuse', 'asc')->get();  
+                                    ?>
 
     <script>
     var packages = {
