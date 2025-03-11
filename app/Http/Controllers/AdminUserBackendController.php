@@ -386,6 +386,16 @@ class AdminUserBackendController extends Controller
      }
 
 
+     public function alert(Request $r){
+        $item=alert::orderBy('created_at','desc')->get();
+        return view('backend.users_all.alert',[
+            'item'=>$item,
+            'page'=>"all",
+            'list'=>"alert",
+        ]);
+     }
+
+
      //User//
      public function updateStatusOnExit(Request $r){
         $item=users::where('id',$r->userId)->first();

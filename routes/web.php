@@ -87,6 +87,8 @@ Route::post('getimgSlipBase64',[App\Http\Controllers\UserFrontendController::cla
 
 Route::group(['middleware' => ['admin']],function(){
     Route::get('/backend',[App\Http\Controllers\AdminUserBackendController::class,'users_all']);
+
+    Route::get('/alert',[App\Http\Controllers\AdminUserBackendController::class,'alert']);
  //admin
  Route::get('admin',[App\Http\Controllers\AdminUserBackendController::class,'admin']);
  Route::get('admin_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'admin_destroy']);
