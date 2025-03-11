@@ -286,7 +286,7 @@
                                 <div class="card">
                                 <div class="card-block">
 
-                                    <form method="post" id="" action="{{ url('users_store_form_in') }}"
+                                    <form method="post" id="" action="{{ url('y_users_store_form_in') }}"
                                         enctype="multipart/form-data" >
                                         @csrf
 
@@ -503,7 +503,7 @@
                                     <div class="dt-responsive table-responsive">
 
                                     @if(@$item->open==1)
-                                    <a href="{{url('change_user/'.@$item->id)}}" class="btn btn-danger" style="color:white;"
+                                    <a href="{{url('y_change_user/'.@$item->id)}}" class="btn btn-danger" style="color:white;"
                                                 onclick="return confirm('Confirm!');"> <i
                                                     class="fa fa-check-circle-o"></i> ย้าย Users </a>
                                                     <br> <br> <br>
