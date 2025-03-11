@@ -89,7 +89,7 @@
                 document.getElementById('showFileNameForSave').style.display = 'block';
                 document.getElementById('showFileNameForSave').innerHTML = document.getElementById('qr_code_image').files[0].name;
             } else {
-                if (body?.statis?.response?.message)  alert(body.statis.response.message);
+                if (body?.statis?.response?.message)  alert(body.statis.response.message + (body.statis.response.code==1013?' กรุณาติดต่อ Admin !':''));
                 else alert(body.error);
             }
             document.getElementById('showWaitForSave').style.display = 'none';

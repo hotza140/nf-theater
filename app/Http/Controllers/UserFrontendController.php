@@ -34,6 +34,7 @@ use App\Models\Reward;
 use App\Models\RewardUserLog;
 use App\Mail\CustConfirmMail;
 use App\Models\OrderPayPackage;
+use App\Models\PayPackNotmatch;
 
 class UserFrontendController extends Controller
 {
@@ -110,7 +111,28 @@ class UserFrontendController extends Controller
     public function profileRdSh (Request $request) {
         $users = Auth::guard('users')->user();
         $RewardUserLog = RewardUserLog::where('username',$users->username)->get();
-        return view('frontend.profile',compact('users','RewardUserLog'));
+        $userProfile = users::select(
+                'tb_users.username',
+                'tb_users.password as userpass',
+                'tb_users.type_netflix',
+                'tb_users.type_youtube',
+                'tb_users_in_in.type',
+                'tb_users_in_in.type_mail',
+                'tb_users_in.*'
+            )
+            ->leftJoin('tb_users_in_in', 'tb_users.id', '=', 'tb_users_in_in.id_user')
+            ->leftJoin('tb_users_in', 'tb_users_in_in.id_user_in', '=', 'tb_users_in.id')
+            ->where('tb_users.username', $users->username)
+            ->get();
+
+            // $userData=users::where('id',$users->id)->first();
+            // $aaa=users_in_in::where('id_user',$userData->id)->first();
+            // $bbb=users_in::where('id',$aaa->id_user_in)->first();
+            // dd($userData,$aaa,$bbb);
+            // dd($userProfile);
+        $checknetFlix = users::where('type_netflix',1)->where('username',$users->username)->first();
+        $checkyouTube = users::where('type_youtube',1)->where('username',$users->username)->first();
+        return view('frontend.profile',compact('users','RewardUserLog','userProfile','checknetFlix','checkyouTube'));
     }
 
     public function SendOrderPackage (Request $request) {
@@ -165,7 +187,7 @@ class UserFrontendController extends Controller
             'qr_code_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Get the uploaded file
+        // Get the uploaded file  Subpackage_Paymoney
         $file = $request->file('qr_code_image');
 
         if ( $file && $file->isValid()) { // $file && $file->isValid() && 0
@@ -174,6 +196,7 @@ class UserFrontendController extends Controller
             $body = [
                 'log' => true,
                 'files' => new \CURLFile($file->getRealPath(), $file->getMimeType(), $file->getClientOriginalName()),
+                "amount"=> $request->Subpackage_Paymoney,
             ];
 
             // Initialize cURL
@@ -212,6 +235,10 @@ class UserFrontendController extends Controller
             if($statusCode==200) { // || @$statis['response']['code']code: 1012 200 error 400 ส่งซ้ำ  || @$statis['response']['code']==1012
                 $request['RefPayment'] = @$statis['response']['data']['transRef'];
                 self::SaveOrderPackage($request);
+            } else if($statusCode==400) {
+                if(@$statis) {
+                    self::SavePayNotMacth($request,$statis);  // กรณีที่โอนยอดไม่ตรงที่กำหนดไว้....
+                }
             }
 
             // Return the status
@@ -220,6 +247,42 @@ class UserFrontendController extends Controller
             // File upload failed or is not valid
             return response()->json(['error' => 'No valid file uploaded'], 400);
         }
+    }
+
+    public function SavePayNotMacth ($request,$statis) { 
+        // package_Name,Subpackage_Code ,Subpackage_Name ,Subpackage_Paymoney Orderemail
+        $PayPackNotmatchCk = PayPackNotmatch::where('RefPayment',$statis['response']['data']['transRef'])->first();
+        if(empty($PayPackNotmatchCk)) {
+            $YY = date('y');
+            $mm = date('m');
+            $CkORD = "ERR{$YY}{$mm}";
+            $runnum=DB::table('tb_pay_pack_notmatch')->whereRaw("SUBSTR(OrderPayCode,1,7) = '$CkORD'")->orderby('id','desc')->count();
+            $runtotal=$runnum+1;
+            $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
+            $run = "ERR{$YY}{$mm}{$xxxx}";
+            $filename = $run.'_'.date('YmdHis').'.'.$request->file('qr_code_image')->getClientOriginalExtension();
+            $userIs = \Auth::guard('users')->user();
+            $PayPackNotmatch = new PayPackNotmatch();
+            $PayPackNotmatch->OrderPayCode =$run;
+            $PayPackNotmatch->username =$userIs->username;
+            $PayPackNotmatch->package_Name =$request->package_Name;
+            $PayPackNotmatch->Subpackage_Code =$request->Subpackage_Code;
+            $PayPackNotmatch->Subpackage_Name =$request->Subpackage_Name;
+            $PayPackNotmatch->Subpackage_Paymoney =$request->Subpackage_Paymoney;
+            $PayPackNotmatch->Cus_Paymoney = $statis['response']['data']['amount'];
+            $PayPackNotmatch->Orderemail =$request->Orderemail;
+            $PayPackNotmatch->RefPayment =$statis['response']['data']['transRef'];
+            $PayPackNotmatch->imgSlip = $filename;
+            
+            $PayPackNotmatch->save();
+
+            // Save Slip in frongdrv storage.....
+            \Storage::disk('frongdrv')->put('Frongdrv/Err/'.$filename, file_get_contents($request->file('qr_code_image')));
+        }
+        
+        $id = $request->id;
+        
+        // return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess!');
     }
 
     public function SendMailSMTPT1() {
@@ -253,11 +316,11 @@ class UserFrontendController extends Controller
     }
 
     public function getimgSlipBase64(Request $request) {
-        $filerd = \Storage::disk('frongdrv')->get('Frongdrv/'.$request->img);
+        $filerd = \Storage::disk('frongdrv')->get('Frongdrv/'.(@$request->path?$request->path.'/':'').$request->img);
         $base64 = base64_encode($filerd);
 
         // If you need to include the MIME type (for displaying in an `img` tag)
-        $mime = \Storage::disk('frongdrv')->mimeType('Frongdrv/'.$request->img);
+        $mime = \Storage::disk('frongdrv')->mimeType('Frongdrv/'.(@$request->path?$request->path.'/':'').$request->img);
         $base64WithMime = 'data:' . $mime . ';base64,' . $base64;
 
         return response()->json(["img"=>$base64WithMime],200); // Output Base64 image string
