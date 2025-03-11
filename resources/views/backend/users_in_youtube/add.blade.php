@@ -92,13 +92,13 @@
                                         </div>
 
 
-                                        <?php $country=DB::table('dataset_country')->orderByRaw("CONVERT(ct_nameTHA USING tis620) ASC")->cursor(); ?>
+                                        <?php $country=DB::table('tb_country')->orderByRaw("CONVERT(title USING tis620) ASC")->cursor(); ?>
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Country</label>
                                                 <select name="country" id="country" class="form-control add_select2"  >
                                                 @foreach($country as $key=>$countrys)
-                                                <option value="{{@$countrys->ct_nameTHA}}" @if(@$item->country==@$countrys->ct_nameTHA) selected  @endif >{{@$countrys->ct_nameTHA}}</option>
+                                                <option value="{{@$countrys->title}}" @if(@$item->country==@$countrys->title) selected  @endif >{{@$countrys->title}}</option>
                                                 @endforeach
                                                 </select>
                                             </div>

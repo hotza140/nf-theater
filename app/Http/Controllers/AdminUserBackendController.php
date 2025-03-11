@@ -194,6 +194,51 @@ class AdminUserBackendController extends Controller
      }
 
 
+      //country//
+      public function country(){
+        $item=country ::orderby('id','desc')->cursor();
+        return view('backend.country.index',[
+            'item'=>$item,
+            'page'=>"all",
+            'list'=>"country",
+        ]);
+    }
+    public function country_store(Request $r){
+        $item=new country();
+        $item->title=$r->title;
+        $item->save();
+        return redirect()->to('country')->with('message','Sucess!');
+
+    }
+    public function country_update(Request $r,$id){
+        $item=country::where('id',$id)->first();
+        $item->title=$r->title;
+        $item->save();
+        return redirect()->to('country_edit/'.$id)->with('message','Sucess!');
+    }
+    public function country_edit($id){
+        $item=country::where('id',$id)->first();
+        return view('backend.country.edit',[
+            'item'=>$item,
+            'page'=>"all",
+            'list'=>"country",
+        ]);
+    }
+    public function country_destroy($id){
+        $item=country::where('id',$id)->first();
+        $item->delete();
+        return redirect()->back()->with('message','Sucess!');
+    }
+    public function country_add(){
+        return view('backend.country.add',[
+            'page'=>"all",
+            'list'=>"country",
+        ]);
+    }
+    //country//
+
+
+
      //admin//
      public function admin(){
         $item=admin ::orderby('id','desc')->cursor();

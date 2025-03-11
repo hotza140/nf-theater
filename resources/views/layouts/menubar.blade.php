@@ -572,6 +572,15 @@
                                         @endif
 
 
+                                        <li class="{{ isset($list) && $list == 'country' ? 'active' : '' }}">
+                                            <a href="{{ url('country') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Country</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+
+
                                     </ul>
                                     <!--DJ page-->
                                 </li>
