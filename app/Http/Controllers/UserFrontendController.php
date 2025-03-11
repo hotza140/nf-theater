@@ -185,10 +185,17 @@ class UserFrontendController extends Controller
         
         // return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess!');
 
+
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $accounts=users_in_in::whereIn('id_user',@$users)->delete();
+        $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
+        
          ///ส่วนเพิ่มวัน auto
          $account = users_in_in::where('id_user', $userIs->id)->orderBy('id','desc')->first();
          $uu = users::where('id', $userIs->id)->first();
-        //  if(@$account!=null){
             $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$request->Subpackage_Name)->first();
             $new_date_end = date('Y-m-d', strtotime($account->date_end . ' + ' . $pack_id->Subpackage_Dayuse . ' days'));
 
@@ -211,95 +218,6 @@ class UserFrontendController extends Controller
             $uu->id_package=@$pack_id->id;
             $uu->type=$account->type;
             $uu->save();
-        //  }
-         
-        //  else{
-        //     $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$request->Subpackage_Name)->first();
-        //     $new_date_end = date('Y-m-d', strtotime(date('Y-m-d') . ' + ' . $pack_id->Subpackage_Dayuse . ' days'));
-        //     $dates=date('Y-m-d');
-
-        //     if($pack_id->type=='MOBILE'){
-        //         $user = (new users_in())->getEligibleUser();
-        //         if (@$user!=null) {
-        //             $aaa=new users_in_in();
-        //             $aaa->id_user=$uu->id;  
-        //             $aaa->id_user_in=$user->id;    
-        //             $aaa->type='MOBILE';
-        
-        //             $aaa->date_start=$dates; 
-        //             $aaa->date_end=$new_date_end; 
-        //             $aaa->save();
-        
-        //             $aaa_his=new users_in_in_history();
-        //             $aaa_his->id_user=$uu->id;  
-        //             $aaa_his->id_user_in=$user->id;    
-        //             $aaa_his->type='MOBILE';
-        
-        //             $aaa_his->date_start=$dates; 
-        //             $aaa_his->date_end=$new_date_end;
-        //             $aaa_his->save();
-        
-        //             $uu->date_start=$dates;
-        //             $uu->date_end=$new_date_end;
-        //             $uu->package=@$pack_id->Subpackage_Name;
-        //             $uu->id_package=@$pack_id->id;
-        //             $uu->type=@$pack_id->type;
-        //             $uu->save();
-        
-        //         }else{
-        //             $alert = new alert();
-        //             $alert->text='ไม่มี Account ที่ว่าง';
-        //             $alert->id_user=$userIs->id;
-        //             $alert->save();
-
-        //             $uu->status_account = 1;
-        //             $uu->save();
-        //         }
-        //         }else{
-        //             $user = (new users_in())->getEligibleUser_pc();
-        //         if ($user !== null) {
-        //             // นับจำนวน users_in_in ที่มีอยู่แล้ว
-        //             $countExisting = users_in_in::where('id_user_in', $user->id)->count();
-        
-        //             // คำนวณค่า type_mail (1 หรือ 2)
-        //             $newTypeMail = ($countExisting % 2) + 1;
-        
-        //             $aaa = new users_in_in();
-        //             $aaa->id_user = $uu->id;  
-        //             $aaa->id_user_in = $user->id;    
-        //             $aaa->type = 'PC';
-        //             $aaa->type_mail = $newTypeMail;
-        //             $aaa->date_start = $dates; 
-        //             $aaa->date_end = $new_date_end; 
-        //             $aaa->save();
-        
-        //             // บันทึกลงประวัติ
-        //             $aaa_his = new users_in_in_history();
-        //             $aaa_his->id_user = $uu->id;  
-        //             $aaa_his->id_user_in = $user->id;    
-        //             $aaa_his->type = 'PC';
-        //             $aaa_his->type_mail = $newTypeMail;
-        //             $aaa_his->date_start = $dates; 
-        //             $aaa_his->date_end = $new_date_end;
-        //             $aaa_his->save();
-
-        //             $uu->date_start=$dates;
-        //             $uu->date_end=$new_date_end;
-        //             $uu->package=@$pack_id->Subpackage_Name;
-        //             $uu->id_package=@$pack_id->id;
-        //             $uu->type=@$pack_id->type;
-        //             $uu->save();
-        //         } else {
-        //             $alert = new alert();
-        //             $alert->text='ไม่มี Account ที่ว่าง';
-        //             $alert->id_user=$userIs->id;
-        //             $alert->save();
-
-        //             $item->status_account = 1;
-        //             $item->save();
-        //         }
-        //         }
-        //  }
          ///ส่วนเพิ่มวัน auto
 
     }
