@@ -397,11 +397,7 @@ class YoutubeBackendController extends Controller
 
         $item=users ::whereNotNull('type_youtube')->orderByRaw(
             '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
-        )->whereIn('id', function($query) {
-            $query->selectRaw('MIN(id)')
-                  ->from('tb_users')
-                  ->groupBy('username');
-        })->paginate(20);
+        )->paginate(20);
 
         $search = $r->search;
         $status_account = $r->status_account;
