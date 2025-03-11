@@ -226,6 +226,7 @@
                                             <!-- <tbody class="sortable"> -->
                                             <tbody class="">
                                             @foreach($item as $key=>$items)
+                                            <?php  $t_users = App\Models\users::whereNotNull('type_netflix')->where('id','!=',$items->id)->where('username',$items->username)->orderBy('id','asc')->get();  ?>
                                             <tr class="num" id="{{$items->id}}">
                                                     <td>{{$key+1}}</td>
 
@@ -264,9 +265,27 @@
                                                         @endif
                                                         {{$items->username}}
                                                     </td>
-                                                    <td>{{$items->name}}</td>
+                                                    <td>{{$items->name}}
+                                                        @foreach($t_users as $t_userss)
+                                                        <br><a href="{{url('users_edit/'.$t_userss->id)}}" target="_blank">{{$t_userss->name}}</a>
+                                                        @endforeach
+                                                    </td>
                                                     <td>{{$items->line}}</td>
-                                                    <td>{{@$paga}}</td>
+
+                                                    <td>{{@$paga}}
+                                                    @foreach($t_users as $t_userss)
+                                                    <?php
+                                                    if($t_userss->type=='PC'){
+                                                        $paga_a='TV '.@$t_userss->package;
+                                                    }else{
+                                                        $paga_a='ยกเว้นทีวี '.@$t_userss->package;
+                                                    }
+
+                                                    ?>
+                                                    <br>{{@$paga_a}}
+                                                    @endforeach
+                                                    </td>
+
                                                     <?php
                                                     $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
@@ -299,7 +318,40 @@
 
                                                     
 
-                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
+                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})
+                                                    @foreach($t_users as $t_userss)
+                                                    <?php
+                                                    $date_start = $t_userss->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = $t_userss->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
+
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
+
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
+                                                    ?>
+                                                    <br>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})
+                                                    @endforeach
+                                                    </td>
                                                     <td>
                                                         @if($items->status_account == 0)
                                                             <span class="status-active">มีแอคเคาท์</span>
@@ -308,6 +360,17 @@
                                                         @else
                                                             <span class="status-expired">หมดอายุ</span>
                                                         @endif
+
+                                                        @foreach($t_users as $t_userss)
+                                                        <br>
+                                                        @if($t_userss->status_account == 0)
+                                                            <span class="status-active">มีแอคเคาท์</span>
+                                                        @elseif($t_userss->status_account == 1)
+                                                            <span class="status-inactive">ไม่มีแอคเคาท์</span>
+                                                        @else
+                                                            <span class="status-expired">หมดอายุ</span>
+                                                        @endif
+                                                        @endforeach
                                                     </td>
 
                                                     <td>

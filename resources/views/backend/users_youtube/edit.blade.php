@@ -497,7 +497,7 @@
 
 
                 <?php
-                 $user_r=App\Models\users::where('id','!=',@$item->id)->where('username',@$item->username)->where('password',@$item->password)->orderby('id','desc')->cursor();
+                 $user_r=App\Models\users::whereNotNull('type_youtube')->where('id','!=',@$item->id)->where('username',@$item->username)->where('password',@$item->password)->orderby('id','desc')->cursor();
                 ?>
                  <!-- Page body3 start -->
                  <div class="page-body">
