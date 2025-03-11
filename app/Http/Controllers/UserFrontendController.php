@@ -71,6 +71,13 @@ class UserFrontendController extends Controller
  ///frontend Login---------------
     public function login_frontend(Request $r)
     {
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $accounts=users_in_in::whereIn('id_user',@$users)->delete();
+        $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
+
         $users=users::where('username',$r->username)->first();
         if($users){
             if($r->password==$users->password){ // ||Hash::check($r->password, $users->password)
@@ -111,6 +118,13 @@ class UserFrontendController extends Controller
     }
 
     public function profileRdSh (Request $request) {
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $accounts=users_in_in::whereIn('id_user',@$users)->delete();
+        $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
+        
         $users = Auth::guard('users')->user();
         $RewardUserLog = RewardUserLog::where('username',$users->username)->get();
         $userProfile = users::select(
@@ -192,7 +206,7 @@ class UserFrontendController extends Controller
         $accounts=users_in_in::whereIn('id_user',@$users)->delete();
         $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
         // ลบเช็คเวลา
-        
+
          ///ส่วนเพิ่มวัน auto
          $account = users_in_in::where('id_user', $userIs->id)->orderBy('id','desc')->first();
          $uu = users::where('id', $userIs->id)->first();
