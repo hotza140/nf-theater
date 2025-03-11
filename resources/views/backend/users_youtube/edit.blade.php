@@ -172,7 +172,7 @@
                                                 var opt = document.createElement("option");
                                                 opt.value = option.Subpackage_Name; // Assuming Subpackage_Name is the value you want to use
                                                 opt.textContent = option.Subpackage_Name; // Update this if you want to display a different text
-                                                if (option.id === selectedPackage) {
+                                                if (option.id === parseInt(selectedPackage)) {
                                                     opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
                                                 }
                                                 packageSelect.appendChild(opt);
@@ -321,7 +321,7 @@
             opt.value = pkg.Subpackage_Name;
             opt.textContent = pkg.Subpackage_Name;
             opt.dataset.dayuse = pkg.Subpackage_Dayuse; // เก็บจำนวนวันไว้ใน dataset
-            if (pkg.id === selectedPackage) {
+            if (pkg.id === parseInt(selectedPackage)) {
                 opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
             }
             packageSelect.appendChild(opt);

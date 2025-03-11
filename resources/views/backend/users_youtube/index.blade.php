@@ -266,7 +266,7 @@
                                                     </td>
                                                     <td>{{$items->email}}</td>
                                                     <td>{{$items->line}}</td>
-                                                    <td>{{@$paga}}</td>
+                                                    <td>{{@$items->package}}</td>
                                                     <?php
                                                     $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
