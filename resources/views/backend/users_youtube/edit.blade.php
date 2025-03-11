@@ -159,7 +159,7 @@
                                         function updatePackage() {
                                             var type = document.getElementById("type").value;
                                             var packageSelect = document.getElementById("package");
-                                            var selectedPackage = "{{ @$item->package }}"; // นำค่าจากฐานข้อมูลมาใช้
+                                            var selectedPackage = "{{ @$item->id_package }}"; // นำค่าจากฐานข้อมูลมาใช้
 
                                             // ล้างค่าเดิม
                                             packageSelect.innerHTML = "";
@@ -172,7 +172,7 @@
                                                 var opt = document.createElement("option");
                                                 opt.value = option.Subpackage_Name; // Assuming Subpackage_Name is the value you want to use
                                                 opt.textContent = option.Subpackage_Name; // Update this if you want to display a different text
-                                                if (option.Subpackage_Name === selectedPackage) {
+                                                if (option.id === selectedPackage) {
                                                     opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
                                                 }
                                                 packageSelect.appendChild(opt);
@@ -310,7 +310,7 @@
     function updatePackage_a() {
         var type = document.getElementById("type_a").value;
         var packageSelect = document.getElementById("package_a");
-        var selectedPackage = "{{ @$item->package }}"; // นำค่าจากฐานข้อมูลมาใช้
+        var selectedPackage = "{{ @$item->id_package }}"; // นำค่าจากฐานข้อมูลมาใช้
 
         // ล้างค่าเดิม
         packageSelect.innerHTML = "";
@@ -319,9 +319,9 @@
         packages[type].forEach(pkg => {
             var opt = document.createElement("option");
             opt.value = pkg.Subpackage_Name;
-            opt.textContent = opt.value;
+            opt.textContent = pkg.Subpackage_Name;
             opt.dataset.dayuse = pkg.Subpackage_Dayuse; // เก็บจำนวนวันไว้ใน dataset
-            if (opt.value === selectedPackage) {
+            if (pkg.id === selectedPackage) {
                 opt.selected = true; // ตั้งค่าที่เลือกไว้ตามฐานข้อมูล
             }
             packageSelect.appendChild(opt);

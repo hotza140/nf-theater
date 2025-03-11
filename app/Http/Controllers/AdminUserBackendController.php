@@ -29,6 +29,7 @@ use App\Models\users_in_in;
 use App\Models\users_in_in_history;
 use App\Models\admin;
 use App\Models\country;
+use App\Models\alert;
 
 use App\Models\created_history;
 
