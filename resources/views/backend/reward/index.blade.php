@@ -76,34 +76,10 @@
 
                                     <a style="color:white;" class="btn btn-success" href="{{url('reward_add')}}"> <i class="fa fa-plus"></i> Add</a>
 
-                                    
-                                        <br>
-                                        <form class="form-horizontal" action="{{url('reward')}}" method="GET" enctype="multipart/form-data">
-                                        @csrf
-                                       
-                                        <div class="form-group row" style="display: flex; justify-content: flex-end;">
-                                        {{-- <div class="col-sm-2">
-                                        <select name="status_account" id="" class="form-control">
-                                            <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
-                                            <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
-                                            <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option>
-                                            </select>
-                                            </div> --}}
-                                            <div class="col-sm-2">
-                                                <input type="text" name="search" value="{{@$search}}">
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="submit" class="btn btn-warning" style="color:white;">
-                                                    <i class="fa fa-check-circle-o"></i> Search
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-
                                 </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
-                                        <table id="simpletable_call" class="table table-striped table-bordered nowrap">
+                                        <table id="simpletable" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
                                                
@@ -151,16 +127,6 @@
                                         </table>
                                     </div>
 
-                                    <!-- Pagination -->
-                                    <style>
-                                        .pagination-wrapper {
-                                            text-align: right; /* จัดให้อยู่ขวาสุด */
-                                        }
-                                    </style>
-                                    <div class="pagination-wrapper">
-                                        <div>{{ $item->appends(Request::all())->links() }}</div>
-                                    </div>
-                                    <!-- Pagination -->
 
                                 </div>
 

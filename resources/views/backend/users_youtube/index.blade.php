@@ -127,12 +127,12 @@
                                             </select>
                                             </div>
 
-                                            <div class="col-sm-2">
+                                            <!-- <div class="col-sm-2">
                                             <select name="status_user" id="" class="form-control">
                                             <option  value="1" @if(@$status_user==1) selected  @endif >สถานะตัวแทน (ทั้งหมด)</option>
                                             <option  value="2" @if(@$status_user==2) selected  @endif >เฉพาะตัวแทน</option>
                                             </select>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-sm-2">
                                                 <input type="text" name="search" value="{{@$search}}">

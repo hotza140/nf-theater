@@ -74,7 +74,7 @@ class RewardBackendController extends Controller
         }
     }
     
-    $item = $item->orderBy('id', 'desc')->paginate(10);
+    $item = $item->orderBy('id', 'desc')->cursor();
     return view('backend.reward.index',[
         'item'=>$item,
         'page'=>"admin",
