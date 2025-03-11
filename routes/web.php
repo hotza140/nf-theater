@@ -252,8 +252,9 @@ Route::group(['middleware' => ['admin']],function(){
     Route::post('gift_open_close',[App\Http\Controllers\GiftBackendController::class,'gift_open_close']);
     //gift
 
-    //gift
+    //orderpaypackage
     Route::get('orderpaypackage',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage']);
+    Route::get('paypacknotmatch',[App\Http\Controllers\OrderPayPackageController::class,'paypacknotmatch']);
     Route::get('orderpaypackage_destroy/{id}',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_destroy']);
     Route::get('orderpaypackage_add',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_add']);
     Route::post('orderpaypackage_store',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_store']);

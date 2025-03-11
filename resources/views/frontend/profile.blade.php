@@ -21,15 +21,20 @@
                 </div>
                 <div class="col d-flex align-items-center">
                     <div class="net-plan-details">
+                        @if(@$checknetFlix)
                         <div id="showUNetflix">
                             <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Netflix Package.</h2>
-                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>User ID</h2><span class="name-profile" style="color: var(--bs-emphasis-color);">{{$users->username}}</span> <!--NF00080-->
-                            <p class="pass-profile">Password : {{$users->password}}</p> <!--0123456-->
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>User ID</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;">{{$userProfile[0]['email'.(@$userProfile[0]->type_mail?'0'.$userProfile[0]->type_mail:'')]}}</span> <!--NF00080-->
+                            <p class="pass-profile">Password : {{$userProfile[0]['password'.(@$userProfile[0]->type_mail?'0'.$userProfile[0]->type_mail:'')]}}</p> <!--0123456-->
                         </div>
-                        <div id="showUYoutube" style="display: none;">
+                        @endif
+                        @if(@$checkyouTube)
+                        <div id="showUYoutube" style="display: {{@$checknetFlix&&@$checkyouTube?'none':'block'}};">
                             <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Youtube Package.</h2>
-                            <p class="mail-profile">Email: nftheater134+27@gmail.com {{--$users->email--}}</p> <!--nftheater134+27@gmail.com-->
+                            <p class="mail-profile">Email: {{$userProfile[0]['email'.(@$userProfile[0]->type_mail?'0'.$userProfile[0]->type_mail:'')]}} {{--$users->email--}}</p> <!--nftheater134+27@gmail.com-->
+                            <p class="pass-profile">Password : {{$userProfile[0]['password'.(@$userProfile[0]->type_mail?'0'.$userProfile[0]->type_mail:'')]}}</p> <!--0123456-->
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center justify-content-sm-center align-items-sm-center box-back" style="padding-left: 5px;">
@@ -44,15 +49,18 @@
                     </div>
                 </div>
             </div>
+            {{-- 'checknetFlix','checkyouTube' --}}
             <div class="row" style="margin-right:-20px;">
                 <div class="col d-flex justify-content-end">
-                    <button class="btn btn-danger btn-sm" 
-                        onclick="document.getElementById('showUNetflix').style='display:block';document.getElementById('showUYoutube').style='display:none';"
-                        style="height: 30px;padding:5px;width:80px;">Netflix</button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-danger btn-sm" 
-                        onclick="document.getElementById('showUNetflix').style='display:none';document.getElementById('showUYoutube').style='display:block';"
-                        style="height: 30px;padding:5px;width:80px;">Youtube</button>
+                    @if(@$checknetFlix&&@$checkyouTube)
+                        <button class="btn btn-danger btn-sm" 
+                            onclick="document.getElementById('showUNetflix').style='display:block';document.getElementById('showUYoutube').style='display:none';"
+                            style="height: 30px;padding:5px;width:80px;">Netflix</button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-danger btn-sm" 
+                            onclick="document.getElementById('showUNetflix').style='display:none';document.getElementById('showUYoutube').style='display:block';"
+                            style="height: 30px;padding:5px;width:80px;">Youtube</button>
+                    @endif
                 </div>
             </div>
         </div>

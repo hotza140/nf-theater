@@ -30,6 +30,7 @@ use App\Models\users_in_in_history;
 use App\Models\admin;
 use App\Models\Marking;
 use App\Models\OrderPayPackage;
+use App\Models\PayPackNotmatch;
 
 class OrderPayPackageController extends Controller
 {
@@ -56,35 +57,69 @@ class OrderPayPackageController extends Controller
 
     //orderpaypackage//
     public function orderpaypackage(Request $r){
-    $date=date('Y-m-d');
+        $date=date('Y-m-d');
 
-    $item=OrderPayPackage::select('*');
-    $search = $r->search;
-    $status_account = $r->status_account;
-    if (!empty($search) or !empty($status_account) ) {
-        $item = OrderPayPackage::where(function ($query) use ($search, $status_account) {
-            $query->where('username', 'LIKE', '%' . $search . '%');
-            $query->orwhere('package_Name', 'LIKE', '%' . $search . '%');
-            $query->orwhere('Subpackage_Name', 'LIKE', '%' . $search . '%');
-        });
+        $item=OrderPayPackage::select('*');
+        $search = $r->search;
+        $status_account = $r->status_account;
+        if (!empty($search) or !empty($status_account) ) {
+            $item = OrderPayPackage::where(function ($query) use ($search, $status_account) {
+                $query->where('username', 'LIKE', '%' . $search . '%');
+                $query->orwhere('package_Name', 'LIKE', '%' . $search . '%');
+                $query->orwhere('Subpackage_Name', 'LIKE', '%' . $search . '%');
+                $query->orwhere('RefPayment', 'LIKE', '%' . $search . '%');
+            });
 
-        if ($status_account == '0') {
-            $item = $item->where('date_end','>=',$date);
-        }elseif($status_account == '1'){
-            $item = $item->where('date_end','<',$date);
+            if ($status_account == '0') {
+                $item = $item->where('date_end','>=',$date);
+            }elseif($status_account == '1'){
+                $item = $item->where('date_end','<',$date);
+            }
         }
-    }
-    
-    $item = $item->orderBy('Subpackage_Name', 'asc')->paginate(10);
-    return view('backend.orderpaypackage.index',[
-        'item'=>$item,
-        'page'=>"admin",
-        'list'=>"orderpaypackage",
+        
+        $item = $item->orderBy('Subpackage_Name', 'asc')->paginate(10);
+        return view('backend.orderpaypackage.index',[
+            'item'=>$item,
+            'page'=>"admin",
+            'list'=>"orderpaypackage",
 
-        'search'=>$search,
-        'status_account'=>$status_account,
-    ]);
+            'search'=>$search,
+            'status_account'=>$status_account,
+        ]);
     }
+    //paypacknotmatch//
+    public function paypacknotmatch(Request $r){
+        $date=date('Y-m-d');
+    
+        $item=PayPackNotmatch::select('*');
+        $search = $r->search;
+        $status_account = $r->status_account;
+        if (!empty($search) or !empty($status_account) ) {
+            $item = PayPackNotmatch::where(function ($query) use ($search, $status_account) {
+                $query->where('username', 'LIKE', '%' . $search . '%');
+                $query->orwhere('package_Name', 'LIKE', '%' . $search . '%');
+                $query->orwhere('Subpackage_Name', 'LIKE', '%' . $search . '%');
+                $query->orwhere('RefPayment', 'LIKE', '%' . $search . '%');
+            });
+    
+            if ($status_account == '0') {
+                $item = $item->where('date_end','>=',$date);
+            }elseif($status_account == '1'){
+                $item = $item->where('date_end','<',$date);
+            }
+        }
+        
+        $item = $item->orderBy('Subpackage_Name', 'asc')->paginate(10);
+        return view('backend.orderpaypackage.indexNotMatch',[
+            'item'=>$item,
+            'page'=>"admin",
+            'list'=>"orderpaypackage",
+    
+            'search'=>$search,
+            'status_account'=>$status_account,
+        ]);
+    }
+
     public function orderpaypackage_store(Request $r){
         $item=new OrderPayPackage();
 

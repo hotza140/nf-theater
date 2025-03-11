@@ -62,7 +62,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h5 class="m-b-10">Order Payment Packages BACKEND</h5>
+                        <h3 class="m-b-10" style="color: red"><b></b>Payment Packages Not Match BACKEND</h3>
 
                     </div>
                 </div>
@@ -77,8 +77,8 @@
                             <div class="card">
                                 <div class="card-header">
 
-                                    <a style="color:white;" class="btn btn-danger"
-                                        href="{{url('paypacknotmatch')}}"> List Payment Not Match.</a>
+                                    <a style="color:white;" class="btn btn-primary"
+                                        href="{{url('orderpaypackage')}}"> Order Payment Packages</a>
 
 
                                     <br>
@@ -122,7 +122,8 @@
                                                     <th>E-mail</th>
                                                     <th>package_Name</th>
                                                     <th>Subpackage_Name</th>
-                                                    <th>Payment</th>
+                                                    <th>Subpackage Price</th>
+                                                    <th>Cus Paymoney</th>
                                                     <th>Ref. Payment</th>
                                                     <th>Show Slip</th>
                                                     {{-- <th>Reware Gift</th> --}}
@@ -156,10 +157,11 @@
                                                     <td>{{$items->package_Name}}</td>
                                                     <td>{{$items->Subpackage_Name}}</td>
                                                     <td style="text-align: right; margin-right:5px;">{{$items->Subpackage_Paymoney}}</td>
+                                                    <td style="text-align: right; margin-right:5px;">{{$items->Cus_Paymoney}}</td>
                                                     <td>{{$items->RefPayment}}</td>
                                                     <td style="text-align: center">
                                                         <button class="btn btn-primary btn-sm"
-                                                            onclick="ShowSlipImg({{$items->id}},'{{$items->imgSlip}}','');">Slip</button>
+                                                            onclick="ShowSlipImg({{$items->id}},'{{$items->imgSlip}}','Err');">Slip</button>
                                                     </td>
                                                     {{-- <td>
                                                         <a href="{{url('orderpaypackage_edit/'.$items->id)}}"
