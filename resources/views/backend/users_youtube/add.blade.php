@@ -100,7 +100,7 @@
 
                                         <div class="form-group row">
 
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3" style="display:none;">
                                         <label class="col-form-label">Package*</label>
                                         <select name="type" id="type" class="form-control" required onchange="updatePackage()" >
                                         <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >จำนวนลูกค้า</option>
@@ -144,6 +144,10 @@
                                             <label class="col-form-label">Enter Days*</label>
                                             <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
                                         </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id="date_start"

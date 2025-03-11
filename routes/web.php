@@ -98,7 +98,20 @@ Route::group(['middleware' => ['admin']],function(){
  //admin
 
 
+  //country
+  Route::get('country',[App\Http\Controllers\AdminUserBackendController::class,'country']);
+  Route::get('country_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'country_destroy']);
+  Route::get('country_add',[App\Http\Controllers\AdminUserBackendController::class,'country_add']);
+  Route::post('country_store',[App\Http\Controllers\AdminUserBackendController::class,'country_store']);
+  Route::get('country_edit/{id}',[App\Http\Controllers\AdminUserBackendController::class,'country_edit']);
+  Route::post('country_update/{id}',[App\Http\Controllers\AdminUserBackendController::class,'country_update']);
+  //country
+ 
+
+
 //  NETFLIX///
+Route::get('users_status_edit/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_status_edit']);
+
  Route::get('his_created',[App\Http\Controllers\AdminUserBackendController::class,'his_created']);
 
  Route::get('users_all',[App\Http\Controllers\AdminUserBackendController::class,'users_all']);
@@ -146,7 +159,10 @@ Route::group(['middleware' => ['admin']],function(){
 
 
 
+
 //  YOUTUBE///
+Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendController::class,'y_users_status_edit']);
+
     Route::get('y_his_created',[App\Http\Controllers\YoutubeBackendController::class,'his_created']);
 
     Route::get('y_users_all',[App\Http\Controllers\YoutubeBackendController::class,'users_all']);

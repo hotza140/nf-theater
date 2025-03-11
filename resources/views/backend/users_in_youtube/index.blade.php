@@ -158,8 +158,21 @@
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>{{$items->name}}</td>
-                                                    <td>{{$items->email}}</td>
-                                                    <td>{{$items->password}}</td>
+                                                    <td>{{$items->email}}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo_email('{{$items->email}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </td>
+
+                                                    <td>
+                                                    @if(Auth::guard('admin')->user()->type == 0)    
+                                                    {{$items->password}}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo_pass('{{$items->password}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                        @endif
+                                                    </td>
+
                                                     <?php
                                                     $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
@@ -189,7 +202,7 @@
                                                         $formatted_date2 = null;
                                                     }
                                                     ?>
-                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
+                                                    <td>{{@$formatted_date1}} {{ $items->time ? \Carbon\Carbon::parse($items->time)->format('H:i') : '' }}</td>
                                                     <!-- <td>{{$items->country}}</td> -->
                                                     <td>
                                                     <a href="{{url('y_users_in_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
@@ -226,6 +239,74 @@
 
                                     function copyUserInfo(email, password) {
                                         let textToCopy = `${email}\n${password}`;
+
+                                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                            }).catch(err => {
+                                                console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                fallbackCopyTextToClipboard(textToCopy);
+                                            });
+                                        } else {
+                                            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+                                            fallbackCopyTextToClipboard(textToCopy);
+                                        }
+                                    }
+                                    </script>
+
+                                    <script>
+                                    function fallbackCopyTextToClipboard_email(text) {
+                                        const textArea = document.createElement("textarea");
+                                        textArea.value = text;
+                                        document.body.appendChild(textArea);
+                                        textArea.focus();
+                                        textArea.select();
+                                        try {
+                                            document.execCommand("copy");
+                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                        } catch (err) {
+                                            console.error("คัดลอกไม่สำเร็จ: ", err);
+                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                                        }
+                                        document.body.removeChild(textArea);
+                                    }
+
+                                    function copyUserInfo_email(email) {
+                                        let textToCopy = `${email}`;
+
+                                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                            }).catch(err => {
+                                                console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                fallbackCopyTextToClipboard(textToCopy);
+                                            });
+                                        } else {
+                                            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+                                            fallbackCopyTextToClipboard(textToCopy);
+                                        }
+                                    }
+                                    </script>
+
+                                    <script>
+                                    function fallbackCopyTextToClipboard_pass(text) {
+                                        const textArea = document.createElement("textarea");
+                                        textArea.value = text;
+                                        document.body.appendChild(textArea);
+                                        textArea.focus();
+                                        textArea.select();
+                                        try {
+                                            document.execCommand("copy");
+                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                        } catch (err) {
+                                            console.error("คัดลอกไม่สำเร็จ: ", err);
+                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                                        }
+                                        document.body.removeChild(textArea);
+                                    }
+
+                                    function copyUserInfo_pass(password) {
+                                        let textToCopy = `${password}`;
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
                                             navigator.clipboard.writeText(textToCopy).then(() => {

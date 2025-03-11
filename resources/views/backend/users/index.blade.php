@@ -216,6 +216,7 @@
                                                     <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>สถานะ Account</th>
                                                     <th>Tool</th>
+                                                    <th>Add Profile</th>
                                                     <th>Account</th>
                                                    
                                                     
@@ -315,6 +316,14 @@
                                                         <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$paga}}', '{{$items->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
+                                                    </td>
+
+                                                    <td>
+                                                    <form method="GET" action="{{url('users_add')}}" id="form{{$items->id}}" name="form{{$items->id}}" target="_blank">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{@$items->id}}">
+                                                        <button type="submit" class="btn btn-sm btn-success" style="color:white;" target="_blank"><i class="fa fa-gear"></i>NETFLIX</button>
+                                                    </form>
                                                     </td>
 
                                                     <?php

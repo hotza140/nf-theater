@@ -28,6 +28,7 @@ use App\Models\users_in;
 use App\Models\users_in_in;
 use App\Models\users_in_in_history;
 use App\Models\admin;
+use App\Models\country;
 
 use App\Models\created_history;
 
@@ -307,6 +308,14 @@ class YoutubeBackendController extends Controller
     //admin//
 
 
+    public function y_users_status_edit($id){
+        $item=users::where('id',$id)->first();
+        $item->status_edit=null;
+        $item->save();
+
+        return redirect()->to('users');
+     }
+
 
 
      // OPEN/CLOSE-------users
@@ -579,7 +588,7 @@ class YoutubeBackendController extends Controller
         $his->id_user_in=@$acc_id;
         $his->id_user_in_in=@$aaa->id;
         $his->number=$randomNumber;
-        $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile: '.$item->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Package: '.@$e_type.' '.$item->package.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;Password: '.@$pa;
+        $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile: '.$item->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmailUser: '.$item->email.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;Password: '.@$pa;
 
         $his->save();
 
@@ -906,7 +915,7 @@ class YoutubeBackendController extends Controller
                 $his->id_user_in=@$acc_id;
                 $his->id_user_in_in=@$aaa->id;
                 $his->number=$randomNumber;
-                $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile: '.$item->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Package: '.@$e_type.' '.$item->package.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;Password: '.@$pa;
+                $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile: '.$item->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmailUser: '.$item->email.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;Password: '.@$pa;
 
                 $his->save();
 
@@ -1112,20 +1121,21 @@ class YoutubeBackendController extends Controller
               return redirect()->back()->with('message','Email Already Have in Data!');
               }
 
-            //   if($nh!=null){
-            //     return redirect()->back()->with('message','Name Profile Already Have in Data!');
-            //     }   
+              if($nh!=null){
+                return redirect()->back()->with('message','Name Profile Already Have in Data!');
+                }   
   
           $item->password=$r->password;
   
           $item->name=$r->name;
           $item->email=$r->email;
           $item->date_start=$r->date_start;
-          $item->date_end=$r->date_end;
+          $item->time=$r->time;
           $item->country=$r->country;
 
           $item->email01=$r->email01;
           $item->email02=$r->email02;
+          $item->code=$r->code;
 
           $item->password01=$r->password01;
           $item->password02=$r->password02;
@@ -1145,20 +1155,21 @@ class YoutubeBackendController extends Controller
             return redirect()->back()->with('message','Email Already Have in Data!');
             }
 
-            //   if($nh!=null){
-            //     return redirect()->back()->with('message','Name Profile Already Have in Data!');
-            //     } 
+              if($nh!=null){
+                return redirect()->back()->with('message','Name Profile Already Have in Data!');
+                } 
   
            $item->password=$r->password;
   
           $item->name=$r->name;
           $item->email=$r->email;
           $item->date_start=$r->date_start;
-          $item->date_end=$r->date_end;
+          $item->time=$r->time;
           $item->country=$r->country;
 
           $item->email01=$r->email01;
           $item->email02=$r->email02;
+          $item->code=$r->code;
 
           $item->password01=$r->password01;
           $item->password02=$r->password02;

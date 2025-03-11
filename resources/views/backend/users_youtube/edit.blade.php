@@ -129,7 +129,7 @@
 
                                         <div class="form-group row">
 
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3" style="display:none;">
                                         <label class="col-form-label">Package Type*</label>
                                         <select name="type" id="type" class="form-control" required onchange="updatePackage()" >
                                         <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >จำนวนลูกค้า</option>
@@ -220,7 +220,7 @@
 
                                 <div class="card">
                                 <div class="card-header">
-                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ต่ออายุ Account</h1>
+                                <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ต่ออายุ หรือปรับวันที่ Account</h1>
                                 <br><br>
                                 <form method="post" id=""
                                         action="{{ url('y_users_update_date') }}"
@@ -231,11 +231,10 @@
 
                                         <div class="form-group row">
 
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3" style="display:none;">
                                         <label class="col-form-label">Package Type*</label>
                                         <select name="type" id="type_a" class="form-control" required onchange="updatePackage_a()" >
                                         <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >จำนวนลูกค้า</option>
-                                        <!-- <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option> -->
                                         </select>
                                         </div>
 
@@ -267,12 +266,12 @@
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id="date_start"
-                                                      value="" readonly required >
+                                                      value=""  required >
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date End</label>
                                                 <input type="date" name="date_end" class="form-control" id="date_end"
-                                                      value="" readonly required >
+                                                      value=""  required >
                                             </div>
                                         </div>
                                         <p class="">
@@ -474,7 +473,11 @@
                                                         
                                                         ?>
                                                         <td>{{@$mail_r}}</td>
-                                                        <td>{{@$pass_r}}</td>
+                                                        <td>
+                                                        @if(Auth::guard('admin')->user()->type == 0)   
+                                                        {{@$pass_r}}
+                                                        @endif
+                                                        </td>
                                                         @endif
                                                     <td>{{@$accountss->created_at}}</td>
                                                 </tr>
@@ -694,7 +697,7 @@
     </div>
 
 
-    <script>
+    <!-- <script>
     window.addEventListener('beforeunload', function (e) {
         // Send an AJAX request to Laravel route when the user is leaving the page
         fetch('{{ route('updateStatusOnExit') }}', {
@@ -709,6 +712,34 @@
         }).catch((error) => {
             console.log("Error:", error);
         });
+    });
+</script> -->
+
+<script>
+    window.addEventListener('load', function () {
+        // หน่วงเวลา 3 วินาที (3000 มิลลิวินาที) ก่อนแสดงหน้า
+        setTimeout(function () {
+            // ทำการรีโหลดหน้าหรือให้มีการแสดงผลตามปกติ
+            // โค้ดที่ต้องการให้ทำหลังจากหน่วงเวลา
+        }, 3000);
+    });
+
+    window.addEventListener('beforeunload', function (e) {
+        // ตรวจสอบว่าไม่ใช่การรีเฟรชหน้า
+        if (performance.getEntriesByType("navigation")[0]?.type !== "reload") {
+            fetch('{{ route('updateStatusOnExit') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({
+                    userId: '{{ $item->id }}'
+                })
+            }).catch((error) => {
+                console.log("Error:", error);
+            });
+        }
     });
 </script>
 

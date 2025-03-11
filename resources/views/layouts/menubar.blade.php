@@ -529,6 +529,8 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+
+                                        @if(Auth::guard('admin')->user()->type == 1 or Auth::guard('admin')->user()->type == 0)
                                         <li class="{{ isset($list) && $list == 'users' ? 'active' : '' }}">
                                             <a href="{{ url('users') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -543,6 +545,7 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+                                        @endif
 
                                         <li class="">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -550,6 +553,7 @@
                                                 <span class="pcoded-mcaret"></span>
                                         </li>
 
+                                        @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0)
                                         <li class="{{ isset($list) && $list == 'users_youtube' ? 'active' : '' }}">
                                             <a href="{{ url('y_users') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -562,6 +566,16 @@
                                             <a href="{{ url('y_users_in') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext">Manage Account Youtube</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        @endif
+
+
+                                        <li class="{{ isset($list) && $list == 'country' ? 'active' : '' }}">
+                                            <a href="{{ url('country') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Country</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>

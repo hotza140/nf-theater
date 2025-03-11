@@ -92,7 +92,7 @@
                                             </div>
 
 
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-3" style="display:none;">
                                                 <label class="col-form-label">Package*</label>
                                                 <select name="users[{{ $i }}][type]" class="form-control" required onchange="updatePackage(this)">
                                                     <option value="MOBILE">จำนวนลูกค้า</option>

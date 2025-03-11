@@ -28,6 +28,7 @@ use App\Models\users_in;
 use App\Models\users_in_in;
 use App\Models\users_in_in_history;
 use App\Models\admin;
+use App\Models\country;
 
 use App\Models\created_history;
 
@@ -193,6 +194,51 @@ class AdminUserBackendController extends Controller
      }
 
 
+      //country//
+      public function country(){
+        $item=country ::orderby('id','desc')->cursor();
+        return view('backend.country.index',[
+            'item'=>$item,
+            'page'=>"all",
+            'list'=>"country",
+        ]);
+    }
+    public function country_store(Request $r){
+        $item=new country();
+        $item->title=$r->title;
+        $item->save();
+        return redirect()->to('country')->with('message','Sucess!');
+
+    }
+    public function country_update(Request $r,$id){
+        $item=country::where('id',$id)->first();
+        $item->title=$r->title;
+        $item->save();
+        return redirect()->to('country_edit/'.$id)->with('message','Sucess!');
+    }
+    public function country_edit($id){
+        $item=country::where('id',$id)->first();
+        return view('backend.country.edit',[
+            'item'=>$item,
+            'page'=>"all",
+            'list'=>"country",
+        ]);
+    }
+    public function country_destroy($id){
+        $item=country::where('id',$id)->first();
+        $item->delete();
+        return redirect()->back()->with('message','Sucess!');
+    }
+    public function country_add(){
+        return view('backend.country.add',[
+            'page'=>"all",
+            'list'=>"country",
+        ]);
+    }
+    //country//
+
+
+
      //admin//
      public function admin(){
         $item=admin ::orderby('id','desc')->cursor();
@@ -305,6 +351,16 @@ class AdminUserBackendController extends Controller
         ]);
     }
     //admin//
+
+
+
+    public function users_status_edit($id){
+        $item=users::where('id',$id)->first();
+        $item->status_edit=null;
+        $item->save();
+
+        return redirect()->to('users');
+     }
 
 
 
@@ -1122,6 +1178,40 @@ class AdminUserBackendController extends Controller
                 }
               }
 
+
+              $ch1=users_in::where('email',$r->email01)->orderby('id','desc')->first();
+
+              if($ch1!=null){
+                return redirect()->back()->with('message','Email Already Have in Data!');
+                }else{
+                  $ch1=users_in::where('email01',$r->email01)->orderby('id','desc')->first();
+                  if($ch1!=null){
+                  return redirect()->back()->with('message','Email Already Have in Data!');
+                  }else{
+                      $ch1=users_in::where('email02',$r->email01)->orderby('id','desc')->first();
+                      if($ch1!=null){
+                      return redirect()->back()->with('message','Email Already Have in Data!');
+                      } 
+                  }
+                }
+
+                $ch2=users_in::where('email',$r->email02)->orderby('id','desc')->first();
+
+                if($ch2!=null){
+                  return redirect()->back()->with('message','Email Already Have in Data!');
+                  }else{
+                    $ch2=users_in::where('email01',$r->email02)->orderby('id','desc')->first();
+                    if($ch2!=null){
+                    return redirect()->back()->with('message','Email Already Have in Data!');
+                    }else{
+                        $ch2=users_in::where('email02',$r->email02)->orderby('id','desc')->first();
+                        if($ch2!=null){
+                        return redirect()->back()->with('message','Email Already Have in Data!');
+                        } 
+                    }
+                  }
+
+
               if($nh!=null){
                 return redirect()->back()->with('message','Name Profile Already Have in Data!');
                 }   
@@ -1136,6 +1226,7 @@ class AdminUserBackendController extends Controller
 
           $item->email01=$r->email01;
           $item->email02=$r->email02;
+          $item->code=$r->code;
 
           $item->password01=$r->password01;
           $item->password02=$r->password02;
@@ -1163,6 +1254,38 @@ class AdminUserBackendController extends Controller
               }
             }
 
+            $ch1=users_in::where('id','!=',$id)->where('email',$r->email01)->orderby('id','desc')->first();
+
+            if($ch1!=null){
+              return redirect()->back()->with('message','Email Already Have in Data!');
+              }else{
+                $ch1=users_in::where('id','!=',$id)->where('email01',$r->email01)->orderby('id','desc')->first();
+                if($ch1!=null){
+                return redirect()->back()->with('message','Email Already Have in Data!');
+                }else{
+                    $ch1=users_in::where('id','!=',$id)->where('email02',$r->email01)->orderby('id','desc')->first();
+                    if($ch1!=null){
+                    return redirect()->back()->with('message','Email Already Have in Data!');
+                    } 
+                }
+              }
+
+              $ch2=users_in::where('id','!=',$id)->where('email',$r->email02)->orderby('id','desc')->first();
+
+              if($ch2!=null){
+                return redirect()->back()->with('message','Email Already Have in Data!');
+                }else{
+                  $ch2=users_in::where('id','!=',$id)->where('email01',$r->email02)->orderby('id','desc')->first();
+                  if($ch2!=null){
+                  return redirect()->back()->with('message','Email Already Have in Data!');
+                  }else{
+                      $ch2=users_in::where('id','!=',$id)->where('email02',$r->email02)->orderby('id','desc')->first();
+                      if($ch2!=null){
+                      return redirect()->back()->with('message','Email Already Have in Data!');
+                      } 
+                  }
+                }
+
               if($nh!=null){
                 return redirect()->back()->with('message','Name Profile Already Have in Data!');
                 } 
@@ -1177,6 +1300,7 @@ class AdminUserBackendController extends Controller
 
           $item->email01=$r->email01;
           $item->email02=$r->email02;
+          $item->code=$r->code;
 
           $item->password01=$r->password01;
           $item->password02=$r->password02;
@@ -1352,6 +1476,11 @@ class AdminUserBackendController extends Controller
 
     // สร้างข้อมูลใน users_in_in แบบอัตโนมัติ
     foreach ($users as $user) {
+
+        $check_tan=users_in_in::where('id_user_in',@$r->id_user_in)->where('tan',1)->count();
+
+        if(@$check_tan<2){
+            
         $aaa=users::where('id',$user->id)->first();
         $item=new users_in_in();
         $item->id_user=$user->id;  
@@ -1375,6 +1504,7 @@ class AdminUserBackendController extends Controller
         $item_his->date_start=@$aaa->date_start; 
         $item_his->date_end=@$aaa->date_end;
         $item_his->save();
+        }
         }
     }
 
@@ -1407,6 +1537,10 @@ class AdminUserBackendController extends Controller
  
      // สร้างข้อมูลใน users_in_in แบบอัตโนมัติ
      foreach ($users as $user) {
+         $check_tan=users_in_in::where('id_user_in',@$r->id_user_in)->where('tan',1)->count();
+
+         if(@$check_tan<2){
+
          $aaa=users::where('id',$user->id)->first();
          $item=new users_in_in();
          $item->id_user=$user->id;  
@@ -1433,6 +1567,8 @@ class AdminUserBackendController extends Controller
          $item_his->date_end=@$aaa->date_end;
          $item_his->save();
          }
+
+        }
      }
  
      return redirect()->back()->with('message','Sucess!');
