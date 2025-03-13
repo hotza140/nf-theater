@@ -511,8 +511,17 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
 
-                                  
                                     <ul class="pcoded-submenu">
+                                        
+                                    <li class="{{ isset($list) && $list == 'dashbord' ? 'active' : '' }}">
+                                            <a href="{{ url('dashbord') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Dashbord</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+
+
                                     @if(Auth::guard('admin')->user()->type == 0)
                                         <li class="{{ isset($list) && $list == 'admin' ? 'active' : '' }}">
                                             <a href="{{ url('admin') }}">

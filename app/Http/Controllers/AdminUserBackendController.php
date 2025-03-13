@@ -36,6 +36,31 @@ use App\Models\created_history;
 class AdminUserBackendController extends Controller
 {
 
+    public function dashbord(Request $r){
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $ddd = users_in_in::pluck('id')->ToArray();
+        // $item = users_in_in_history::whereDate('date_end', '<', $date)->whereNull('status_check')->orderBy('id_user_in','asc')->get();
+        $item = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->get();
+        $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
+
+       return view('backend.users_all.dashbord',[
+           'item'=>$item,
+           'nub'=>$nub,
+           'page'=>"all",
+           'list'=>"dashbord",
+       ]);
+   }
+
+   
+   public function day_his($id){
+    $ddd = users_in_in::pluck('id')->ToArray();
+    $users_update = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->where('id_user_in',$id)->update(['status_check' => 1]);
+    return redirect()->back()->with('message','Sucess!');
+    }
+
+   
+
     public function change_user($id){
         $item=users_in_in::where('id_user_in',$id)->get();
         foreach($item as $items){
@@ -59,6 +84,7 @@ class AdminUserBackendController extends Controller
                     $aaa_his->id_user = @$userData->id;
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'MOBILE';
+                    $aaa_his->id_user_in_in = $aaa->id;
 
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
@@ -92,6 +118,7 @@ class AdminUserBackendController extends Controller
                     $aaa_his->id_user = @$userData->id;
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'PC';
+                    $aaa_his->id_user_in_in = $aaa->id;
                     $aaa_his->type_mail = $newTypeMail;
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
@@ -560,6 +587,7 @@ class AdminUserBackendController extends Controller
             $aaa_his->id_user=$item->id;  
             $aaa_his->id_user_in=$user->id;    
             $aaa_his->type='MOBILE';
+            $aaa_his->id_user_in_in = $aaa->id;
 
             $aaa_his->date_start=$user->date_start; 
             $aaa_his->date_end=$user->date_end;
@@ -599,6 +627,7 @@ class AdminUserBackendController extends Controller
             $aaa_his->id_user = $item->id;  
             $aaa_his->id_user_in = $user->id;    
             $aaa_his->type = 'PC';
+            $aaa_his->id_user_in_in = $aaa->id;
             $aaa_his->type_mail = $newTypeMail;
             $aaa_his->date_start = $user->date_start; 
             $aaa_his->date_end = $user->date_end;
@@ -733,6 +762,7 @@ class AdminUserBackendController extends Controller
                 $aaa_his->id_user=$item->id;  
                 $aaa_his->id_user_in=$user->id;    
                 $aaa_his->type='MOBILE';
+                $aaa_his->id_user_in_in = $aaa->id;
 
                 $aaa_his->date_start=$user->date_start; 
                 $aaa_his->date_end=$user->date_end;
@@ -775,6 +805,7 @@ class AdminUserBackendController extends Controller
                 $aaa_his->id_user=$item->id;  
                 $aaa_his->id_user_in=$user->id;    
                 $aaa_his->type='PC';
+                $aaa_his->id_user_in_in = $aaa->id;
                 $aaa_his->type_mail = $newTypeMail;
                 $aaa_his->date_start=$user->date_start; 
                 $aaa_his->date_end=$user->date_end;
@@ -905,6 +936,7 @@ class AdminUserBackendController extends Controller
                     $aaa_his->id_user = $item->id;
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'MOBILE';
+                    $aaa_his->id_user_in_in = $aaa->id;
 
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
@@ -943,6 +975,7 @@ class AdminUserBackendController extends Controller
                     $aaa_his->id_user = $item->id;
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'PC';
+                    $aaa_his->id_user_in_in = $aaa->id;
                     $aaa_his->type_mail = $newTypeMail;
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
@@ -1074,6 +1107,7 @@ class AdminUserBackendController extends Controller
         $aaa_his->id_user=$item->id;  
         $aaa_his->id_user_in=$r->id_user_in;    
         $aaa_his->type=$item->type;
+        $aaa_his->id_user_in_in = $aaa->id;
 
         $aaa_his->date_start=$r->date_start; 
         $aaa_his->date_end=$r->date_end;
@@ -1101,6 +1135,7 @@ class AdminUserBackendController extends Controller
             $aaa_his->id_user_in=$r->id_user_in;    
             $aaa_his->type='PC';
             $aaa_his->type_mail=$r->type_mail;
+            $aaa_his->id_user_in_in = $aaa->id;
 
             $aaa_his->date_start=$r->date_start; 
             $aaa_his->date_end=$r->date_end;
@@ -1469,7 +1504,8 @@ class AdminUserBackendController extends Controller
 
         $item_his=new users_in_in_history();
         $item_his->id_user=$r->id_user;  
-        $item_his->id_user_in=$r->id_user_in;    
+        $item_his->id_user_in=$r->id_user_in; 
+        $item_his->id_user_in_in = $item->id;   
         if($r->type_mail!=null){
             $item_his->type='PC';
             $item_his->type_mail=$r->type_mail;
@@ -1567,10 +1603,14 @@ class AdminUserBackendController extends Controller
         $item_his->id_user=$user->id;  
         $item_his->id_user_in=$r->id_user_in;    
         $item_his->type=@$aaa->type;
+        $item_his->id_user_in_in = $item->id;
 
         $item_his->date_start=@$aaa->date_start; 
         $item_his->date_end=@$aaa->date_end;
         $item_his->save();
+
+        $aaa->status_account=1;
+        $aaa->save();
         }
         }
     }
@@ -1629,10 +1669,14 @@ class AdminUserBackendController extends Controller
          $item_his->id_user_in=$r->id_user_in;    
          $item_his->type=@$aaa->type;
          $item_his->tan=1;
+         $item_his->id_user_in_in = $item->id;
  
          $item_his->date_start=@$aaa->date_start; 
          $item_his->date_end=@$aaa->date_end;
          $item_his->save();
+
+         $aaa->status_account=1;
+         $aaa->save();
          }
 
         }

@@ -58,6 +58,7 @@ class YoutubeBackendController extends Controller
                     $aaa_his->id_user = @$userData->id;
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'MOBILE';
+                    $aaa_his->id_user_in_in = $aaa->id;
 
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
@@ -91,6 +92,7 @@ class YoutubeBackendController extends Controller
                     $aaa_his->id_user = @$userData->id;
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'PC';
+                    $aaa_his->id_user_in_in = $aaa->id;
                     $aaa_his->type_mail = $newTypeMail;
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
@@ -499,6 +501,7 @@ class YoutubeBackendController extends Controller
             $aaa_his->id_user=$item->id;  
             $aaa_his->id_user_in=$user->id;    
             $aaa_his->type='MOBILE';
+            $aaa_his->id_user_in_in = $aaa->id;
 
             $aaa_his->date_start=$user->date_start; 
             $aaa_his->date_end=$user->date_end;
@@ -538,6 +541,7 @@ class YoutubeBackendController extends Controller
             $aaa_his->id_user = $item->id;  
             $aaa_his->id_user_in = $user->id;    
             $aaa_his->type = 'PC';
+            $aaa_his->id_user_in_in = $aaa->id;
             $aaa_his->type_mail = $newTypeMail;
             $aaa_his->date_start = $user->date_start; 
             $aaa_his->date_end = $user->date_end;
@@ -668,6 +672,7 @@ class YoutubeBackendController extends Controller
                 $aaa_his->id_user=$item->id;  
                 $aaa_his->id_user_in=$user->id;    
                 $aaa_his->type='MOBILE';
+                $aaa_his->id_user_in_in = $aaa->id;
 
                 $aaa_his->date_start=$user->date_start; 
                 $aaa_his->date_end=$user->date_end;
@@ -710,6 +715,7 @@ class YoutubeBackendController extends Controller
                 $aaa_his->id_user=$item->id;  
                 $aaa_his->id_user_in=$user->id;    
                 $aaa_his->type='PC';
+                $aaa_his->id_user_in_in = $aaa->id;
                 $aaa_his->type_mail = $newTypeMail;
                 $aaa_his->date_start=$user->date_start; 
                 $aaa_his->date_end=$user->date_end;
@@ -840,7 +846,7 @@ class YoutubeBackendController extends Controller
                     $aaa_his->id_user = $item->id;
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'MOBILE';
-
+                    $aaa_his->id_user_in_in = $aaa->id;
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
                     $aaa_his->save();
@@ -878,6 +884,7 @@ class YoutubeBackendController extends Controller
                     $aaa_his->id_user = $item->id;
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'PC';
+                    $aaa_his->id_user_in_in = $aaa->id;
                     $aaa_his->type_mail = $newTypeMail;
                     $aaa_his->date_start=$user->date_start; 
                     $aaa_his->date_end=$user->date_end;
@@ -1009,6 +1016,7 @@ class YoutubeBackendController extends Controller
         $aaa_his->id_user=$item->id;  
         $aaa_his->id_user_in=$r->id_user_in;    
         $aaa_his->type=$item->type;
+        $aaa_his->id_user_in_in = $aaa->id;
 
         $aaa_his->date_start=$r->date_start; 
         $aaa_his->date_end=$r->date_end;
@@ -1035,6 +1043,7 @@ class YoutubeBackendController extends Controller
             $aaa_his->id_user=$item->id;  
             $aaa_his->id_user_in=$r->id_user_in;    
             $aaa_his->type='PC';
+            $aaa_his->id_user_in_in = $aaa->id;
             $aaa_his->type_mail=$r->type_mail;
 
             $aaa_his->date_start=$r->date_start; 
@@ -1296,6 +1305,7 @@ class YoutubeBackendController extends Controller
             }else{
             $item_his->type=@$user->type;
             }
+            $item_his->id_user_in_in = $item->id;
 
             $item_his->date_start=@$user->date_start; 
             $item_his->date_end=@$user->date_end;
@@ -1382,10 +1392,13 @@ class YoutubeBackendController extends Controller
         $item_his->id_user=$user->id;  
         $item_his->id_user_in=$r->id_user_in;    
         $item_his->type=@$aaa->type;
-
+        $item_his->id_user_in_in = $item->id;
         $item_his->date_start=@$aaa->date_start; 
         $item_his->date_end=@$aaa->date_end;
         $item_his->save();
+
+        $aaa->status_account=1;
+        $aaa->save();
         }
     }
 
@@ -1439,10 +1452,13 @@ class YoutubeBackendController extends Controller
          $item_his->id_user_in=$r->id_user_in;    
          $item_his->type=@$aaa->type;
          $item_his->tan=1;
- 
+         $item_his->id_user_in_in = $item->id;
          $item_his->date_start=@$aaa->date_start; 
          $item_his->date_end=@$aaa->date_end;
          $item_his->save();
+
+         $aaa->status_account=1;
+         $aaa->save();
          }
      }
  
