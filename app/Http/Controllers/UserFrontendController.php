@@ -591,15 +591,15 @@ class UserFrontendController extends Controller
         if(@$request->usernameReferrer) {
             if(@$usersCKReferrer&&@$request->usernameReferrer!=$users->username) {
                 $ReferFriend = new ReferFriend();
-                $ReferFriend->referee_user_id = $users->id;
-                $ReferFriend->referrer_user_id = $usersCKReferrer->id;
+                $ReferFriend->referee_user_id = $users->username;
+                $ReferFriend->referrer_user_id = @$request->usernameReferrer;
                 $ReferFriend->referrer_score = 10;
                 $ReferFriend->save();
                 $saveOK = 1;
             }
         } else if(@$request->noshowReferrerCk) {
             $ReferFriend = new ReferFriend();
-            $ReferFriend->referee_user_id = $users->id;
+            $ReferFriend->referee_user_id = $users->username;
             $ReferFriend->save();
             $saveOK = 2;
         }
@@ -614,8 +614,8 @@ class UserFrontendController extends Controller
         $usersCKReferrer = users::where('username',@$request->usernameReferrer)->first();
         if(@$request->usernameReferrer) {
             if(@$usersCKReferrer&&@$request->usernameReferrer!=$users->username) {
-                $ReferFriend = ReferFriend::where('referee_user_id',$users->id)->first();
-                $ReferFriend->referrer_user_id = $usersCKReferrer->id;
+                $ReferFriend = ReferFriend::where('referee_user_id',$users->username)->first();
+                $ReferFriend->referrer_user_id = @$request->usernameReferrer;
                 $ReferFriend->referrer_score = 10;
                 $ReferFriend->save();
                 $saveOK = 1;
