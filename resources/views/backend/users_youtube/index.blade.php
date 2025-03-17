@@ -382,15 +382,18 @@
                                                     </td>
 
                                                     <?php
-                                                     $accounts=App\Models\users_in_in::where('id_user',@$items->id)->orderby('id','desc')->cursor();
+                                                     $accounts=App\Models\users_in_in::where('id_user',@$items->id)->orderby('id','desc')->first();
+                                                     $check_test=App\Models\users_in::where('id',@$accounts->id_user_in)->first();
                                                     ?>
                                                      <td>
-                                                    @foreach($accounts as $accountss)
-                                                    <?php
-                                                    $check_test=App\Models\users_in::where('id',@$accountss->id_user_in)->first();
+                                                     <a href="{{url('users_in_edit/'.@$check_test->id)}}" target="_blank" >{{@$check_test->name}}</a>
+                                                     @foreach($t_users as $t_userss)
+                                                     <?php
+                                                     $accounts=App\Models\users_in_in::where('id_user',@$t_userss->id)->orderby('id','desc')->first();
+                                                     $check_test=App\Models\users_in::where('id',@$accounts->id_user_in)->first();
                                                     ?>
-                                                    <a href="{{url('y_users_in_edit/'.@$check_test->id)}}" target="_blank" >{{@$check_test->name}}</a>
-                                                    <br>
+                                                     <br>
+                                                    <a href="{{url('users_in_edit/'.@$check_test->id)}}" target="_blank" >{{@$check_test->name}}</a>
                                                     @endforeach
                                                      </td>
 
