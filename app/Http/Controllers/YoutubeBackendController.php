@@ -404,9 +404,19 @@ class YoutubeBackendController extends Controller
         $search = $r->search;
         $status_account = $r->status_account;
         $status_user = $r->status_user;
+
+        // ตรวจสอบว่า search เป็นวันที่ในรูปแบบ 14/03/2025 หรือไม่
+        $date_new = null;
+        if (!empty($search) && preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $search)) {
+            $date_parts = explode('/', $search);
+            $date_new = $date_parts[2] . '-' . $date_parts[1] . '-' . $date_parts[0]; // แปลงเป็น Y-m-d
+        }
         
         if (!empty($search) or ($status_account !== null)) {
-            $item = users::whereNotNull('type_youtube')->where(function ($query) use ($search, $status_account) {
+            $item = users::whereNotNull('type_youtube')->where(function ($query) use ($search, $status_account,$date_new) {
+                if ($date_new !== null) {
+                    $query->where('date_end',$date_new);
+                } else {
                 $query->where('name', 'LIKE', '%' . $search . '%')
                       ->orWhere('username', 'LIKE', '%' . $search . '%')
                       ->orWhere('phone', 'LIKE', '%' . $search . '%')
@@ -414,6 +424,7 @@ class YoutubeBackendController extends Controller
                       ->orWhereHas('userIn', function($query) use ($search) {
                           $query->where('tb_users_in.name', 'LIKE', '%' . $search . '%'); // ระบุชื่อคอลัมน์จากตาราง tb_users_in
                       });
+                    }
             });
         
             if ($status_account == '999' and $status_account !== null) {
@@ -1107,7 +1118,7 @@ class YoutubeBackendController extends Controller
                 $item = users_in::whereNotNull('type_f')->where(function ($query) use ($search, $status_account, $date_new) {
                     // ถ้า search เป็นวันที่ ให้ใช้ date_new แทน search
                     if ($date_new !== null) {
-                        $query->where('date_end', 'LIKE', '%' . $date_new . '%');
+                        $query->where('date_end',$date_new);
                     } else {
                         $query->where('name', 'LIKE', '%' . $search . '%')
                             ->orWhere('email', 'LIKE', '%' . $search . '%')
