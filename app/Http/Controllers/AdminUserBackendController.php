@@ -597,8 +597,8 @@ class AdminUserBackendController extends Controller
             $aaa->id_user_in=$user->id;    
             $aaa->type='MOBILE';
 
-            $aaa->date_start=$user->date_start; 
-            $aaa->date_end=$user->date_end; 
+            $aaa->date_start=$r->date_start; 
+            $aaa->date_end=$r->date_end; 
             $aaa->save();
 
             $aaa_his=new users_in_in_history();
@@ -607,8 +607,8 @@ class AdminUserBackendController extends Controller
             $aaa_his->type='MOBILE';
             $aaa_his->id_user_in_in = $aaa->id;
 
-            $aaa_his->date_start=$user->date_start; 
-            $aaa_his->date_end=$user->date_end;
+            $aaa_his->date_start=$r->date_start; 
+            $aaa_his->date_end=$r->date_end;
             $aaa_his->save();
 
             $acc=$user->id;
@@ -636,8 +636,8 @@ class AdminUserBackendController extends Controller
             $aaa->id_user_in = $user->id;    
             $aaa->type = 'PC';
             $aaa->type_mail = $newTypeMail;
-            $aaa->date_start = $user->date_start; 
-            $aaa->date_end = $user->date_end; 
+            $aaa->date_start = $r->date_start; 
+            $aaa->date_end = $r->date_end; 
             $aaa->save();
 
             // บันทึกลงประวัติ
@@ -647,8 +647,8 @@ class AdminUserBackendController extends Controller
             $aaa_his->type = 'PC';
             $aaa_his->id_user_in_in = $aaa->id;
             $aaa_his->type_mail = $newTypeMail;
-            $aaa_his->date_start = $user->date_start; 
-            $aaa_his->date_end = $user->date_end;
+            $aaa_his->date_start = $r->date_start; 
+            $aaa_his->date_end = $r->date_end;
             $aaa_his->save();
 
             $acc=$user->id;
@@ -772,8 +772,8 @@ class AdminUserBackendController extends Controller
                     $aaa->id_user_in=$user->id;
                 }
                 $aaa->type='MOBILE';
-                $aaa->date_start=$user->date_start; 
-                $aaa->date_end=$user->date_end;
+                $aaa->date_start=$r->date_start;
+                $aaa->date_end=$r->date_end;
                 $aaa->save();
     
                 $aaa_his=new users_in_in_history();
@@ -782,8 +782,8 @@ class AdminUserBackendController extends Controller
                 $aaa_his->type='MOBILE';
                 $aaa_his->id_user_in_in = $aaa->id;
 
-                $aaa_his->date_start=$user->date_start; 
-                $aaa_his->date_end=$user->date_end;
+                $aaa_his->date_start=$r->date_start;
+                $aaa_his->date_end=$r->date_end;
                 $aaa_his->save();
     
             }else{
@@ -815,8 +815,8 @@ class AdminUserBackendController extends Controller
                 }
                 $aaa->type='PC';
                 $aaa->type_mail = $newTypeMail;
-                $aaa->date_start=$user->date_start; 
-                $aaa->date_end=$user->date_end;
+                $aaa->date_start=$r->date_start; 
+                $aaa->date_end=$r->date_end;
                 $aaa->save();
     
                 $aaa_his=new users_in_in_history();
@@ -825,8 +825,8 @@ class AdminUserBackendController extends Controller
                 $aaa_his->type='PC';
                 $aaa_his->id_user_in_in = $aaa->id;
                 $aaa_his->type_mail = $newTypeMail;
-                $aaa_his->date_start=$user->date_start; 
-                $aaa_his->date_end=$user->date_end;
+                $aaa_his->date_start=$r->date_start; 
+                $aaa_his->date_end=$r->date_end;
                 $aaa_his->save();
     
             }else{
