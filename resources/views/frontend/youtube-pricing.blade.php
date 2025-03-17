@@ -145,12 +145,15 @@
             </div>
         </div>
     </div>
+    @php
+        $userCMail = Auth::guard('users')->user();
+    @endphp
     <script>
         function showPackageOrder(Subpackage_Code ,Subpackage_Name ,Subpackage_Paymoney) {
             document.getElementById('Subpackage_Code').value=Subpackage_Code;
             document.getElementById('Subpackage_Name').value=Subpackage_Name;
             document.getElementById('Subpackage_Paymoney').value=Subpackage_Paymoney;
-            document.getElementById('Orderemail').value='test@gmail.com';
+            document.getElementById('Orderemail').value='{{$userCMail->email}}';
         }
     </script>
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-points" style="margin-top: 150px;">

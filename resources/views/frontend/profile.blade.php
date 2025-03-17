@@ -4,37 +4,72 @@
     <div class="net-container">
         <h1 class="head-pro">NF THEATER</h1>
         <div class="profile-plans">
+            <button class="btn btn-primary logout-bt" type="button" onclick="document.location.href=`{{url('profile_change')}}`;">
+                </svg>Change Profile</button>&nbsp;
+
             <button class="btn btn-primary logout-bt" type="button" onclick="document.location.href=`{{route('logoutfrontend')}}`;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="margin-right: 5px;">
                     <path d="M8.51428 20H4.51428C3.40971 20 2.51428 19.1046 2.51428 18V6C2.51428 4.89543 3.40971 4 4.51428 4H8.51428V6H4.51428V18H8.51428V20Z" fill="currentColor"></path>
                     <path d="M13.8418 17.385L15.262 15.9768L11.3428 12.0242L20.4857 12.0242C21.038 12.0242 21.4857 11.5765 21.4857 11.0242C21.4857 10.4719 21.038 10.0242 20.4857 10.0242L11.3236 10.0242L15.304 6.0774L13.8958 4.6572L7.5049 10.9941L13.8418 17.385Z" fill="currentColor"></path>
                 </svg>logout</button>
         </div>
+
+
         <div class="container profile-plans-white" style="padding-right: 24px;">
             <div class="row">
                 <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center align-items-sm-center">
                     <div class="img-profile-a"><img class="net-profile-icon" src="assets/img/Frame%201%20(1).png" alt="Netflix Icon">
-                        <div class="edit-icon"><a data-bs-target="#modal-edit-img" data-bs-toggle="modal"><button class="btn btn-primary edit-bt" type="button" style="padding: 6px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pencil">
+                        {{-- <div class="edit-icon"><a data-bs-target="#modal-edit-img" data-bs-toggle="modal"><button class="btn btn-primary edit-bt" type="button" style="padding: 6px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pencil">
                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
-                                    </svg></button></a></div>
+                                    </svg></button></a></div> --}}
                     </div>
                 </div>
                 <div class="col d-flex align-items-center">
                     <div class="net-plan-details">
-                        @if(@$checknetFlix)
-                        <div id="showUNetflix">
-                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Netflix Package.</h2>
-                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>User ID</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;">{{$userProfile[0]['email'.(@$userProfile[0]->type_mail?'0'.$userProfile[0]->type_mail:'')]}}</span> <!--NF00080-->
-                            <p class="pass-profile">Password : {{$userProfile[0]['password'.(@$userProfile[0]->type_mail?'0'.$userProfile[0]->type_mail:'')]}}</p> <!--0123456-->
-                        </div>
+
+                        @if(@$selectNfYt=='NetFlix')
+                            <div id="showUNetflix">
+                                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Profile : {{@$userProfile->utypename}}</h2>
+                                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package : {{@$userProfile->Subpackage_Name}}</h2>
+                                @if(@$userProfile->type_mail==null)
+                                
+                                <?php 
+                                $pak=DB::table('tb_users_in_in')->where('id_user',@$userProfile->id)->first();
+                                $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
+                                ?>
+                                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID : {{@$ac->email}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
+                                <p class="pass-profile">Password : {{@$ac->password}}<span id="passwordnf"></span></p>
+                                @else
+                                <?php 
+                                $pak=DB::table('tb_users_in_in')->where('id_user',@$userProfile->id)->first();
+                                $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
+                                ?>
+                                @if(@$pak->type_mail==1)
+                                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID : {{@$ac->email01}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
+                                <p class="pass-profile">Password : {{@$ac->password01}}<span id="passwordnf"></span></p>
+                                @else
+                                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID : {{@$ac->email02}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
+                                <p class="pass-profile">Password : {{@$ac->password02}}<span id="passwordnf"></span></p>
+                                @endif
+
+
+                                @endif
+                            </div>
                         @endif
-                        @if(@$checkyouTube)
-                        <div id="showUYoutube" style="display: {{@$checknetFlix&&@$checkyouTube?'none':'block'}};">
+                        @if(@$selectNfYt=='YouTube')
+                        <?php 
+                        $pak=DB::table('tb_users_in_in')->where('id_user',@$userProfile->id)->first();
+                        $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
+                        ?>
+                        <div id="showUYoutube">
                             <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Youtube Package.</h2>
-                            <p class="mail-profile">Email: {{$userProfile[0]['email'.(@$userProfile[0]->type_mail?'0'.$userProfile[0]->type_mail:'')]}} {{--$users->email--}}</p> <!--nftheater134+27@gmail.com-->
-                            <p class="pass-profile">Password : {{$userProfile[0]['password'.(@$userProfile[0]->type_mail?'0'.$userProfile[0]->type_mail:'')]}}</p> <!--0123456-->
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Profile : {{@$userProfile->useremail}}</h2>
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package : {{@$userProfile->Subpackage_Name}}</h2>
+                            <p class="mail-profile">Account Email: : {{@$ac->email}}<span id="emailYT"></span></p> <!--nftheater134+27@gmail.com-->
+                            <p class="pass-profile">Password : {{@$ac->password}}<span id="passYT"></span></p> <!--0123456-->
                         </div>
                         @endif
+
                     </div>
                 </div>
                 <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center justify-content-sm-center align-items-sm-center box-back" style="padding-left: 5px;">
@@ -49,53 +84,44 @@
                     </div>
                 </div>
             </div>
-            {{-- 'checknetFlix','checkyouTube' --}}
-            <div class="row" style="margin-right:-20px;">
-                <div class="col d-flex justify-content-end">
-                    @if(@$checknetFlix&&@$checkyouTube)
-                        <button class="btn btn-danger btn-sm" 
-                            onclick="document.getElementById('showUNetflix').style='display:block';document.getElementById('showUYoutube').style='display:none';"
-                            style="height: 30px;padding:5px;width:80px;">Netflix</button>
-                        &nbsp;&nbsp;
-                        <button class="btn btn-danger btn-sm" 
-                            onclick="document.getElementById('showUNetflix').style='display:none';document.getElementById('showUYoutube').style='display:block';"
-                            style="height: 30px;padding:5px;width:80px;">Youtube</button>
-                    @endif
-                </div>
-            </div>
         </div>
+        
     </div>
     <div class="net-container">
         <h1 class="head-pack" style="font-family: Prompt, sans-serif;">ข้อมูลแพ็กเกจ</h1>
         <div class="net-plans">
+            @if(@$selectNfYt=='NetFlix')
             <div class="net-plan">
                 <div class="net-plan-info"><img src="assets/img/logo-netflix%201.png" alt="Netflix Icon" class="net-plan-icon">
                     <div class="net-plan-details">
                         <h2>แพ็กเกจ NETFLIX</h2>
-                        <p>Netflix ยาวนานถึง 2 เดือน</p>
+                        <p id="namePackageShNF">{{@$userProfile->Subpackage_Name}}</p>  <!--Netflix ยาวนานถึง 2 เดือน-->
                     </div>
                 </div>
                 <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
                     <div style="margin: 0;padding: 0;height: auto;">
-                        <p class="net-price" style="text-align: center;height: auto;">269</p>
+                        <p class="net-price" style="text-align: center;height: auto;" id="priceShNF">{{ number_format($userProfile->Subpackage_Paymoney, 0, '.', ',') }}</p> <!--269-->
                     </div>
-                    <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">บาท</span></div>
+                    <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;"> บาท</span></div>
                 </div>
             </div>
+            @endif
+            @if(@$selectNfYt=='YouTube')
             <div class="net-plan2">
                 <div class="net-plan-info"><img src="assets/img/logo-netflix%201%20(1).png" alt="Netflix Icon" class="net-plan-icon">
                     <div class="net-plan-details">
                         <h2 class="pack-h2">แพ็กเกจ Youtube</h2>
-                        <p class="pack-h3">Youtube ยาวนานถึง 2 เดือน</p>
+                        <p class="pack-h3" id="namePackageShYT">{{@$userProfile->Subpackage_Name}}</p> <!--Youtube ยาวนานถึง 2 เดือน-->
                     </div>
                 </div>
                 <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
                     <div style="margin: 0;padding: 0;height: auto;">
-                        <p class="net-price" style="text-align: center;height: auto;">269</p>
+                        <p class="net-price" style="text-align: center;height: auto;" id="priceShYT">{{ number_format($userProfile->Subpackage_Paymoney, 0, '.', ',') }}</p> <!--269-->
                     </div>
-                    <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">บาท</span></div>
+                    <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;"> บาท</span></div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
     <div class="d-link">
@@ -193,12 +219,19 @@
                         </div>
                         <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
                     </div>
-                    <div class="modal-body">
-                        <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อยูสเซอร์</label><input class="form-control form-v1" type="text" placeholder="NF00080"></form>
-                        <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label><input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน"></form>
-                        <form class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">รูปถาพโปรไฟล์</label><input class="form-control" type="file"></form>
-                    </div>
-                    <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;"><button class="btn btn-primary bt-pay" type="button">บันทึกการแก้ไข</button></div>
+                    <form action="{{route('frontend.changepassusercus')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อยูสเซอร์</label><input class="form-control form-v1" type="text" name="username" placeholder="NF00080" value="{{$users->username}}" readonly></div>
+                            <div class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">Old-Password</label><input class="form-control form-v1" type="password" placeholder="รหัสผ่านเดิม" name="oldpass"></div>
+                            <div class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">Password</label><input class="form-control form-v1" type="password" placeholder="รหัสผ่านใหม่" name="newpass"></div>
+                            <div class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">Re-Password</label><input class="form-control form-v1" type="password" placeholder="ทวนรหัสผ่านใหม่" name="newpassre"></div>
+                            {{-- <div class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label><input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน"></div> --}}
+                            {{-- <div class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">รูปถาพโปรไฟล์</label><input class="form-control" type="file"></div> --}}
+                        </div>
+                        <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px; display:none;"><button class="btn btn-primary bt-pay" id="SaveChgPass">บันทึกการแก้ไข</button></div>
+                    </form>
+                    <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;"><button class="btn btn-primary bt-pay" onclick="document.getElementById('SaveChgPass').click()">บันทึกการแก้ไข</button></div>
                 </div>
             </div>
         </div>
@@ -253,6 +286,127 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-repoints-recommender" style="padding-top: 150px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header m-h">
+                        <div class="h-pop-man">
+                            <div class="img-man02"><img class="img-man" src="assets/img/man02.webp"></div>
+                        </div>
+                        <div><button class="btn-close close-bt1" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
+                    </div>
+                    <div class="modal-body m-h">
+                        <div class="point-box-div1">
+                            <div class="point-box-t1"><span class="point-num">10</span></div>
+                            <div class="point-box1">
+                                <p class="text-p1">คุณได้รับแต้ม</p>
+                                <p class="text-p2" style="text-align:">สะสมให้ครบ เพื่อแลกของรางวัล</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"><button class="btn btn-primary bt-pay" type="button">แลกของรางวัล</button></div>
+                </div>
+            </div>
+        </div>
+
+        @php
+            $userCKReferFrst = Auth::guard('users')->user();
+            $ReferFriendFrst = App\Models\ReferFriend::where('referee_user_id',$userCKReferFrst->id)->whereNull('referrer_user_id')->first();
+        @endphp
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-repoints-referree" style="padding-top: 150px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header m-h">
+                        <div class="h-pop-man">
+                            <div class="img-man02"><img class="img-man" src="assets/img/man02.webp"></div>
+                        </div>
+                        <div><button class="btn-close close-bt1" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
+                    </div>
+                    <div class="modal-body m-h">
+                        <div class="point-box-div1">
+                            <div class="point-box1">
+                                <p class="text-p2 mt-1">กรุณากรอกรหัสผู้แนะนำท่าน</p>
+                            </div>
+                            <div class="form-div"><label class="form-label" style="color: var(--bs-emphasis-color);">ผู้แนะนำ : </label><input class="form-control form-v1" type="text" name="usernameReferrer" id="usernameReferrer" placeholder="NF00080"></div>
+                            @if(!@$ReferFriendFrst)
+                                <div><p><input type="checkbox" name="noshowReferrer" id="noshowReferrer"> ไม่แสดงอีก</p></div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="modal-footer m-f" style="padding-top: 5px;padding-bottom: 30px;">
+                        <button class="btn btn-primary bt-pay" type="button" onclick="confirmReferrer();">
+                            ยืนยันผู้แนะนำ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if(!@$ReferFriend)
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var myModal = new bootstrap.Modal(document.getElementById("modal-repoints-referree"));
+                    myModal.show();
+                });
+
+                function confirmReferrer() {
+                    let usernameReferrer = document.getElementById('usernameReferrer').value;
+                    let noshowReferrerCk = document.getElementById('noshowReferrer').checked;
+
+                    fetch('{{route('frontend.confirmReferrer')}}', {
+                        method: 'POST', // or 'PUT'
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            _token : "{{csrf_token()}}",
+                            usernameReferrer,noshowReferrerCk
+                        }),
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Success:', data);
+                        alert(data.saveOK==0?'ข้อมูลไม่ถูกต้อง !':(data.saveOK==1?'มอบแต้มให้ผู้แนะนำเรียบร้อยแล้ว.':'ไม่แสดงอีก ข้ามการมองแต้มให้ผู้แนะนำ.'));
+                        document.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }
+            </script>
+        @else
+            <script>
+                function confirmReferrerFRSTBTN() { 
+                    var myModal = new bootstrap.Modal(document.getElementById("modal-repoints-referree"));
+                    myModal.show();
+                }
+
+                function confirmReferrer() {
+                    let usernameReferrer = document.getElementById('usernameReferrer').value;
+
+                    fetch('{{route('frontend.confirmReferrerFRST')}}', {
+                        method: 'POST', // or 'PUT'
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            _token : "{{csrf_token()}}",
+                            usernameReferrer
+                        }),
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Success:', data);
+                        alert(data.saveOK==0?'ข้อมูลไม่ถูกต้อง !':(data.saveOK==1?'มอบแต้มให้ผู้แนะนำเรียบร้อยแล้ว.':'ข้อมูลไม่ถูกต้อง !'));
+                        document.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }
+            </script>
+        @endif
+
     </div>
     {{-- <div>
         <p class="copy-r">Copyright ©&nbsp;NF Theater&nbsp;2024.</p>

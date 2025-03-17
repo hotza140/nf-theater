@@ -38,6 +38,8 @@ use App\Models\PayPackNotmatch;
 
 use App\Models\alert;
 
+use App\Models\ReferFriend;
+
 class UserFrontendController extends Controller
 {
     ///login---------------
@@ -78,17 +80,37 @@ class UserFrontendController extends Controller
         $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
         // ลบเช็คเวลา
 
-        $users=users::where('username',$r->username)->first();
-        if($users){
-            if($r->password==$users->password){ // ||Hash::check($r->password, $users->password)
-                Auth::guard('users')->login($users); 
-                return redirect("/profile");
-            }else{
-                return redirect()->to('/frontlogin')->with('message','Password Wrong!');
-            }
+        if($r->type=='netflix'){
+            $users=users::where('username',$r->username)->where('password',$r->password)->whereNotNull('type_netflix')->orderBy('id','asc')->first();
         }else{
-            return redirect()->to('/frontlogin')->with('message','Username Wrong!');
+            $users=users::where('username',$r->username)->where('password',$r->password)->whereNotNull('type_youtube')->orderBy('id','asc')->first();
         }
+
+        if($users){
+                Auth::guard('users')->login($users); 
+
+                return redirect()->route('frontend.profile');
+                // if($r->type=='netflix'){
+                //     return redirect("/profile");
+                // }else{
+                //     return redirect("/profile");
+                // }
+        }else{
+            return redirect()->to('/frontlogin')->with('message','Username or Password Wrong!');
+        }
+    }
+
+    public function change_profile($id)
+    {
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $accounts=users_in_in::whereIn('id_user',@$users)->delete();
+        $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
+        $users=users::where('id',$id)->first();
+        Auth::guard('users')->login($users); 
+        return redirect()->to('profile');
     }
 
     public function nFYtPackage(Request $r) {
@@ -126,29 +148,172 @@ class UserFrontendController extends Controller
         // ลบเช็คเวลา
         
         $users = Auth::guard('users')->user();
+
+        // ตรวจสอบ referee_user_id ผู้ถูกแนะนำได้ดำเนินการให้คะแนนผู้แนะนำแล้ว
+        $ReferFriend = ReferFriend::where('referee_user_id',$users->id)->first();
+        $ProfileNows = 1;
+
+        $selectNfYt = @$request->selectNfYt??\Session::get('selectNfYt');
+        if(@$request->selectNfYt) \Session::put('selectNfYt',$request->selectNfYt);
+        
         $RewardUserLog = RewardUserLog::where('username',$users->username)->get();
         $userProfile = users::select(
+                'tb_users.id',
                 'tb_users.username',
+                'tb_users.email as useremail',
                 'tb_users.password as userpass',
+                'tb_users.name as utypename',
                 'tb_users.type_netflix',
                 'tb_users.type_youtube',
-                'tb_users_in_in.type',
+                'tb_users_in_in.type as typeinin',
                 'tb_users_in_in.type_mail',
-                'tb_users_in.*'
+                'tb_users_in.name','tb_users_in.email','tb_users_in.email01','tb_users_in.email02',
+                'tb_users_in.password','tb_users_in.password01','tb_users_in.password02',
+                'tb_package_subwatch.Subpackage_Name','tb_package_subwatch.Subpackage_Dayuse',
+                'tb_package_subwatch.Subpackage_Paymoney'
             )
             ->leftJoin('tb_users_in_in', 'tb_users.id', '=', 'tb_users_in_in.id_user')
             ->leftJoin('tb_users_in', 'tb_users_in_in.id_user_in', '=', 'tb_users_in.id')
-            ->where('tb_users.username', $users->username)
-            ->get();
+            ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
+            ->where('tb_users.id', $users->id)->first();
 
-            // $userData=users::where('id',$users->id)->first();
-            // $aaa=users_in_in::where('id_user',$userData->id)->first();
-            // $bbb=users_in::where('id',$aaa->id_user_in)->first();
-            // dd($userData,$aaa,$bbb);
-            // dd($userProfile);
-        $checknetFlix = users::where('type_netflix',1)->where('username',$users->username)->first();
-        $checkyouTube = users::where('type_youtube',1)->where('username',$users->username)->first();
-        return view('frontend.profile',compact('users','RewardUserLog','userProfile','checknetFlix','checkyouTube'));
+
+            $userProfile_all_netflix = users::select(
+                'tb_users.id',
+                'tb_users.username',
+                'tb_users.email as useremail',
+                'tb_users.password as userpass',
+                'tb_users.name as utypename',
+                'tb_users.type_netflix',
+                'tb_users.type_youtube',
+                'tb_users_in_in.type as typeinin',
+                'tb_users_in_in.type_mail',
+                'tb_users_in.name','tb_users_in.email','tb_users_in.email01','tb_users_in.email02',
+                'tb_users_in.password','tb_users_in.password01','tb_users_in.password02',
+                'tb_package_subwatch.Subpackage_Name','tb_package_subwatch.Subpackage_Dayuse',
+                'tb_package_subwatch.Subpackage_Paymoney'
+            )
+            ->leftJoin('tb_users_in_in', 'tb_users.id', '=', 'tb_users_in_in.id_user')
+            ->leftJoin('tb_users_in', 'tb_users_in_in.id_user_in', '=', 'tb_users_in.id')
+            ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
+            ->where('tb_users.username', $users->username)->whereNotNull('type_netflix')->orderBy('id','asc')->get();
+
+            $userProfile_all_youtube = users::select(
+                'tb_users.id',
+                'tb_users.username',
+                'tb_users.email as useremail',
+                'tb_users.password as userpass',
+                'tb_users.name as utypename',
+                'tb_users.type_netflix',
+                'tb_users.type_youtube',
+                'tb_users_in_in.type as typeinin',
+                'tb_users_in_in.type_mail',
+                'tb_users_in.name','tb_users_in.email','tb_users_in.email01','tb_users_in.email02',
+                'tb_users_in.password','tb_users_in.password01','tb_users_in.password02',
+                'tb_package_subwatch.Subpackage_Name','tb_package_subwatch.Subpackage_Dayuse',
+                'tb_package_subwatch.Subpackage_Paymoney'
+            )
+            ->leftJoin('tb_users_in_in', 'tb_users.id', '=', 'tb_users_in_in.id_user')
+            ->leftJoin('tb_users_in', 'tb_users_in_in.id_user_in', '=', 'tb_users_in.id')
+            ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
+            ->where('tb_users.username', $users->username)->whereNotNull('type_youtube')->orderBy('id','asc')->get();
+
+            if($users->type_netflix!=null){
+                $selectNfYt='NetFlix';
+            }else{
+                $selectNfYt='YouTube';
+            }
+
+        return view('frontend.profile',compact('users','RewardUserLog','userProfile','userProfile_all_netflix','userProfile_all_youtube','selectNfYt','ReferFriend','ProfileNows'));
+    }
+
+
+    public function profile_change (Request $request) {
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $accounts=users_in_in::whereIn('id_user',@$users)->delete();
+        $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
+        
+        $users = Auth::guard('users')->user();
+
+        // ตรวจสอบ referee_user_id ผู้ถูกแนะนำได้ดำเนินการให้คะแนนผู้แนะนำแล้ว
+        $ReferFriend = ReferFriend::where('referee_user_id',$users->id)->first();
+        $ProfileNows = 1;
+
+        $selectNfYt = @$request->selectNfYt??\Session::get('selectNfYt');
+        if(@$request->selectNfYt) \Session::put('selectNfYt',$request->selectNfYt);
+        
+        $RewardUserLog = RewardUserLog::where('username',$users->username)->get();
+        $userProfile = users::select(
+                'tb_users.id',
+                'tb_users.username',
+                'tb_users.email as useremail',
+                'tb_users.password as userpass',
+                'tb_users.name as utypename',
+                'tb_users.type_netflix',
+                'tb_users.type_youtube',
+                'tb_users_in_in.type as typeinin',
+                'tb_users_in_in.type_mail',
+                'tb_users_in.name','tb_users_in.email','tb_users_in.email01','tb_users_in.email02',
+                'tb_users_in.password','tb_users_in.password01','tb_users_in.password02',
+                'tb_package_subwatch.Subpackage_Name','tb_package_subwatch.Subpackage_Dayuse',
+                'tb_package_subwatch.Subpackage_Paymoney'
+            )
+            ->leftJoin('tb_users_in_in', 'tb_users.id', '=', 'tb_users_in_in.id_user')
+            ->leftJoin('tb_users_in', 'tb_users_in_in.id_user_in', '=', 'tb_users_in.id')
+            ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
+            ->where('tb_users.id', $users->id)->first();
+
+
+            $userProfile_all_netflix = users::select(
+                'tb_users.id',
+                'tb_users.username',
+                'tb_users.email as useremail',
+                'tb_users.password as userpass',
+                'tb_users.name as utypename',
+                'tb_users.type_netflix',
+                'tb_users.type_youtube',
+                'tb_users_in_in.type as typeinin',
+                'tb_users_in_in.type_mail',
+                'tb_users_in.name','tb_users_in.email','tb_users_in.email01','tb_users_in.email02',
+                'tb_users_in.password','tb_users_in.password01','tb_users_in.password02',
+                'tb_package_subwatch.Subpackage_Name','tb_package_subwatch.Subpackage_Dayuse',
+                'tb_package_subwatch.Subpackage_Paymoney'
+            )
+            ->leftJoin('tb_users_in_in', 'tb_users.id', '=', 'tb_users_in_in.id_user')
+            ->leftJoin('tb_users_in', 'tb_users_in_in.id_user_in', '=', 'tb_users_in.id')
+            ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
+            ->where('tb_users.username', $users->username)->whereNotNull('type_netflix')->orderBy('id','asc')->get();
+
+            $userProfile_all_youtube = users::select(
+                'tb_users.id',
+                'tb_users.username',
+                'tb_users.email as useremail',
+                'tb_users.password as userpass',
+                'tb_users.name as utypename',
+                'tb_users.type_netflix',
+                'tb_users.type_youtube',
+                'tb_users_in_in.type as typeinin',
+                'tb_users_in_in.type_mail',
+                'tb_users_in.name','tb_users_in.email','tb_users_in.email01','tb_users_in.email02',
+                'tb_users_in.password','tb_users_in.password01','tb_users_in.password02',
+                'tb_package_subwatch.Subpackage_Name','tb_package_subwatch.Subpackage_Dayuse',
+                'tb_package_subwatch.Subpackage_Paymoney'
+            )
+            ->leftJoin('tb_users_in_in', 'tb_users.id', '=', 'tb_users_in_in.id_user')
+            ->leftJoin('tb_users_in', 'tb_users_in_in.id_user_in', '=', 'tb_users_in.id')
+            ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
+            ->where('tb_users.username', $users->username)->whereNotNull('type_youtube')->orderBy('id','asc')->get();
+
+            if($users->type_netflix!=null){
+                $selectNfYt='NetFlix';
+            }else{
+                $selectNfYt='YouTube';
+            }
+
+        return view('frontend.profile_change',compact('users','RewardUserLog','userProfile','userProfile_all_netflix','userProfile_all_youtube','selectNfYt','ReferFriend','ProfileNows'));
     }
 
     public function SendOrderPackage (Request $request) {
@@ -347,6 +512,30 @@ class UserFrontendController extends Controller
         // return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess!');
     }
 
+    public function changepassusercus(Request $request) {
+        $validator = \Validator::make($request->all(), [
+            'oldpass' => 'required',
+            'newpass' => 'required|min:6',
+            'newpassre' => 'required|same:newpass',
+        ]);
+        
+        if ($validator->fails()) {
+            // return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->with('message','Password Wrong!');
+        }
+        
+        $users = users::where('username',$request->username)->where('password',$request->oldpass)->get();
+        if(count($users)>0) {
+            foreach ($users as $key => $value) {
+                # code...
+                $value->password=$request->newpass;
+                $value->save();
+            }
+        } else return redirect()->back()->with('message','Password Wrong!');
+
+        return redirect()->back()->with('message','Success!');
+    }
+
     public function SendMailSMTPT1() {
         // 'from' => array('address' => 'myusername@gmail.com', 'name' => 'hawle'),
         // $mailData = '';
@@ -386,5 +575,47 @@ class UserFrontendController extends Controller
         $base64WithMime = 'data:' . $mime . ';base64,' . $base64;
 
         return response()->json(["img"=>$base64WithMime],200); // Output Base64 image string
+    }
+
+    public function confirmReferrer(Request $request) {
+        // confirmReferrer
+        // usernameReferrer,noshowReferrerCk
+        $saveOK = 0;
+        $users = Auth::guard('users')->user();
+        $usersCKReferrer = users::where('username',@$request->usernameReferrer)->first();
+        if(@$request->usernameReferrer) {
+            if(@$usersCKReferrer&&@$request->usernameReferrer!=$users->username) {
+                $ReferFriend = new ReferFriend();
+                $ReferFriend->referee_user_id = $users->id;
+                $ReferFriend->referrer_user_id = $usersCKReferrer->id;
+                $ReferFriend->referrer_score = 10;
+                $ReferFriend->save();
+                $saveOK = 1;
+            }
+        } else if(@$request->noshowReferrerCk) {
+            $ReferFriend = new ReferFriend();
+            $ReferFriend->referee_user_id = $users->id;
+            $ReferFriend->save();
+            $saveOK = 2;
+        }
+        return response()->json(["usernameReferrer"=>$request->usernameReferrer,"noshowReferrerCk"=>$request->noshowReferrerCk,'saveOK'=>$saveOK]);
+    }
+
+    public function confirmReferrerFRST(Request $request) {
+        // confirmReferrerFRST
+        // usernameReferrer
+        $saveOK = 0;
+        $users = Auth::guard('users')->user();
+        $usersCKReferrer = users::where('username',@$request->usernameReferrer)->first();
+        if(@$request->usernameReferrer) {
+            if(@$usersCKReferrer&&@$request->usernameReferrer!=$users->username) {
+                $ReferFriend = ReferFriend::where('referee_user_id',$users->id)->first();
+                $ReferFriend->referrer_user_id = $usersCKReferrer->id;
+                $ReferFriend->referrer_score = 10;
+                $ReferFriend->save();
+                $saveOK = 1;
+            }
+        } 
+        return response()->json(["usernameReferrer"=>$request->usernameReferrer,'saveOK'=>$saveOK]);
     }
 }
