@@ -351,9 +351,10 @@ class YoutubeBackendController extends Controller
      public function users_all(Request $r){
         // ลบเช็คเวลา
         $date=date('Y-m-d');
-        $users = users::whereDate('date_end', '<', $date)->pluck('id')->toArray();
-        $accounts=users_in_in::whereIn('id_user',@$users)->delete();
-        $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
         // ลบเช็คเวลา
 
 
@@ -390,11 +391,12 @@ class YoutubeBackendController extends Controller
      
      public function users(Request $r){
          // ลบเช็คเวลา
-         $date=date('Y-m-d');
-         $users = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
-         $accounts=users_in_in::whereIn('id_user',@$users)->delete();
-         $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
-         // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
 
 
         $item=users ::whereNotNull('type_youtube')->orderByRaw(
@@ -500,8 +502,8 @@ class YoutubeBackendController extends Controller
             $aaa->id_user_in=$user->id;    
             $aaa->type='MOBILE';
 
-            $aaa->date_start=$user->date_start; 
-            $aaa->date_end=$user->date_end; 
+            $aaa->date_start=$r->date_start;
+            $aaa->date_end=$r->date_end; 
             $aaa->save();
 
             $aaa_his=new users_in_in_history();
@@ -510,8 +512,8 @@ class YoutubeBackendController extends Controller
             $aaa_his->type='MOBILE';
             $aaa_his->id_user_in_in = $aaa->id;
 
-            $aaa_his->date_start=$user->date_start; 
-            $aaa_his->date_end=$user->date_end;
+            $aaa_his->date_start=$r->date_start;
+            $aaa_his->date_end=$r->date_end;
             $aaa_his->save();
 
             $acc=$user->id;
@@ -539,8 +541,8 @@ class YoutubeBackendController extends Controller
             $aaa->id_user_in = $user->id;    
             $aaa->type = 'PC';
             $aaa->type_mail = $newTypeMail;
-            $aaa->date_start = $user->date_start; 
-            $aaa->date_end = $user->date_end; 
+            $aaa->date_start = $r->date_start;
+            $aaa->date_end = $r->date_end; 
             $aaa->save();
 
             // บันทึกลงประวัติ
@@ -550,8 +552,8 @@ class YoutubeBackendController extends Controller
             $aaa_his->type = 'PC';
             $aaa_his->id_user_in_in = $aaa->id;
             $aaa_his->type_mail = $newTypeMail;
-            $aaa_his->date_start = $user->date_start; 
-            $aaa_his->date_end = $user->date_end;
+            $aaa_his->date_start = $r->date_start;
+            $aaa_his->date_end = $r->date_end;
             $aaa_his->save();
 
             $acc=$user->id;
@@ -671,8 +673,8 @@ class YoutubeBackendController extends Controller
                     $aaa->id_user_in=$user->id;
                 }
                 $aaa->type='MOBILE';
-                $aaa->date_start=$user->date_start; 
-                $aaa->date_end=$user->date_end;
+                $aaa->date_start=$r->date_start; 
+                $aaa->date_end=$r->date_end;
                 $aaa->save();
     
                 $aaa_his=new users_in_in_history();
@@ -681,8 +683,8 @@ class YoutubeBackendController extends Controller
                 $aaa_his->type='MOBILE';
                 $aaa_his->id_user_in_in = $aaa->id;
 
-                $aaa_his->date_start=$user->date_start; 
-                $aaa_his->date_end=$user->date_end;
+                $aaa_his->date_start=$r->date_start; 
+                $aaa_his->date_end=$r->date_end;
                 $aaa_his->save();
     
             }else{
@@ -714,8 +716,8 @@ class YoutubeBackendController extends Controller
                 }
                 $aaa->type='PC';
                 $aaa->type_mail = $newTypeMail;
-                $aaa->date_start=$user->date_start; 
-                $aaa->date_end=$user->date_end;
+                $aaa->date_start=$r->date_start; 
+                $aaa->date_end=$r->date_end;
                 $aaa->save();
     
                 $aaa_his=new users_in_in_history();
@@ -724,8 +726,8 @@ class YoutubeBackendController extends Controller
                 $aaa_his->type='PC';
                 $aaa_his->id_user_in_in = $aaa->id;
                 $aaa_his->type_mail = $newTypeMail;
-                $aaa_his->date_start=$user->date_start; 
-                $aaa_his->date_end=$user->date_end;
+                $aaa_his->date_start=$r->date_start; 
+                $aaa_his->date_end=$r->date_end;
                 $aaa_his->save();
     
             }else{
@@ -746,16 +748,6 @@ class YoutubeBackendController extends Controller
         $item=users::where('id',$id)->first();
         $item->status_edit=Auth::guard('admin')->user()->id;
         $item->save();
-        
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users = users::where('id',$id)->whereDate('date_end', '<', $date)->first();
-        if($users!=null){
-            $accounts=users_in_in::where('id_user',@$id)->delete();
-            $item->status_account=2;
-            $item->save();
-        }
-        // ลบเช็คเวลา
 
         return view('backend.users_youtube.edit',[
             'item'=>$item,
@@ -845,8 +837,8 @@ class YoutubeBackendController extends Controller
                     $aaa->id_user_in = $user->id;
                     $aaa->type = 'MOBILE';
 
-                    $aaa->date_start=$user->date_start; 
-                    $aaa->date_end=$user->date_end;
+                    $aaa->date_start=$userData['date_start'] ?? null;
+                    $aaa->date_end=$userData['date_end'] ?? null;
                     $aaa->save();
     
                     $aaa_his = new users_in_in_history();
@@ -854,8 +846,8 @@ class YoutubeBackendController extends Controller
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'MOBILE';
                     $aaa_his->id_user_in_in = $aaa->id;
-                    $aaa_his->date_start=$user->date_start; 
-                    $aaa_his->date_end=$user->date_end;
+                    $aaa_his->date_start=$userData['date_start'] ?? null;
+                    $aaa_his->date_end=$userData['date_end'] ?? null;
                     $aaa_his->save();
 
                     $acc=$user->id;
@@ -883,8 +875,8 @@ class YoutubeBackendController extends Controller
                     $aaa->id_user_in = $user->id;
                     $aaa->type = 'PC';
                     $aaa->type_mail = $newTypeMail;
-                    $aaa->date_start=$user->date_start; 
-                    $aaa->date_end=$user->date_end;
+                    $aaa->date_start=$userData['date_start'] ?? null;
+                    $aaa->date_end=$userData['date_end'] ?? null;
                     $aaa->save();
     
                     $aaa_his = new users_in_in_history();
@@ -893,8 +885,8 @@ class YoutubeBackendController extends Controller
                     $aaa_his->type = 'PC';
                     $aaa_his->id_user_in_in = $aaa->id;
                     $aaa_his->type_mail = $newTypeMail;
-                    $aaa_his->date_start=$user->date_start; 
-                    $aaa_his->date_end=$user->date_end;
+                    $aaa_his->date_start=$userData['date_start'] ?? null;
+                    $aaa_his->date_end=$userData['date_end'] ?? null;
                     $aaa_his->save();
 
                     $acc=$user->id;
@@ -1097,11 +1089,12 @@ class YoutubeBackendController extends Controller
        //User_in//
        public function users_in(Request $r){
          // ลบเช็คเวลา
-         $date=date('Y-m-d');
-         $users = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
-         $accounts=users_in_in::whereIn('id_user',@$users)->delete();
-         $users_update = users::whereNotNull('type_youtube')->whereDate('date_end', '<', $date)->update(['status_account' => 2]);
-         // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
 
           $item=users_in::whereNotNull('type_f')->orderby('id','desc')->paginate(10);
           $search = $r->search;
@@ -1213,19 +1206,6 @@ class YoutubeBackendController extends Controller
       }
       public function users_in_edit($id){
           $item=users_in::where('id',$id)->first();
-
-        // ลบเช็คเวลา
-          $ch=users_in_in::where('id_user_in',@$id)->get();
-          $date=date('Y-m-d');
-          foreach($ch as $chs){
-          $users = users::where('id',$chs->id_user)->whereDate('date_end', '<', $date)->first();
-          if($users!=null){
-              $accounts=users_in_in::where('id',$chs->id)->delete();
-              $item->status_account=2;
-              $item->save();
-          }
-         }
-         // ลบเช็คเวลา
 
           return view('backend.users_in_youtube.edit',[
               'item'=>$item,
