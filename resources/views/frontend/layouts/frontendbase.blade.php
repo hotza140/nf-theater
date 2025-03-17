@@ -12,8 +12,17 @@
     <link rel="stylesheet" href="assets/css/Edit-Form.css">
 </head>
 
+@php
+    $userCKReferFrst = Auth::guard('users')->user();
+    $ReferFriendFrst = App\Models\ReferFriend::where('referee_user_id',@$userCKReferFrst->id)->whereNull('referrer_user_id')->first();
+@endphp
+
 <body id="bodystart">
     <div style="position:absolute;right: 0;padding:5px;" id="btnMenuS1">
+        @if(@$ReferFriendFrst&&@$ProfileNows)
+            <button class="btn btn-primary logout-bt" type="button" id="ReferFriend" onclick="confirmReferrerFRSTBTN();">ให้คะแนผู้แนะนำ</button>
+        @endif
+        <button class="btn btn-primary logout-bt" type="button" id="ReferFriend" onclick="shareAndCopyTF(`https://lin.ee/jgB0ld5`);">แนะนำเพื่อน</button>
         <button class="btn btn-primary logout-bt" type="button" id="RewardsBtn" onclick="document.location.href=`{{route('frontend.rewards')}}`;">Rewards</button>
         <button class="btn btn-primary logout-bt" type="button" id="ProfileBtn" onclick="document.location.href=`{{route('frontend.profile')}}`;">Profile</button>
     </div>
@@ -29,6 +38,30 @@
             alert('{{session("message")}}');
         </script>
     @endif
+
 </body>
 
 </html>
+
+<script>
+    function fallbackCopyToClipboard(text) {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert(`Copied ${text} to clipboard !`);
+    }
+
+    // Example usage
+    // fallbackCopyToClipboard("Hello, World!");
+
+
+    function shareAndCopyTF(text) { 
+        fallbackCopyToClipboard(text);
+        window.open(text);
+    }
+</script>
+
+

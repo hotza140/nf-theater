@@ -53,6 +53,14 @@ Route::group(['middleware' => ['users']],function(){
     Route::get('youtube',[App\Http\Controllers\UserFrontendController::class,'nFYtPackage'])->name('frontend.youtube');
 
     Route::get('profile',[App\Http\Controllers\UserFrontendController::class,'profileRdSh'])->name('frontend.profile');
+    Route::get('profile_change',[App\Http\Controllers\UserFrontendController::class,'profile_change'])->name('frontend.profile_change');
+
+    Route::get('change_profile/{id}',[App\Http\Controllers\UserFrontendController::class,'change_profile']);
+
+    Route::post('profile',[App\Http\Controllers\UserFrontendController::class,'profileRdSh'])->name('frontend.profile');
+    Route::post('confirmReferrer',[App\Http\Controllers\UserFrontendController::class,'confirmReferrer'])->name('frontend.confirmReferrer');
+    Route::post('confirmReferrerFRST',[App\Http\Controllers\UserFrontendController::class,'confirmReferrerFRST'])->name('frontend.confirmReferrerFRST');
+
 
     Route::get('rewards',[App\Http\Controllers\UserFrontendController::class,'rewardsRead'])->name('frontend.rewards');
 
@@ -75,6 +83,9 @@ Route::group(['middleware' => ['users']],function(){
     Route::post('afterSaveOrderPackage',[App\Http\Controllers\UserFrontendController::class,'afterSaveOrderPackage'])->name('frontend.afterSaveOrderPackage');
 
     Route::get('SendMailSMTPT1',[App\Http\Controllers\UserFrontendController::class,'SendMailSMTPT1'])->name('frontend.SendMailSMTPT1');
+
+    // change password for username
+    Route::post('changepassusercus',[App\Http\Controllers\UserFrontendController::class,'changepassusercus'])->name('frontend.changepassusercus');
     
 });
 
