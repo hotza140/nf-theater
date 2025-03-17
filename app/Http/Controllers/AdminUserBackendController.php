@@ -37,11 +37,24 @@ class AdminUserBackendController extends Controller
 {
 
     public function dashbord(Request $r){
-        // ลบเช็คเวลา
+         // ลบเช็คเวลา
+         $date=date('Y-m-d');
+         $users = users::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+         $accounts=users_in_in::whereIn('id_user',@$users)->delete();
+         $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+         // ลบเช็คเวลา
+
+
         $date=date('Y-m-d');
         $ddd = users_in_in::pluck('id')->ToArray();
-        // $item = users_in_in_history::whereDate('date_end', '<', $date)->whereNull('status_check')->orderBy('id_user_in','asc')->get();
-        $item = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->get();
+        $item = users_in_in_history::whereNotIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->whereIn('id', function($query) {
+            $query->selectRaw('MIN(id)')
+                  ->from('tb_users_in_in_history')
+                  ->groupBy('id_user_in');
+        })->orderBy('id_user_in','asc')->get();
+
         $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
 
        return view('backend.users_all.dashbord',[

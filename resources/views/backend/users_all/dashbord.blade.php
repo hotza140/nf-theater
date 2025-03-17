@@ -104,7 +104,7 @@
                                                 <style>
                                                         /* การตั้งค่ากล่องจตุรัส */
                                                         .flashing-card {
-                                                            width: 250px;
+                                                            width: 550px;
                                                             height: 250px;
                                                             background-color: #f50505;  /* สีพื้นหลัง */
                                                             color: white;  /* สีข้อความ */
@@ -159,7 +159,7 @@
                                 <div class="card-block">
 
                                 <div class="flashing-card">
-                                    <p>จำนวนคนที่หมดอายุ {{ number_format(@$nub, 0) }} คน</p>
+                                    <h1>จำนวนคนที่หมดอายุ {{ number_format(@$nub, 0) }} คน </h1>
                                 </div>
                                 <br><br><br>
 
@@ -169,7 +169,7 @@
                                                 <tr>
                                                
                                                     <th>#</th>
-                                                    <th>Type</th>
+                                                    <!-- <th>Type</th> -->
                                                     <th>Username</th>
                                                     <th>Profile</th>
                                                     <th>Line</th>
@@ -185,36 +185,61 @@
                                             <tbody class="">
                                             @foreach($item as $key=>$accountsas)
                                             <?php
-                                             $user=App\Models\users::where('id',@$accountsas->id_user)->first();
-                                             $accountsass=App\Models\users_in::where('id',@$accountsas->id_user_in)->first();
-                                             if($accountsas->id_user_in!=@$line){
-                                               @$line=$accountsas->id_user_in;
-                                                $linm=null;
-                                             }else{
-                                                $linm=1;
-                                             }
+                                            $ddd = App\Models\users_in_in::pluck('id')->ToArray();
+                                             $gub=DB::table('tb_users_in_in_history')->whereNotIn('id_user_in_in', $ddd)
+                                             ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)->get();
+                                             $user=DB::table('tb_users')->where('id',@$accountsas->id_user)->first();
+                                             $accountsass=DB::table('tb_users_in')->where('id',@$accountsas->id_user_in)->first();
                                             ?>
 
                                             <tr>
                                                     <td>{{$key+1}} 
-
-                                                    @if($linm==null)
                                                     <a href="{{url('day_his/'.$accountsas->id_user_in)}}" class="btn btn-danger" style="color:white;" onclick="javascript:return confirm('Confirm?')" >
                                                                 <span >เปลี่ยนทั้งหมด</span>
                                                             </a> 
-                                                            @endif
 
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                         <i class="fa fa-mobile" style="font-size:30px; color:red;" title="หมดอายุแล้ว"></i>
                                                         @else
                                                         <i class="fa fa-desktop" style="font-size:30px; color:red;" title="หมดอายุแล้ว"></i>
                                                         @endif
+                                                    </td> -->
+
+                                                    <td>{{@$user->username}}
+                                                    @foreach($gub as $key=>$gubs)
+                                                    <?php
+                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
+                                                    ?>
+                                                    <br>
+                                                    {{@$user->username}}
+                                                    @endforeach
                                                     </td>
-                                                    <td>{{@$user->username}}</td>
-                                                    <td>{{@$user->name}}</td>
-                                                    <td>{{@$user->line}}</td>
+
+                                                    <td>{{@$user->name}}
+                                                    @foreach($gub as $key=>$gubs)
+                                                    <?php
+                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
+                                                    ?>
+                                                    <br>
+                                                    {{@$user->name}}
+                                                    @endforeach
+                                                    </td>
+
+                                                    <td>{{@$user->line}}
+                                                    @foreach($gub as $key=>$gubs)
+                                                    <?php
+                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
+                                                    ?>
+                                                    <br>
+                                                    {{@$user->line}}
+                                                    @endforeach
+                                                    </td>
+
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                     <td>{{@$accountsass->email}}</td>
@@ -253,11 +278,6 @@
                                                     <td>{{@$formatted_date1}}</td>
                                                     <td>{{@$formatted_date2}}</td>
                                                 </tr>
-
-                                                @if($linm!=null)
-                                                <tr><td colspan="7">-----------------------------------------------</td></tr>
-                                                @endif
-
                                                 @endforeach
 
                                             </tbody>
