@@ -127,15 +127,15 @@
                             <input type="hidden" name="Subpackage_Code" id="Subpackage_Code">
                             <input type="hidden" name="package_Name" value="Youtube">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อ Package</label>
-                            <input class="form-control form-v1" type="text" placeholder="Youtube ยกเว้นทีวี 1 เดือน" name="Subpackage_Name" id="Subpackage_Name">
+                            <input class="form-control form-v1" type="text" placeholder="Youtube ยกเว้นทีวี 1 เดือน" name="Subpackage_Name" id="Subpackage_Name" readonly>
                         </div>
                         <div class="form-div">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">จำนวนเงิน</label>
-                            <input class="form-control form-v1" type="text" placeholder="139" name="Subpackage_Paymoney" id="Subpackage_Paymoney">
+                            <input class="form-control form-v1" type="text" placeholder="139" name="Subpackage_Paymoney" id="Subpackage_Paymoney" readonly>
                         </div>
                         <div class="form-div">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label>
-                            <input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน" name="Orderemail" id="Orderemail">
+                            <input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน" name="Orderemail" id="Orderemail" readonly>
                         </div>
                     </div>
                 </form>

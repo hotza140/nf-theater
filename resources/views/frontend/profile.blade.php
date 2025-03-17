@@ -27,23 +27,23 @@
                 <div class="col d-flex align-items-center">
                     <div class="net-plan-details">
 
+                        <?php 
+                                $pak=DB::table('tb_users_in_in')->where('id_user',@$userProfile->id)->first();
+                                $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
+                                ?>
+
                         @if(@$selectNfYt=='NetFlix')
                             <div id="showUNetflix">
                                 <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Profile : {{@$userProfile->utypename}}</h2>
-                                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package : {{@$userProfile->Subpackage_Name}}</h2>
+                                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package : @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
+
                                 @if(@$userProfile->type_mail==null)
-                                
-                                <?php 
-                                $pak=DB::table('tb_users_in_in')->where('id_user',@$userProfile->id)->first();
-                                $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
-                                ?>
+
                                 <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID : {{@$ac->email}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
                                 <p class="pass-profile">Password : {{@$ac->password}}<span id="passwordnf"></span></p>
+
                                 @else
-                                <?php 
-                                $pak=DB::table('tb_users_in_in')->where('id_user',@$userProfile->id)->first();
-                                $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
-                                ?>
+
                                 @if(@$pak->type_mail==1)
                                 <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID : {{@$ac->email01}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
                                 <p class="pass-profile">Password : {{@$ac->password01}}<span id="passwordnf"></span></p>
@@ -52,21 +52,86 @@
                                 <p class="pass-profile">Password : {{@$ac->password02}}<span id="passwordnf"></span></p>
                                 @endif
 
-
                                 @endif
+
+                                <?php
+                                $date_start = @$pak->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                $date_end = @$pak->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                $today = date('Y-m-d'); // วันที่ปัจจุบัน
+
+                                if ($date_start && $date_end) {
+                                    if (strtotime($today) < strtotime($date_start)) {
+                                        $status = "ยังไม่เข้าช่วง";
+                                    } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                        $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                        $status = "เหลืออีก $days_remaining วัน";
+                                    } else {
+                                        $status = "หมดอายุแล้ว";
+                                    }
+                                } else {
+                                    $status = "ไม่มีข้อมูลวันที่";
+                                }
+
+                                if ($date_start) {
+                                    $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                } else {
+                                    $formatted_date1 = null;
+                                }
+                                if ($date_end) {
+                                    $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                } else {
+                                    $formatted_date2 = null;
+                                }
+                                ?>
+
+            @if(@$pak->date_start!=null)
+            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</h2>
+            @endif
                             </div>
                         @endif
                         @if(@$selectNfYt=='YouTube')
-                        <?php 
-                        $pak=DB::table('tb_users_in_in')->where('id_user',@$userProfile->id)->first();
-                        $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
-                        ?>
+
                         <div id="showUYoutube">
                             <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Youtube Package.</h2>
                             <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Profile : {{@$userProfile->useremail}}</h2>
-                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package : {{@$userProfile->Subpackage_Name}}</h2>
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package : @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
                             <p class="mail-profile">Account Email: : {{@$ac->email}}<span id="emailYT"></span></p> <!--nftheater134+27@gmail.com-->
                             <p class="pass-profile">Password : {{@$ac->password}}<span id="passYT"></span></p> <!--0123456-->
+
+                            <?php
+                                                    $date_start = @$pak->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = @$pak->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
+
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
+
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
+                                                    ?>
+
+                                    @if(@$pak->date_start!=null)
+                                    <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</h2>
+                                    @endif
+                                
                         </div>
                         @endif
 
@@ -87,6 +152,8 @@
         </div>
         
     </div>
+
+    @if(@$pak->date_start!=null)
     <div class="net-container">
         <h1 class="head-pack" style="font-family: Prompt, sans-serif;">ข้อมูลแพ็กเกจ</h1>
         <div class="net-plans">
@@ -124,6 +191,9 @@
             @endif
         </div>
     </div>
+    @endif
+
+
     <div class="d-link">
         <div class="d-link-in2">
             <div class="box-link-m"><a href="{{route('frontend.netflix')}}?id=1"><img src="assets/img/NF22%20(1).png"></a></div>

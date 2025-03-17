@@ -38,11 +38,12 @@ class AdminUserBackendController extends Controller
 
     public function dashbord(Request $r){
          // ลบเช็คเวลา
-         $date=date('Y-m-d');
-         $users = users::whereDate('date_end', '<', $date)->pluck('id')->toArray();
-         $accounts=users_in_in::whereIn('id_user',@$users)->delete();
-         $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
-         // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
 
 
         $date=date('Y-m-d');
@@ -447,9 +448,10 @@ class AdminUserBackendController extends Controller
      public function users_all(Request $r){
         // ลบเช็คเวลา
         $date=date('Y-m-d');
-        $users = users::whereDate('date_end', '<', $date)->pluck('id')->toArray();
-        $accounts=users_in_in::whereIn('id_user',@$users)->delete();
-        $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
+        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
         // ลบเช็คเวลา
 
 
@@ -485,12 +487,13 @@ class AdminUserBackendController extends Controller
    }
      
      public function users(Request $r){
-         // ลบเช็คเวลา
-         $date=date('Y-m-d');
-         $users = users::whereNotNull('type_netflix')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
-         $accounts=users_in_in::whereIn('id_user',@$users)->delete();
-         $users_update = users::whereDate('date_end', '<', $date)->update(['status_account' => 2]);
-         // ลบเช็คเวลา
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
 
         $item=users ::whereNotNull('type_netflix')->orderByRaw(
             '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
@@ -844,16 +847,6 @@ class AdminUserBackendController extends Controller
         $item=users::where('id',$id)->first();
         $item->status_edit=Auth::guard('admin')->user()->id;
         $item->save();
-        
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users = users::where('id',$id)->whereDate('date_end', '<', $date)->first();
-        if($users!=null){
-            $accounts=users_in_in::where('id_user',@$id)->delete();
-            $item->status_account=2;
-            $item->save();
-        }
-        // ลบเช็คเวลา
 
         return view('backend.users.edit',[
             'item'=>$item,
@@ -1196,11 +1189,12 @@ class AdminUserBackendController extends Controller
        //User_in//
        public function users_in(Request $r){
          // ลบเช็คเวลา
-         $date=date('Y-m-d');
-         $users = users::whereNotNull('type_netflix')->whereDate('date_end', '<', $date)->pluck('id')->toArray();
-         $accounts=users_in_in::whereIn('id_user',@$users)->delete();
-         $users_update = users::whereNotNull('type_netflix')->whereDate('date_end', '<', $date)->update(['status_account' => 2]);
-         // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
 
           $item=users_in::whereNull('type_f')->orderby('id','desc')->paginate(10);
           $search = $r->search;
@@ -1427,19 +1421,6 @@ class AdminUserBackendController extends Controller
       }
       public function users_in_edit($id){
           $item=users_in::where('id',$id)->first();
-
-        // ลบเช็คเวลา
-          $ch=users_in_in::where('id_user_in',@$id)->get();
-          $date=date('Y-m-d');
-          foreach($ch as $chs){
-          $users = users::where('id',$chs->id_user)->whereDate('date_end', '<', $date)->first();
-          if($users!=null){
-              $accounts=users_in_in::where('id',$chs->id)->delete();
-              $item->status_account=2;
-              $item->save();
-          }
-         }
-         // ลบเช็คเวลา
 
           return view('backend.users_in.edit',[
               'item'=>$item,
