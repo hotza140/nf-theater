@@ -837,8 +837,8 @@ class YoutubeBackendController extends Controller
                     $aaa->id_user_in = $user->id;
                     $aaa->type = 'MOBILE';
 
-                    $aaa->date_start=$user->date_start; 
-                    $aaa->date_end=$user->date_end;
+                    $aaa->date_start=$userData['date_start'] ?? null;
+                    $aaa->date_end=$userData['date_end'] ?? null;
                     $aaa->save();
     
                     $aaa_his = new users_in_in_history();
@@ -846,8 +846,8 @@ class YoutubeBackendController extends Controller
                     $aaa_his->id_user_in = $user->id;
                     $aaa_his->type = 'MOBILE';
                     $aaa_his->id_user_in_in = $aaa->id;
-                    $aaa_his->date_start=$user->date_start; 
-                    $aaa_his->date_end=$user->date_end;
+                    $aaa_his->date_start=$userData['date_start'] ?? null;
+                    $aaa_his->date_end=$userData['date_end'] ?? null;
                     $aaa_his->save();
 
                     $acc=$user->id;
@@ -875,8 +875,8 @@ class YoutubeBackendController extends Controller
                     $aaa->id_user_in = $user->id;
                     $aaa->type = 'PC';
                     $aaa->type_mail = $newTypeMail;
-                    $aaa->date_start=$user->date_start; 
-                    $aaa->date_end=$user->date_end;
+                    $aaa->date_start=$userData['date_start'] ?? null;
+                    $aaa->date_end=$userData['date_end'] ?? null;
                     $aaa->save();
     
                     $aaa_his = new users_in_in_history();
@@ -885,8 +885,8 @@ class YoutubeBackendController extends Controller
                     $aaa_his->type = 'PC';
                     $aaa_his->id_user_in_in = $aaa->id;
                     $aaa_his->type_mail = $newTypeMail;
-                    $aaa_his->date_start=$user->date_start; 
-                    $aaa_his->date_end=$user->date_end;
+                    $aaa_his->date_start=$userData['date_start'] ?? null;
+                    $aaa_his->date_end=$userData['date_end'] ?? null;
                     $aaa_his->save();
 
                     $acc=$user->id;
