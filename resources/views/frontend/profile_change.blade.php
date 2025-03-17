@@ -1,6 +1,11 @@
 @extends('frontend.layouts.frontendbase')
 @section('contentfront')
 
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
     <div class="net-container">
         <h1 class="head-pro">NF THEATER</h1>
         <div class="profile-plans">
