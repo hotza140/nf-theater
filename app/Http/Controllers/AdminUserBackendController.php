@@ -50,11 +50,8 @@ class AdminUserBackendController extends Controller
         $ddd = users_in_in::pluck('id')->ToArray();
         $item = users_in_in_history::whereNotIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
-        ->whereIn('id', function($query) {
-            $query->selectRaw('MIN(id)')
-                  ->from('tb_users_in_in_history')
-                  ->groupBy('id_user_in');
-        })->orderBy('id_user_in','asc')->get();
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in','asc')->get();
 
         $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
 
