@@ -14,7 +14,7 @@
 
 @php
     $userCKReferFrst = Auth::guard('users')->user();
-    $ReferFriendFrst = App\Models\ReferFriend::where('referee_user_id',@$userCKReferFrst->id)->whereNull('referrer_user_id')->first();
+    $ReferFriendFrst = App\Models\ReferFriend::where('referee_user_id',@$userCKReferFrst->username)->whereNull('referrer_user_id')->first();
 @endphp
 
 <body id="bodystart">
@@ -22,7 +22,7 @@
         @if(@$ReferFriendFrst&&@$ProfileNows)
             <button class="btn btn-primary logout-bt" type="button" id="ReferFriend" onclick="confirmReferrerFRSTBTN();">ให้คะแนผู้แนะนำ</button>
         @endif
-        <button class="btn btn-primary logout-bt" type="button" id="ReferFriend" onclick="shareAndCopyTF(`https://lin.ee/jgB0ld5`);">แนะนำเพื่อน</button>
+        {{-- <button class="btn btn-primary logout-bt" type="button" id="ReferFriend" onclick="shareAndCopyTF(`https://lin.ee/jgB0ld5`);">แนะนำเพื่อน</button> --}}
         <button class="btn btn-primary logout-bt" type="button" id="RewardsBtn" onclick="document.location.href=`{{route('frontend.rewards')}}`;">Rewards</button>
         <button class="btn btn-primary logout-bt" type="button" id="ProfileBtn" onclick="document.location.href=`{{route('frontend.profile')}}`;">Profile</button>
     </div>
