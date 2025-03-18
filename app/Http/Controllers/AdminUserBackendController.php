@@ -615,6 +615,9 @@ class AdminUserBackendController extends Controller
             $item->save();
             return redirect()->to('users')->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
         }
+        }else{
+            $item->status_account=1;
+            $item->save();
         }
 
         }else{
@@ -655,6 +658,9 @@ class AdminUserBackendController extends Controller
             $item->save();
             return redirect()->to('users')->with('message', 'สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Manual');
         }
+        }else{
+            $item->status_account=1;
+            $item->save();
         }
 
         }
@@ -782,12 +788,18 @@ class AdminUserBackendController extends Controller
                 $aaa_his->date_start=$r->date_start;
                 $aaa_his->date_end=$r->date_end;
                 $aaa_his->save();
+
+                $item->status_account=0;
+                $item->save();
     
             }else{
                 $item->status_account=1;
                 $item->save();
                 return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
             }
+            }else{
+            $item->status_account=1;
+            $item->save();
             }
 
             }else{
@@ -825,12 +837,18 @@ class AdminUserBackendController extends Controller
                 $aaa_his->date_start=$r->date_start; 
                 $aaa_his->date_end=$r->date_end;
                 $aaa_his->save();
+
+                $item->status_account=0;
+                $item->save();
     
             }else{
                 $item->status_account=1;
                 $item->save();
                 return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
             }
+            }else{
+                $item->status_account=1;
+                $item->save();
             }
 
             }
@@ -954,6 +972,9 @@ class AdminUserBackendController extends Controller
                     $item->status_account = 1;
                     $item->save();
                 }
+                }else{
+                    $item->status_account=1;
+                    $item->save();
                 }
 
                 }else{
@@ -993,7 +1014,12 @@ class AdminUserBackendController extends Controller
                     $item->status_account = 1;
                     $item->save();
                 }
+                }else{
+                    $item->status_account=1;
+                    $item->save();
                 }
+                
+
                 }
 
 
@@ -1602,7 +1628,7 @@ class AdminUserBackendController extends Controller
         $item_his->date_end=@$aaa->date_end;
         $item_his->save();
 
-        $aaa->status_account=1;
+        $aaa->status_account=0;
         $aaa->save();
         }
         }
@@ -1668,7 +1694,7 @@ class AdminUserBackendController extends Controller
          $item_his->date_end=@$aaa->date_end;
          $item_his->save();
 
-         $aaa->status_account=1;
+         $aaa->status_account=0;
          $aaa->save();
          }
 
