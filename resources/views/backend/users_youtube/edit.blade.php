@@ -630,8 +630,8 @@
                                             <tbody class="">
                                             @foreach($accountsa as $key=>$accountsas)
                                             <?php
-                                             $accountsass=DB::table('users_in')->where('id',@$accountsas->id_user_in)->first();
-                                             $ch_his=DB::table('users_in_in')->where('id_user',@$accountsas->id_user)
+                                             $accountsass=DB::table('tb_users_in')->where('id',@$accountsas->id_user_in)->first();
+                                             $ch_his=DB::table('tb_users_in_in')->where('id_user',@$accountsas->id_user)
                                              ->where('id_user_in',@$accountsas->id_user_in)
                                              ->where('created_at',@$accountsas->created_at)
                                              ->first();
