@@ -286,6 +286,32 @@
                                 <div class="card">
                                 <div class="card-block">
 
+                                <form class="form-horizontal" action="{{url('y_users_add_many')}}" method="GET" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group row" >
+                                        <div class="col-sm-1">
+                                        <input type="hidden" class="form-control" id="" name="id" value="{{@$item->id}}" >
+
+                                        <input type="number" class="form-control" id="number_input" name="number" value="1" min="1" max="10" required>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button type="submit" class="btn btn-success" style="color:white;">
+                                                <i class="fa fa-plus"></i> สร้างแบบหลาย User
+                                                </button>
+                                            </div>
+                                        </div>
+                                        </form>
+                                        <script>
+                                        document.getElementById("number_input").addEventListener("input", function () {
+                                            if (this.value > 10) {
+                                                this.value = 10;
+                                            } else if (this.value < 1) {
+                                                this.value = 1;
+                                            }
+                                        });
+                                        </script>
+
+
                                     <form method="post" id="" action="{{ url('y_users_store_form_in') }}"
                                         enctype="multipart/form-data" >
                                         @csrf

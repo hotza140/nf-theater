@@ -668,9 +668,10 @@ class YoutubeBackendController extends Controller
             if($item->type=='MOBILE'){
 
             $user = (new users_in())->getEligibleUser_youtube();
+            $aaa=users_in_in::where('id_user',@$r->id)->first();
     
-            if($r->username!=null and $r->password!=null){
-            if (@$user!=null) {
+            if($item->username!=null and $item->password!=null){
+            if (@$user!=null or @$aaa!=null ) {
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
 
                 if(@$aaa==null){
@@ -709,9 +710,10 @@ class YoutubeBackendController extends Controller
             }else{
 
                 $user = (new users_in())->getEligibleUser_pc();
+                $aaa=users_in_in::where('id_user',@$r->id)->first();
     
-            if($r->username!=null and $r->password!=null){
-            if (@$user!=null) {
+            if($item->username!=null and $item->password!=null){
+            if (@$user!=null or @$aaa!=null ) {
 
             // นับจำนวน users_in_in ที่มีอยู่แล้ว
             $countExisting = users_in_in::where('id_user_in', $user->id)->count();
@@ -812,6 +814,7 @@ class YoutubeBackendController extends Controller
             'list'=>"users_youtube",
 
             'number'=>$r->number,
+            'id'=>$r->id,
         ]);
     }
 
@@ -846,7 +849,14 @@ class YoutubeBackendController extends Controller
             if ($item->save()) {
 
                 if($userData['type']=='MOBILE'){
-                $user = (new users_in())->getEligibleUser_youtube();
+
+                    if($r->id==null){
+                        $user = (new users_in())->getEligibleUser_youtube();
+                    }else{
+                        $user=users_in::where('id',@$r->id)->first();
+                        $bcc=users_in_in::where('id_user_in',@$user->id)->count();
+                        if($bcc<5){}else{$user=null;}
+                    }
 
                 if(@$userData['username']!=null and @$userData['password']!=null ){
                 if ($user !== null) {
@@ -881,7 +891,14 @@ class YoutubeBackendController extends Controller
                 }
 
                 }else{
-                $user = (new users_in())->getEligibleUser_pc();
+
+                if($r->id==null){
+                    $user = (new users_in())->getEligibleUser_pc();
+                    }else{
+                        $user=users_in::where('id',@$r->id)->first();
+                        $bcc=users_in_in::where('id_user_in',@$user->id)->whereNotNull('type_mail')->count();
+                        if($bcc<2){}else{$user=null;}
+                    }
 
                 if(@$userData['username']!=null and @$userData['password']!=null ){
                 if ($user !== null) {
