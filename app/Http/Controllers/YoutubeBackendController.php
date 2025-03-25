@@ -668,9 +668,10 @@ class YoutubeBackendController extends Controller
             if($item->type=='MOBILE'){
 
             $user = (new users_in())->getEligibleUser_youtube();
+            $aaa=users_in_in::where('id_user',@$r->id)->first();
     
             if($r->username!=null and $r->password!=null){
-            if (@$user!=null) {
+            if (@$user!=null or @$aaa!=null ) {
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
 
                 if(@$aaa==null){
@@ -709,9 +710,10 @@ class YoutubeBackendController extends Controller
             }else{
 
                 $user = (new users_in())->getEligibleUser_pc();
+                $aaa=users_in_in::where('id_user',@$r->id)->first();
     
             if($r->username!=null and $r->password!=null){
-            if (@$user!=null) {
+            if (@$user!=null or @$aaa!=null ) {
 
             // นับจำนวน users_in_in ที่มีอยู่แล้ว
             $countExisting = users_in_in::where('id_user_in', $user->id)->count();
