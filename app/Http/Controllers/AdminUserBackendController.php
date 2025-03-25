@@ -59,16 +59,36 @@ class AdminUserBackendController extends Controller
 
 
         $date=date('Y-m-d');
+        $startDate = date('Y-m-d', strtotime('+4 days', strtotime($date))); // มากกว่า 3 วัน (เริ่มจากวันที่ 4)
+        $endDate = date('Y-m-d', strtotime('+7 days', strtotime($date))); // ไม่เกิน 7 วัน
+
         $ddd = users_in_in::pluck('id')->ToArray();
         $item = users_in_in_history::whereNotIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
         ->groupBy('id_user_in')
         ->orderBy('id_user_in','asc')->get();
 
+
+        $itemb = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->get();
+
+        $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+            ->whereNull('status_check')
+            ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
+            ->groupBy('id_user_in')
+            ->orderBy('id_user_in', 'asc')
+            ->get();
+
         $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
 
        return view('backend.users_all.dashbord',[
            'item'=>$item,
+           'itemb'=>$itemb,
+           'itemc'=>$itemc,
            'nub'=>$nub,
            'page'=>"all",
            'list'=>"dashbord",
