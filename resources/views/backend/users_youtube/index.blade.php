@@ -264,12 +264,14 @@
                                                             <span class="status-expired">ตัวแทน</span>
                                                         @endif
                                                         {{$items->username}}
-
-                                                        @foreach($t_users as $t_userss)
-                                                        <br><a href="{{url('y_users_edit/'.$t_userss->id)}}" target="_blank">{{$t_userss->name}}</a>
+                                                    </td>
+                                                    <td>{{$items->email}}
+                                                    <a href="{{url('y_users_destroy/'.$items->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
+                                                    @foreach($t_users as $t_userss)
+                                                        <br><a href="{{url('y_users_edit/'.$t_userss->id)}}" target="_blank">{{$t_userss->email}}</a>
+                                                        <a href="{{url('y_users_destroy/'.$items->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
                                                         @endforeach
                                                     </td>
-                                                    <td>{{$items->email}}</td>
                                                     <td>{{$items->line}}</td>
 
                                                     <td>{{@$items->package}}
@@ -367,7 +369,7 @@
 
                                                     <td>
                                                     <a href="{{url('y_users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
-                                                        <a href="{{url('y_users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
+                                                        <!-- <a href="{{url('y_users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a> -->
                                                         <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->email}}', '{{@$paga}}', '{{$items->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>

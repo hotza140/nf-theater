@@ -266,8 +266,10 @@
                                                         {{$items->username}}
                                                     </td>
                                                     <td>{{$items->name}}
+                                                    <a href="{{url('users_destroy/'.$items->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
                                                         @foreach($t_users as $t_userss)
                                                         <br><a href="{{url('users_edit/'.$t_userss->id)}}" target="_blank">{{$t_userss->name}}</a>
+                                                        <a href="{{url('users_destroy/'.$t_userss->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
                                                         @endforeach
                                                     </td>
                                                     <td>{{$items->line}}</td>
@@ -375,7 +377,7 @@
 
                                                     <td>
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
-                                                        <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
+                                                        <!-- <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a> -->
                                                         <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$paga}}', '{{$items->link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>

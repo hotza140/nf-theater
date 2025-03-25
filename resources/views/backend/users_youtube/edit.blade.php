@@ -532,7 +532,7 @@
                                             <tr>
                                                     <td>{{$key+1}}</td>
                                                     <td>{{$user_rs->username}}</td>
-                                                    <td>{{$user_rs->name}}</td>
+                                                    <td>{{$user_rs->email}}</td>
                                                     <td>{{$user_rs->line}}</td>
                                                     <?php
                                                     $date_start = $user_rs->date_start; // วันที่เริ่มต้น (Y-m-d)

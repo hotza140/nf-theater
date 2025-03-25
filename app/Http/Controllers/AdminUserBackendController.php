@@ -454,7 +454,7 @@ class AdminUserBackendController extends Controller
 
        $item=users ::orderByRaw(
            '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
-       )->paginate(20);
+       )->groupBy('username')->paginate(20);
 
        $search = $r->search;
        
@@ -471,7 +471,7 @@ class AdminUserBackendController extends Controller
        
            $item = $item->orderByRaw(
                '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
-           )->paginate(20);
+           )->groupBy('username')->paginate(20);
        }
 
        return view('backend.users_all.index',[
