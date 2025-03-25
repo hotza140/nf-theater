@@ -377,15 +377,20 @@
     document.getElementById("package_a").addEventListener("change", updateDaysAndEndDate);
 </script>
 
+<?php
+// ตรวจสอบว่า $item->date_end มีค่าหรือไม่
+$dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
+?>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const dateStartInput = document.getElementById('date_start');
         const daySelect = document.getElementById('day_select');
         const dayInput = document.getElementById('day_input');
 
-        // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
-        const today = new Date().toISOString().split('T')[0];
-        dateStartInput.value = today;
+        // ตั้งค่าเริ่มต้นให้ date_start จาก PHP
+        const initialDate = "<?= $dateStartValue ?>";
+        dateStartInput.value = initialDate;
 
         // เมื่อเลือกจำนวนวันจาก select ให้ไปใส่ใน input และคำนวณวันสิ้นสุด
         daySelect.addEventListener('change', () => {
@@ -402,6 +407,15 @@
         dateStartInput.addEventListener('change', () => {
             updateEndDate(parseInt(dayInput.value, 10));
         });
+
+        // ฟังก์ชันอัปเดตวันสิ้นสุด
+        function updateEndDate(days) {
+            if (!isNaN(days)) {
+                const startDate = new Date(dateStartInput.value);
+                startDate.setDate(startDate.getDate() + days);
+                document.getElementById('date_end').value = startDate.toISOString().split('T')[0];
+            }
+        }
     });
 </script>
 

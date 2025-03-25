@@ -805,7 +805,7 @@ class AdminUserBackendController extends Controller
             $user = (new users_in())->getEligibleUser();
             $aaa=users_in_in::where('id_user',@$r->id)->first();
     
-            if($r->username!=null and $r->password!=null){
+            if($item->username!=null and $item->password!=null){
             if (@$user!=null or @$aaa!=null) {
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
 
@@ -847,7 +847,7 @@ class AdminUserBackendController extends Controller
                 $user = (new users_in())->getEligibleUser_pc();
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
     
-            if($r->username!=null and $r->password!=null){
+            if($item->username!=null and $item->password!=null){
             if (@$user!=null or @$aaa!=null) {
 
             // นับจำนวน users_in_in ที่มีอยู่แล้ว
