@@ -30,11 +30,23 @@ use App\Models\users_in_in_history;
 use App\Models\admin;
 use App\Models\country;
 use App\Models\alert;
+use App\Models\log_dash;
 
 use App\Models\created_history;
 
 class AdminUserBackendController extends Controller
 {
+
+    public function his_dash(Request $r){
+       $item = log_dash::orderBy('id','desc')->get();
+
+      return view('backend.users_all.his_dash',[
+          'item'=>$item,
+          'page'=>"all",
+          'list'=>"dashbord",
+      ]);
+  }
+
 
     public function dashbord(Request $r){
          // ลบเช็คเวลา
@@ -66,7 +78,14 @@ class AdminUserBackendController extends Controller
    
    public function day_his($id){
     $ddd = users_in_in::pluck('id')->ToArray();
+    $sss = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->where('id_user_in',$id)->first();
     $users_update = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->where('id_user_in',$id)->update(['status_check' => 1]);
+
+    $aaa_his = new log_dash();
+    $aaa_his->id_user = Auth::guard('admin')->user()->id;
+    $aaa_his->id_in_in_history = @$sss->id;
+    $aaa_his->save();
+
     return redirect()->back()->with('message','Sucess!');
     }
 
@@ -908,6 +927,7 @@ class AdminUserBackendController extends Controller
             'list'=>"users",
 
             'number'=>$r->number,
+            'id'=>$r->id,
         ]);
     }
 
@@ -942,7 +962,14 @@ class AdminUserBackendController extends Controller
             if ($item->save()) {
 
                 if($userData['type']=='MOBILE'){
-                $user = (new users_in())->getEligibleUser();
+
+                if($r->id==null){
+                    $user = (new users_in())->getEligibleUser();
+                }else{
+                    $user=user_in::where('id',@$r->id)->first();
+                    $bcc=user_in_in::where('id_user_in',@$user->id)->count();
+                    if($bcc<5){}else{$user=null;}
+                }
 
                 if(@$userData['username']!=null and @$userData['password']!=null ){
                 if ($user !== null) {
@@ -978,7 +1005,14 @@ class AdminUserBackendController extends Controller
                 }
 
                 }else{
+
+                if($r->id==null){
                 $user = (new users_in())->getEligibleUser_pc();
+                }else{
+                    $user=user_in::where('id',@$r->id)->first();
+                    $bcc=user_in_in::where('id_user_in',@$user->id)->whereNotNull('type_mail')->count();
+                    if($bcc<2){}else{$user=null;}
+                }
 
                 if(@$userData['username']!=null and @$userData['password']!=null ){
                 if ($user !== null) {

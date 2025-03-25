@@ -22,12 +22,19 @@
                             <div class="card">
                                 <div class="card-header">
 
+                                @if(@$id!=null)
+                                <?php $acc=DB::table('tb_users_in')->where('id',@$id)->first();  ?>
+                                <h3 style="color:red;">กำลังเพิ่มคนเข้า Account {{@$acc->name}}</h3>
+                                @endif
+
                                 </div>
                                 <div class="card-block">
 
                                     <form method="post" id="" action="{{ url('y_users_store_many') }}"
                                         enctype="multipart/form-data" >
                                         @csrf
+
+                                        <input type="hidden" name="id" value="{{@$id}}">
 
                                         <!-- -------EDIT---------- -->
                                         <input type="hidden" name="edit" value="{{@$item->id}}">

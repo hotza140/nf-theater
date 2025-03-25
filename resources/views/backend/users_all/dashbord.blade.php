@@ -153,7 +153,7 @@
                             <!-- Zero config.table start -->
                             <div class="card">
                                 <div class="card-header">
-
+                                <a style="color:white;" class="btn btn-info" href="{{url('his_dash')}}" target="_blank" > <i class="fa fa-plus"></i>ประวัติการยืนยัน</a>
                                         </div>
                                 </div>
                                 <div class="card-block">

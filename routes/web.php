@@ -101,6 +101,9 @@ Route::group(['middleware' => ['admin']],function(){
     Route::get('/dashbord',[App\Http\Controllers\AdminUserBackendController::class,'dashbord']);
     Route::get('/day_his/{id}',[App\Http\Controllers\AdminUserBackendController::class,'day_his']);
 
+
+    Route::get('/his_dash',[App\Http\Controllers\AdminUserBackendController::class,'his_dash']);
+
     Route::get('/alert',[App\Http\Controllers\AdminUserBackendController::class,'alert']);
  //admin
  Route::get('admin',[App\Http\Controllers\AdminUserBackendController::class,'admin']);

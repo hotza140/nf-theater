@@ -151,28 +151,51 @@
                                             <!-- <tbody class="sortable"> -->
                                             <tbody class="">
                                             @foreach($item as $key=>$items)
+                                            <?php   $in=App\Models\users::where('username',$items->username)->whereNotNull('type_netflix')->first();
+                                        
+                                                $inn=App\Models\users::where('username',$items->username)->whereNotNull('type_youtube')->first(); 
+                                            
+                                            
+                                             ?>
                                             <tr class="num" id="{{$items->id}}">
                                                     <td>{{$key+1}}</td>
 
                                                     <?php
-                                                    if($items->type=='PC'){
-                                                        $paga='TV '.@$items->package;
+                                                    if(@$in->type_netflix!=null){
+                                                    if(@$in->type=='PC'){
+                                                        $paga='TV '.@$in->package;
                                                     }else{
-                                                        $paga='ยกเว้นทีวี '.@$items->package;
+                                                        $paga='ยกเว้นทีวี '.@$in->package;
+                                                    }
+                                                    }else{
+                                                        $paga=@$in->package;
+                                                    }
+
+                                                    ?>
+
+<?php
+                                                    if(@$inn->type_netflix!=null){
+                                                    if(@$inn->type=='PC'){
+                                                        $pagaa='TV '.@$inn->package;
+                                                    }else{
+                                                        $pagaa='ยกเว้นทีวี '.@$inn->package;
+                                                    }
+                                                    }else{
+                                                        $pagaa=@$inn->package;
                                                     }
 
                                                     ?>
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
+                                                    @if($items->username!=null)
                                                     <td>{{$items->username}}</td>
-                                                    <td>{{$items->line}}</td>
-                                                    <td>{{@$paga}}</td>
-
-                                                    @if($items->type_netflix!=null)
-                                                    <td>NETFLIX</td>
                                                     @else
-                                                    <td>YOUTUBE</td>
+                                                    <td>ตัวแทน</td>
                                                     @endif
+                                                    <td>{{$items->line}}</td>
+                                                    <td>{{@$paga}} / {{@$pagaa}}</td>
+
+                                                    <td> @if(@$in!=null) NETFLIX / @endif @if(@$inn!=null) YOUTUBE @endif</td>
 
 
                                                     @if(Auth::guard('admin')->user()->type == 1 or Auth::guard('admin')->user()->type == 0)
