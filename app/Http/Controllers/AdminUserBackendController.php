@@ -95,7 +95,7 @@ class AdminUserBackendController extends Controller
             ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
             ->groupBy('id_user_in')
             ->orderBy('id_user_in', 'asc')
-            ->get();
+            ->count();
 
         $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
 
