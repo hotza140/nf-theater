@@ -8,16 +8,10 @@
             </div>
         </div>
     </div>
-    <div class="d-link">
-        <div class="d-link-in">
-            <div class="box-link-m"><a href="{{route('frontend.netflix')}}?id=1"><img src="assets/img/NF22%20(1).png"></a></div>
-            <div class="box-link-m"><a href="{{route('frontend.youtube')}}?id=2"><img src="assets/img/NF11%20(1).png"></a></div>
-            <div class="box-link-m"><a class="cursor-box" data-bs-target="#modal-member" data-bs-toggle="modal"><img src="assets/img/NF3%20(1).png"></a></div>
-            <div class="box-link-m"><a class="cursor-box" data-bs-target="#modal-repoints" data-bs-toggle="modal"><img src="assets/img/NF5%20(1).png"></a></div>
-            <div class="box-link-m"><a class="cursor-box" data-bs-toggle="modal" data-bs-target="#modal-points"><img src="assets/img/NF4%20(1).png"></a></div>
-            <div class="box-link-m"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img src="assets/img/NF6%20(1).png"></a></div>
-        </div>
-    </div>
+    
+    <!--ส่วนของปุ่มไว้เลือกรายการบริการเช่น netflix youtube confirm service customer etc.-->
+    @include('frontend.headbtnservice')
+
     <div class="net-container">
         <h1 class="head-pack" style="font-family: Prompt, sans-serif;">รายการแลกของรางวัล</h1>
         <div class="net-plans">
@@ -225,7 +219,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" role="dialog" tabindex="-1" id="modal-points" style="margin-top: 150px;">
+        {{-- <div class="modal fade" role="dialog" tabindex="-1" id="modal-points" style="margin-top: 150px;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header m-h">
@@ -237,13 +231,18 @@
                     <div class="modal-body m-h">
                         <div class="point-box-div">
                             <div class="point-box"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img class="img-po1" src="assets/img/event_theater.png"></a></div>
-                            <div class="point-box"><a href="/rewards.html"><img class="img-po1" src="assets/img/redeem_reward.png"></a></div>
+                            <div class="point-box"><a href="{{route('frontend.rewards')}}"><img class="img-po1"
+                                src="assets/img/event_theater01.png"></a></div>
+                            <div class="point-box"><a href="{{route('frontend.rewards')}}"><img class="img-po1" src="assets/img/redeem_reward.png"></a></div>
                         </div>
                     </div>
                     <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"></div>
                 </div>
             </div>
-        </div>
+        </div> --}}
+
+        @include('frontend.headmodelpoints')
+        
         <div class="modal fade" role="dialog" tabindex="-1" id="modal-repoints" style="padding-top: 150px;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -262,7 +261,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"><button class="btn btn-primary bt-pay" type="button">แลกของรางวัล</button></div>
+                    <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"><button 
+                        class="btn btn-primary bt-pay" type="button">แลกของรางวัล</button></div>
                 </div>
             </div>
         </div>
@@ -299,9 +299,7 @@
     {{-- <div>
         <p class="copy-r">Copyright ©&nbsp;NF Theater&nbsp;2024.</p>
     </div> --}}
-    <script>
-        document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;
-        document.getElementById('RewardsBtn').style = `display:none;`;
+    
     </script>
 
     @if(session('message'))

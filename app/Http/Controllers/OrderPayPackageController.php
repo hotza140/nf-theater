@@ -31,6 +31,7 @@ use App\Models\admin;
 use App\Models\Marking;
 use App\Models\OrderPayPackage;
 use App\Models\PayPackNotmatch;
+use App\Models\OrderPayPackageTruewallet;
 
 class OrderPayPackageController extends Controller
 {
@@ -111,6 +112,38 @@ class OrderPayPackageController extends Controller
         
         $item = $item->orderBy('Subpackage_Name', 'asc')->paginate(10);
         return view('backend.orderpaypackage.indexNotMatch',[
+            'item'=>$item,
+            'page'=>"admin",
+            'list'=>"orderpaypackage",
+    
+            'search'=>$search,
+            'status_account'=>$status_account,
+        ]);
+    }
+    //OrderPayPackageTruewallet//
+    public function paypackbytruewallet(Request $r){
+        $date=date('Y-m-d');
+    
+        $item=OrderPayPackageTruewallet::select('*');
+        $search = $r->search;
+        $status_account = $r->status_account;
+        if (!empty($search) or !empty($status_account) ) {
+            $item = OrderPayPackageTruewallet::where(function ($query) use ($search, $status_account) {
+                $query->where('username', 'LIKE', '%' . $search . '%');
+                $query->orwhere('package_Name', 'LIKE', '%' . $search . '%');
+                $query->orwhere('Subpackage_Name', 'LIKE', '%' . $search . '%');
+                // $query->orwhere('RefPayment', 'LIKE', '%' . $search . '%');
+            });
+    
+            if ($status_account == '0') {
+                $item = $item->where('date_end','>=',$date);
+            }elseif($status_account == '1'){
+                $item = $item->where('date_end','<',$date);
+            }
+        }
+        
+        $item = $item->orderBy('Subpackage_Name', 'asc')->paginate(10);
+        return view('backend.orderpaypackage.indexTrueWalletPay',[
             'item'=>$item,
             'page'=>"admin",
             'list'=>"orderpaypackage",

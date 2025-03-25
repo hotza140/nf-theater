@@ -62,7 +62,7 @@
                 <!-- Page-header start -->
                 <div class="page-header card">
                     <div class="card-block">
-                        <h3 class="m-b-10" style="color: red"><b></b>Payment Packages Not Match BACKEND</h3>
+                        <h3 class="m-b-10" style="color: red"><b></b>Payment Packages By TrueMoney Wallet.</h3>
 
                     </div>
                 </div>
@@ -123,9 +123,9 @@
                                                     <th>package_Name</th>
                                                     <th>Subpackage_Name</th>
                                                     <th>Subpackage Price</th>
-                                                    <th>Cus Paymoney</th>
+                                                    {{-- <th>Cus Paymoney</th>
                                                     <th>Ref. Payment</th>
-                                                    <th>Message Payment</th>
+                                                    <th>Message Payment</th> --}}
                                                     <th>Show Slip</th>
                                                     {{-- <th>Reware Gift</th> --}}
                                                     {{-- <th>Tool</th> --}}
@@ -158,12 +158,12 @@
                                                     <td>{{$items->package_Name}}</td>
                                                     <td>{{$items->Subpackage_Name}}</td>
                                                     <td style="text-align: right; margin-right:5px;">{{$items->Subpackage_Paymoney}}</td>
-                                                    <td style="text-align: right; margin-right:5px;">{{$items->Cus_Paymoney}}</td>
+                                                    {{-- <td style="text-align: right; margin-right:5px;">{{$items->Cus_Paymoney}}</td>
                                                     <td>{{$items->RefPayment}}</td>
-                                                    <td>{{$items->messageslip}}</td>
+                                                    <td>{{$items->messageslip}}</td> --}}
                                                     <td style="text-align: center">
                                                         <button class="btn btn-primary btn-sm"
-                                                            onclick="ShowSlipImg({{$items->id}},'{{$items->imgSlip}}','Err');">Slip</button>
+                                                            onclick="ShowSlipImg({{$items->id}},'{{$items->imgSlip}}','Truewallet');">Slip</button>
                                                     </td>
                                                     {{-- <td>
                                                         <a href="{{url('orderpaypackage_edit/'.$items->id)}}"

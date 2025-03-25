@@ -244,7 +244,8 @@ Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendContro
     Route::get('package_edit/{id}',[App\Http\Controllers\PackageBackendController::class,'package_edit']);
     Route::post('package_update/{id}',[App\Http\Controllers\PackageBackendController::class,'package_update']);
     Route::post('package_open_close',[App\Http\Controllers\PackageBackendController::class,'package_open_close']);
-    //package
+    Route::post('updateDefault',[App\Http\Controllers\PackageBackendController::class,'updateDefault'])->name('backend.updateDefault');
+    //package 
 
     //subpackage
     Route::get('subpackage',[App\Http\Controllers\PackageSubBackendController::class,'subpackage']);
@@ -265,6 +266,16 @@ Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendContro
     Route::post('reward_update/{id}',[App\Http\Controllers\RewardBackendController::class,'reward_update']);
     Route::post('reward_open_close',[App\Http\Controllers\RewardBackendController::class,'reward_open_close']);
     //reward
+
+    //rewardevent
+    Route::get('rewardevent',[App\Http\Controllers\RewardEventBackendController::class,'rewardevent']);
+    Route::get('rewardevent_destroy/{id}',[App\Http\Controllers\RewardEventBackendController::class,'rewardevent_destroy']);
+    Route::get('rewardevent_add',[App\Http\Controllers\RewardEventBackendController::class,'rewardevent_add']);
+    Route::post('rewardevent_store',[App\Http\Controllers\RewardEventBackendController::class,'rewardevent_store']);
+    Route::get('rewardevent_edit/{id}',[App\Http\Controllers\RewardEventBackendController::class,'rewardevent_edit']);
+    Route::post('rewardevent_update/{id}',[App\Http\Controllers\RewardEventBackendController::class,'rewardevent_update']);
+    Route::post('rewardevent_open_close',[App\Http\Controllers\RewardEventBackendController::class,'rewardevent_open_close']);
+    //rewardevent
 
     //marking
     Route::get('marking',[App\Http\Controllers\MarkingBackendController::class,'marking']);
@@ -289,6 +300,7 @@ Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendContro
     //orderpaypackage
     Route::get('orderpaypackage',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage']);
     Route::get('paypacknotmatch',[App\Http\Controllers\OrderPayPackageController::class,'paypacknotmatch']);
+    Route::get('paypackbytruewallet',[App\Http\Controllers\OrderPayPackageController::class,'paypackbytruewallet']);
     Route::get('orderpaypackage_destroy/{id}',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_destroy']);
     Route::get('orderpaypackage_add',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_add']);
     Route::post('orderpaypackage_store',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage_store']);

@@ -45,7 +45,10 @@
                                 $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
                                 ?>
 
-                    @if(@$selectNfYt=='NetFlix')
+                    {{-- @if(@$selectNfYt=='NetFlix') --}}
+                    <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Username :
+                        {{@$users->username}}</h2>
+                    @if(@$userProfile->type_netflix==1)
                     <div id="showUNetflix">
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Profile :
                             {{@$userProfile->utypename}}</h2>
@@ -111,8 +114,8 @@
                         @endif
                     </div>
                     @endif
-                    @if(@$selectNfYt=='YouTube')
-
+                    {{-- @if(@$selectNfYt=='YouTube') --}}
+                    @if(@$userProfile->type_youtube==1)
                     <div id="showUYoutube">
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Youtube Package.</h2>
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Profile :
@@ -164,6 +167,10 @@
 
                 </div>
             </div>
+            @php
+                $userspoint = Auth::guard('users')->user();
+                $PointSumbalance = App\Models\PointSumbalance::where('usernamepoint',$userspoint->username)->first();
+            @endphp
             <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center justify-content-sm-center align-items-sm-center box-back"
                 style="padding-left: 5px;">
                 <div class="net-plan-point"
@@ -171,7 +178,7 @@
                     <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span
                             style="height: auto;margin-top: -10px;text-align: center;">คะแนนสะสม</span></div>
                     <div style="margin: 0;padding: 0;height: auto;">
-                        <p class="net-point" style="text-align: center;height: auto;">10</p>
+                        <p class="net-point" style="text-align: center;height: auto;">{{@$PointSumbalance->point_balance??0}}</p>
                     </div>
                     <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><button
                             class="btn btn-primary profile-hit" type="button" data-bs-target="#modal-history"
@@ -193,7 +200,8 @@
 <div class="net-container">
     <h1 class="head-pack" style="font-family: Prompt, sans-serif;">ข้อมูลแพ็กเกจ</h1>
     <div class="net-plans">
-        @if(@$selectNfYt=='NetFlix')
+        {{-- @if(@$selectNfYt=='NetFlix') --}}
+        @if(@$userProfile->type_netflix==1)
         <div class="net-plan">
             <div class="net-plan-info"><img src="assets/img/logo-netflix%201.png" alt="Netflix Icon"
                     class="net-plan-icon">
@@ -214,7 +222,8 @@
             </div>
         </div>
         @endif
-        @if(@$selectNfYt=='YouTube')
+        {{-- @if(@$selectNfYt=='YouTube') --}}
+        @if(@$userProfile->type_youtube==1)
         <div class="net-plan2">
             <div class="net-plan-info"><img src="assets/img/logo-netflix%201%20(1).png" alt="Netflix Icon"
                     class="net-plan-icon">
@@ -243,13 +252,14 @@
 <div class="d-link">
     <div class="d-link-in2">
         @if(@$pak->date_start!=null)
-            @if(@$selectNfYt=='NetFlix')
+            {{-- @if(@$selectNfYt=='NetFlix') --}}
+            @if(@$userProfile->type_netflix==1)
                 <div class="box-link-m"><a href="{{route('frontend.netflix')}}?id=1"><img src="assets/img/NF22%20(1).png"></a></div>
             @else
                 <div class="box-link-m"><a href="{{route('frontend.youtube')}}?id=2"><img src="assets/img/NF11%20(1).png"></a></div>
             @endif
         @else
-            <div class="box-link-m"><a class="cursor-box"><img src="assets/img/NF7%20(1).png"></a></div><!--ต้องเอาไลน์ OA มาแสดง-->
+            <div class="box-link-m"><a class="cursor-box" href="https://lin.ee/4V1Jzlj" target="_blank"><img src="assets/img/NF7%20(1).png"></a></div><!--ต้องเอาไลน์ OA มาแสดง-->
         @endif
         <div class="box-link-m"><a class="cursor-box" data-bs-target="#modal-member" data-bs-toggle="modal"><img
                     src="assets/img/NF3%20(1).png"></a></div>
@@ -309,7 +319,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-points" style="margin-top: 150px;">
+    {{-- <div class="modal fade" role="dialog" tabindex="-1" id="modal-points" style="margin-top: 150px;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header m-h">
@@ -323,14 +333,19 @@
                     <div class="point-box-div">
                         <div class="point-box"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url"
                                 target="_blank"><img class="img-po1" src="assets/img/event_theater.png"></a></div>
-                        <div class="point-box"><a href="/rewards.html"><img class="img-po1"
+                        <div class="point-box"><a href="{{route('frontend.rewards')}}"><img class="img-po1"
+                                    src="assets/img/event_theater01.png"></a></div>
+                        <div class="point-box"><a href="{{route('frontend.rewards')}}"><img class="img-po1"
                                     src="assets/img/redeem_reward.png"></a></div>
                     </div>
                 </div>
                 <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"></div>
             </div>
         </div>
-    </div>
+    </div> --}}
+
+    @include('frontend.headmodelpoints')
+
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-price" style="margin-top: 150px;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -488,8 +503,8 @@
 
     @php
     $userCKReferFrst = Auth::guard('users')->user();
-    $ReferFriendFrst = App\Models\ReferFriend::where('referee_user_id',$userCKReferFrst->username)->whereNull('referrer_user_id')->first();
-    $ReferFriendFrstH= App\Models\ReferFriend::where('referee_user_id',$userCKReferFrst->username)->whereNotNull('referrer_user_id')->first(); 
+    $ReferFriendFrst = App\Models\ReferFriend::where('referee_username',$userCKReferFrst->username)->whereNull('referrer_username')->first();
+    $ReferFriendFrstH= App\Models\ReferFriend::where('referee_username',$userCKReferFrst->username)->whereNotNull('referrer_username')->first(); 
     @endphp
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-repoints-referree" style="padding-top: 150px;">
         <div class="modal-dialog" role="document">
@@ -509,7 +524,7 @@
                         <div class="form-div"><label class="form-label"
                                 style="color: var(--bs-emphasis-color);">ผู้แนะนำ : </label><input
                                 class="form-control form-v1" type="text" name="usernameReferrer" id="usernameReferrer"
-                                placeholder="NF00080"></div>
+                                placeholder=""></div>
                         @if(!@$ReferFriendFrst)
                         <div>
                             <p><input type="checkbox" name="noshowReferrer" id="noshowReferrer"> ไม่แสดงอีก</p>
@@ -596,6 +611,6 @@
 </div> --}}
 <script>
     document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;
-        document.getElementById('ProfileBtn').style = `display:none;`;
+    document.getElementById('ProfileBtn').style = `display:none;`;
 </script>
 @endsection

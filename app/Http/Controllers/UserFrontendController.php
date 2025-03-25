@@ -39,6 +39,9 @@ use App\Models\PayPackNotmatch;
 use App\Models\alert;
 
 use App\Models\ReferFriend;
+use App\Models\DefaultConfig;
+use App\Models\PointSumbalance;
+use App\Models\OrderPayPackageTruewallet;
 
 class UserFrontendController extends Controller
 {
@@ -152,8 +155,8 @@ class UserFrontendController extends Controller
         
         $users = Auth::guard('users')->user();
 
-        // ตรวจสอบ referee_user_id ผู้ถูกแนะนำได้ดำเนินการให้คะแนนผู้แนะนำแล้ว
-        $ReferFriend = ReferFriend::where('referee_user_id',$users->id)->first();
+        // ตรวจสอบ referee_username ผู้ถูกแนะนำได้ดำเนินการให้คะแนนผู้แนะนำแล้ว
+        $ReferFriend = ReferFriend::where('referee_username',$users->username)->first();
         $ProfileNows = 1;
 
         $selectNfYt = @$request->selectNfYt??\Session::get('selectNfYt');
@@ -242,8 +245,8 @@ class UserFrontendController extends Controller
         
         $users = Auth::guard('users')->user();
 
-        // ตรวจสอบ referee_user_id ผู้ถูกแนะนำได้ดำเนินการให้คะแนนผู้แนะนำแล้ว
-        $ReferFriend = ReferFriend::where('referee_user_id',$users->id)->first();
+        // ตรวจสอบ referee_username ผู้ถูกแนะนำได้ดำเนินการให้คะแนนผู้แนะนำแล้ว
+        $ReferFriend = ReferFriend::where('referee_username',$users->username)->first();
         $ProfileNows = 1;
 
         $selectNfYt = @$request->selectNfYt??\Session::get('selectNfYt');
@@ -406,11 +409,48 @@ class UserFrontendController extends Controller
 
     }
 
+    public function SaveOrdPkTrueMoneyWallet($request) {
+        // package_Name,Subpackage_Code ,Subpackage_Name ,Subpackage_Paymoney Orderemail
+        $YY = date('y');
+        $mm = date('m');
+        $CkORD = "ORT{$YY}{$mm}";
+        $runnum=DB::table('tb_order_pay_package_truewallet')->whereRaw("SUBSTR(OrderPayCode,1,7) = '$CkORD'")->orderby('id','desc')->count();
+        $runtotal=$runnum+1;
+        $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
+        $run = "ORT{$YY}{$mm}{$xxxx}";
+        $filename = $run.'_'.date('YmdHis').'.'.$request->file('qr_code_imagetruewallet')->getClientOriginalExtension();
+        $userIs = \Auth::guard('users')->user();
 
+        $users = users::where('id', $userIs->id)->first();
+
+        $OrderPayPackage = new OrderPayPackageTruewallet();
+        $OrderPayPackage->OrderPayCode =$run;
+
+        $OrderPayPackage->username =@$users->username;
+        $OrderPayPackage->id_users =@$users->id;
+        $OrderPayPackage->profile =@$users->name;
+        $OrderPayPackage->id_users_backup =$userIs->id;
+
+        $OrderPayPackage->package_Name =$request->package_Name;
+        $OrderPayPackage->Subpackage_Code =$request->Subpackage_Code;
+        $OrderPayPackage->Subpackage_Name =$request->Subpackage_Name;
+        $OrderPayPackage->Subpackage_Paymoney =$request->Subpackage_Paymoney;
+        $OrderPayPackage->Orderemail =$request->Orderemail;
+        $OrderPayPackage->imgSlip = $filename;
+        $OrderPayPackage->save();
+        $id = $request->id;
+
+        // Save Slip in frongdrv storage.....
+        \Storage::disk('frongdrv')->put('Frongdrv/Truewallet/'.$filename, file_get_contents($request->file('qr_code_imagetruewallet')));
+    }
 
     public function afterSaveOrderPackage (Request $request) {
+        $truemoneywallet = @$request->truemoneywallet??null;
+        if($truemoneywallet) {
+            self::SaveOrdPkTrueMoneyWallet($request);
+        }
         $id = $request->id;
-        return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess!');
+        return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess! '.'Please wait to Admin Check.');
     }
 
     public function upCheckQR(Request $request) { 
@@ -483,37 +523,43 @@ class UserFrontendController extends Controller
 
     public function SavePayNotMacth ($request,$statis) { 
         // package_Name,Subpackage_Code ,Subpackage_Name ,Subpackage_Paymoney Orderemail
-        $PayPackNotmatchCk = PayPackNotmatch::where('RefPayment',$statis['response']['data']['transRef'])->first();
-        if(empty($PayPackNotmatchCk)) {
-            $YY = date('y');
-            $mm = date('m');
-            $CkORD = "ERR{$YY}{$mm}";
-            $runnum=DB::table('tb_pay_pack_notmatch')->whereRaw("SUBSTR(OrderPayCode,1,7) = '$CkORD'")->orderby('id','desc')->count();
-            $runtotal=$runnum+1;
-            $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
-            $run = "ERR{$YY}{$mm}{$xxxx}";
-            $filename = $run.'_'.date('YmdHis').'.'.$request->file('qr_code_image')->getClientOriginalExtension();
-            $userIs = \Auth::guard('users')->user();
-            $PayPackNotmatch = new PayPackNotmatch();
-            $PayPackNotmatch->OrderPayCode =$run;
-            $PayPackNotmatch->username =$userIs->username;
-            $PayPackNotmatch->package_Name =$request->package_Name;
-            $PayPackNotmatch->Subpackage_Code =$request->Subpackage_Code;
-            $PayPackNotmatch->Subpackage_Name =$request->Subpackage_Name;
-            $PayPackNotmatch->Subpackage_Paymoney =$request->Subpackage_Paymoney;
-            $PayPackNotmatch->Cus_Paymoney = $statis['response']['data']['amount'];
-            $PayPackNotmatch->Orderemail =$request->Orderemail;
-            $PayPackNotmatch->RefPayment =$statis['response']['data']['transRef'];
-            $PayPackNotmatch->imgSlip = $filename;
-            
-            $PayPackNotmatch->save();
+        try {
+            //code...
+            $PayPackNotmatchCk = PayPackNotmatch::where('RefPayment',$statis['response']['data']['transRef'])->first();
+            if(empty($PayPackNotmatchCk)) {
+                $YY = date('y');
+                $mm = date('m');
+                $CkORD = "ERR{$YY}{$mm}";
+                $runnum=DB::table('tb_pay_pack_notmatch')->whereRaw("SUBSTR(OrderPayCode,1,7) = '$CkORD'")->orderby('id','desc')->count();
+                $runtotal=$runnum+1;
+                $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
+                $run = "ERR{$YY}{$mm}{$xxxx}";
+                $filename = $run.'_'.date('YmdHis').'.'.$request->file('qr_code_image')->getClientOriginalExtension();
+                $userIs = \Auth::guard('users')->user();
+                $PayPackNotmatch = new PayPackNotmatch();
+                $PayPackNotmatch->OrderPayCode =$run;
+                $PayPackNotmatch->username =$userIs->username;
+                $PayPackNotmatch->package_Name =$request->package_Name;
+                $PayPackNotmatch->Subpackage_Code =$request->Subpackage_Code;
+                $PayPackNotmatch->Subpackage_Name =$request->Subpackage_Name;
+                $PayPackNotmatch->Subpackage_Paymoney =$request->Subpackage_Paymoney;
+                $PayPackNotmatch->Cus_Paymoney = $statis['response']['data']['amount'];
+                $PayPackNotmatch->Orderemail =$request->Orderemail;
+                $PayPackNotmatch->RefPayment =$statis['response']['data']['transRef'];
+                $PayPackNotmatch->messageslip =$statis['response']['message'];
+                $PayPackNotmatch->imgSlip = $filename;
+                
+                $PayPackNotmatch->save();
 
-            // Save Slip in frongdrv storage.....
-            \Storage::disk('frongdrv')->put('Frongdrv/Err/'.$filename, file_get_contents($request->file('qr_code_image')));
+                // Save Slip in frongdrv storage.....
+                \Storage::disk('frongdrv')->put('Frongdrv/Err/'.$filename, file_get_contents($request->file('qr_code_image')));
+            }
+            
+            $id = $request->id;
+        } catch (\Throwable $th) {
+            //throw $th;
         }
-        
-        $id = $request->id;
-        
+
         // return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess!');
     }
 
@@ -574,7 +620,7 @@ class UserFrontendController extends Controller
     public function getimgSlipBase64(Request $request) {
         $filerd = \Storage::disk('frongdrv')->get('Frongdrv/'.(@$request->path?$request->path.'/':'').$request->img);
         $base64 = base64_encode($filerd);
-
+        
         // If you need to include the MIME type (for displaying in an `img` tag)
         $mime = \Storage::disk('frongdrv')->mimeType('Frongdrv/'.(@$request->path?$request->path.'/':'').$request->img);
         $base64WithMime = 'data:' . $mime . ';base64,' . $base64;
@@ -587,19 +633,45 @@ class UserFrontendController extends Controller
         // usernameReferrer,noshowReferrerCk
         $saveOK = 0;
         $users = Auth::guard('users')->user();
+
         $usersCKReferrer = users::where('username',@$request->usernameReferrer)->first();
+        $DefaultConfig = DefaultConfig::find(1);
         if(@$request->usernameReferrer) {
             if(@$usersCKReferrer&&@$request->usernameReferrer!=$users->username) {
+                $ReferFriendCK = ReferFriend::where('referee_username',$users->username)->where('referrer_username',$request->usernameReferrer)->first();
                 $ReferFriend = new ReferFriend();
-                $ReferFriend->referee_user_id = $users->username;
-                $ReferFriend->referrer_user_id = @$request->usernameReferrer;
-                $ReferFriend->referrer_score = 10;
-                $ReferFriend->save();
+                if(!@$ReferFriendCK) {
+                    $ReferFriend = new ReferFriend();
+                    $ReferFriend->referee_user_id = $users->id;
+                    $ReferFriend->referee_username = $users->username;
+                    $ReferFriend->referrer_username = @$request->usernameReferrer;
+                    $ReferFriend->referrer_score = $DefaultConfig->referrer_point;
+                    $ReferFriend->save();
+                }
+
+                // check user sum&use&balance point
+                $PointSumbalanceCHK = PointSumbalance::where('usernamepoint',@$ReferFriend->referrer_username)->first();
+                $PointSumbalance = new PointSumbalance();
+                if(!@$PointSumbalanceCHK&&@$ReferFriend->referrer_username) {
+                    $PointSumbalance->user_id = $users->id;
+                    $PointSumbalance->usernamepoint = @$ReferFriend->referrer_username;
+                    $PointSumbalance->save();
+                }
+
+                // บันทึกเพิ่ม point ให้กับผู้แนะนำ และนำค่าที่บันทึกบวกเข้ารายการสะสมแต้ม
+                if(@$ReferFriend->referrer_username) {
+                    $PointSumbalanceRChg = PointSumbalance::where('usernamepoint',@$ReferFriend->referrer_username)->first();
+                    $PointSumbalanceRChg->point_sum = $PointSumbalanceRChg->point_sum+$DefaultConfig->referrer_point;
+                    $PointSumbalanceRChg->point_balance = $PointSumbalanceRChg->point_sum-$PointSumbalanceRChg->point_use;
+                    $PointSumbalanceRChg->save();
+                }
+
                 $saveOK = 1;
             }
         } else if(@$request->noshowReferrerCk) {
             $ReferFriend = new ReferFriend();
-            $ReferFriend->referee_user_id = $users->username;
+            $ReferFriend->referee_user_id = $users->id;
+            $ReferFriend->referee_username = $users->username;
             $ReferFriend->save();
             $saveOK = 2;
         }
@@ -611,13 +683,34 @@ class UserFrontendController extends Controller
         // usernameReferrer
         $saveOK = 0;
         $users = Auth::guard('users')->user();
+
         $usersCKReferrer = users::where('username',@$request->usernameReferrer)->first();
+        $DefaultConfig = DefaultConfig::find(1);
         if(@$request->usernameReferrer) {
             if(@$usersCKReferrer&&@$request->usernameReferrer!=$users->username) {
-                $ReferFriend = ReferFriend::where('referee_user_id',$users->username)->first();
-                $ReferFriend->referrer_user_id = @$request->usernameReferrer;
-                $ReferFriend->referrer_score = 10;
+                $ReferFriend = ReferFriend::where('referee_username',$users->username)->first();
+                $ReferFriend->referrer_username = @$request->usernameReferrer;
+                $ReferFriend->referrer_score = $DefaultConfig->referrer_point;
                 $ReferFriend->save();
+
+                // check user sum&use&balance point
+                $PointSumbalanceCHK = PointSumbalance::where('usernamepoint',@$ReferFriend->referrer_username)->first();
+                $PointSumbalance = new PointSumbalance();
+                if(!@$PointSumbalanceCHK&&@$ReferFriend->referrer_username) {
+                    $PointSumbalance->user_id = $users->id;
+                    $PointSumbalance->usernamepoint = @$ReferFriend->referrer_username;
+                    $PointSumbalance->save();
+                }
+
+                // บันทึกเพิ่ม point ให้กับผู้แนะนำ และนำค่าที่บันทึกบวกเข้ารายการสะสมแต้ม
+                if(@$ReferFriend->referrer_username) {
+                    $PointSumbalanceRChg = PointSumbalance::where('usernamepoint',@$ReferFriend->referrer_username)->first();
+                    $PointSumbalanceRChg->point_sum = $PointSumbalanceRChg->point_sum+$DefaultConfig->referrer_point;
+                    $PointSumbalanceRChg->point_balance = $PointSumbalanceRChg->point_sum-$PointSumbalanceRChg->point_use;
+                    $PointSumbalanceRChg->save();
+                }
+
+
                 $saveOK = 1;
             }
         } 

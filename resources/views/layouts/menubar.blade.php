@@ -668,6 +668,14 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+
+                                        <li class="{{ isset($list) && $list == 'rewardevent' ? 'active' : '' }}">
+                                            <a href="{{ url('rewardevent') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Manage Reward Events</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
                                     </ul>
                                     <!--DJ page-->
                                 </li>

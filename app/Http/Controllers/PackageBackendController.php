@@ -30,6 +30,7 @@ use App\Models\users_in_in_history;
 use App\Models\admin;
 use App\Models\Packagewatch;
 use App\Models\PackageSubwatch;
+use App\Models\DefaultConfig;
 
 class PackageBackendController extends Controller
 {
@@ -153,4 +154,11 @@ class PackageBackendController extends Controller
     ]);
     }
     //package//
+
+    public function updateDefault(Request $request) {
+        $DefaultConfig = DefaultConfig::find(1);
+        $DefaultConfig->referrer_point = $request->referrer_point;
+        $DefaultConfig->save();
+        return redirect()->to('package')->with('message','Sucess!');
+    }
 }

@@ -191,7 +191,27 @@
 
                                 </div>
 
-                                
+                                @php
+                                    $DefaultConfig = App\Models\DefaultConfig::find(1);
+                                @endphp
+                                <div class="dt-responsive table-responsive" style="padding: 25px;">
+                                    <form action="{{route('backend.updateDefault')}}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <b>Config Friend Referral Points.</b>
+                                        <table style="margin-top: 10px;">
+                                            <tr>
+                                                <td style="padding: 5px;">Points : </td>
+                                                <td style="padding: 5px;"><input type="number" name="referrer_point" id="referrer_point" class="form-control" value="{{$DefaultConfig->referrer_point}}"></td>
+                                                <td style="padding: 5px;"> แต้ม</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td style="padding : 10px;text-align:end"><button class="btn btn-primary">Change</button></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

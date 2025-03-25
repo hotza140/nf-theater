@@ -80,6 +80,8 @@
                                     <a style="color:white;" class="btn btn-danger"
                                         href="{{url('paypacknotmatch')}}"> List Payment Not Match.</a>
 
+                                    <a style="color:white;" class="btn btn-danger"
+                                        href="{{url('paypackbytruewallet')}}"> List Payment By TrueMoney Wallet.</a>
 
                                     <br>
                                     <form class="form-horizontal" action="{{url('orderpaypackage')}}" method="GET"

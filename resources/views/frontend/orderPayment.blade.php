@@ -13,12 +13,54 @@
     }
 </style>
 
+<style>
+    body {font-family: Arial;}
+    
+    /* Style the tab  #f1f1f1;  #db0813; */
+    .tab {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      background-color: #d83840;
+    }
+    
+    /* Style the buttons inside the tab */
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+      font-size: 17px;
+    }
+    
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+      background-color: #ddd;
+    }
+    
+    /* Create an active/current tablink class */
+    .tab button.active {
+      background-color: #ccc;
+      color: #db0813;
+    }
+    
+    /* Style the tab content */
+    .tabcontent {
+      display: none;
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-top: none;
+    }
+</style>
+
 <div class="con-bk" style="background: url(&quot;assets/img/backgrown-net1.jpg&quot;)">
     <div class="d-logo">
         <div class="d-logo-m1"><img class="logo-m" src="assets/img/logo-netfilx.png"></div>
     </div>
 </div>
-<div class="d-link">
+{{-- <div class="d-link">
     <div class="d-link-in">
         <div class="box-link-m"><a href="{{route('frontend.netflix')}}?id=1"><img src="assets/img/NF22%20(1).png"></a></div>
         <div class="box-link-m"><a href="{{route('frontend.youtube')}}?id=2"><img src="assets/img/NF11%20(1).png"></a></div>
@@ -27,17 +69,65 @@
         <div class="box-link-m"><a class="cursor-box" data-bs-toggle="modal" data-bs-target="#modal-points"><img src="assets/img/NF4%20(1).png"></a></div>
         <div class="box-link-m"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img src="assets/img/NF6%20(1).png"></a></div>
     </div>
-</div>
+</div> --}}
 <div class="net-container">
     <h1 class="head-pack" style="font-family: Prompt, sans-serif;">ส่วนของการชำระเงินระบบ Payment</h1>
     <div class="net-plans" style="background-color: aliceblue;">
-
-        <form action="{{route('frontend.afterSaveOrderPackage')}}" method="post" enctype="multipart/form-data" id="SaveOrderPackageFront">
-            @csrf
-            <div class="">
-                <div class="form-div">
-                    <img src="{{asset('img/ForPayment.jpg')}}" style="width: 100%">
+        <div class="tab" style="color: black">
+            <button class="tablinks" onclick="openCity(event, 'BankQr')">ขำระด้วย Scan QR ธนาคาร</button>
+            <button class="tablinks" onclick="openCity(event, 'TrueMoneyWallet')">ชำระด้วย โอนผ่านทาง TrueMoney Wallet.</button>
+        </div>
+        <div id="BankQr" class="tabcontent">
+            <form action="{{route('frontend.afterSaveOrderPackage')}}" method="post" enctype="multipart/form-data" id="SaveOrderPackageFront">
+                @csrf
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="form-div">
+                            <img src="{{asset('img/ForPayment.jpg')}}" style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                    
+                        <div class="form-div p-1">
+                            <input type="hidden" name="id" value="{{$id}}" id="idpackageName">
+                            <input type="hidden" name="Subpackage_Code" id="Subpackage_Code" value="{{$Subpackage_Code}}">
+                            <input type="hidden" name="package_Name" value="{{$package_Name}}" id="package_Name">
+                            <label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อ Package</label>
+                            <input class="form-control form-v1" type="text" placeholder="Nextflix ยกเว้นทีวี 1 เดือน" name="Subpackage_Name" id="Subpackage_Name" value="{{$Subpackage_Name}}" readonly>
+                        </div>
+                        <div class="form-div p-1">
+                            <label class="form-label" style="color: var(--bs-emphasis-color);">จำนวนเงิน</label>
+                            <input class="form-control form-v1" type="text" placeholder="139" name="Subpackage_Paymoney" id="Subpackage_Paymoney" value="{{$Subpackage_Paymoney}}" readonly>
+                        </div>
+                        <div class="form-div p-1">
+                            <label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label>
+                            <input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน" name="Orderemail" id="Orderemail" value="{{$Orderemail}}" readonly>
+                        </div>
+                        <div class="form-div p-1">
+                            <label class="form-label" style="color: var(--bs-emphasis-color);">แนบสลิปโอนเงิน</label>
+                            <input class="form-control form-v1" style="padding:6px;" type="file" accept=".jpeg,.png,.jpg,.gif,.svg"
+                                name="qr_code_image" id="qr_code_image" required onchange="ChgImageCheckQr(this);">
+                            <div id="showFileNameForSave" style="display: none;color:black;margin-left:10px;"></div>
+                        </div>
+                        <div id="showWaitForSave" style="display: none;color:black;margin-left:10px;" class="animated-char">Please waitting.....</div>
+                    </div>
                 </div>
+                <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;text-align:center; background-color:rgb(228, 228, 228);">
+                    <button class="btn btn-primary bt-pay" disabled id="btnChkOK"
+                        style="background-color: rgb(233, 230, 230) !important;color :rgb(224, 231, 238) !important;">
+                        บันทึกรายการสั่งซื้อ
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div id="TrueMoneyWallet" class="tabcontent">
+            <form action="{{route('frontend.afterSaveOrderPackage')}}" method="post" enctype="multipart/form-data" id="SaveOrderPackageFront">
+                @csrf
+                
+                <div class="form-div" style="text-align: center;">
+                    <img src="{{asset('img/ForPaymenttrueWallet.png')}}" style="width: 75%;border-radius:10px;">
+                </div>
+            
                 <div class="form-div">
                     <input type="hidden" name="id" value="{{$id}}" id="idpackageName">
                     <input type="hidden" name="Subpackage_Code" id="Subpackage_Code" value="{{$Subpackage_Code}}">
@@ -54,21 +144,19 @@
                     <input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน" name="Orderemail" id="Orderemail" value="{{$Orderemail}}" readonly>
                 </div>
                 <div class="form-div">
-                    <label class="form-label" style="color: var(--bs-emphasis-color);">แนบสลิปโอนเงิน</label>
+                    <label class="form-label" style="color: var(--bs-emphasis-color);">แนบสลิปโอนเงิน <b>TrueMoneyWallet</b></label>
                     <input class="form-control form-v1" style="padding:6px;" type="file" accept=".jpeg,.png,.jpg,.gif,.svg"
-                           name="qr_code_image" id="qr_code_image" required onchange="ChgImageCheckQr(this);">
+                        name="qr_code_imagetruewallet" id="qr_code_imagetruewallet" required>
                     <div id="showFileNameForSave" style="display: none;color:black;margin-left:10px;"></div>
                 </div>
-            </div>
-            <div id="showWaitForSave" style="display: none;color:black;margin-left:10px;" class="animated-char">Please waitting.....</div>
-            <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;text-align:center">
-                <button class="btn btn-primary bt-pay" disabled id="btnChkOK"
-                    style="background-color: rgb(233, 230, 230) !important;color :rgb(224, 231, 238) !important;">
-                    บันทึกรายการสั่งซื้อ
-                </button>
-            </div>
-        </form>
-
+                <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;text-align:center; background-color:rgb(228, 228, 228);">
+                    <button class="btn btn-primary bt-pay" id="btnChkOKTrueWallet">
+                        บันทึกรายการสั่งซื้อ
+                    </button>
+                </div>
+                <input type="hidden" name="truemoneywallet" value="truemoneywallet">
+            </form>
+        </div>
     </div>
 </div>
 <script>
@@ -98,6 +186,23 @@
             console.error('Error:', error);
         });
     }
+</script>
+
+<script>
+    function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    openCity(document.getElementById('BankQr'), 'BankQr');
 </script>
 
 @endsection
