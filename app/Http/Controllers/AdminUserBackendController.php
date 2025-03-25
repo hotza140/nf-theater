@@ -76,7 +76,21 @@ class AdminUserBackendController extends Controller
         ->orderBy('id_user_in', 'asc')
         ->get();
 
+        $nubb = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->count();
+
         $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+            ->whereNull('status_check')
+            ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
+            ->groupBy('id_user_in')
+            ->orderBy('id_user_in', 'asc')
+            ->get();
+
+            $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
             ->whereNull('status_check')
             ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
             ->groupBy('id_user_in')
@@ -90,6 +104,8 @@ class AdminUserBackendController extends Controller
            'itemb'=>$itemb,
            'itemc'=>$itemc,
            'nub'=>$nub,
+           'nubb'=>$nubb,
+           'nubc'=>$nubc,
            'page'=>"all",
            'list'=>"dashbord",
        ]);
