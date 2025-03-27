@@ -1,10 +1,15 @@
 @extends('frontend.layouts.frontendbase')
 @section('contentfront')
 
-<div class="con-bk" style="background: url(&quot;assets/img/backgrown-net1.jpg&quot;)">
+{{-- <div class="con-bk" style="background: url(&quot;assets/img/backgrown-net1.jpg&quot;)">
     <div class="d-logo">
         <div class="d-logo-m1"><img class="logo-m" src="assets/img/logo-netfilx.png"></div>
     </div>
+</div> --}}
+
+<div class="net-container" style="text-align: center;">
+    <h1 class="head-pro">NF THEATER</h1>
+    <h3>เลือกแพ็กเกจที่จะต่ออายุ</h3>
 </div>
 
 <!--ส่วนของปุ่มไว้เลือกรายการบริการเช่น netflix youtube confirm service customer etc.-->

@@ -60,7 +60,6 @@
                 <div class="page-header card">
                     <div class="card-block">
                         <h5 class="m-b-10">Package BACKEND</h5>
-
                     </div>
                 </div>
                 <!-- Page-header end -->
