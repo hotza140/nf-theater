@@ -84,7 +84,7 @@
                                                 <tr>
                                                
                                                     <th>#</th>
-                                                    <th>Open/Close</th>
+                                                    <th>Package</th>
                                                     <th>Reward Name</th>
                                                     {{-- <th>Reward Code</th> --}}
                                                     <th>Rewards Score</th>
@@ -101,14 +101,10 @@
                                                     <td>{{$key+1}}</td>
 
                                                     <td>
-                                                    <form method="post" id="form{{$items->id}}" name="form{{$items->id}}">
-                                                        @csrf
-                                                        <label class="switch">
-                                                            <input type="checkbox" class="toggle-switch" data-id="{{$items->id}}" 
-                                                                {{ $items->open == 0 ? 'checked' : '' }}> <!-- ค่าที่เปิดจะเป็น 0 -->
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </form>
+                                                        @php
+                                                            $packageNFYT = App\Models\Packagewatch::where('package_Code',$items->package_Code)->first();
+                                                        @endphp
+                                                        {{$packageNFYT->package_Name}}
                                                     </td>
 
                                                     <td>{{$items->reward_Name}}</td>

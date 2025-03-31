@@ -288,7 +288,7 @@
                     @foreach ($RewardUserLog as $itemRw)
                     <div>
                         <div class="history-text"><span
-                                style="color: var(--bs-emphasis-color);">{{date('d-m-Y',strtotime($itemRw->created_at))}}</span><span
+                                style="color: var(--bs-emphasis-color);">{{date('d-m-Y h:i',strtotime($itemRw->created_at))}}</span><span
                                 style="color: var(--bs-emphasis-color);">{{$itemRw->reward_Name}}</span></div>
                         <hr class="hr-line">
                     </div>

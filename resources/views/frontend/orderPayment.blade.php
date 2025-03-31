@@ -55,11 +55,17 @@
     }
 </style>
 
-<div class="con-bk" style="background: url(&quot;assets/img/backgrown-net1.jpg&quot;)">
+{{-- <div class="con-bk" style="background: url(&quot;assets/img/backgrown-net1.jpg&quot;)">
     <div class="d-logo">
         <div class="d-logo-m1"><img class="logo-m" src="assets/img/logo-netfilx.png"></div>
     </div>
+</div> --}}
+
+<div class="net-container" style="text-align: center;">
+    <h1 class="head-pro">NF THEATER</h1>
+    <h3>ส่วนของการชำระเงินระบบ Payment</h3>
 </div>
+
 {{-- <div class="d-link">
     <div class="d-link-in">
         <div class="box-link-m"><a href="{{route('frontend.netflix')}}?id=1"><img src="assets/img/NF22%20(1).png"></a></div>
@@ -71,7 +77,7 @@
     </div>
 </div> --}}
 <div class="net-container">
-    <h1 class="head-pack" style="font-family: Prompt, sans-serif;">ส่วนของการชำระเงินระบบ Payment</h1>
+    {{-- <h1 class="head-pack" style="font-family: Prompt, sans-serif;">ส่วนของการชำระเงินระบบ Payment</h1> --}}
     <div class="net-plans" style="background-color: aliceblue;">
         <div class="tab" style="color: black">
             <button class="tablinks" onclick="openCity(event, 'BankQr')">ขำระด้วย Scan QR ธนาคาร</button>
@@ -205,6 +211,9 @@
     openCity(document.getElementById('BankQr'), 'BankQr');
 </script>
 
+<script>
+    document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;
+</script>
 @endsection
 
 

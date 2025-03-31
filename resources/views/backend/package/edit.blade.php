@@ -201,7 +201,7 @@
                                                         <tr>
                                                         
                                                             <th>#</th>
-                                                            <th>Open/Close</th>
+                                                            {{-- <th>Open/Close</th> --}}
                                                             {{-- <th>Sub Package Code</th> --}}
                                                             <th>Sub Package Name</th>
                                                             <th>จำนวนวัน</th>
@@ -218,7 +218,7 @@
                                                     <tr class="num" id="{{$items->id}}">
                                                             <td>{{$keys+1}}</td>
         
-                                                            <td>
+                                                            {{-- <td>
                                                             <form method="post" id="form{{$items->id}}" name="form{{$items->id}}">
                                                                 @csrf
                                                                 <label class="switch">
@@ -227,7 +227,7 @@
                                                                     <span class="slider"></span>
                                                                 </label>
                                                             </form>
-                                                            </td>
+                                                            </td> --}}
                                                             <td>{{$items->Subpackage_Name}}</td>
                                                             <td>{{$items->Subpackage_Dayuse}} วัน</td>
                                                             <td>{{$items->Subpackage_Paymoney}} บาท</td>

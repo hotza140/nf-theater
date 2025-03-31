@@ -1,12 +1,17 @@
 @extends('frontend.layouts.frontendbase')
 @section('contentfront')
 
-    <div class="con-bk" style="background: url(&quot;assets/img/backgrown-net1.jpg&quot;)">
+    {{-- <div class="con-bk" style="background: url(&quot;assets/img/backgrown-net1.jpg&quot;)">
         <div class="d-logo">
             <div class="d-logo-m2">
                 <h1 class="head-pro">NF THEATER</h1>
             </div>
         </div>
+    </div> --}}
+
+    <div class="net-container" style="text-align: center;">
+        <h1 class="head-pro">NF THEATER</h1>
+        <h3>แลกของรางวัล</h3>
     </div>
     
     <!--ส่วนของปุ่มไว้เลือกรายการบริการเช่น netflix youtube confirm service customer etc.-->
@@ -302,9 +307,9 @@
     
     </script>
 
-    @if(session('message'))
+    {{-- @if(session('message'))
         <script>
             alert('{{ session('message') }}');
         </script>
-    @endif
+    @endif --}}
 @endsection

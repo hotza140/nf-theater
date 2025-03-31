@@ -127,19 +127,75 @@ class UserFrontendController extends Controller
     }
 
     public function rewardsRead(Request $r) {
-        $Reward = Reward::select('*')->orderby('reward_Score')->get();
+        $usersl = Auth::guard('users')->user();
+        $Reward = Reward::select('tb_reward.*','tb_packagewatch.package_Name','tb_packagewatch.id AS pkwId')
+                        ->leftjoin('tb_packagewatch','tb_reward.package_Code','tb_packagewatch.package_Code');
+        if($usersl->type_netflix==1) 
+             $Reward->where('tb_packagewatch.id',1);
+        else $Reward->where('tb_packagewatch.id',2);
+        $Reward = $Reward->orderby('reward_Score')->get();
         return view('frontend.rewards',compact('Reward'));
     }
 
-    public function RewardUserLog_store(Request $r) {
+    public function RewardUserLog_store(Request $r) { // ตรวจสอบก่อน........
         $userIs = \Auth::guard('users')->user();
-        $RewardUserLog = new RewardUserLog();
+        $PointSumbalance = PointSumbalance::where('usernamepoint',$userIs->username)->first();
+        $Reward = Reward::where('reward_Code',$r->reward_Code)->first();
 
-        $RewardUserLog->username = $userIs->username;
-        $RewardUserLog->reward_Name = $r->reward_Name;
-        $RewardUserLog->reward_Code = $r->reward_Code;
+        if(!@$PointSumbalance->point_balance) return redirect()->back()->with('message','Your Package Expired !');
+        
+        if($PointSumbalance->point_balance<$Reward->reward_Score) 
+             return redirect()->back()->with('message','Point not enough!');
+        else {
+            $RewardUserLog = new RewardUserLog();
 
-        $RewardUserLog->save();
+            $RewardUserLog->username = $userIs->username;
+            $RewardUserLog->reward_Name = $r->reward_Name;
+            $RewardUserLog->reward_Code = $r->reward_Code;
+            $RewardUserLog->save();
+
+            $PointSumbalance->point_use = $PointSumbalance->point_use + $Reward->reward_Score;
+            $PointSumbalance->point_balance = $PointSumbalance->point_balance - $Reward->reward_Score;
+            $PointSumbalance->save();
+
+            // return redirect()->back()->with('message','Sucess!');
+        }
+        
+        // ลบเช็คเวลา
+        $date=date('Y-m-d');
+        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+        // ลบเช็คเวลา
+
+
+        ///ส่วนเพิ่มวัน auto
+        $account = users_in_in::where('id_user', $userIs->id)->orderBy('id','desc')->first();
+        $uu = users::where('id', $userIs->id)->first();
+           $pack_id=DB::table('tb_package_subwatch')->where('id',$userIs->id_package)->first();
+           $new_date_end = date('Y-m-d', strtotime($account->date_end . ' + ' . $Reward->reward_Day . ' days'));
+
+           $account->date_end=$new_date_end;
+           $account->save();
+
+           $account = users_in_in::where('id_user', $userIs->id)->orderBy('id','desc')->first();
+           $aaa_his = new users_in_in_history();
+           $aaa_his->id_user = $account->id_user;
+           $aaa_his->id_user_in = $account->id_user_in;
+           $aaa_his->type = $account->type;
+           $aaa_his->type_mail = $account->type_mail;
+           $aaa_his->date_start=$account->date_start;
+           $aaa_his->date_end=$account->date_end;
+           $aaa_his->save();
+
+           $uu->date_start=$account->date_start;
+           $uu->date_end=$account->date_end;
+           $uu->package=$pack_id->Subpackage_Name;
+           $uu->id_package=@$pack_id->id;
+           $uu->type=$account->type;
+           $uu->save();
+        ///ส่วนเพิ่มวัน auto
 
         return redirect()->back()->with('message','Sucess!');
     }
@@ -162,7 +218,7 @@ class UserFrontendController extends Controller
         $selectNfYt = @$request->selectNfYt??\Session::get('selectNfYt');
         if(@$request->selectNfYt) \Session::put('selectNfYt',$request->selectNfYt);
         
-        $RewardUserLog = RewardUserLog::where('username',$users->username)->get();
+        $RewardUserLog = RewardUserLog::where('username',$users->username)->latest('id')->take(5)->get();
         $userProfile = users::select(
                 'tb_users.id',
                 'tb_users.username',
@@ -348,6 +404,8 @@ class UserFrontendController extends Controller
 
         $users = users::where('id', $userIs->id)->first();
 
+        $PackageSubwatch = PackageSubwatch::where('Subpackage_Code',$request->Subpackage_Code)->first();
+
         $OrderPayPackage = new OrderPayPackage();
         $OrderPayPackage->OrderPayCode =$run;
 
@@ -363,6 +421,7 @@ class UserFrontendController extends Controller
         $OrderPayPackage->Orderemail =$request->Orderemail;
         $OrderPayPackage->RefPayment =$request->RefPayment;
         $OrderPayPackage->imgSlip = $filename;
+        $OrderPayPackage->receive_point = $PackageSubwatch->Making_Scoring;
         $OrderPayPackage->save();
         $id = $request->id;
 
@@ -370,6 +429,22 @@ class UserFrontendController extends Controller
         \Storage::disk('frongdrv')->put('Frongdrv/'.$filename, file_get_contents($request->file('qr_code_image')));
         
         // return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess!');
+
+        // check user sum&use&balance point
+        $PointSumbalanceCHK = PointSumbalance::where('usernamepoint',@$userIs->username)->first();
+        $PointSumbalance = new PointSumbalance();
+        if(!@$PointSumbalanceCHK) {
+            $PointSumbalance->user_id = $users->id;
+            $PointSumbalance->usernamepoint = $users->username;
+            $PointSumbalance->point_sum = $PackageSubwatch->Making_Scoring;
+            $PointSumbalance->point_balance = $PackageSubwatch->Making_Scoring;
+            $PointSumbalance->save();
+        } else {
+            $PointSumbalanceCHK->point_sum = $PointSumbalanceCHK->point_sum+$PackageSubwatch->Making_Scoring;
+            $PointSumbalanceCHK->point_balance = $PointSumbalanceCHK->point_balance+$PackageSubwatch->Making_Scoring;
+            $PointSumbalanceCHK->save();
+        }
+
 
 
         // ลบเช็คเวลา
@@ -423,6 +498,8 @@ class UserFrontendController extends Controller
 
         $users = users::where('id', $userIs->id)->first();
 
+        $PackageSubwatch = PackageSubwatch::where('Subpackage_Code',$request->Subpackage_Code)->first();
+
         $OrderPayPackage = new OrderPayPackageTruewallet();
         $OrderPayPackage->OrderPayCode =$run;
 
@@ -437,8 +514,24 @@ class UserFrontendController extends Controller
         $OrderPayPackage->Subpackage_Paymoney =$request->Subpackage_Paymoney;
         $OrderPayPackage->Orderemail =$request->Orderemail;
         $OrderPayPackage->imgSlip = $filename;
+        $OrderPayPackage->receive_point = $PackageSubwatch->Making_Scoring;
         $OrderPayPackage->save();
         $id = $request->id;
+
+        // check user sum&use&balance point
+        $PointSumbalanceCHK = PointSumbalance::where('usernamepoint',@$userIs->username)->first();
+        $PointSumbalance = new PointSumbalance();
+        if(!@$PointSumbalanceCHK) {
+            $PointSumbalance->user_id = $users->id;
+            $PointSumbalance->usernamepoint = $users->username;
+            $PointSumbalance->point_sum = $PackageSubwatch->Making_Scoring;
+            $PointSumbalance->point_balance = $PackageSubwatch->Making_Scoring;
+            $PointSumbalance->save();
+        } else {
+            $PointSumbalanceCHK->point_sum = $PointSumbalanceCHK->point_sum+$PackageSubwatch->Making_Scoring;
+            $PointSumbalanceCHK->point_balance = $PointSumbalanceCHK->point_balance+$PackageSubwatch->Making_Scoring;
+            $PointSumbalanceCHK->save();
+        }
 
         // Save Slip in frongdrv storage.....
         \Storage::disk('frongdrv')->put('Frongdrv/Truewallet/'.$filename, file_get_contents($request->file('qr_code_imagetruewallet')));
@@ -625,7 +718,20 @@ class UserFrontendController extends Controller
         $mime = \Storage::disk('frongdrv')->mimeType('Frongdrv/'.(@$request->path?$request->path.'/':'').$request->img);
         $base64WithMime = 'data:' . $mime . ';base64,' . $base64;
 
-        return response()->json(["img"=>$base64WithMime],200); // Output Base64 image string
+        if($request->savef==1) {
+            if($request->path=='Truewallet') {
+                $OrderPayPackageTruewallet = OrderPayPackageTruewallet::find($request->id);
+                $OrderPayPackageTruewallet->OrderCheck = 1;
+                $OrderPayPackageTruewallet->save();
+            }
+            if($request->path=='Err') {
+                $PayPackNotmatch = PayPackNotmatch::find($request->id);
+                $PayPackNotmatch->OrderCheck = 1;
+                $PayPackNotmatch->save();
+            }
+        }
+
+        return response()->json(["img"=>$base64WithMime,"mime"=>$mime,"imgname"=>$request->img],200); // Output Base64 image string
     }
 
     public function confirmReferrer(Request $request) {

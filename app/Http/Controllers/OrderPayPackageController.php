@@ -110,7 +110,7 @@ class OrderPayPackageController extends Controller
             }
         }
         
-        $item = $item->orderBy('Subpackage_Name', 'asc')->paginate(10);
+        $item = $item->orderBy('OrderCheck','asc','Subpackage_Name', 'asc')->paginate(10);
         return view('backend.orderpaypackage.indexNotMatch',[
             'item'=>$item,
             'page'=>"admin",
@@ -142,7 +142,7 @@ class OrderPayPackageController extends Controller
             }
         }
         
-        $item = $item->orderBy('Subpackage_Name', 'asc')->paginate(10);
+        $item = $item->orderBy('OrderCheck','asc','Subpackage_Name', 'asc')->paginate(10);
         return view('backend.orderpaypackage.indexTrueWalletPay',[
             'item'=>$item,
             'page'=>"admin",

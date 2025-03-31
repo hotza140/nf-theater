@@ -116,7 +116,7 @@
                                                 <tr>
 
                                                     <th>#</th>
-                                                    <th>Open/Close</th>
+                                                    <th>สถานะ</th>
                                                     <th>OrderPayCode </th>
                                                     <th>username</th>
                                                     <th>E-mail</th>
@@ -139,17 +139,7 @@
                                                     <td>{{$key+1}}</td>
 
                                                     <td>
-                                                        <form method="post" id="form{{$items->id}}"
-                                                            name="form{{$items->id}}">
-                                                            @csrf
-                                                            <label class="switch">
-                                                                <input type="checkbox" class="toggle-switch"
-                                                                    data-id="{{$items->id}}" {{ $items->OrderCheck == 0
-                                                                ? 'checked' : '' }}>
-                                                                <!-- ค่าที่เปิดจะเป็น 0 -->
-                                                                <span class="slider"></span>
-                                                            </label>
-                                                        </form>
+                                                        <b>{!!$items->OrderCheck==1?'<span style="color:green">โหลดแล้ว</span>':'<span style="color:red">ยังไม่โหลด</span>'!!}</b>
                                                     </td>
 
                                                     <td>{{$items->OrderPayCode }}</td>
@@ -162,6 +152,9 @@
                                                     <td>{{$items->RefPayment}}</td>
                                                     <td>{{$items->messageslip}}</td>
                                                     <td style="text-align: center">
+                                                        <button class="btn btn-warning btn-sm"
+                                                            onclick="ShowSlipImg({{$items->id}},'{{$items->imgSlip}}','Err',1);"
+                                                            >Load</button>
                                                         <button class="btn btn-primary btn-sm"
                                                             onclick="ShowSlipImg({{$items->id}},'{{$items->imgSlip}}','Err');">Slip</button>
                                                     </td>
@@ -216,13 +209,13 @@
     }
 </style>
 <script>
-    function ShowSlipImg(id,img,path) {
-        Swal.fire({
+    function ShowSlipImg(id,img,path,savef=0) {
+        if(savef!=1) Swal.fire({
             title: "Show Slip",
             html: `<img src="" id="imgSlipS1" style="width:100%">`,
-            customClass: "swal-wides"
+            customClass: "swal-wides",
         });
-        // document.getElementById('imgSlipS1').src = `{{asset('storage/Frongdrv')}}/${img}`;
+        
         fetch('{{route('frontend.getimgSlipBase64')}}', {
             method: 'POST', // or 'PUT'
             headers: {
@@ -230,19 +223,40 @@
             },
             body: JSON.stringify({
                 _token : "{{csrf_token()}}",
-                id,img,path
+                id,img,path,savef
             }),
         })
         .then(response => response.json().then(data => ({ status: response.status, body: data }))) // Get status + body
         .then(({ status, body }) => {
             console.log('Success:', body , status);
             if(status==200) {
-                document.getElementById('imgSlipS1').src = body.img;
-            } 
+                if(savef==0)
+                    document.getElementById('imgSlipS1').src = body.img;
+                else if(savef==1) 
+                    saveBase64AsFile(body.img, body.imgname, body.mime);
+            }
         })
         .catch((error) => {
             console.error('Error:', error);
         });
+    }
+    
+    function saveBase64AsFile(base64, filename, mimeType) {
+        const byteCharacters = atob(base64.split(',')[1]); // Decode Base64
+        const byteNumbers = new Array(byteCharacters.length);
+       
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: mimeType });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 </script>
 

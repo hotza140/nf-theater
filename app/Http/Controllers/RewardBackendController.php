@@ -56,33 +56,33 @@ class RewardBackendController extends Controller
 
     //reward//
     public function reward(Request $r){
-    $date=date('Y-m-d');
+        $date=date('Y-m-d');
 
-    $item=Reward::select('*');
-    $search = $r->search;
-    $status_account = $r->status_account;
-    if (!empty($search) or !empty($status_account) ) {
-        $item = Reward::where(function ($query) use ($search, $status_account) {
-            $query->where('reward_Name', 'LIKE', '%' . $search . '%');
-            $query->orwhere('reward_Code', 'LIKE', '%' . $search . '%');
-        });
+        $item=Reward::select('*');
+        $search = $r->search;
+        $status_account = $r->status_account;
+        if (!empty($search) or !empty($status_account) ) {
+            $item = Reward::where(function ($query) use ($search, $status_account) {
+                $query->where('reward_Name', 'LIKE', '%' . $search . '%');
+                $query->orwhere('reward_Code', 'LIKE', '%' . $search . '%');
+            });
 
-        if ($status_account == '0') {
-            $item = $item->where('date_end','>=',$date);
-        }elseif($status_account == '1'){
-            $item = $item->where('date_end','<',$date);
+            if ($status_account == '0') {
+                $item = $item->where('date_end','>=',$date);
+            }elseif($status_account == '1'){
+                $item = $item->where('date_end','<',$date);
+            }
         }
-    }
-    
-    $item = $item->orderBy('id', 'desc')->cursor();
-    return view('backend.reward.index',[
-        'item'=>$item,
-        'page'=>"admin",
-        'list'=>"reward",
+        
+        $item = $item->orderBy('package_Code', 'asc')->cursor();
+        return view('backend.reward.index',[
+            'item'=>$item,
+            'page'=>"admin",
+            'list'=>"reward",
 
-        'search'=>$search,
-        'status_account'=>$status_account,
-    ]);
+            'search'=>$search,
+            'status_account'=>$status_account,
+        ]);
     }
     public function reward_store(Request $r){
         $item=new Reward();
