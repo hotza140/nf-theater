@@ -1511,18 +1511,18 @@ public function dashbord_y(Request $r){
       }
       public function users_in_store(Request $r){
           $item=new users_in();
-          $ch=users_in::where('email',$r->email)->orderby('id','desc')->first();
+          $ch=users_in::whereNotNull('email')->where('email',$r->email)->orderby('id','desc')->first();
           $nh=users_in::where('name',$r->name)->orderby('id','desc')->first();
   
   
           if($ch!=null){
               return redirect()->back()->with('message','Email Already Have in Data!');
               }else{
-                $ch=users_in::where('email01',$r->email)->orderby('id','desc')->first();
+                $ch=users_in::whereNotNull('email01')->where('email01',$r->email)->orderby('id','desc')->first();
                 if($ch!=null){
                 return redirect()->back()->with('message','Email Already Have in Data!');
                 }else{
-                    $ch=users_in::where('email02',$r->email)->orderby('id','desc')->first();
+                    $ch=users_in::whereNotNull('email02')->where('email02',$r->email)->orderby('id','desc')->first();
                     if($ch!=null){
                     return redirect()->back()->with('message','Email Already Have in Data!');
                     } 
@@ -1530,6 +1530,7 @@ public function dashbord_y(Request $r){
               }
 
 
+              if($r->email01!=null){
               $ch1=users_in::where('email',$r->email01)->orderby('id','desc')->first();
 
               if($ch1!=null){
@@ -1545,7 +1546,10 @@ public function dashbord_y(Request $r){
                       } 
                   }
                 }
+                }
 
+
+                if($r->email02!=null){
                 $ch2=users_in::where('email',$r->email02)->orderby('id','desc')->first();
 
                 if($ch2!=null){
@@ -1561,6 +1565,7 @@ public function dashbord_y(Request $r){
                         } 
                     }
                   }
+                    }
 
 
               if($nh!=null){
@@ -1861,7 +1866,7 @@ public function dashbord_y(Request $r){
         $item->date_start=@$aaa->date_start; 
         $item->date_end=@$aaa->date_end;
 
-        $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
+        $user_in_in_count=users_in_in::where('type','MOBILE')->where('id_user_in',@$r->id_user_in)->count();
         if($user_in_in_count >= 5){
         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
         }else{
@@ -1927,7 +1932,7 @@ public function dashbord_y(Request $r){
          $item->date_start=@$aaa->date_start; 
          $item->date_end=@$aaa->date_end;
  
-         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
+         $user_in_in_count=users_in_in::where('type','MOBILE')->where('id_user_in',@$r->id_user_in)->count();
          if($user_in_in_count >= 5){
          return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
          }else{

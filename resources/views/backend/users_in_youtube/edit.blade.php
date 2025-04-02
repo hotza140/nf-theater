@@ -549,7 +549,7 @@
                                                     <!-- <th>Open/Close</th> -->
                                                     <th>Type</th>
                                                     <th>Username</th>
-                                                    <th>Name Profile</th>
+                                                    <th>Eamil</th>
                                                     <th>ชื่อไลน์ลูกค้า</th>
                                                     <th>Package</th>
                                                     <th>วันที่ใช้งานคงเหลือ</th>
@@ -598,7 +598,7 @@
                                                     ?>
                                                     
                                                     <td>{{@$user_aa->username}}</td>
-                                                    <td>{{@$user_aa->name}}</td>
+                                                    <td>{{@$user_aa->email}}</td>
                                                     <td>{{@$user_aa->line}}</td>
                                                     <td>{{@$paga}}</td>
                                                     <?php
