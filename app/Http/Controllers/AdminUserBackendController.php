@@ -1352,6 +1352,8 @@ public function dashbord_y(Request $r){
         $item->type=$r->type;
         $item->package=$r->package;
 
+        $item->type_netflix=1;
+
         $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$r->package)->first();
         $item->id_package=@$pack_id->id;
 

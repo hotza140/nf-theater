@@ -220,22 +220,24 @@
                                     ->whereDate('date_end', '>=',$date_ch_in) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
                                     ->orderby('id','desc')->cursor();
                                     ?>
-                                    <!-- <div class="col-sm-3">
+                                    <div class="col-sm-3">
                                     <select name="id_user" id="id_user" class="form-control add_select2"  required >
                                     @foreach($user as $key=>$users)
                                     <option value="{{@$users->id}}" >{{@$users->name}} ({{@$users->username}})</option>
                                      @endforeach
                                     </select>
-                                    </div> -->
+                                    </div>
 
-                                    <!-- <div class="col-sm-1">
+                                    <input type="hidden"  name="type" value="MOBILE" >
+<!-- 
+                                    <div class="col-sm-1">
                                     <select name="type" id="type" class="form-control add_select2" required  >
                                         <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
                                         <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
                                         </select>
-                                        </div> -->
+                                        </div>
 
-                                        <!-- <div class="col-sm-3">
+                                        <div class="col-sm-3">
                                     <select name="type_mail" id="type_mail" class="form-control add_select2"   >
                                         <option value="" @if(@$item->type_mail=='') selected  @endif >เมลหลัก (ยกเว้น TV)</option>
                                         @if($user_in_in_count_PC_1==0)
@@ -247,11 +249,11 @@
                                         </select>
                                         </div> -->
                                     
-                                    <!-- <div class="col-sm-1">
+                                    <div class="col-sm-1">
                                         <button type="submit" style="color:white;" class="btn btn-success"  onclick="javascript:return confirm('Confirm?')">
                                             <i class="fa fa-plus"></i> Add
                                         </button>
-                                    </div>     -->
+                                    </div>    
 
                                     </form>  
 
