@@ -50,7 +50,7 @@ class AdminUserBackendController extends Controller
   public function his_dash_y(Request $r){
     $item = log_dash::orderBy('id','desc')->get();
 
-   return view('backend.users_all.his_dash',[
+   return view('backend.users_all.his_dash_y',[
        'item'=>$item,
        'page'=>"all",
        'list'=>"dashbord_y",
@@ -108,7 +108,7 @@ public function dashbord_y(Request $r){
 
    $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
 
-  return view('backend.users_all.dashbord',[
+  return view('backend.users_all.dashbord_y',[
       'item'=>$item,
       'itemb'=>$itemb,
       'itemc'=>$itemc,
