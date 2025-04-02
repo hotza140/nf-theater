@@ -126,7 +126,7 @@
                                                         .flashing-card2 {
                                                             width: 500px;
                                                             height: 200px;
-                                                            background-color: #ffff00;  /* สีพื้นหลัง */
+                                                            background-color: #ddfc03;  /* สีพื้นหลัง */
                                                             color: white;  /* สีข้อความ */
                                                             display: flex;
                                                             align-items: center;
@@ -143,6 +143,38 @@
                                                             width: 500px;
                                                             height: 200px;
                                                             background-color: #00ffff;  /* สีพื้นหลัง */
+                                                            color: white;  /* สีข้อความ */
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            border-radius: 15px;  /* มุมโค้ง */
+                                                            font-size: 20px;
+                                                            font-weight: bold;
+                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
+                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
+                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
+                                                        }
+
+                                                        .flashing-card4 {
+                                                            width: 500px;
+                                                            height: 200px;
+                                                            background-color: #3ec15f;  /* สีพื้นหลัง */
+                                                            color: white;  /* สีข้อความ */
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            border-radius: 15px;  /* มุมโค้ง */
+                                                            font-size: 20px;
+                                                            font-weight: bold;
+                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
+                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
+                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
+                                                        }
+
+                                                        .flashing-card5 {
+                                                            width: 500px;
+                                                            height: 200px;
+                                                            background-color: #365fc9;  /* สีพื้นหลัง */
                                                             color: white;  /* สีข้อความ */
                                                             display: flex;
                                                             align-items: center;
@@ -199,25 +231,33 @@
                                         <tr>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ {{ number_format(@$nub, 0) }} คน </h1>
+                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ: ({{ number_format(@$nub, 0) }} คน) </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card5">
+                                                    <h1><i class="fa fa-user"></i> จำนวน Account ที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$acc, 0) }}) </h1>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
                                             <td>
                                                 <div class="flashing-card2">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน {{ number_format(@$nubb, 0) }} คน </h1>
+                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน: ({{ number_format(@$nubb, 0) }} คน) </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card3">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน {{ number_format(@$nubc, 0) }} คน </h1>
+                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน: ({{ number_format(@$nubc, 0) }} คน) </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
-                                                <div class="flashing-card3">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน {{ number_format(@$nubd, 0) }} คน </h1>
+                                                <div class="flashing-card4">
+                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$nubd, 0) }} คน) </h1>
                                                 </div>
                                             </td>
                                         </tr>

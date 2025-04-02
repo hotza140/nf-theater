@@ -198,6 +198,11 @@ public function dashbord_y(Request $r){
         //     ->orderBy('id_user_in', 'asc')
         //     ->count();
 
+
+        $acc = users_in::whereNull('type_f')
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+        ->count();
+
         $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
 
        return view('backend.users_all.dashbord',[
@@ -209,6 +214,9 @@ public function dashbord_y(Request $r){
            'nubb'=>$nubb,
            'nubc'=>$nubc,
            'nubd'=>$nubd,
+
+           'acc'=>$acc,
+
            'page'=>"all",
            'list'=>"dashbord",
        ]);
