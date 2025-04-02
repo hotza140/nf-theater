@@ -463,7 +463,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                     <th>Type</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
-                                                    <th>Password</th>
+                                                    <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
 
                                                 </tr>
@@ -499,11 +499,11 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                         
                                                         ?>
                                                         <td>{{@$mail_r}}</td>
-                                                        <td>
+                                                        <!-- <td>
                                                         @if(Auth::guard('admin')->user()->type == 0)   
                                                         {{@$pass_r}}
                                                         @endif
-                                                        </td>
+                                                        </td> -->
                                                         @endif
                                                     <td>{{@$accountss->created_at}}</td>
                                                 </tr>
@@ -544,7 +544,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                
                                                     <th>#</th>
                                                     <th>Username</th>
-                                                    <th>Name Profile</th>
+                                                    <th>Email</th>
                                                     <th>ชื่อไลน์ลูกค้า</th>
                                                     <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>สถานะ Account</th>
@@ -647,7 +647,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                     <th>Type</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
-                                                    <th>Password</th>
+                                                    <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
 
                                                 </tr>
@@ -688,7 +688,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                         
                                                         ?>
                                                         <td>{{@$mail_r}}</td>
-                                                        <td>{{@$pass_r}}</td>
+                                                        <!-- <td>{{@$pass_r}}</td> -->
                                                         @endif
                                                     <td>{{@$accountsass->created_at}}</td>
                                                 </tr>
