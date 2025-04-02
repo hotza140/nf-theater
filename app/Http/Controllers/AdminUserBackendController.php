@@ -38,7 +38,14 @@ class AdminUserBackendController extends Controller
 {
 
     public function his_dash(Request $r){
-       $item = log_dash::whereNull('type_f')->orderBy('id','desc')->get();
+    //    $item = log_dash::whereNull('type_f')->orderBy('id','desc')->get();
+
+       $item = log_dash::whereHas('user_in_his', function ($query) {
+        $query->whereHas('user_in', function ($subQuery) {
+            $subQuery->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        });
+        })
+        ->get();
 
       return view('backend.users_all.his_dash',[
           'item'=>$item,
@@ -48,7 +55,14 @@ class AdminUserBackendController extends Controller
   }
 
   public function his_dash_y(Request $r){
-    $item = log_dash::whereNotNull('type_f')->orderBy('id','desc')->get();
+    // $item = log_dash::whereNotNull('type_f')->orderBy('id','desc')->get();
+
+    $item = log_dash::whereHas('user_in_his', function ($query) {
+        $query->whereHas('user_in', function ($subQuery) {
+            $subQuery->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        });
+    })
+    ->get();
 
    return view('backend.users_all.his_dash_y',[
        'item'=>$item,

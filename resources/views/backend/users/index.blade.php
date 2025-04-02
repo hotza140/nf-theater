@@ -272,7 +272,11 @@
                                                         <a href="{{url('users_destroy/'.$t_userss->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
                                                         @endforeach
                                                     </td>
-                                                    <td>{{$items->line}}</td>
+                                                    <td>{{$items->line}}
+                                                    @foreach($t_users as $t_userss)
+                                                    <br>{{$t_userss->line}}
+                                                    @endforeach
+                                                    </td>
 
                                                     <td>{{@$paga}}
                                                     @foreach($t_users as $t_userss)
