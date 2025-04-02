@@ -104,7 +104,7 @@
                                 </div>
                                 <hr/>
                                 <div class="input-group">
-                                    <input type="email" class="form-control" placeholder="Your Email Address" name="email" value="{{ old('email') }}" maxlength = "25" required>
+                                    <input type="email" class="form-control" placeholder="Your Email Address" name="email" value="{{ old('email') }}" maxlength = "150" required>
                                     <span class="md-line"></span>
                                 </div>
                                 <div class="input-group">

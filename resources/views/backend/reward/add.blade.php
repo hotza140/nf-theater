@@ -32,7 +32,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Rewards Code*</label>
-                                                <input type="reward_Code" name="reward_Code" class="form-control" id=""  maxlength = "25"
+                                                <input type="reward_Code" name="reward_Code" class="form-control" id=""  maxlength = "150"
                                                 placeholder="รหัสคูปอง"  readonly>
                                             </div>
                                             <div class="col-sm-3">
@@ -44,7 +44,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3"> 
                                                 {{-- <label class="col-form-label">Package Use*</label> --}}
-                                                {{-- <input type="package_Code" name="package_Code" class="form-control" id=""  maxlength = "25"
+                                                {{-- <input type="package_Code" name="package_Code" class="form-control" id=""  maxlength = "150"
                                                 placeholder="กำหนดค่าแต้ม"  readonly> --}}
                                                 @php
                                                     $Packagewatch = App\Models\Packagewatch::all();
@@ -61,7 +61,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Rewards Score(แต้ม)*</label>
-                                                <input type="reward_Score" name="reward_Score" class="form-control" id=""  maxlength = "25"
+                                                <input type="reward_Score" name="reward_Score" class="form-control" id=""  maxlength = "150"
                                                 placeholder="กำหนดค่าแต้ม" required>
                                             </div>
                                         </div>

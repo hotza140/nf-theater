@@ -216,7 +216,7 @@
                                                     <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>สถานะ Account</th>
                                                     <th>Tool</th>
-                                                    <th>Add Profile</th>
+                                                    <th>Add Email</th>
                                                     <th>Account</th>
                                                    
                                                     

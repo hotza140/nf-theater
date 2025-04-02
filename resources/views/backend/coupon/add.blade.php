@@ -32,7 +32,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Coupon Code*</label>
-                                                <input type="Coupon_Code" name="Coupon_Code" class="form-control" id=""  maxlength = "25"
+                                                <input type="Coupon_Code" name="Coupon_Code" class="form-control" id=""  maxlength = "150"
                                                 placeholder="รหัสคูปอง"  readonly>
                                             </div>
                                             <div class="col-sm-3">

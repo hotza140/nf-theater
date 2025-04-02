@@ -1127,6 +1127,21 @@ class YoutubeBackendController extends Controller
        
            return response()->json(['success' => false]);
        }
+
+       // T_house------users_in
+       public function update_t_house(Request $r)
+       {
+           $item = users_in::where('id', $r->id)->first();
+       
+           if($item!=null){
+               $item->t_house  = $r->t_house ;
+               $item->save();
+       
+               return response()->json(['success' => true, 'open' => $item->open]);
+           }
+       
+           return response()->json(['success' => false]);
+       }
   
   
        //User_in//

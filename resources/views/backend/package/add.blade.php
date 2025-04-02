@@ -32,7 +32,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Package Auto Code</label>
-                                                <input type="package_Code" name="package_Code" class="form-control" id=""  maxlength = "25"
+                                                <input type="package_Code" name="package_Code" class="form-control" id=""  maxlength = "150"
                                                 placeholder="รหัสแพ็คเกจ"  readonly>
                                             </div>
                                             <div class="col-sm-3">

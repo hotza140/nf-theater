@@ -90,7 +90,7 @@
                                         <select name="status_account" id="" class="form-control">
                                             <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
                                             <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
-                                            <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option>
+                                            <!-- <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option> -->
                                             </select>
                                             </div>
                                             <div class="col-sm-2">
@@ -138,6 +138,17 @@
                                                             <span class="slider"></span>
                                                         </label>
                                                     </form>
+
+                                                    <form method="post" id="form{{$items->id}}" name="form{{$items->id}}">
+                                                        @csrf
+                                                        <label>
+                                                            <select name="t_house" class="form-control house-select" data-id="{{$items->id}}">
+                                                                <option value="บ้านบล็อก" @if(@$items->t_house=='บ้านบล็อก') selected @endif>บ้านบล็อก</option>
+                                                                <option value="บ้านอุทธรณ์" @if(@$items->t_house=='บ้านอุทธรณ์') selected @endif>บ้านอุทธรณ์</option>
+                                                                <option value="บ้านต่ออายุ" @if(@$items->t_house=='บ้านต่ออายุ') selected @endif>บ้านต่ออายุ</option>
+                                                            </select>
+                                                        </label>
+                                                    </form>
                                                     </td>
                                                     <td>
                                                     <?php $nub = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'MOBILE')->whereNull('tan')->count();
@@ -159,15 +170,15 @@
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>{{$items->name}}</td>
                                                     <td>{{$items->email}}
-                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo_email('{{$items->email}}')">
+                                                    <button class="btn btn-sm btn-primary" style="float: right;" onclick="copyUserInfo_email('{{$items->email}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
 
                                                     <td>
                                                     @if(Auth::guard('admin')->user()->type == 0)    
-                                                    {{$items->password}}
-                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo_pass('{{$items->password}}')">
+                                                    <!-- {{$items->password}} -->******
+                                                    <button class="btn btn-sm btn-primary" style="float: right;" onclick="copyUserInfo_pass('{{$items->password}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                         @endif
@@ -229,7 +240,7 @@
                                         textArea.select();
                                         try {
                                             document.execCommand("copy");
-                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                            // alert("คัดลอกข้อมูลสำเร็จ!");
                                         } catch (err) {
                                             console.error("คัดลอกไม่สำเร็จ: ", err);
                                             alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
@@ -242,7 +253,7 @@
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
                                             navigator.clipboard.writeText(textToCopy).then(() => {
-                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                                // alert("คัดลอกข้อมูลสำเร็จ!");
                                             }).catch(err => {
                                                 console.error('คัดลอกไม่สำเร็จ: ', err);
                                                 fallbackCopyTextToClipboard(textToCopy);
@@ -263,7 +274,7 @@
                                         textArea.select();
                                         try {
                                             document.execCommand("copy");
-                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                            // alert("คัดลอกข้อมูลสำเร็จ!");
                                         } catch (err) {
                                             console.error("คัดลอกไม่สำเร็จ: ", err);
                                             alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
@@ -276,7 +287,7 @@
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
                                             navigator.clipboard.writeText(textToCopy).then(() => {
-                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                                // alert("คัดลอกข้อมูลสำเร็จ!");
                                             }).catch(err => {
                                                 console.error('คัดลอกไม่สำเร็จ: ', err);
                                                 fallbackCopyTextToClipboard(textToCopy);
@@ -297,7 +308,7 @@
                                         textArea.select();
                                         try {
                                             document.execCommand("copy");
-                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                            // alert("คัดลอกข้อมูลสำเร็จ!");
                                         } catch (err) {
                                             console.error("คัดลอกไม่สำเร็จ: ", err);
                                             alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
@@ -310,7 +321,7 @@
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
                                             navigator.clipboard.writeText(textToCopy).then(() => {
-                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                                // alert("คัดลอกข้อมูลสำเร็จ!");
                                             }).catch(err => {
                                                 console.error('คัดลอกไม่สำเร็จ: ', err);
                                                 fallbackCopyTextToClipboard(textToCopy);
@@ -357,6 +368,36 @@
 @endsection
 
 @section('script')
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.house-select').forEach(selectElement => {
+            selectElement.addEventListener('change', function () {
+                const id = this.getAttribute('data-id'); // ดึงค่า ID
+                const t_house = this.value; // ค่าที่เลือก
+
+                fetch('{{ url("/update_t_house") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id, t_house }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert('อัปเดตไม่สำเร็จ!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('เกิดข้อผิดพลาด!');
+                });
+            });
+        });
+    });
+</script>
 
 
 <script>
