@@ -204,11 +204,11 @@ public function dashbord_y(Request $r){
            'item'=>$item,
            'itemb'=>$itemb,
            'itemc'=>$itemc,
-           'itemc'=>$itemd,
+           'itemd'=>$itemd,
            'nub'=>$nub,
            'nubb'=>$nubb,
            'nubc'=>$nubc,
-           'nubc'=>$nubd,
+           'nubd'=>$nubd,
            'page'=>"all",
            'list'=>"dashbord",
        ]);
