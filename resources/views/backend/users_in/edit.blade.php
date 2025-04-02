@@ -307,6 +307,8 @@
                                 <div class="card">
                                 <div class="card-block">
 
+                                <h3>เพิ่ม หลาย User</h3>
+
                                 <form class="form-horizontal" action="{{url('users_add_many')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row" >
@@ -331,6 +333,13 @@
                                             }
                                         });
                                         </script>
+
+
+
+
+                                    <br><br><br>
+
+                                    <h3>เพิ่ม User</h3>
 
 
                                     <form method="post" id="" action="{{ url('users_store_form_in') }}"
