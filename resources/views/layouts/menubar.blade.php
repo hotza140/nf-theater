@@ -705,6 +705,15 @@
         });
         </script>
 
+        <!-- คลุมดำ -->
+        <script>
+        document.querySelectorAll('input[type="email"]').forEach(function(input) {
+            input.addEventListener('click', function() {
+                this.select();
+            });
+        });
+        </script>
+
 
 
         <!-- // ป้องกันการกด Enter เพื่อส่งข้อมูล ในทุกฟอร์ม -->
