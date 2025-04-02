@@ -1738,7 +1738,8 @@ class AdminUserBackendController extends Controller
          $check_tan=users_in_in::where('id_user_in',@$r->id_user_in)->where('tan',1)->count();
 
          if(@$check_tan<2){
-
+         $hol=1; 
+         
          $aaa=users::where('id',$user->id)->first();
          $item=new users_in_in();
          $item->id_user=$user->id;  
@@ -1773,7 +1774,11 @@ class AdminUserBackendController extends Controller
         }
      }
  
-     return redirect()->back()->with('message','Sucess!');
+     if(@$hol!=null){
+        return redirect()->back()->with('message','Sucess!');
+     }else{
+        return redirect()->back()->with('message','ตัวแทนเต็มแล้ว');
+     }
  }
  // Auto
     
