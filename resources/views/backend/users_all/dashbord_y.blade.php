@@ -126,7 +126,7 @@
                                                         .flashing-card2 {
                                                             width: 500px;
                                                             height: 200px;
-                                                            background-color: #ddc122;  /* สีพื้นหลัง */
+                                                            background-color: #ffff00;  /* สีพื้นหลัง */
                                                             color: white;  /* สีข้อความ */
                                                             display: flex;
                                                             align-items: center;
@@ -142,39 +142,7 @@
                                                         .flashing-card3 {
                                                             width: 500px;
                                                             height: 200px;
-                                                            background-color: #1be4d0;  /* สีพื้นหลัง */
-                                                            color: white;  /* สีข้อความ */
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            border-radius: 15px;  /* มุมโค้ง */
-                                                            font-size: 20px;
-                                                            font-weight: bold;
-                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
-                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
-                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
-                                                        }
-
-                                                        .flashing-card4 {
-                                                            width: 500px;
-                                                            height: 200px;
-                                                            background-color: #47b8a7;  /* สีพื้นหลัง */
-                                                            color: white;  /* สีข้อความ */
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            border-radius: 15px;  /* มุมโค้ง */
-                                                            font-size: 20px;
-                                                            font-weight: bold;
-                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
-                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
-                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
-                                                        }
-
-                                                        .flashing-card5 {
-                                                            width: 500px;
-                                                            height: 200px;
-                                                            background-color: #365fc9;  /* สีพื้นหลัง */
+                                                            background-color: #00ffff;  /* สีพื้นหลัง */
                                                             color: white;  /* สีข้อความ */
                                                             display: flex;
                                                             align-items: center;
@@ -221,7 +189,7 @@
                             <!-- Zero config.table start -->
                             <div class="card">
                                 <div class="card-header">
-                                <a style="color:white;" class="btn btn-info" href="{{url('his_dash')}}" target="_blank" > <i class="fa fa-plus"></i>ประวัติการยืนยัน</a>
+                                <a style="color:white;" class="btn btn-info" href="{{url('his_dash_y')}}" target="_blank" > <i class="fa fa-plus"></i>ประวัติการยืนยัน</a>
                                         </div>
                                 </div>
                                 <div class="card-block">
@@ -231,33 +199,19 @@
                                         <tr>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ: ({{ number_format(@$nub, 0) }} คน) </h1>
+                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ {{ number_format(@$nub, 0) }} คน </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
-                                                <div class="flashing-card5">
-                                                    <h1><i class="fa fa-box"></i> จำนวน Account ที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$acc, 0) }}) </h1>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
                                                 <div class="flashing-card2">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน: ({{ number_format(@$nubb, 0) }} คน) </h1>
+                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน {{ number_format(@$nubb, 0) }} คน </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card3">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน: ({{ number_format(@$nubc, 0) }} คน) </h1>
-                                                </div>
-                                            </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <div class="flashing-card4">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$nubd, 0) }} คน) </h1>
+                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 7 วัน {{ number_format(@$nubc, 0) }} คน </h1>
                                                 </div>
                                             </td>
                                         </tr>
@@ -266,7 +220,7 @@
                                 <br><br><br>
 
                                     <div class="dt-responsive table-responsive">
-                                        <h3><i class="fa fa-user"></i>จำนวนคนที่หมดอายุ ({{ number_format(@$nub, 0) }} คน) </h3>
+                                        <h3><i class="fa fa-user"></i>จำนวนคนที่หมดอายุ {{ number_format(@$nub, 0) }} คน </h3>
                                         <table id="" class="table table-striped table-bordered nowrap">
                                         <thead>
                                                 <tr>
@@ -392,7 +346,7 @@
 
 
                                     <div class="dt-responsive table-responsive">
-                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน ({{ number_format(@$nubb, 0) }} คน) </h3>
+                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน {{ number_format(@$nubb, 0) }} คน </h3>
                                         <table id="" class="table table-striped table-bordered nowrap">
                                         <thead>
                                                 <tr>
@@ -519,7 +473,7 @@
 
 
                                     <div class="dt-responsive table-responsive">
-                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน ({{ number_format(@$nubc, 0) }} คน) </h3>
+                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 7 วัน {{ number_format(@$nubc, 0) }} คน </h3>
                                         <table id="" class="table table-striped table-bordered nowrap">
                                         <thead>
                                                 <tr>
@@ -540,139 +494,6 @@
                                             <!-- <tbody class="sortable"> -->
                                             <tbody class="">
                                             @foreach($itemc as $key=>$accountsas)
-                                            <?php
-                                            $ddd = App\Models\users_in_in::pluck('id')->ToArray();
-                                             $gub=DB::table('tb_users_in_in_history')->whereNotIn('id_user_in_in', $ddd)
-                                             ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)->get();
-                                             $user=DB::table('tb_users')->where('id',@$accountsas->id_user)->first();
-                                             $accountsass=DB::table('tb_users_in')->where('id',@$accountsas->id_user_in)->first();
-                                            ?>
-
-                                            <tr>
-                                                    <td>{{$key+1}} 
-                                                    <a href="{{url('day_his/'.$accountsas->id_user_in)}}" class="btn btn-danger" style="color:white;" onclick="javascript:return confirm('Confirm?')" >
-                                                                <span >เปลี่ยนทั้งหมด</span>
-                                                            </a> 
-
-                                                    </td>
-                                                    <!-- <td>
-                                                        @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                        <i class="fa fa-mobile" style="font-size:30px; color:red;" title="หมดอายุแล้ว"></i>
-                                                        @else
-                                                        <i class="fa fa-desktop" style="font-size:30px; color:red;" title="หมดอายุแล้ว"></i>
-                                                        @endif
-                                                    </td> -->
-
-                                                    <td>{{@$user->username}}
-                                                    @foreach($gub as $key=>$gubs)
-                                                    <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
-                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
-                                                    ?>
-                                                    <br>
-                                                    {{@$user->username}}
-                                                    @endforeach
-                                                    </td>
-
-                                                    <td>{{@$user->name}}
-                                                    @foreach($gub as $key=>$gubs)
-                                                    <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
-                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
-                                                    ?>
-                                                    <br>
-                                                    {{@$user->name}}
-                                                    @endforeach
-                                                    </td>
-
-                                                    <td>{{@$user->line}}
-                                                    @foreach($gub as $key=>$gubs)
-                                                    <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
-                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
-                                                    ?>
-                                                    <br>
-                                                    {{@$user->line}}
-                                                    @endforeach
-                                                    </td>
-
-                                                    <td>{{@$accountsass->name}}</td>
-                                                    @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                    <td>{{@$accountsass->email}}</td>
-                                                    <td>{{@$accountsass->password}}</td>
-                                                        @else
-                                                        <?php  
-                                                        if($accountsas->type_mail==1){
-                                                            $mail_r=$accountsass->email01;
-                                                            $pass_r=$accountsass->password01;
-                                                        }elseif($accountsas->type_mail==2){
-                                                            $mail_r=$accountsass->email02;
-                                                            $pass_r=$accountsass->password02;
-                                                        }
-                                                        
-                                                        ?>
-                                                        <td>{{@$mail_r}}</td>
-                                                        <td>{{@$pass_r}}</td>
-                                                        @endif
-
-                                                        <?php
-                                                        $date_start=@$accountsass->created_at;
-                                                        $date_end=@$accountsass->date_end;
-
-                                                          if ($date_start) {
-                                                            $formatted_date1 = date('d/m/Y', strtotime($date_start));
-                                                        } else {
-                                                            $formatted_date1 = null;
-                                                        }
-                                                        if ($date_end) {
-                                                            $formatted_date2 = date('d/m/Y', strtotime($date_end));
-                                                        } else {
-                                                            $formatted_date2 = null;
-                                                        }
-
-                                                        ?>
-                                                    <td>{{@$formatted_date1}}</td>
-                                                    <td>{{@$formatted_date2}}</td>
-                                                </tr>
-                                                @endforeach
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-
-
-
-
-
-                                <br><br><br><br>
-
-
-
-
-                                    <div class="dt-responsive table-responsive">
-                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน ({{ number_format(@$nubd, 0) }} คน) </h3>
-                                        <table id="" class="table table-striped table-bordered nowrap">
-                                        <thead>
-                                                <tr>
-                                               
-                                                    <th>#</th>
-                                                    <!-- <th>Type</th> -->
-                                                    <th>Username</th>
-                                                    <th>Profile</th>
-                                                    <th>Line</th>
-                                                    <th>Name Account</th>
-                                                    <th>Email</th>
-                                                    <th>Password</th>
-                                                    <th>วันที่เชื่อมต่อ</th>
-                                                    <th>วันหมดอายุ</th>
-
-                                                </tr>
-                                            </thead>
-                                            <!-- <tbody class="sortable"> -->
-                                            <tbody class="">
-                                            @foreach($itemd as $key=>$accountsas)
                                             <?php
                                             $ddd = App\Models\users_in_in::pluck('id')->ToArray();
                                              $gub=DB::table('tb_users_in_in_history')->whereNotIn('id_user_in_in', $ddd)

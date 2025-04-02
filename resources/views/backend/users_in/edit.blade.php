@@ -307,13 +307,15 @@
                                 <div class="card">
                                 <div class="card-block">
 
+                                <h3>เพิ่ม หลาย User</h3>
+
                                 <form class="form-horizontal" action="{{url('users_add_many')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row" >
                                         <div class="col-sm-1">
                                         <input type="hidden" class="form-control" id="" name="id" value="{{@$item->id}}" >
 
-                                        <input type="number" class="form-control" id="number_input" name="number" value="1" min="1" max="10" required>
+                                        <input type="number" class="form-control" id="number_input" name="number" value="1" min="1" max="7" required>
                                             </div>
                                             <div class="col-sm-1">
                                                 <button type="submit" class="btn btn-success" style="color:white;">
@@ -324,13 +326,20 @@
                                         </form>
                                         <script>
                                         document.getElementById("number_input").addEventListener("input", function () {
-                                            if (this.value > 10) {
-                                                this.value = 10;
+                                            if (this.value > 7) {
+                                                this.value = 7;
                                             } else if (this.value < 1) {
                                                 this.value = 1;
                                             }
                                         });
                                         </script>
+
+
+
+
+                                    <br><br><br>
+
+                                    <h3>เพิ่ม User</h3>
 
 
                                     <form method="post" id="" action="{{ url('users_store_form_in') }}"

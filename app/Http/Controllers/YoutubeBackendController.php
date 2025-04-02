@@ -614,7 +614,7 @@ class YoutubeBackendController extends Controller
         $his->id_user_in=@$acc_id;
         $his->id_user_in_in=@$aaa->id;
         $his->number=$randomNumber;
-        $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile: '.$item->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmailUser: '.$item->email.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;Password: '.@$pa;
+        $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmailUser: '.$item->email.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;';
 
         $his->save();
 
@@ -977,7 +977,7 @@ class YoutubeBackendController extends Controller
                 $his->id_user_in=@$acc_id;
                 $his->id_user_in_in=@$aaa->id;
                 $his->number=$randomNumber;
-                $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile: '.$item->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmailUser: '.$item->email.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;Password: '.@$pa;
+                $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.$acc.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmailUser: '.$item->email.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;';
 
                 $his->save();
 

@@ -91,6 +91,7 @@
                                             <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
                                             <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
                                             <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option>
+                                            <option  value="2" @if(@$status_account==2) selected  @endif >Account ที่ใกล้หมดอายุ 1 วัน</option>
                                             </select>
                                             </div>
                                             <div class="col-sm-2">

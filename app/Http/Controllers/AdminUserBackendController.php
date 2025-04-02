@@ -38,7 +38,14 @@ class AdminUserBackendController extends Controller
 {
 
     public function his_dash(Request $r){
-       $item = log_dash::orderBy('id','desc')->get();
+    //    $item = log_dash::whereNull('type_f')->orderBy('id','desc')->get();
+
+       $item = log_dash::whereHas('user_in_his', function ($query) {
+        $query->whereHas('user_in', function ($subQuery) {
+            $subQuery->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        });
+        })
+        ->get();
 
       return view('backend.users_all.his_dash',[
           'item'=>$item,
@@ -46,6 +53,108 @@ class AdminUserBackendController extends Controller
           'list'=>"dashbord",
       ]);
   }
+
+  public function his_dash_y(Request $r){
+    // $item = log_dash::whereNotNull('type_f')->orderBy('id','desc')->get();
+
+    $item = log_dash::whereHas('user_in_his', function ($query) {
+        $query->whereHas('user_in', function ($subQuery) {
+            $subQuery->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        });
+    })
+    ->get();
+
+   return view('backend.users_all.his_dash_y',[
+       'item'=>$item,
+       'page'=>"all",
+       'list'=>"dashbord_y",
+   ]);
+}
+
+public function dashbord_y(Request $r){
+    // ลบเช็คเวลา
+   $date=date('Y-m-d');
+   $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+   $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+   $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+   $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+   // ลบเช็คเวลา
+
+
+   $date=date('Y-m-d');
+   $startDate = date('Y-m-d', strtotime('+4 days', strtotime($date))); // มากกว่า 3 วัน (เริ่มจากวันที่ 4)
+   $endDate = date('Y-m-d', strtotime('+7 days', strtotime($date))); // ไม่เกิน 7 วัน
+
+   $ddd = users_in_in::pluck('id')->ToArray();
+
+   $item = users_in_in_history::whereNotIn('id_user_in_in', $ddd)
+   ->whereNull('status_check')
+   ->whereHas('user_in', function ($query) {
+    $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+    })
+   ->groupBy('id_user_in')
+   ->orderBy('id_user_in','asc')->get();
+
+   $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)
+   ->whereNull('status_check')
+   ->whereHas('user_in', function ($query) {
+    $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+    })
+   ->orderBy('id_user_in','asc')
+   ->count();
+
+
+   $itemb = users_in_in_history::whereIn('id_user_in_in', $ddd)
+   ->whereNull('status_check')
+   ->whereHas('user_in', function ($query) {
+    $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+    })
+   ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
+   ->groupBy('id_user_in')
+   ->orderBy('id_user_in', 'asc')
+   ->get();
+
+   $nubb = users_in_in_history::whereIn('id_user_in_in', $ddd)
+   ->whereNull('status_check')
+   ->whereHas('user_in', function ($query) {
+    $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+    })
+   ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
+   ->groupBy('id_user_in')
+   ->orderBy('id_user_in', 'asc')
+   ->count();
+
+   $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+       ->whereNull('status_check')
+       ->whereHas('user_in', function ($query) {
+        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        })
+       ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
+       ->groupBy('id_user_in')
+       ->orderBy('id_user_in', 'asc')
+       ->get();
+
+       $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+       ->whereNull('status_check')
+       ->whereHas('user_in', function ($query) {
+        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        })
+       ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
+       ->groupBy('id_user_in')
+       ->orderBy('id_user_in', 'asc')
+       ->count();
+
+  return view('backend.users_all.dashbord_y',[
+      'item'=>$item,
+      'itemb'=>$itemb,
+      'itemc'=>$itemc,
+      'nub'=>$nub,
+      'nubb'=>$nubb,
+      'nubc'=>$nubc,
+      'page'=>"all",
+      'list'=>"dashbord_y",
+  ]);
+}
 
 
     public function dashbord(Request $r){
@@ -63,14 +172,29 @@ class AdminUserBackendController extends Controller
         $endDate = date('Y-m-d', strtotime('+7 days', strtotime($date))); // ไม่เกิน 7 วัน
 
         $ddd = users_in_in::pluck('id')->ToArray();
+
         $item = users_in_in_history::whereNotIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->groupBy('id_user_in')
         ->orderBy('id_user_in','asc')->get();
+
+        $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)
+        ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->orderBy('id_user_in','asc')
+        ->count();
 
 
         $itemb = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
@@ -78,34 +202,85 @@ class AdminUserBackendController extends Controller
 
         $nubb = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->count();
 
         $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
-            ->whereNull('status_check')
-            ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
-            ->groupBy('id_user_in')
-            ->orderBy('id_user_in', 'asc')
-            ->get();
+        ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->get();
 
-            $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
-            ->whereNull('status_check')
-            ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
-            ->groupBy('id_user_in')
-            ->orderBy('id_user_in', 'asc')
-            ->count();
+        $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->count();
 
-        $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
+        $itemd = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->get();
+
+        $nubd = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->count();
+
+        // $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        //     ->whereNull('status_check')
+        //     ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
+        //     ->groupBy('id_user_in')
+        //     ->orderBy('id_user_in', 'asc')
+        //     ->get();
+
+        //     $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        //     ->whereNull('status_check')
+        //     ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
+        //     ->groupBy('id_user_in')
+        //     ->orderBy('id_user_in', 'asc')
+        //     ->count();
+
+
+        $acc = users_in::whereNull('type_f')
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+        ->count();
 
        return view('backend.users_all.dashbord',[
            'item'=>$item,
            'itemb'=>$itemb,
            'itemc'=>$itemc,
+           'itemd'=>$itemd,
            'nub'=>$nub,
            'nubb'=>$nubb,
            'nubc'=>$nubc,
+           'nubd'=>$nubd,
+
+           'acc'=>$acc,
+
            'page'=>"all",
            'list'=>"dashbord",
        ]);
@@ -1318,6 +1493,8 @@ class AdminUserBackendController extends Controller
                     $item = $item->where('date_end', '>=', $date);
                 } elseif ($status_account == '1') {
                     $item = $item->where('date_end', '<', $date);
+                } elseif ($status_account == '2') {
+                    $item = $item->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))]);
                 }
 
                 $item = $item->orderBy('id', 'desc')->paginate(10);
@@ -1334,18 +1511,18 @@ class AdminUserBackendController extends Controller
       }
       public function users_in_store(Request $r){
           $item=new users_in();
-          $ch=users_in::where('email',$r->email)->orderby('id','desc')->first();
+          $ch=users_in::whereNotNull('email')->where('email',$r->email)->orderby('id','desc')->first();
           $nh=users_in::where('name',$r->name)->orderby('id','desc')->first();
   
   
           if($ch!=null){
               return redirect()->back()->with('message','Email Already Have in Data!');
               }else{
-                $ch=users_in::where('email01',$r->email)->orderby('id','desc')->first();
+                $ch=users_in::whereNotNull('email01')->where('email01',$r->email)->orderby('id','desc')->first();
                 if($ch!=null){
                 return redirect()->back()->with('message','Email Already Have in Data!');
                 }else{
-                    $ch=users_in::where('email02',$r->email)->orderby('id','desc')->first();
+                    $ch=users_in::whereNotNull('email02')->where('email02',$r->email)->orderby('id','desc')->first();
                     if($ch!=null){
                     return redirect()->back()->with('message','Email Already Have in Data!');
                     } 
@@ -1353,6 +1530,7 @@ class AdminUserBackendController extends Controller
               }
 
 
+              if($r->email01!=null){
               $ch1=users_in::where('email',$r->email01)->orderby('id','desc')->first();
 
               if($ch1!=null){
@@ -1368,7 +1546,10 @@ class AdminUserBackendController extends Controller
                       } 
                   }
                 }
+                }
 
+
+                if($r->email02!=null){
                 $ch2=users_in::where('email',$r->email02)->orderby('id','desc')->first();
 
                 if($ch2!=null){
@@ -1384,6 +1565,7 @@ class AdminUserBackendController extends Controller
                         } 
                     }
                   }
+                    }
 
 
               if($nh!=null){
@@ -1684,7 +1866,7 @@ class AdminUserBackendController extends Controller
         $item->date_start=@$aaa->date_start; 
         $item->date_end=@$aaa->date_end;
 
-        $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
+        $user_in_in_count=users_in_in::where('type','MOBILE')->where('id_user_in',@$r->id_user_in)->count();
         if($user_in_in_count >= 5){
         return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
         }else{
@@ -1738,6 +1920,7 @@ class AdminUserBackendController extends Controller
          $check_tan=users_in_in::where('id_user_in',@$r->id_user_in)->where('tan',1)->count();
 
          if(@$check_tan<2){
+         $hol=1; 
 
          $aaa=users::where('id',$user->id)->first();
          $item=new users_in_in();
@@ -1749,7 +1932,7 @@ class AdminUserBackendController extends Controller
          $item->date_start=@$aaa->date_start; 
          $item->date_end=@$aaa->date_end;
  
-         $user_in_in_count=users_in_in::where('id_user_in',@$r->id_user_in)->count();
+         $user_in_in_count=users_in_in::where('type','MOBILE')->where('id_user_in',@$r->id_user_in)->count();
          if($user_in_in_count >= 5){
          return redirect()->back()->with('message','จำนวนผู้ใช้งานครบแล้ว!');
          }else{
@@ -1773,7 +1956,11 @@ class AdminUserBackendController extends Controller
         }
      }
  
-     return redirect()->back()->with('message','Sucess!');
+     if(@$hol!=null){
+        return redirect()->back()->with('message','Sucess!');
+     }else{
+        return redirect()->back()->with('message','ตัวแทนเต็มแล้ว');
+     }
  }
  // Auto
     

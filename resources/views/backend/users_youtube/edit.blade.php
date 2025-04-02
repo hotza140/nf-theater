@@ -220,6 +220,18 @@
 
                                 <div class="card">
                                 <div class="card-header">
+                                    <h3>เพิ่ม Profile</h3>
+                                <form method="GET" action="{{url('y_users_add')}}" id="form{{$item->id}}" name="form{{$item->id}}" target="_blank">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{@$item->id}}">
+                                                        <button type="submit" class="btn btn-sm btn-info" style="color:white;" target="_blank"><i class="fa fa-gear"></i>เพิ่ม Profile</button>
+                                                    </form>
+                                                    </div>
+                                    </div>
+
+
+                                <div class="card">
+                                <div class="card-header">
                                 <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ต่ออายุ หรือปรับวันที่ Account</h1>
                                 <br><br>
                                 <form method="post" id=""
@@ -451,7 +463,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                     <th>Type</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
-                                                    <th>Password</th>
+                                                    <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
 
                                                 </tr>
@@ -487,11 +499,11 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                         
                                                         ?>
                                                         <td>{{@$mail_r}}</td>
-                                                        <td>
+                                                        <!-- <td>
                                                         @if(Auth::guard('admin')->user()->type == 0)   
                                                         {{@$pass_r}}
                                                         @endif
-                                                        </td>
+                                                        </td> -->
                                                         @endif
                                                     <td>{{@$accountss->created_at}}</td>
                                                 </tr>
@@ -532,7 +544,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                
                                                     <th>#</th>
                                                     <th>Username</th>
-                                                    <th>Name Profile</th>
+                                                    <th>Email</th>
                                                     <th>ชื่อไลน์ลูกค้า</th>
                                                     <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>สถานะ Account</th>
@@ -635,7 +647,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                     <th>Type</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
-                                                    <th>Password</th>
+                                                    <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
 
                                                 </tr>
@@ -676,7 +688,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                         
                                                         ?>
                                                         <td>{{@$mail_r}}</td>
-                                                        <td>{{@$pass_r}}</td>
+                                                        <!-- <td>{{@$pass_r}}</td> -->
                                                         @endif
                                                     <td>{{@$accountsass->created_at}}</td>
                                                 </tr>

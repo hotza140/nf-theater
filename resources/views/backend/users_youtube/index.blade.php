@@ -269,10 +269,15 @@
                                                     <a href="{{url('y_users_destroy/'.$items->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
                                                     @foreach($t_users as $t_userss)
                                                         <br><a href="{{url('y_users_edit/'.$t_userss->id)}}" target="_blank">{{$t_userss->email}}</a>
-                                                        <a href="{{url('y_users_destroy/'.$items->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
+                                                        <a href="{{url('y_users_destroy/'.$t_userss->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
                                                         @endforeach
                                                     </td>
-                                                    <td>{{$items->line}}</td>
+
+                                                    <td>{{$items->line}}
+                                                    @foreach($t_users as $t_userss)
+                                                    <br>{{$t_userss->line}}
+                                                    @endforeach
+                                                    </td>
 
                                                     <td>{{@$items->package}}
                                                     @foreach($t_users as $t_userss)
@@ -428,7 +433,7 @@
                                     }
 
                                     function copyUserInfo(username, password, name, package, link) {
-                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
+                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nEmail: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
                                             navigator.clipboard.writeText(textToCopy).then(() => {
