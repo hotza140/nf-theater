@@ -441,7 +441,9 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-member" style="padding-top: 150px;">
+
+    @include('frontend.profileconfirm')
+    {{-- <div class="modal fade" role="dialog" tabindex="-1" id="modal-member" style="padding-top: 150px;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header m-h">
@@ -474,7 +476,7 @@
                 <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"></div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-repoints-recommender" style="padding-top: 150px;">
         <div class="modal-dialog" role="document">

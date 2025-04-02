@@ -10,15 +10,19 @@ use Illuminate\Queue\SerializesModels;
 class CustConfirmMail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $genToken,$emailconfirm,$ImageLinklogo;  // ,$base64Image
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
+    public function __construct($genToken,$emailconfirm,$ImageLinklogo)  
+    {  //,$base64Image
+        $this->genToken = $genToken;
+        $this->emailconfirm = $emailconfirm;
+        // $this->base64Image = $base64Image;
+        $this->ImageLinklogo = $ImageLinklogo;
     }
 
     /**
@@ -28,7 +32,11 @@ class CustConfirmMail extends Mailable
      */
     public function build()
     {
-        $subject = "ตรวจสอบระบบในการส่งเมลทดสอบ";
-        return $this->view('frontend.mailcus.mailtocusauto')->subject($subject);
+        $subject = "ยืนยันเมล เพื่อใช้งานกับทาง NF THEATER.";
+        $genTokenIS = $this->genToken;
+        $emailconfirmIS = $this->emailconfirm;
+        // $base64Image = $this->base64Image;
+        $ImageLinklogo = $this->ImageLinklogo;
+        return $this->view('frontend.mailcus.mailtocusauto',compact('genTokenIS','emailconfirmIS','ImageLinklogo'))->subject($subject); // ,'base64Image'
     }
 }

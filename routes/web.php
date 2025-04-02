@@ -86,6 +86,9 @@ Route::group(['middleware' => ['users']],function(){
 
     // change password for username
     Route::post('changepassusercus',[App\Http\Controllers\UserFrontendController::class,'changepassusercus'])->name('frontend.changepassusercus');
+
+    // mail confirm over
+    Route::post('confirmmailck',[App\Http\Controllers\UserFrontendController::class,'confirmmailck'])->name('frontend.confirmmailck');
     
 });
 

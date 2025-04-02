@@ -42,6 +42,7 @@ use App\Models\ReferFriend;
 use App\Models\DefaultConfig;
 use App\Models\PointSumbalance;
 use App\Models\OrderPayPackageTruewallet;
+use App\Models\ConfirmMail;
 
 class UserFrontendController extends Controller
 {
@@ -680,36 +681,6 @@ class UserFrontendController extends Controller
         return redirect()->back()->with('message','Success!');
     }
 
-    public function SendMailSMTPT1() {
-        // 'from' => array('address' => 'myusername@gmail.com', 'name' => 'hawle'),
-        // $mailData = '';
-        // $apply_email = 'egchai.pookham.org@gmail.com';// $value->apply_email;
-        // $MailSend = Mail::to($apply_email);
-        // if(@$ccEmails) $MailSend->cc($ccEmails);
-        // if(@$bccEmails) $MailSend->bcc($bccEmails);
-        // $MailSend->send(new CustConfirmMail($mailData));
-
-        // Mail::send('frontend.mailcus.mailtocusauto', [ 'content' => 'testmail'],    
-        // function ($m) {
-        //     $m->from('abc@gmail.com', 'ABC'); 
-        //     $m->to('egchai.pookham.org@gmail.com', 'XYZ')->subject('TestMailSubject!');
-        // }
-        
-        // );
-    
-        // if (Mail::failures()) {
-        //         return response()->Fail('Sorry! Please try again latter');
-        //         // return redirect()->back()->withErrors(['name' => 'The name is required']);
-        // }else{
-        //         return response()->success('Great! Successfully send in your mail');
-        //         // return redirect()->back()->withSuccess(['name' => 'The name is required']);
-        // }
-
-        Mail::to('egachai.pookham.org@gmail.com')->send(new CustConfirmMail());
-
-        return 'Test email sent!';
-    }
-
     public function getimgSlipBase64(Request $request) {
         $filerd = \Storage::disk('frongdrv')->get('Frongdrv/'.(@$request->path?$request->path.'/':'').$request->img);
         $base64 = base64_encode($filerd);
@@ -821,5 +792,125 @@ class UserFrontendController extends Controller
             }
         } 
         return response()->json(["usernameReferrer"=>$request->usernameReferrer,'saveOK'=>$saveOK]);
+    }
+
+    public function SendMailSMTPT1($request) {
+        // 'from' => array('address' => 'myusername@gmail.com', 'name' => 'hawle'),
+        // $mailData = '';
+        // $apply_email = 'egchai.pookham.org@gmail.com';// $value->apply_email;
+        // $MailSend = Mail::to($apply_email);
+        // if(@$ccEmails) $MailSend->cc($ccEmails);
+        // if(@$bccEmails) $MailSend->bcc($bccEmails);
+        // $MailSend->send(new CustConfirmMail($mailData));
+
+        // Mail::send('frontend.mailcus.mailtocusauto', [ 'content' => 'testmail'],    
+        // function ($m) {
+        //     $m->from('abc@gmail.com', 'ABC'); 
+        //     $m->to('egchai.pookham.org@gmail.com', 'XYZ')->subject('TestMailSubject!');
+        // }
+        
+        // );
+    
+        // if (Mail::failures()) {
+        //         return response()->Fail('Sorry! Please try again latter');
+        //         // return redirect()->back()->withErrors(['name' => 'The name is required']);
+        // }else{
+        //         return response()->success('Great! Successfully send in your mail');
+        //         // return redirect()->back()->withSuccess(['name' => 'The name is required']);
+        // }
+
+        // Mail::to('egachai.pookham.org@gmail.com')->send(new CustConfirmMail());
+        $CkNoDuplicateToken = 1;
+        while ($CkNoDuplicateToken==1) {
+            # code...
+            $genToken = self::generateRandomString(25);
+            $ConfirmMail = ConfirmMail::where('token_check',$genToken)->first();
+            if(!@$ConfirmMail) $CkNoDuplicateToken=0;
+        }
+        
+        $emailconfirm = $request->emailconfirm??'';
+
+        // user_id username_confirm token_check email_confirm expire_confirm open_ck
+        $users = Auth::guard('users')->user();
+        $ConfirmMail = new ConfirmMail();
+        $ConfirmMail->user_id = $users->id;
+        $ConfirmMail->username_confirm = $users->username;
+        $ConfirmMail->token_check = $genToken;
+        $ConfirmMail->email_confirm = $emailconfirm;
+        $ConfirmMail->expire_confirm = date('Y-m-d H:i:s', strtotime('+60 minutes'));
+        $ConfirmMail->open_ck = 1;
+        $ConfirmMail->save();
+
+        // $path = public_path('assets/img/avata.png');
+        // // Convert image to base64
+        // $imageData = base64_encode(file_get_contents($path));
+
+        // // Determine the MIME type
+        // $mimeType = mime_content_type($path);
+
+        // // Format base64 string
+        // $base64Image = "data:$mimeType;base64,$imageData";
+
+        $ImageLinklogo = asset('assets/img/avata.png');
+
+        Mail::to($emailconfirm)->send(new CustConfirmMail($genToken,$emailconfirm,$ImageLinklogo)); // $base64Image,
+
+        if (Mail::failures()) {
+            return 'Warning! ไม่สามารถส่งเมลที่ท่านต้องการยืนยันได้!'; // confirm_mail
+        }
+
+        return 'Sucess! ส่งการยืนยันไปที่เมลของท่านแล้ว ไม่เกิน 60 นาที.';
+    }
+
+    public function generateRandomString($length = 25) {
+        return substr(str_shuffle(str_repeat($x = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', ceil($length / strlen($x)))), 1, $length);
+    }    
+
+    public function confirmmailck(Request $request) {
+        $users = Auth::guard('users')->user();
+        $ConfirmMail = ConfirmMail::where('username_confirm',$users->username)->where('email_confirm',$request->emailconfirm)->where('open_ck',2)->first();
+        if($ConfirmMail) {
+            return redirect()->back()->with('message',"warning! เมลนี้ ได้รับการยืนยันแล้วเป็นปัจจุบัน.");
+        }
+        $messF = self::SendMailSMTPT1($request);
+        return redirect()->back()->with('message',"{$messF}");
+    }
+
+    public function receiveconfirmmailck(Request $request) {
+        // user_id username_confirm token_check email_confirm expire_confirm open_ck
+        $RecieveToken = @$request->rtoken??'';
+        $ConfirmMail = ConfirmMail::where('token_check',$RecieveToken)
+                                  ->where('open_ck',1)
+                                  ->where('expire_confirm', '>=', carbon::now()) // Using Carbon for better date handling
+                                  ->first();
+        if(@$ConfirmMail) {
+            $ConfirmMail->open_ck = 2;
+            $ConfirmMail->save();
+            $ConfirmMailDel = ConfirmMail::where('id','!=',$ConfirmMail->id)->where('username_confirm',$ConfirmMail->username_confirm)->get();
+            foreach ($ConfirmMailDel as $key => $value) {
+                # code...
+                $value->delete();
+            }
+
+            $users = users::where('username',$ConfirmMail->username_confirm)->get();
+            foreach ($users as $key => $value) {
+                # code...
+                $value->email = $ConfirmMail->email_confirm;
+                $value->save();
+            }
+            return view('frontend.mailcus.thankyouconfirmmail',compact('ConfirmMail'));
+        } else {
+            $ConfirmMailDel = ConfirmMail::where('token_check',$RecieveToken)
+                                         ->where('open_ck',1)
+                                         ->where('expire_confirm', '<', carbon::now()) // Using Carbon for better date handling
+                                         ->get();
+            foreach ($ConfirmMailDel as $key => $value) {
+                # code...
+                $value->delete();
+            }
+            // echo "<script>alert('คุณไม่สามารถยืนเมลด้วยลิงค์นี้ได้ กรุณาทำการยืนยันเมลใหม่ !.');</script>";
+            // return redirect()->back();
+            return view('frontend.mailcus.thankyouconfirmmail');
+        }
     }
 }
