@@ -126,7 +126,7 @@
                                                         .flashing-card2 {
                                                             width: 500px;
                                                             height: 200px;
-                                                            background-color: #ddfc03;  /* สีพื้นหลัง */
+                                                            background-color: #ddc122;  /* สีพื้นหลัง */
                                                             color: white;  /* สีข้อความ */
                                                             display: flex;
                                                             align-items: center;
@@ -142,7 +142,7 @@
                                                         .flashing-card3 {
                                                             width: 500px;
                                                             height: 200px;
-                                                            background-color: #00ffff;  /* สีพื้นหลัง */
+                                                            background-color: #1be4d0;  /* สีพื้นหลัง */
                                                             color: white;  /* สีข้อความ */
                                                             display: flex;
                                                             align-items: center;
@@ -158,7 +158,7 @@
                                                         .flashing-card4 {
                                                             width: 500px;
                                                             height: 200px;
-                                                            background-color: #3ec15f;  /* สีพื้นหลัง */
+                                                            background-color: #47b8a7;  /* สีพื้นหลัง */
                                                             color: white;  /* สีข้อความ */
                                                             display: flex;
                                                             align-items: center;
@@ -237,7 +237,7 @@
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card5">
-                                                    <h1><i class="fa fa-user"></i> จำนวน Account ที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$acc, 0) }}) </h1>
+                                                    <h1><i class="fa fa-box"></i> จำนวน Account ที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$acc, 0) }}) </h1>
                                                 </div>
                                             </td>
                                         </tr>
