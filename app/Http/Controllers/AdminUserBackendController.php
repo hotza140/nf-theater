@@ -38,7 +38,7 @@ class AdminUserBackendController extends Controller
 {
 
     public function his_dash(Request $r){
-       $item = log_dash::orderBy('id','desc')->get();
+       $item = log_dash::whereNull('type_f')->orderBy('id','desc')->get();
 
       return view('backend.users_all.his_dash',[
           'item'=>$item,
@@ -48,7 +48,7 @@ class AdminUserBackendController extends Controller
   }
 
   public function his_dash_y(Request $r){
-    $item = log_dash::orderBy('id','desc')->get();
+    $item = log_dash::whereNotNull('type_f')->orderBy('id','desc')->get();
 
    return view('backend.users_all.his_dash_y',[
        'item'=>$item,
@@ -72,14 +72,29 @@ public function dashbord_y(Request $r){
    $endDate = date('Y-m-d', strtotime('+7 days', strtotime($date))); // ไม่เกิน 7 วัน
 
    $ddd = users_in_in::pluck('id')->ToArray();
+
    $item = users_in_in_history::whereNotIn('id_user_in_in', $ddd)
    ->whereNull('status_check')
+   ->whereHas('user_in', function ($query) {
+    $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+    })
    ->groupBy('id_user_in')
    ->orderBy('id_user_in','asc')->get();
+
+   $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)
+   ->whereNull('status_check')
+   ->whereHas('user_in', function ($query) {
+    $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+    })
+   ->orderBy('id_user_in','asc')
+   ->count();
 
 
    $itemb = users_in_in_history::whereIn('id_user_in_in', $ddd)
    ->whereNull('status_check')
+   ->whereHas('user_in', function ($query) {
+    $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+    })
    ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
@@ -87,6 +102,9 @@ public function dashbord_y(Request $r){
 
    $nubb = users_in_in_history::whereIn('id_user_in_in', $ddd)
    ->whereNull('status_check')
+   ->whereHas('user_in', function ($query) {
+    $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+    })
    ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
@@ -94,6 +112,9 @@ public function dashbord_y(Request $r){
 
    $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
        ->whereNull('status_check')
+       ->whereHas('user_in', function ($query) {
+        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        })
        ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
        ->groupBy('id_user_in')
        ->orderBy('id_user_in', 'asc')
@@ -101,12 +122,13 @@ public function dashbord_y(Request $r){
 
        $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
        ->whereNull('status_check')
+       ->whereHas('user_in', function ($query) {
+        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        })
        ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
        ->groupBy('id_user_in')
        ->orderBy('id_user_in', 'asc')
        ->count();
-
-   $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
 
   return view('backend.users_all.dashbord_y',[
       'item'=>$item,
@@ -136,14 +158,29 @@ public function dashbord_y(Request $r){
         $endDate = date('Y-m-d', strtotime('+7 days', strtotime($date))); // ไม่เกิน 7 วัน
 
         $ddd = users_in_in::pluck('id')->ToArray();
+
         $item = users_in_in_history::whereNotIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->groupBy('id_user_in')
         ->orderBy('id_user_in','asc')->get();
+
+        $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)
+        ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->orderBy('id_user_in','asc')
+        ->count();
 
 
         $itemb = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
@@ -151,6 +188,9 @@ public function dashbord_y(Request $r){
 
         $nubb = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
@@ -158,6 +198,9 @@ public function dashbord_y(Request $r){
 
         $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
@@ -165,6 +208,9 @@ public function dashbord_y(Request $r){
 
         $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
@@ -172,6 +218,9 @@ public function dashbord_y(Request $r){
 
         $itemd = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
@@ -179,6 +228,9 @@ public function dashbord_y(Request $r){
 
         $nubd = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
+        ->whereHas('user_in', function ($query) {
+            $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
@@ -202,8 +254,6 @@ public function dashbord_y(Request $r){
         $acc = users_in::whereNull('type_f')
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
         ->count();
-
-        $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
 
        return view('backend.users_all.dashbord',[
            'item'=>$item,
