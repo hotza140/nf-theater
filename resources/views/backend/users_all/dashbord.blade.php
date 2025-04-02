@@ -266,7 +266,7 @@
                                 <br><br><br>
 
                                     <div class="dt-responsive table-responsive">
-                                        <h3><i class="fa fa-user"></i>จำนวนคนที่หมดอายุ {{ number_format(@$nub, 0) }} คน </h3>
+                                        <h3><i class="fa fa-user"></i>จำนวนคนที่หมดอายุ ({{ number_format(@$nub, 0) }} คน) </h3>
                                         <table id="" class="table table-striped table-bordered nowrap">
                                         <thead>
                                                 <tr>
@@ -392,7 +392,7 @@
 
 
                                     <div class="dt-responsive table-responsive">
-                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน {{ number_format(@$nubb, 0) }} คน </h3>
+                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน ({{ number_format(@$nubb, 0) }} คน) </h3>
                                         <table id="" class="table table-striped table-bordered nowrap">
                                         <thead>
                                                 <tr>
@@ -519,7 +519,7 @@
 
 
                                     <div class="dt-responsive table-responsive">
-                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน {{ number_format(@$nubc, 0) }} คน </h3>
+                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน ({{ number_format(@$nubc, 0) }} คน) </h3>
                                         <table id="" class="table table-striped table-bordered nowrap">
                                         <thead>
                                                 <tr>
@@ -652,7 +652,7 @@
 
 
                                     <div class="dt-responsive table-responsive">
-                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน {{ number_format(@$nubd, 0) }} คน </h3>
+                                        <h3><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน ({{ number_format(@$nubd, 0) }} คน) </h3>
                                         <table id="" class="table table-striped table-bordered nowrap">
                                         <thead>
                                                 <tr>

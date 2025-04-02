@@ -1429,6 +1429,8 @@ public function dashbord_y(Request $r){
                     $item = $item->where('date_end', '>=', $date);
                 } elseif ($status_account == '1') {
                     $item = $item->where('date_end', '<', $date);
+                } elseif ($status_account == '2') {
+                    $item = $item->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))]);
                 }
 
                 $item = $item->orderBy('id', 'desc')->paginate(10);
