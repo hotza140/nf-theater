@@ -220,6 +220,18 @@
 
                                 <div class="card">
                                 <div class="card-header">
+                                    <h3>เพิ่ม Profile</h3>
+                                <form method="GET" action="{{url('y_users_add')}}" id="form{{$item->id}}" name="form{{$item->id}}" target="_blank">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{@$item->id}}">
+                                                        <button type="submit" class="btn btn-sm btn-info" style="color:white;" target="_blank"><i class="fa fa-gear"></i>เพิ่ม Profile</button>
+                                                    </form>
+                                                    </div>
+                                    </div>
+
+
+                                <div class="card">
+                                <div class="card-header">
                                 <h1 class="mb-0" style="font-size: 1.5rem; color: #333; font-weight: bold;">ต่ออายุ หรือปรับวันที่ Account</h1>
                                 <br><br>
                                 <form method="post" id=""
