@@ -157,18 +157,46 @@ public function dashbord_y(Request $r){
         ->count();
 
         $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
-            ->whereNull('status_check')
-            ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
-            ->groupBy('id_user_in')
-            ->orderBy('id_user_in', 'asc')
-            ->get();
+        ->whereNull('status_check')
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->get();
 
-            $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
-            ->whereNull('status_check')
-            ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
-            ->groupBy('id_user_in')
-            ->orderBy('id_user_in', 'asc')
-            ->count();
+        $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->count();
+
+        $itemd = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->get();
+
+        $nubd = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->count();
+
+        // $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        //     ->whereNull('status_check')
+        //     ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
+        //     ->groupBy('id_user_in')
+        //     ->orderBy('id_user_in', 'asc')
+        //     ->get();
+
+        //     $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        //     ->whereNull('status_check')
+        //     ->whereBetween('date_end', [$startDate, $endDate]) // เฉพาะ date_end ที่อยู่ในช่วงนี้
+        //     ->groupBy('id_user_in')
+        //     ->orderBy('id_user_in', 'asc')
+        //     ->count();
 
         $nub = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->whereNull('status_check')->orderBy('id_user_in','asc')->count();
 
@@ -176,9 +204,11 @@ public function dashbord_y(Request $r){
            'item'=>$item,
            'itemb'=>$itemb,
            'itemc'=>$itemc,
+           'itemc'=>$itemd,
            'nub'=>$nub,
            'nubb'=>$nubb,
            'nubc'=>$nubc,
+           'nubc'=>$nubd,
            'page'=>"all",
            'list'=>"dashbord",
        ]);
