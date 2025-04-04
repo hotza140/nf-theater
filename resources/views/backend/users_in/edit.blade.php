@@ -371,7 +371,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Username*</label>
-                                                <input type="text" name="username" class="form-control" id=""  maxlength = "150"
+                                                <input type="text" name="username" class="form-control" required id=""  maxlength = "150"
                                                      required value="{{@$run}}">
                                             </div>
                                             <div class="col-sm-3">
