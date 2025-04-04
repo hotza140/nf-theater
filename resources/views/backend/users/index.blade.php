@@ -260,10 +260,12 @@
 
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>
-                                                    @if($items->username == null and $items->password==null)
-                                                            <span class="status-expired">ตัวแทน</span>
+                                                    @if($items->password==null)
+                                                    {{$items->username}} <span class="status-expired">ตัวแทน</span>
+                                                    @else
+                                                    {{$items->username}}
                                                         @endif
-                                                        {{$items->username}}
+                                                        
                                                     </td>
                                                     <td>{{$items->name}}
                                                     <a href="{{url('users_destroy/'.$items->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
@@ -298,9 +300,11 @@
                                                     $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
                                                     if ($date_start && $date_end) {
-                                                        if (strtotime($today) < strtotime($date_start)) {
-                                                            $status = "ยังไม่เข้าช่วง";
-                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                        // if (strtotime($today) < strtotime($date_start)) {
+                                                        //     $status = "ยังไม่เข้าช่วง";
+                                                        // } else
+                                                        
+                                                        if (strtotime($today) <= strtotime($date_end)) {
                                                             $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
                                                             $status = "เหลืออีก $days_remaining วัน";
                                                         } else {
@@ -311,7 +315,7 @@
                                                     }
 
                                                     if ($date_start) {
-                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                        $formatted_date1 = date('d/m/Y', strtotime($today));
                                                     } else {
                                                         $formatted_date1 = null;
                                                     }
@@ -332,9 +336,10 @@
                                                     $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
                                                     if ($date_start && $date_end) {
-                                                        if (strtotime($today) < strtotime($date_start)) {
-                                                            $status = "ยังไม่เข้าช่วง";
-                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                        // if (strtotime($today) < strtotime($date_start)) {
+                                                        //     $status = "ยังไม่เข้าช่วง";
+                                                        // } else
+                                                        if (strtotime($today) <= strtotime($date_end)) {
                                                             $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
                                                             $status = "เหลืออีก $days_remaining วัน";
                                                         } else {
@@ -345,7 +350,7 @@
                                                     }
 
                                                     if ($date_start) {
-                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                        $formatted_date1 = date('d/m/Y', strtotime($today));
                                                     } else {
                                                         $formatted_date1 = null;
                                                     }

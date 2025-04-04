@@ -315,7 +315,7 @@ class YoutubeBackendController extends Controller
         $item->status_edit=null;
         $item->save();
 
-        return redirect()->to('users');
+        return redirect()->to('y_users');
      }
 
 
@@ -1183,6 +1183,15 @@ class YoutubeBackendController extends Controller
                     $item = $item->where('date_end', '>=', $date);
                 } elseif ($status_account == '1') {
                     $item = $item->where('date_end', '<', $date);
+                }
+                elseif ($status_account == '11') {
+                    $item = $item->whereNull('t_house');
+                }elseif ($status_account == '22') {
+                    $item = $item->where('t_house','บ้านบล็อก');
+                }elseif ($status_account == '33') {
+                    $item = $item->where('t_house','บ้านอุทธรณ์');
+                }elseif ($status_account == '44') {
+                    $item = $item->where('t_house','บ้านต่ออายุ');
                 }
 
                 $item = $item->orderBy('id', 'desc')->paginate(10);

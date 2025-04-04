@@ -179,18 +179,22 @@ public function dashbord_y(Request $r){
    //     ->count();
 
 
-//    $acc = users_in::whereNull('type_f')
+//    $acc = users_in::whereNotNull('type_f')
 //    ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
 //    ->count();
 
-$acc_a = users_in::whereNull('type_f')
+$acc_a = users_in::where('open',0)->whereNotNull('type_f')
 ->where('t_house','บ้านบล็อก')
 ->count();
-$acc_b = users_in::whereNull('type_f')
+$acc_b = users_in::where('open',0)->whereNotNull('type_f')
 ->where('t_house','บ้านอุทธรณ์')
 ->count();
-$acc_c = users_in::whereNull('type_f')
+$acc_c = users_in::where('open',0)->whereNotNull('type_f')
 ->where('t_house','บ้านต่ออายุ')
+->count();
+
+$acc = users_in::where('open',0)->whereNotNull('type_f')
+->whereNull('t_house')
 ->count();
 
   return view('backend.users_all.dashbord_y',[
@@ -203,6 +207,7 @@ $acc_c = users_in::whereNull('type_f')
     'nubc'=>$nubc,
     'nubd'=>$nubd,
 
+    'acc'=>$acc,
     'acc_a'=>$acc_a,
     'acc_b'=>$acc_b,
     'acc_c'=>$acc_c,
@@ -321,7 +326,7 @@ $acc_c = users_in::whereNull('type_f')
         //     ->count();
 
 
-        $acc = users_in::whereNull('type_f')
+        $acc = users_in::where('open',0)->whereNull('type_f')
         ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
         ->count();
 
@@ -1382,12 +1387,12 @@ $acc_c = users_in::whereNull('type_f')
 
     public function users_store_form_in(Request $r){
         $item=new users();
-        $ch=users::where('email',$r->email)->orderby('id','desc')->first();
+        // $ch=users::where('email',$r->email)->orderby('id','desc')->first();
         // $ca=users::where('username',$r->username)->orderby('id','desc')->first();
 
-        if($ch!=null){
-            return redirect()->back()->with('message','Email Already Have in Data!');
-            }
+        // if($ch!=null){
+        //     return redirect()->back()->with('message','Email Already Have in Data!');
+        //     }
             
             // elseif($ca!=null){
             //     return redirect()->back()->with('message','Username Already Have in Data!');

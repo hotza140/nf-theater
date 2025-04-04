@@ -342,15 +342,7 @@
                                         $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
                                         $run = "NF{$xxxx}";
 
-                                        if(@$item->username!=null){
-                                            $run=@$item->username;
-                                        }
-
-                                        if(@$item->password!=null){
-                                            $password=@$item->password;
-                                        }else{
-                                            $password = rand(111111, 999999);
-                                        }
+                                        $password = rand(111111, 999999);
 
                                         ?>
                                         

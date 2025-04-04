@@ -80,6 +80,8 @@
                                         </div>
                                         
                                         <div class="form-group row">
+
+                                        @if(@$item->password!=null)
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Username</label>
                                                 <input type="text" name="username" class="form-control" id="" readonly  maxlength = "150"
@@ -89,6 +91,17 @@
                                                 <label class="col-form-label">Password</label>
                                                 <input type="text" name="password" class="form-control" id="" readonly  value="{{@$password}}" placeholder="รหัสผ่าน" >
                                             </div>
+                                            @else
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Username</label>
+                                                <input type="text" name="username" class="form-control" id="" readonly  maxlength = "150"
+                                                      value="{{@$item->username}}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="col-form-label">Password</label>
+                                                <input type="text" name="password" class="form-control" id="" readonly  value="" placeholder="รหัสผ่าน" >
+                                            </div>
+                                            @endif
                                         </div>
 
                                         <!-- <div class="form-group row">

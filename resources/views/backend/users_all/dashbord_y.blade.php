@@ -105,144 +105,27 @@
                                                         } */
                                                     </style>
 
-                                                <style>
-                                                        /* การตั้งค่ากล่องจตุรัส */
-                                                        .flashing-card {
+<style>
+                                                       .flashing-card {
                                                             width: 500px;
                                                             height: 200px;
-                                                            background-color: #f50505;  /* สีพื้นหลัง */
-                                                            color: white;  /* สีข้อความ */
+                                                            background-color: #800020; /* สีเลือดหมู */
+                                                            color: white;
                                                             display: flex;
                                                             align-items: center;
                                                             justify-content: center;
-                                                            border-radius: 15px;  /* มุมโค้ง */
-                                                            font-size: 20px;
+                                                            border-radius: 20px;
+                                                            font-size: 22px;
                                                             font-weight: bold;
-                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
-                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
-                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
+                                                            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+                                                            box-shadow: 0 10px 25px rgba(128, 0, 32, 0.6);
+                                                            transition: transform 0.3s ease, box-shadow 0.3s ease;
+                                                            margin-bottom: 20px; /* ✅ เพิ่มระยะห่างด้านล่างของกล่อง */
                                                         }
 
-                                                        .flashing-card2 {
-                                                            width: 500px;
-                                                            height: 200px;
-                                                            background-color: #ddc122;  /* สีพื้นหลัง */
-                                                            color: white;  /* สีข้อความ */
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            border-radius: 15px;  /* มุมโค้ง */
-                                                            font-size: 20px;
-                                                            font-weight: bold;
-                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
-                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
-                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
-                                                        }
-
-                                                        .flashing-card3 {
-                                                            width: 500px;
-                                                            height: 200px;
-                                                            background-color: #1be4d0;  /* สีพื้นหลัง */
-                                                            color: white;  /* สีข้อความ */
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            border-radius: 15px;  /* มุมโค้ง */
-                                                            font-size: 20px;
-                                                            font-weight: bold;
-                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
-                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
-                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
-                                                        }
-
-                                                        .flashing-card4 {
-                                                            width: 500px;
-                                                            height: 200px;
-                                                            background-color: #47b8a7;  /* สีพื้นหลัง */
-                                                            color: white;  /* สีข้อความ */
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            border-radius: 15px;  /* มุมโค้ง */
-                                                            font-size: 20px;
-                                                            font-weight: bold;
-                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
-                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
-                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
-                                                        }
-
-                                                        .flashing-card5 {
-                                                            width: 500px;
-                                                            height: 200px;
-                                                            background-color: #365fc9;  /* สีพื้นหลัง */
-                                                            color: white;  /* สีข้อความ */
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            border-radius: 15px;  /* มุมโค้ง */
-                                                            font-size: 20px;
-                                                            font-weight: bold;
-                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
-                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
-                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
-                                                        }
-
-                                                        .flashing-card6 {
-                                                            width: 500px;
-                                                            height: 200px;
-                                                            background-color: #c13ead;  /* สีพื้นหลัง */
-                                                            color: white;  /* สีข้อความ */
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            border-radius: 15px;  /* มุมโค้ง */
-                                                            font-size: 20px;
-                                                            font-weight: bold;
-                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
-                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
-                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
-                                                        }
-
-                                                        .flashing-card7 {
-                                                            width: 500px;
-                                                            height: 200px;
-                                                            background-color: #b05e4f;  /* สีพื้นหลัง */
-                                                            color: white;  /* สีข้อความ */
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            border-radius: 15px;  /* มุมโค้ง */
-                                                            font-size: 20px;
-                                                            font-weight: bold;
-                                                            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* เงาข้อความ */
-                                                            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);  /* เงารอบๆ กล่อง */
-                                                            animation: bounce 1s infinite; /* การกระพริบและการเด้ง */
-                                                        }
-
-                                                        /* การตั้งค่า Animation สำหรับการกระพริบ */
-                                                        @keyframes flashing {
-                                                            0% {
-                                                                opacity: 1;
-                                                                transform: scale(1);
-                                                            }
-                                                            50% {
-                                                                opacity: 0.6;
-                                                                transform: scale(1.05);  /* ขยายกล่องเล็กน้อย */
-                                                            }
-                                                            100% {
-                                                                opacity: 1;
-                                                                transform: scale(1);  /* กลับสู่ขนาดเดิม */
-                                                            }
-                                                        }
-
-                                                        /* การตั้งค่า Animation สำหรับการเด้ง */
-                                                        @keyframes bounce {
-                                                            0%, 100% {
-                                                                transform: translateY(0);
-                                                            }
-                                                            50% {
-                                                                transform: translateY(-10px);  /* เด้งขึ้นเล็กน้อย */
-                                                            }
+                                                        .flashing-card:hover {
+                                                            transform: scale(1.03);
+                                                            box-shadow: 0 15px 30px rgba(128, 0, 32, 0.75);
                                                         }
                                                     </style>
 
@@ -270,19 +153,19 @@
 
                                         <tr>
                                             <td>
-                                                <div class="flashing-card2">
+                                                <div class="flashing-card">
                                                     <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน: ({{ number_format(@$nubb, 0) }} คน) </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
-                                                <div class="flashing-card3">
+                                                <div class="flashing-card">
                                                     <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน: ({{ number_format(@$nubc, 0) }} คน) </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
-                                                <div class="flashing-card4">
+                                                <div class="flashing-card">
                                                     <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$nubd, 0) }} คน) </h1>
                                                 </div>
                                             </td>
@@ -290,19 +173,27 @@
 
                                         <tr>
                                             <td>
-                                                <div class="flashing-card5">
+                                                <div class="flashing-card">
+                                                    <h1><i class="fa fa-user"></i> จำนวนบ้านปกติ: ({{ number_format(@$acc, 0) }} คน) </h1>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="flashing-card">
                                                     <h1><i class="fa fa-user"></i> จำนวนบ้านบล็อก: ({{ number_format(@$acc_a, 0) }} คน) </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
-                                                <div class="flashing-card6">
+                                                <div class="flashing-card">
                                                     <h1><i class="fa fa-user"></i> จำนวนบ้านอุทธรณ์: ({{ number_format(@$acc_b, 0) }} คน) </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
-                                                <div class="flashing-card7">
+                                                <div class="flashing-card">
                                                     <h1><i class="fa fa-user"></i> จำนวนบ้านต่ออายุ: ({{ number_format(@$acc_c, 0) }} คน) </h1>
                                                 </div>
                                             </td>

@@ -364,15 +364,7 @@
                                         $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
                                         $run = "NF{$xxxx}";
 
-                                        if(@$item->username!=null){
-                                            $run=@$item->username;
-                                        }
-
-                                        if(@$item->password!=null){
-                                            $password=@$item->password;
-                                        }else{
                                             $password = rand(111111, 999999);
-                                        }
 
                                         ?>
                                         
@@ -390,28 +382,20 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
-                                                <label class="col-form-label">Email</label>
-                                                <input type="email" name="email" class="form-control" id=""  
-                                                      value="">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <label class="col-form-label">Phone</label>
-                                                <input type="text" name="phone" class="form-control" id=""  maxlength = "10"
+                                                <label class="col-form-label">เบอรโทรศัพท์</label>
+                                                <input type="text" name="phone" class="form-control" id=""  maxlength = "10" placeholder="เบอรโทรศัพท์ (ถ้ามี)"
                                                       value="">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Line</label>
+                                                <label class="col-form-label">ชื่อไลน์ลูกค้า</label>
                                                 <input type="text" name="line" class="form-control" id=""  
                                                       value="">
                                             </div>
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Link Line</label>
+                                                <label class="col-form-label">ลิงก์ไลน์ลูกค้า</label>
                                                 <input type="text" name="link_line" class="form-control" id=""  
                                                       value="">
                                             </div>

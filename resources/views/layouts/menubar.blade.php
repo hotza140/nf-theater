@@ -513,26 +513,7 @@
 
                                     <ul class="pcoded-submenu">
                                         
-                                    @if(Auth::guard('admin')->user()->type == 1 or Auth::guard('admin')->user()->type == 0)
-                                    <li class="{{ isset($list) && $list == 'dashbord' ? 'active' : '' }}">
-                                            <a href="{{ url('dashbord') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">Dashbord Netflix</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        @endif
-
-                                        @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0)
-                                        <li class="{{ isset($list) && $list == 'dashbord_y' ? 'active' : '' }}">
-                                            <a href="{{ url('dashbord_y') }}">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">Dashbord Youtube</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        @endif
-
+                                   
 
                                     @if(Auth::guard('admin')->user()->type == 0)
                                         <li class="{{ isset($list) && $list == 'admin' ? 'active' : '' }}">
@@ -550,6 +531,24 @@
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
+
+
+                                        <li class="">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext"></span>
+                                                <span class="pcoded-mcaret"></span>
+                                        </li>
+
+
+                                        @if(Auth::guard('admin')->user()->type == 1 or Auth::guard('admin')->user()->type == 0)
+                                    <li class="{{ isset($list) && $list == 'dashbord' ? 'active' : '' }}">
+                                            <a href="{{ url('dashbord') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Dashbord Netflix</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        @endif
 
                                         @if(Auth::guard('admin')->user()->type == 1 or Auth::guard('admin')->user()->type == 0)
                                         <li class="{{ isset($list) && $list == 'users' ? 'active' : '' }}">
@@ -573,6 +572,18 @@
                                                 <span class="pcoded-mtext"></span>
                                                 <span class="pcoded-mcaret"></span>
                                         </li>
+
+
+
+                                        @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0)
+                                        <li class="{{ isset($list) && $list == 'dashbord_y' ? 'active' : '' }}">
+                                            <a href="{{ url('dashbord_y') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Dashbord Youtube</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        @endif
 
                                         @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0)
                                         <li class="{{ isset($list) && $list == 'users_youtube' ? 'active' : '' }}">

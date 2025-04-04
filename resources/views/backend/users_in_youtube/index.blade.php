@@ -90,6 +90,14 @@
                                         <select name="status_account" id="" class="form-control">
                                             <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
                                             <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
+
+                                            <optgroup label="สถานะบ้าน">                                          
+                                            <option value="11" @if(@$status_account==11) selected @endif>ปกติ</option>
+                                            <option value="22" @if(@$status_account==22) selected @endif>บ้านบล็อก</option>
+                                            <option value="33" @if(@$status_account==33) selected @endif>บ้านอุทธรณ์</option>
+                                            <option value="44" @if(@$status_account==44) selected @endif>บ้านต่ออายุ</option>
+                                            </optgroup>
+                                            
                                             <!-- <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option> -->
                                             </select>
                                             </div>
@@ -130,26 +138,30 @@
                                                     <td>{{$key+1}}</td>
 
                                                     <td>
-                                                    <form method="post" id="form{{$items->id}}" name="form{{$items->id}}">
-                                                        @csrf
-                                                        <label class="switch">
-                                                            <input type="checkbox" class="toggle-switch" data-id="{{$items->id}}" 
-                                                                {{ $items->open == 0 ? 'checked' : '' }}> <!-- ค่าที่เปิดจะเป็น 0 -->
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </form>
+                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                            <form method="post" id="form{{$items->id}}" name="form{{$items->id}}">
+                                                                @csrf
+                                                                <label class="switch">
+                                                                    <input type="checkbox" class="toggle-switch" data-id="{{$items->id}}" 
+                                                                        {{ $items->open == 0 ? 'checked' : '' }}>
+                                                                    <span class="slider"></span>
+                                                                </label>
+                                                            </form>
 
-                                                    <form method="post" id="form{{$items->id}}" name="form{{$items->id}}">
-                                                        @csrf
-                                                        <label>
-                                                            <select name="t_house" class="form-control house-select" data-id="{{$items->id}}">
-                                                                <option value="บ้านบล็อก" @if(@$items->t_house=='บ้านบล็อก') selected @endif>บ้านบล็อก</option>
-                                                                <option value="บ้านอุทธรณ์" @if(@$items->t_house=='บ้านอุทธรณ์') selected @endif>บ้านอุทธรณ์</option>
-                                                                <option value="บ้านต่ออายุ" @if(@$items->t_house=='บ้านต่ออายุ') selected @endif>บ้านต่ออายุ</option>
-                                                            </select>
-                                                        </label>
-                                                    </form>
+                                                            <form method="post" id="form_select{{$items->id}}" name="form_select{{$items->id}}">
+                                                                @csrf
+                                                                <label>
+                                                                    <select name="t_house" class="form-control house-select" data-id="{{$items->id}}">
+                                                                    <option value="" @if(@$items->t_house=='') selected @endif>ปกติ</option>
+                                                                        <option value="บ้านบล็อก" @if(@$items->t_house=='บ้านบล็อก') selected @endif>บ้านบล็อก</option>
+                                                                        <option value="บ้านอุทธรณ์" @if(@$items->t_house=='บ้านอุทธรณ์') selected @endif>บ้านอุทธรณ์</option>
+                                                                        <option value="บ้านต่ออายุ" @if(@$items->t_house=='บ้านต่ออายุ') selected @endif>บ้านต่ออายุ</option>
+                                                                    </select>
+                                                                </label>
+                                                            </form>
+                                                        </div>
                                                     </td>
+
                                                     <td>
                                                     <?php $nub = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'MOBILE')->whereNull('tan')->count();
                                                     $nub_tan = App\Models\users_in_in::where('id_user_in', $items->id)->where('type', 'MOBILE')->whereNotNull('tan')->count();
