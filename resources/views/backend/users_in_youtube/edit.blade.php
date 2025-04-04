@@ -331,7 +331,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Email</label>
-                                                <input type="email" name="email" class="form-control" id=""  
+                                                <input type="email" name="email" class="form-control" id=""   required
                                                       value="">
                                             </div>
                                         </div>

@@ -73,16 +73,16 @@
                                         
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Username (User {{ $i + 1 }})*</label>
-                                                <input type="text" name="users[{{ $i }}][username]" class="form-control"  value="{{ @$run }}">
+                                                <input type="text" name="users[{{ $i }}][username]" class="form-control" required  value="{{ @$run }}">
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Email</label>
-                                                <input type="text" name="users[{{ $i }}][email]" class="form-control" >
+                                                <input type="text" name="users[{{ $i }}][email]" class="form-control" required >
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password*</label>
-                                                <input type="text" name="users[{{ $i }}][password]" class="form-control"  value="{{ @$password }}" placeholder="รหัสผ่าน">
+                                                <input type="text" name="users[{{ $i }}][password]" class="form-control" required  value="{{ @$password }}" placeholder="รหัสผ่าน">
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">เบอร์โทรศัพท์</label>
