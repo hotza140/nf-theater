@@ -110,7 +110,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Email*</label>
-                                                <input type="email" name="email" class="form-control" id=""  maxlength = "25"
+                                                <input type="email" name="email" class="form-control" id=""  maxlength = "150"
                                                      required value="{{@$item->email}}">
                                             </div>
                                             <div class="col-sm-3">
@@ -220,22 +220,24 @@
                                     ->whereDate('date_end', '>=',$date_ch_in) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
                                     ->orderby('id','desc')->cursor();
                                     ?>
-                                    <!-- <div class="col-sm-3">
+                                    <div class="col-sm-3">
                                     <select name="id_user" id="id_user" class="form-control add_select2"  required >
                                     @foreach($user as $key=>$users)
                                     <option value="{{@$users->id}}" >{{@$users->name}} ({{@$users->username}})</option>
                                      @endforeach
                                     </select>
-                                    </div> -->
+                                    </div>
 
-                                    <!-- <div class="col-sm-1">
+                                    <input type="hidden"  name="type" value="MOBILE" >
+<!-- 
+                                    <div class="col-sm-1">
                                     <select name="type" id="type" class="form-control add_select2" required  >
                                         <option value="MOBILE" @if(@$item->type=='MOBILE') selected  @endif >ยกเว้นทีวี</option>
                                         <option value="PC" @if(@$item->type=='PC') selected  @endif >TV</option>
                                         </select>
-                                        </div> -->
+                                        </div>
 
-                                        <!-- <div class="col-sm-3">
+                                        <div class="col-sm-3">
                                     <select name="type_mail" id="type_mail" class="form-control add_select2"   >
                                         <option value="" @if(@$item->type_mail=='') selected  @endif >เมลหลัก (ยกเว้น TV)</option>
                                         @if($user_in_in_count_PC_1==0)
@@ -247,11 +249,11 @@
                                         </select>
                                         </div> -->
                                     
-                                    <!-- <div class="col-sm-1">
+                                    <div class="col-sm-1">
                                         <button type="submit" style="color:white;" class="btn btn-success"  onclick="javascript:return confirm('Confirm?')">
                                             <i class="fa fa-plus"></i> Add
                                         </button>
-                                    </div>     -->
+                                    </div>    
 
                                     </form>  
 
@@ -329,7 +331,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Email</label>
-                                                <input type="email" name="email" class="form-control" id=""  
+                                                <input type="email" name="email" class="form-control" id=""   required
                                                       value="">
                                             </div>
                                         </div>
@@ -340,22 +342,14 @@
                                         $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
                                         $run = "NF{$xxxx}";
 
-                                        if(@$item->username!=null){
-                                            $run=@$item->username;
-                                        }
-
-                                        if(@$item->password!=null){
-                                            $password=@$item->password;
-                                        }else{
-                                            $password = rand(111111, 999999);
-                                        }
+                                        $password = rand(111111, 999999);
 
                                         ?>
                                         
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Username*</label>
-                                                <input type="text" name="username" class="form-control" id=""  maxlength = "25"
+                                                <input type="text" name="username" class="form-control" id=""  maxlength = "150"
                                                      required value="{{@$run}}">
                                             </div>
                                             <div class="col-sm-3">
@@ -590,10 +584,12 @@
 
                                                     <?php
                                                     if(@$user_aa->type=='PC'){
-                                                        $paga='TV '.@@$user_aa->package;
+                                                        $paga='TV '.@$user_aa->package;
                                                     }else{
-                                                        $paga='ยกเว้นทีวี '.@@$user_aa->package;
+                                                        $paga='ยกเว้นทีวี '.@$user_aa->package;
                                                     }
+
+                                                    $paga=@$user_aa->package;
 
                                                     ?>
                                                     

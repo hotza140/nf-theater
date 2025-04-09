@@ -75,19 +75,19 @@
                                             <div class="col-sm-6">
                                                 <label class="col-form-label">Email</label>
                                                 <input type="text" name="email" class="form-control" id=""
-                                                      value="{{@$item->email}}">
+                                                      value="{{@$item->email}}" required >
                                             </div>
                                         </div>
                                         
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Username</label>
-                                                <input type="text" name="username" class="form-control" id="" readonly  maxlength = "25"
+                                                <input type="text" name="username" class="form-control" id="" readonly required  maxlength = "150"
                                                       value="{{@$run}}">
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password</label>
-                                                <input type="text" name="password" class="form-control" id="" readonly  value="{{@$password}}" placeholder="รหัสผ่าน" >
+                                                <input type="text" name="password" class="form-control" id="" readonly required  value="{{@$password}}" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 
@@ -106,11 +106,11 @@
                                                       value="{{@$item->phone}}">
                                             </div>
 
-                                            <div class="col-sm-3">
+                                            <!-- <div class="col-sm-3">
                                                 <label class="col-form-label">Email</label>
                                                 <input type="text" name="email" class="form-control" id=""   placeholder="Email (ถ้ามี)"
                                                       value="{{@$item->email}}">
-                                            </div>
+                                            </div> -->
                                         </div>
 
                                         <div class="form-group row">
@@ -220,11 +220,11 @@
 
                                 <div class="card">
                                 <div class="card-header">
-                                    <h3>เพิ่ม Profile</h3>
+                                    <h3>เพิ่ม Email</h3>
                                 <form method="GET" action="{{url('y_users_add')}}" id="form{{$item->id}}" name="form{{$item->id}}" target="_blank">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{@$item->id}}">
-                                                        <button type="submit" class="btn btn-sm btn-info" style="color:white;" target="_blank"><i class="fa fa-gear"></i>เพิ่ม Profile</button>
+                                                        <button type="submit" class="btn btn-sm btn-info" style="color:white;" target="_blank"><i class="fa fa-gear"></i>เพิ่ม Email</button>
                                                     </form>
                                                     </div>
                                     </div>
@@ -486,7 +486,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                     <td>{{@$accountsss->name}}</td>
                                                     @if($accountss->type=='MOBILE' or $accountss->type=='')
                                                     <td>{{@$accountsss->email}}</td>
-                                                    <td>{{@$accountsss->password}}</td>
+                                                    <!-- <td>{{@$accountsss->password}}</td> -->
                                                         @else
                                                         <?php  
                                                         if($accountss->type_mail==1){
@@ -675,7 +675,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                     <td>{{@$accountsass->email}}</td>
-                                                    <td>{{@$accountsass->password}}</td>
+                                                    <!-- <td>{{@$accountsass->password}}</td> -->
                                                         @else
                                                         <?php  
                                                         if($accountsas->type_mail==1){

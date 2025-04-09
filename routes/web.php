@@ -185,6 +185,9 @@ Route::get('users_status_edit/{id}',[App\Http\Controllers\AdminUserBackendContro
 
 
 
+
+
+
 //  YOUTUBE///
 Route::post('y_autoCreateUsersInIn',[App\Http\Controllers\AdminUserBackendController::class,'autoCreateUsersInIn']);
 Route::post('y_autoCreateUsersInIn_aaa',[App\Http\Controllers\AdminUserBackendController::class,'autoCreateUsersInIn_aaa']);
@@ -233,6 +236,9 @@ Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendContro
        Route::post('y_users_in_update/{id}',[App\Http\Controllers\YoutubeBackendController::class,'users_in_update']);
        Route::post('y_users_in_open_close',[App\Http\Controllers\YoutubeBackendController::class,'users_in_open_close']);
        //users
+
+
+       Route::post('update_t_house',[App\Http\Controllers\YoutubeBackendController::class,'update_t_house']);
 
 //  YOUTUBE///
 

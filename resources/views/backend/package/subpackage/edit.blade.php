@@ -89,7 +89,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Sub Package Code*</label>
-                                                <input type="Subpackage_Code" name="Subpackage_Code" class="form-control" id=""  maxlength = "25"
+                                                <input type="Subpackage_Code" name="Subpackage_Code" class="form-control" id=""  maxlength = "150"
                                                 placeholder="รหัสแพ็คเกจ"  required readonly value="{{$item->Subpackage_Code}}">
                                             </div>
                                             <div class="col-sm-3">

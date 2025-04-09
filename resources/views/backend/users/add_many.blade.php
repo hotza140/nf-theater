@@ -73,7 +73,7 @@
                                         
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Username (User {{ $i + 1 }})*</label>
-                                                <input type="text" name="users[{{ $i }}][username]" class="form-control"  value="{{ @$run }}">
+                                                <input type="text" name="users[{{ $i }}][username]" class="form-control" required  value="{{ @$run }}">
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Name Profile</label>

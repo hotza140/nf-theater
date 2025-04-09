@@ -315,7 +315,7 @@ class YoutubeBackendController extends Controller
         $item->status_edit=null;
         $item->save();
 
-        return redirect()->to('users');
+        return redirect()->to('y_users');
      }
 
 
@@ -1025,6 +1025,8 @@ class YoutubeBackendController extends Controller
         $item->type=$r->type;
         $item->package=$r->package;
 
+        $item->type_youtube=1;
+
         $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$r->package)->first();
         $item->id_package=@$pack_id->id;
 
@@ -1127,6 +1129,21 @@ class YoutubeBackendController extends Controller
        
            return response()->json(['success' => false]);
        }
+
+       // T_house------users_in
+       public function update_t_house(Request $r)
+       {
+           $item = users_in::where('id', $r->id)->first();
+       
+           if($item!=null){
+               $item->t_house  = $r->t_house ;
+               $item->save();
+       
+               return response()->json(['success' => true, 'open' => $item->open]);
+           }
+       
+           return response()->json(['success' => false]);
+       }
   
   
        //User_in//
@@ -1166,6 +1183,15 @@ class YoutubeBackendController extends Controller
                     $item = $item->where('date_end', '>=', $date);
                 } elseif ($status_account == '1') {
                     $item = $item->where('date_end', '<', $date);
+                }
+                elseif ($status_account == '11') {
+                    $item = $item->whereNull('t_house');
+                }elseif ($status_account == '22') {
+                    $item = $item->where('t_house','บ้านบล็อก');
+                }elseif ($status_account == '33') {
+                    $item = $item->where('t_house','บ้านอุทธรณ์');
+                }elseif ($status_account == '44') {
+                    $item = $item->where('t_house','บ้านต่ออายุ');
                 }
 
                 $item = $item->orderBy('id', 'desc')->paginate(10);

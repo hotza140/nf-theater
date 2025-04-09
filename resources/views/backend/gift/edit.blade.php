@@ -107,7 +107,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Gift Code*</label>
-                                                <input type="Gift_Code" name="Gift_Code" class="form-control" id=""  maxlength = "25"
+                                                <input type="Gift_Code" name="Gift_Code" class="form-control" id=""  maxlength = "150"
                                                 placeholder="รหัสคูปอง"  required readonly value="{{$item->Gift_Code}}">
                                             </div>
                                             <div class="col-sm-3">

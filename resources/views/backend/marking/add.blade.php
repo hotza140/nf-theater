@@ -32,7 +32,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Marking Code*</label>
-                                                <input type="text" name="Marking_Code" class="form-control" id=""  maxlength = "25"
+                                                <input type="text" name="Marking_Code" class="form-control" id=""  maxlength = "150"
                                                 placeholder="รหัส"  readonly>
                                             </div>
                                             <div class="col-sm-3">
