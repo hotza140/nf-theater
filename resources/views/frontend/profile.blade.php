@@ -118,7 +118,7 @@
                     @if(@$userProfile->type_youtube==1)
                     <div id="showUYoutube">
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Youtube Package.</h2>
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Profile :
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Email : <!--Profile-->
                             {{@$userProfile->useremail}}</h2>
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package :
                             @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
@@ -516,6 +516,7 @@
                         <div class="img-man02"><img class="img-man" src="assets/img/man02.webp"></div>
                     </div>
                     <div><button class="btn-close close-bt1" type="button" aria-label="Close"
+                            onclick="confirmReferrer(1);"
                             data-bs-dismiss="modal"></button></div>
                 </div>
                 <div class="modal-body m-h">
@@ -529,7 +530,7 @@
                                 placeholder=""></div>
                         @if(!@$ReferFriendFrst)
                         <div>
-                            <p><input type="checkbox" name="noshowReferrer" id="noshowReferrer"> ไม่แสดงอีก</p>
+                            <p><input type="checkbox" name="noshowReferrer" id="noshowReferrer"> <span style="cursor: pointer;" onclick="document.querySelector(`#noshowReferrer`).click();">ไม่แสดงอีก</span></p>
                         </div>
                         @endif
                     </div>
@@ -549,29 +550,30 @@
                 myModal.show();
             });
 
-            function confirmReferrer() {
-                let usernameReferrer = document.getElementById('usernameReferrer').value;
+            function confirmReferrer(clkClose=0) {
+                let usernameReferrer = clkClose==0 ? document.getElementById('usernameReferrer').value : '';
                 let noshowReferrerCk = document.getElementById('noshowReferrer').checked;
-
-                fetch('{{route('frontend.confirmReferrer')}}', {
-                    method: 'POST', // or 'PUT'
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        _token : "{{csrf_token()}}",
-                        usernameReferrer,noshowReferrerCk
-                    }),
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log('Success:', data);
-                    alert(data.saveOK==0?'ข้อมูลไม่ถูกต้อง !':(data.saveOK==1?'มอบแต้มให้ผู้แนะนำเรียบร้อยแล้ว.':'ไม่แสดงอีก ข้ามการมองแต้มให้ผู้แนะนำ.'));
-                    document.location.reload();
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+                if((clkClose==1&&noshowReferrerCk)||clkClose==0) {
+                    fetch('{{route('frontend.confirmReferrer')}}', {
+                        method: 'POST', // or 'PUT'
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            _token : "{{csrf_token()}}",
+                            usernameReferrer,noshowReferrerCk
+                        }),
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Success:', data);
+                        alert(data.saveOK==0?'ข้อมูลไม่ถูกต้อง !':(data.saveOK==1?'มอบแต้มให้ผู้แนะนำเรียบร้อยแล้ว.':'ไม่แสดงอีก ข้ามการมองแต้มให้ผู้แนะนำ.'));
+                        document.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }
             }
         </script>
     @else
