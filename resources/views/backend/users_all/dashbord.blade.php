@@ -325,8 +325,8 @@
                                                         @endif
 
                                                         <?php
-                                                        $date_start=@$accountsass->created_at;
-                                                        $date_end=@$accountsass->date_end;
+                                                        $date_start=@$accountsas->created_at;
+                                                        $date_end=@$accountsas->date_end;
 
                                                           if ($date_start) {
                                                             $formatted_date1 = date('d/m/Y', strtotime($date_start));
@@ -463,8 +463,8 @@
                                                         @endif
 
                                                         <?php
-                                                        $date_start=@$accountsass->created_at;
-                                                        $date_end=@$accountsass->date_end;
+                                                        $date_start=@$accountsas->created_at;
+                                                        $date_end=@$accountsas->date_end;
 
                                                           if ($date_start) {
                                                             $formatted_date1 = date('d/m/Y', strtotime($date_start));
@@ -602,8 +602,8 @@
                                                         @endif
 
                                                         <?php
-                                                        $date_start=@$accountsass->created_at;
-                                                        $date_end=@$accountsass->date_end;
+                                                        $date_start=@$accountsas->created_at;
+                                                        $date_end=@$accountsas->date_end;
 
                                                           if ($date_start) {
                                                             $formatted_date1 = date('d/m/Y', strtotime($date_start));
@@ -747,8 +747,8 @@
                                                         @endif
 
                                                         <?php
-                                                        $date_start=@$accountsass->created_at;
-                                                        $date_end=@$accountsass->date_end;
+                                                        $date_start=@$accountsas->created_at;
+                                                        $date_end=@$accountsas->date_end;
 
                                                           if ($date_start) {
                                                             $formatted_date1 = date('d/m/Y', strtotime($date_start));
