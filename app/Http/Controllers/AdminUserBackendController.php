@@ -1352,7 +1352,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
                     $acc='Account เต็ม';
                 }
 
-                if($r->type=='PC'){
+                if($userData['type']=='PC'){
                     $e_type='TV';
                 }else{
                     $e_type='ยกเว้นทีวี';

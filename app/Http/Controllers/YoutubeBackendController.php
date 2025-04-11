@@ -964,7 +964,7 @@ class YoutubeBackendController extends Controller
                     $acc='Account เต็ม';
                 }
 
-                if($r->type=='PC'){
+                if($userData['type']=='PC'){
                     $e_type='TV';
                 }else{
                     $e_type='ยกเว้นทีวี';
