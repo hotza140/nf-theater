@@ -393,14 +393,14 @@
 
                                                     <?php
                                                      $accounts=App\Models\users_in_in::where('id_user',@$items->id)->orderby('id','desc')->first();
-                                                     $check_test=App\Models\users_in::where('id',@$accounts->id_user_in)->first();
+                                                     $check_test=DB::table('tb_users_in')->where('id',@$accounts->id_user_in)->first();
                                                     ?>
                                                      <td>
                                                      <a href="{{url('users_in_edit/'.@$check_test->id)}}" target="_blank" >{{@$check_test->name}}</a>
                                                      @foreach($t_users as $t_userss)
                                                      <?php
                                                      $accounts=App\Models\users_in_in::where('id_user',@$t_userss->id)->orderby('id','desc')->first();
-                                                     $check_test=App\Models\users_in::where('id',@$accounts->id_user_in)->first();
+                                                     $check_test=DB::table('tb_users_in')->where('id',@$accounts->id_user_in)->first();
                                                     ?>
                                                      <br>
                                                     <a href="{{url('users_in_edit/'.@$check_test->id)}}" target="_blank" >{{@$check_test->name}}</a>
