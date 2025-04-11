@@ -251,44 +251,44 @@
                                                     <td>{{@$user->username}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->username}}
+                                                    {{@$useraa->username}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->name}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->name}}
+                                                    {{@$useraa->name}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->line}}
+                                                    {{@$useraa->line}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->link_line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->link_line}}
+                                                    {{@$useraa->link_line}}
                                                     @endforeach
                                                     </td>
 
@@ -389,44 +389,44 @@
                                                     <td>{{@$user->username}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->username}}
+                                                    {{@$useraa->username}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->name}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->name}}
+                                                    {{@$useraa->name}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->line}}
+                                                    {{@$useraa->line}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->link_line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->link_line}}
+                                                    {{@$useraa->link_line}}
                                                     @endforeach
                                                     </td>
 
@@ -528,44 +528,44 @@
                                                     <td>{{@$user->username}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->username}}
+                                                    {{@$useraa->username}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->name}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->name}}
+                                                    {{@$useraa->name}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->line}}
+                                                    {{@$useraa->line}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->link_line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->link_line}}
+                                                    {{@$useraa->link_line}}
                                                     @endforeach
                                                     </td>
 
@@ -673,44 +673,44 @@
                                                     <td>{{@$user->username}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->username}}
+                                                    {{@$useraa->username}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->name}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->name}}
+                                                    {{@$useraa->name}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->line}}
+                                                    {{@$useraa->line}}
                                                     @endforeach
                                                     </td>
 
                                                     <td>{{@$user->link_line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
-                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$user->link_line}}
+                                                    {{@$useraa->link_line}}
                                                     @endforeach
                                                     </td>
 
