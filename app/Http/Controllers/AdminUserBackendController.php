@@ -822,6 +822,10 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
             if ($status_user == 2) {
                 $item = $item->whereNull('password');
             }
+
+            if ($status_user == 3) {
+                $item = $item->whereNotNull('password');
+            }
         
             $item = $item->orderByRaw(
                 '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
