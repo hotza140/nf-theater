@@ -369,6 +369,8 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
             $userData=users::where('id',$items->id_user)->first();
             $aaa=users_in_in::where('id',$items->id)->first();
 
+            $aaaaaa = users_in_in_history::where('id_user_in_in',@$items->id)->update(['status_check' => 1]);
+
             if($userData['type']=='MOBILE'){
                 $user = (new users_in())->getEligibleUser();
 
