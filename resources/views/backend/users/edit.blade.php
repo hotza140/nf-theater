@@ -491,7 +491,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                              $accountsss=DB::table('tb_users_in')->where('id',@$accountss->id_user_in)->first();
                                             ?>
                                             <tr>
-                                                    <td>{{$key+1}} {{$accountss->id}}</td>
+                                                    <td>{{$key+1}}</td>
                                                     <td>
                                                         @if($accountss->type=='MOBILE' or $accountss->type=='')
                                                         <i class="fa fa-mobile" style="font-size:30px; color:red;" title="กำลังใช้งาน"></i>

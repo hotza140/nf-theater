@@ -1285,6 +1285,9 @@ class YoutubeBackendController extends Controller
       public function users_in_destroy($id){
           $item=users_in::where('id',$id)->first();
           $item->delete();
+          $ge = users_in_in::where('id_user_in',$id)->pluck('id_user')->toArray();
+          $de = users_in_in::where('id_user_in',$id)->delete();
+          $ff = users::whereIn('id',$ge)->update(['status_account' => 2]);
           return redirect()->back()->with('message','Sucess!');
       }
       public function users_in_add(){
