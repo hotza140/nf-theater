@@ -1274,7 +1274,7 @@ class YoutubeBackendController extends Controller
           return redirect()->to('y_users_in_edit/'.$id)->with('message','Sucess!');
       }
       public function users_in_edit($id){
-          $item=users_in::where('id',$id)->first();
+        $item=DB::table('tb_users_in')->where('id',$id)->first();
 
           return view('backend.users_in_youtube.edit',[
               'item'=>$item,

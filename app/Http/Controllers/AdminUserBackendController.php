@@ -1764,7 +1764,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
           return redirect()->to('users_in_edit/'.$id)->with('message','Sucess!');
       }
       public function users_in_edit($id){
-          $item=users_in::where('id',$id)->first();
+          $item=DB::table('tb_users_in')->where('id',$id)->first();
 
           return view('backend.users_in.edit',[
               'item'=>$item,
