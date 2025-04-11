@@ -456,7 +456,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
 
 
                 <?php
-                 $accounts=App\Models\users_in_in::where('id_user',@$item->id)->orderby('id','desc')->cursor();
+                 $accounts=DB::table('users_in_in')->where('id_user',@$item->id)->orderby('id','desc')->cursor();
                 ?>
                  <!-- Page body2 start -->
                  <div class="page-body">
@@ -506,11 +506,11 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                         @else
                                                         <?php  
                                                         if($accountss->type_mail==1){
-                                                            $mail_r=$accountsss->email01;
-                                                            $pass_r=$accountsss->password01;
+                                                            $mail_r=@$accountsss->email01;
+                                                            $pass_r=@$accountsss->password01;
                                                         }elseif($accountss->type_mail==2){
-                                                            $mail_r=$accountsss->email02;
-                                                            $pass_r=$accountsss->password02;
+                                                            $mail_r=@$accountsss->email02;
+                                                            $pass_r=@$accountsss->password02;
                                                         }
                                                         
                                                         ?>
@@ -691,11 +691,11 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                                         @else
                                                         <?php  
                                                         if($accountsas->type_mail==1){
-                                                            $mail_r=$accountsass->email01;
-                                                            $pass_r=$accountsass->password01;
+                                                            $mail_r=@$accountsass->email01;
+                                                            $pass_r=@$accountsass->password01;
                                                         }elseif($accountsas->type_mail==2){
-                                                            $mail_r=$accountsass->email02;
-                                                            $pass_r=$accountsass->password02;
+                                                            $mail_r=@$accountsass->email02;
+                                                            $pass_r=@$accountsass->password02;
                                                         }
                                                         
                                                         ?>

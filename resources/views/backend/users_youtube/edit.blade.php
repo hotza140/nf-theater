@@ -440,7 +440,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
 
 
                 <?php
-                 $accounts=App\Models\users_in_in::where('id_user',@$item->id)->orderby('id','desc')->cursor();
+                 $accounts=DB::table('users_in_in')->where('id_user',@$item->id)->orderby('id','desc')->cursor();
                 ?>
                  <!-- Page body2 start -->
                  <div class="page-body">
