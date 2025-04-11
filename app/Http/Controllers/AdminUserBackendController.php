@@ -820,7 +820,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
             }
 
             if ($status_user == 2) {
-                $item = $item->whereNull('username')->whereNull('password');
+                $item = $item->whereNull('password');
             }
         
             $item = $item->orderByRaw(
