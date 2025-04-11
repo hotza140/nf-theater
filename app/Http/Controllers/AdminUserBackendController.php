@@ -1184,7 +1184,13 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
     public function users_destroy($id){
         $item=users::where('id',$id)->first();
         $item->delete();
+        $vv = users_in_in::where('id_user',$id)->pluck('id')->toArray();
+
         $de = users_in_in::where('id_user', $id)->delete();
+
+        
+
+        $aaa = users_in_in_history::whereIn('id_user_in_in',$vv)->update(['status_check' => 1]);
         return redirect()->back()->with('message','Sucess!');
     }
     public function users_add(Request $r){
@@ -1784,8 +1790,14 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
           $item=users_in::where('id',$id)->first();
           $item->delete();
           $ge = users_in_in::where('id_user_in',$id)->pluck('id_user')->toArray();
+
+          $vv = users_in_in::where('id_user_in',$id)->pluck('id')->toArray();
+
           $de = users_in_in::where('id_user_in',$id)->delete();
           $ff = users::whereIn('id',$ge)->update(['status_account' => 2]);
+
+          $aaa = users_in_in_history::whereIn('id_user_in_in',$vv)->update(['status_check' => 1]);
+
           return redirect()->back()->with('message','Sucess!');
       }
       public function users_in_add(){
@@ -1903,6 +1915,9 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
         }
         
         $item->delete();
+
+        $aaa = users_in_in_history::where('id_user_in_in',$id)->update(['status_check' => 1]);
+        
         return redirect()->back()->with('message','Sucess!');
     }
     //users_in_in//
