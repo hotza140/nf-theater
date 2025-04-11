@@ -223,6 +223,7 @@
                                                     <th>Username</th>
                                                     <th>Profile</th>
                                                     <th>Line</th>
+                                                    <th>Line Link</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
@@ -290,6 +291,17 @@
                                                     @endforeach
                                                     </td>
 
+                                                    <td>{{@$user->link_line}}
+                                                    @foreach($gub as $key=>$gubs)
+                                                    <?php
+                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
+                                                    ?>
+                                                    <br>
+                                                    {{@$user->link_line}}
+                                                    @endforeach
+                                                    </td>
+
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                     <td>{{@$accountsass->email}}</td>
@@ -349,6 +361,7 @@
                                                     <th>Username</th>
                                                     <th>Profile</th>
                                                     <th>Line</th>
+                                                    <th>Line Link</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
@@ -416,6 +429,17 @@
                                                     @endforeach
                                                     </td>
 
+                                                    <td>{{@$user->link_line}}
+                                                    @foreach($gub as $key=>$gubs)
+                                                    <?php
+                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
+                                                    ?>
+                                                    <br>
+                                                    {{@$user->link_line}}
+                                                    @endforeach
+                                                    </td>
+
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                     <td>{{@$accountsass->email}}</td>
@@ -476,6 +500,7 @@
                                                     <th>Username</th>
                                                     <th>Profile</th>
                                                     <th>Line</th>
+                                                    <th>Line Link</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
@@ -540,6 +565,17 @@
                                                     ?>
                                                     <br>
                                                     {{@$user->line}}
+                                                    @endforeach
+                                                    </td>
+
+                                                    <td>{{@$user->link_line}}
+                                                    @foreach($gub as $key=>$gubs)
+                                                    <?php
+                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
+                                                    ?>
+                                                    <br>
+                                                    {{@$user->link_line}}
                                                     @endforeach
                                                     </td>
 
@@ -609,6 +645,7 @@
                                                     <th>Username</th>
                                                     <th>Profile</th>
                                                     <th>Line</th>
+                                                    <th>Line Link</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
                                                     <th>Password</th>
@@ -673,6 +710,17 @@
                                                     ?>
                                                     <br>
                                                     {{@$user->line}}
+                                                    @endforeach
+                                                    </td>
+
+                                                    <td>{{@$user->link_line}}
+                                                    @foreach($gub as $key=>$gubs)
+                                                    <?php
+                                                    $user=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
+                                                    $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
+                                                    ?>
+                                                    <br>
+                                                    {{@$user->link_line}}
                                                     @endforeach
                                                     </td>
 
