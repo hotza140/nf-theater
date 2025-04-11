@@ -107,7 +107,7 @@
 
 <style>
                                                        .flashing-card {
-                                                            width: 500px;
+                                                            width: 350px;
                                                             height: 200px;
                                                             background-color: #800020; /* สีเลือดหมู */
                                                             color: white;
@@ -115,7 +115,7 @@
                                                             align-items: center;
                                                             justify-content: center;
                                                             border-radius: 20px;
-                                                            font-size: 22px;
+                                                            font-size: 12px;
                                                             font-weight: bold;
                                                             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
                                                             box-shadow: 0 10px 25px rgba(128, 0, 32, 0.6);
@@ -146,7 +146,25 @@
                                         <tr>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ: ({{ number_format(@$nub, 0) }} คน) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ: ({{ number_format(@$nub, 0) }} คน) </h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card">
+                                                    <h4><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน: ({{ number_format(@$nubb, 0) }} คน) </h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card">
+                                                    <h4><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน: ({{ number_format(@$nubc, 0) }} คน) </h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card">
+                                                    <h4><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$nubd, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                         </tr>
@@ -154,47 +172,25 @@
                                         <tr>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน: ({{ number_format(@$nubb, 0) }} คน) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนบ้านปกติ: ({{ number_format(@$acc, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน: ({{ number_format(@$nubc, 0) }} คน) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนบ้านบล็อก: ({{ number_format(@$acc_a, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$nubd, 0) }} คน) </h1>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนบ้านปกติ: ({{ number_format(@$acc, 0) }} คน) </h1>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนบ้านบล็อก: ({{ number_format(@$acc_a, 0) }} คน) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนบ้านอุทธรณ์: ({{ number_format(@$acc_b, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนบ้านอุทธรณ์: ({{ number_format(@$acc_b, 0) }} คน) </h1>
-                                                </div>
-                                            </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนบ้านต่ออายุ: ({{ number_format(@$acc_c, 0) }} คน) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนบ้านต่ออายุ: ({{ number_format(@$acc_c, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                         </tr>
@@ -211,7 +207,7 @@
                                                     <th>#</th>
                                                     <!-- <th>Type</th> -->
                                                     <th>Username</th>
-                                                    <th>Profile</th>
+                                                    <th>Email</th>
                                                     <th>Line</th>
                                                     <th>Line Link</th>
                                                     <th>Name Account</th>
@@ -259,14 +255,14 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{@$user->name}}
+                                                    <td>{{@$user->email}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$useraa->name}}
+                                                    {{@$useraa->email}}
                                                     @endforeach
                                                     </td>
 
@@ -349,7 +345,7 @@
                                                     <th>#</th>
                                                     <!-- <th>Type</th> -->
                                                     <th>Username</th>
-                                                    <th>Profile</th>
+                                                    <th>Email</th>
                                                     <th>Line</th>
                                                     <th>Line Link</th>
                                                     <th>Name Account</th>
@@ -397,14 +393,14 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{@$user->name}}
+                                                    <td>{{@$user->email}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$useraa->name}}
+                                                    {{@$useraa->email}}
                                                     @endforeach
                                                     </td>
 
@@ -488,7 +484,7 @@
                                                     <th>#</th>
                                                     <!-- <th>Type</th> -->
                                                     <th>Username</th>
-                                                    <th>Profile</th>
+                                                    <th>Email</th>
                                                     <th>Line</th>
                                                     <th>Line Link</th>
                                                     <th>Name Account</th>
@@ -536,14 +532,14 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{@$user->name}}
+                                                    <td>{{@$user->email}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$useraa->name}}
+                                                    {{@$useraa->email}}
                                                     @endforeach
                                                     </td>
 
@@ -633,7 +629,7 @@
                                                     <th>#</th>
                                                     <!-- <th>Type</th> -->
                                                     <th>Username</th>
-                                                    <th>Profile</th>
+                                                    <th>Email</th>
                                                     <th>Line</th>
                                                     <th>Line Link</th>
                                                     <th>Name Account</th>
@@ -681,14 +677,14 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{@$user->name}}
+                                                    <td>{{@$user->email}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$useraa->name}}
+                                                    {{@$useraa->email}}
                                                     @endforeach
                                                     </td>
 
