@@ -415,8 +415,6 @@
                                                      <br>
                                                     <a href="{{url('users_in_edit/'.@$check_testaa->id)}}" target="_blank" >{{@$check_testaa->name}}</a>
                                                     @endforeach
-
-                                                    {{@$items->id}} {{@$accounts->id_user}} {{@$accounts->id_user_in}} {{@$check_test->id}} {{@$check_test->name}}
                                                      </td>
 
                                                    
