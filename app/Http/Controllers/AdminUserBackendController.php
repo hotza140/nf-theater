@@ -1764,6 +1764,14 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
           return redirect()->to('users_in_edit/'.$id)->with('message','Sucess!');
       }
       public function users_in_edit($id){
+         // ลบเช็คเวลา
+         $date=date('Y-m-d');
+         $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
+         $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+         $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+         $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+         // ลบเช็คเวลา
+         
           $item=DB::table('tb_users_in')->where('id',$id)->first();
 
           return view('backend.users_in.edit',[

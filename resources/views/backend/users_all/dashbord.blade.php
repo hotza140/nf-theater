@@ -143,10 +143,33 @@
 
                                 <div style="overflow-x: auto; white-space: nowrap;">
                                     <table>
+
+                                    <?php  
+                                        $e1 = App\Models\users_in::where('open',0)->whereNull('type_f')->pluck('id')->ToArray();
+
+                                        $na = App\Models\users_in::where('open',0)->whereNull('type_f')->count();
+
+                                        $aa=$na*5;
+                                        $bb=$na*2;
+
+                                        $in = App\Models\users_in_in::whereNull('type_mail')->whereIn('id_user_in',@$e1)->count();
+                                        $q1=$aa-$in;
+
+                                        $inn = App\Models\users_in_in::whereNotNull('type_mail')->whereIn('id_user_in',@$e1)->count();
+                                        $q2=$bb-$inn;
+
+                                        ?>
+
                                         <tr>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ: ({{ number_format(@$nub, 0) }} คน) </h1>
+                                                    <h1><i class="fa fa-user"></i> จำนวนที่ว่าง ยกเว้น TV: ({{ number_format(@$q1, 0) }} ที่) </h1>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card">
+                                                    <h1><i class="fa fa-user"></i> จำนวนที่ว่าง TV: ({{ number_format(@$q2, 0) }} ที่) </h1>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -177,36 +200,16 @@
                                             </td>
                                         </tr>
 
-
-                                        <?php  
-                                        $e1 = App\Models\users_in::where('open',0)->whereNull('type_f')->pluck('id')->ToArray();
-
-                                        $na = App\Models\users_in::where('open',0)->whereNull('type_f')->count();
-
-                                        $aa=$na*5;
-                                        $bb=$na*2;
-
-                                        $in = App\Models\users_in_in::whereNull('type_mail')->whereIn('id_user_in',@$e1)->count();
-                                        $q1=$aa-$in;
-
-                                        $inn = App\Models\users_in_in::whereNotNull('type_mail')->whereIn('id_user_in',@$e1)->count();
-                                        $q2=$bb-$inn;
-
-                                        ?>
-
                                         <tr>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนที่ว่าง ยกเว้น TV: ({{ number_format(@$q1, 0) }} ที่) </h1>
-                                                </div>
-                                            </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนที่ว่าง TV: ({{ number_format(@$q2, 0) }} ที่) </h1>
+                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ: ({{ number_format(@$nub, 0) }} คน) </h1>
                                                 </div>
                                             </td>
                                         </tr>
+
+
+                                       
 
                                     </table>
                                 </div>

@@ -232,8 +232,11 @@
                                 <input type="hidden"  name="id_user_in" value="{{@$item->id}}" >
 
                                     <?php 
+                                    $tey=App\Models\users_in_in::pluck('id_user')->ToArray();
+
                                     $date_ch_in=date('Y-m-d');
                                     $user=App\Models\users::where('open',0)
+                                    ->whereNotIn('id',$tey)
                                     ->whereNotNull('type_netflix')
                                     ->whereNotNull('username')
                                     ->whereNotNull('password')
