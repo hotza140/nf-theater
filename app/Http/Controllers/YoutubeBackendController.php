@@ -854,7 +854,7 @@ class YoutubeBackendController extends Controller
                         $user = (new users_in())->getEligibleUser_youtube();
                     }else{
                         $user=users_in::where('id',@$r->id)->first();
-                        $bcc=users_in_in::where('id_user_in',@$user->id)->count();
+                        $bcc=users_in_in::where('id_user_in',@$user->id)->whereNull('type_mail')->count();
                         if($bcc<5){}else{$user=null;}
                     }
 

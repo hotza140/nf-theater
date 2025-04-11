@@ -1241,7 +1241,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
                     $user = (new users_in())->getEligibleUser();
                 }else{
                     $user=users_in::where('id',@$r->id)->first();
-                    $bcc=users_in_in::where('id_user_in',@$user->id)->count();
+                    $bcc=users_in_in::where('id_user_in',@$user->id)->whereNull('type_mail')->count();
                     if($bcc<5){}else{$user=null;}
                 }
 
