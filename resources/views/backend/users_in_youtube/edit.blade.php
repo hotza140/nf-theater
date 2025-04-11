@@ -420,12 +420,12 @@
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id="date_start"
-                                                      value="" readonly required >
+                                                      value=""  required >
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date End</label>
                                                 <input type="date" name="date_end" class="form-control" id="date_end"
-                                                      value="" readonly required >
+                                                      value=""  required >
                                             </div>
                                         </div>
 

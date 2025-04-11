@@ -151,12 +151,12 @@
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id="date_start"
-                                                      value="{{@$item->date_start}}" readonly required >
+                                                      value="{{@$item->date_start}}"  required >
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date End</label>
                                                 <input type="date" name="date_end" class="form-control" id="date_end"
-                                                      value="{{@$item->date_end}}" readonly required >
+                                                      value="{{@$item->date_end}}"  required >
                                             </div>
                                         </div>
 

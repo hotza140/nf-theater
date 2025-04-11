@@ -136,11 +136,11 @@
 
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
-                                                <input type="date" name="users[{{ $i }}][date_start]" class="form-control date_start" data-index="{{ $i }}" required readonly>
+                                                <input type="date" name="users[{{ $i }}][date_start]" class="form-control date_start" data-index="{{ $i }}" required >
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date End</label>
-                                                <input type="date" name="users[{{ $i }}][date_end]" class="form-control date_end" data-index="{{ $i }}" required readonly>
+                                                <input type="date" name="users[{{ $i }}][date_end]" class="form-control date_end" data-index="{{ $i }}" required >
                                             </div>
                                         </div>
 
