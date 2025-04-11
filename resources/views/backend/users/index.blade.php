@@ -131,7 +131,7 @@
                                             <select name="status_user" id="" class="form-control">
                                             <option  value="1" @if(@$status_user==1) selected  @endif >User ทั้งหมด</option>
                                             <option  value="2" @if(@$status_user==2) selected  @endif >เฉพาะตัวแทน</option>
-                                            <option  value="3" @if(@$status_user==2) selected  @endif >ไม่ใช่ตัวแทน</option>
+                                            <option  value="3" @if(@$status_user==3) selected  @endif >ไม่ใช่ตัวแทน</option>
                                             </select>
                                             </div>
 
