@@ -440,7 +440,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
 
 
                 <?php
-                 $accounts=DB::table('users_in_in')->where('id_user',@$item->id)->orderby('id','desc')->cursor();
+                 $accounts=App\Models\users_in_in::where('id_user',@$item->id)->orderby('id','desc')->cursor();
                 ?>
                  <!-- Page body2 start -->
                  <div class="page-body">
@@ -472,7 +472,7 @@ $dateStartValue = isset($item->date_end) ? $item->date_end : date('Y-m-d');
                                             <tbody class="">
                                             @foreach($accounts as $key=>$accountss)
                                             <?php
-                                             $accountsss=App\Models\users_in::where('id',@$accountss->id_user_in)->first();
+                                             $accountsss=DB::table('users_in')->where('id',@$accountss->id_user_in)->first();
                                             ?>
                                             <tr>
                                                     <td>{{$key+1}}</td>
