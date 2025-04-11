@@ -1967,7 +1967,6 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
      // ดึง users ที่ยังไม่หมดอายุและยังไม่ถูกเชื่อมกับ user_in_in
      $users = users::whereNotNull('type_netflix')->whereDoesntHave('users_in_in') // ยังไม่มีการเชื่อมกับ users_in_in
                  ->where('open',0)
-                 ->whereNull('username')
                  ->whereNull('password')
                  ->whereDate('date_start', '<=', $date) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
                  ->whereDate('date_end', '>=', $date) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
