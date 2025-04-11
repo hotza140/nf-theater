@@ -113,10 +113,16 @@
                                                 <input type="email" name="email" class="form-control" id=""  maxlength = "150"
                                                      required value="{{@$item->email}}">
                                             </div>
+
+                                            @if(Auth::guard('admin')->user()->type == 0)
+
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password*</label>
                                                 <input type="text" name="password" class="form-control" id="" required value="{{@$item->password}}" placeholder="รหัสผ่าน" >
                                             </div>
+
+                                            @endif
+
                                         </div>
 
                                       
@@ -226,7 +232,7 @@
                                     <div class="col-sm-3">
                                     <select name="id_user" id="id_user" class="form-control add_select2"  required >
                                     @foreach($user as $key=>$users)
-                                    <option value="{{@$users->id}}" >{{@$users->name}} ({{@$users->username}})</option>
+                                    <option value="{{@$users->id}}" >{{@$users->email}} ({{@$users->username}})</option>
                                      @endforeach
                                     </select>
                                     </div>

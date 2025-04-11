@@ -207,12 +207,12 @@
                                                     <th>#</th>
                                                     <!-- <th>Type</th> -->
                                                     <th>Username</th>
-                                                    <th>Email</th>
+                                                    <th>Email User</th>
                                                     <th>Line</th>
                                                     <th>Line Link</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
-                                                    <th>Password</th>
+                                                    <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
 
@@ -291,7 +291,7 @@
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                     <td>{{@$accountsass->email}}</td>
-                                                    <td>{{@$accountsass->password}}</td>
+                                                    <!-- <td>{{@$accountsass->password}}</td> -->
                                                         @else
                                                         <?php  
                                                         if($accountsas->type_mail==1){
@@ -345,12 +345,12 @@
                                                     <th>#</th>
                                                     <!-- <th>Type</th> -->
                                                     <th>Username</th>
-                                                    <th>Email</th>
+                                                    <th>Email User</th>
                                                     <th>Line</th>
                                                     <th>Line Link</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
-                                                    <th>Password</th>
+                                                    <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
 
@@ -429,7 +429,7 @@
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                     <td>{{@$accountsass->email}}</td>
-                                                    <td>{{@$accountsass->password}}</td>
+                                                    <!-- <td>{{@$accountsass->password}}</td> -->
                                                         @else
                                                         <?php  
                                                         if($accountsas->type_mail==1){
@@ -484,12 +484,12 @@
                                                     <th>#</th>
                                                     <!-- <th>Type</th> -->
                                                     <th>Username</th>
-                                                    <th>Email</th>
+                                                    <th>Email User</th>
                                                     <th>Line</th>
                                                     <th>Line Link</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
-                                                    <th>Password</th>
+                                                    <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
 
@@ -568,7 +568,7 @@
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                     <td>{{@$accountsass->email}}</td>
-                                                    <td>{{@$accountsass->password}}</td>
+                                                    <!-- <td>{{@$accountsass->password}}</td> -->
                                                         @else
                                                         <?php  
                                                         if($accountsas->type_mail==1){
@@ -629,12 +629,12 @@
                                                     <th>#</th>
                                                     <!-- <th>Type</th> -->
                                                     <th>Username</th>
-                                                    <th>Email</th>
+                                                    <th>Email User</th>
                                                     <th>Line</th>
                                                     <th>Line Link</th>
                                                     <th>Name Account</th>
                                                     <th>Email</th>
-                                                    <th>Password</th>
+                                                    <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
 
@@ -713,7 +713,7 @@
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
                                                     <td>{{@$accountsass->email}}</td>
-                                                    <td>{{@$accountsass->password}}</td>
+                                                    <!-- <td>{{@$accountsass->password}}</td> -->
                                                         @else
                                                         <?php  
                                                         if($accountsas->type_mail==1){
