@@ -109,7 +109,7 @@ public function dashbord_y(Request $r){
    ->whereHas('user_in', function ($query) {
        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
        })
-   ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
+   ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
    ->get();
@@ -119,7 +119,7 @@ public function dashbord_y(Request $r){
    ->whereHas('user_in', function ($query) {
        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
        })
-   ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
+   ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
    ->count();
@@ -129,7 +129,7 @@ public function dashbord_y(Request $r){
    ->whereHas('user_in', function ($query) {
        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
        })
-   ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+   ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
    ->get();
@@ -139,7 +139,7 @@ public function dashbord_y(Request $r){
    ->whereHas('user_in', function ($query) {
        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
        })
-   ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+   ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
    ->count();
@@ -149,7 +149,7 @@ public function dashbord_y(Request $r){
    ->whereHas('user_in', function ($query) {
        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
        })
-   ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+   ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
    ->get();
@@ -159,7 +159,7 @@ public function dashbord_y(Request $r){
    ->whereHas('user_in', function ($query) {
        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
        })
-   ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+   ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
    ->count();
@@ -256,7 +256,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
         ->whereHas('user_in', function ($query) {
             $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
             })
-        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
+        ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->get();
@@ -266,7 +266,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
         ->whereHas('user_in', function ($query) {
             $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
             })
-        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))])
+        ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->count();
@@ -276,7 +276,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
         ->whereHas('user_in', function ($query) {
             $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
             })
-        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+        ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->get();
@@ -286,7 +286,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
         ->whereHas('user_in', function ($query) {
             $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
             })
-        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+        ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->count();
@@ -296,7 +296,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
         ->whereHas('user_in', function ($query) {
             $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
             })
-        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+        ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->get();
@@ -306,7 +306,7 @@ $acc = users_in::where('open',0)->whereNotNull('type_f')
         ->whereHas('user_in', function ($query) {
             $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
             })
-        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+        ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->count();
