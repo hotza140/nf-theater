@@ -105,9 +105,9 @@
                                                         } */
                                                     </style>
 
-                                                <style>
+<style>
                                                        .flashing-card {
-                                                            width: 500px;
+                                                            width: 350px;
                                                             height: 200px;
                                                             background-color: #800020; /* สีเลือดหมู */
                                                             color: white;
@@ -115,7 +115,7 @@
                                                             align-items: center;
                                                             justify-content: center;
                                                             border-radius: 20px;
-                                                            font-size: 22px;
+                                                            font-size: 12px;
                                                             font-weight: bold;
                                                             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
                                                             box-shadow: 0 10px 25px rgba(128, 0, 32, 0.6);
@@ -163,50 +163,56 @@
                                         <tr>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนที่ว่าง ยกเว้น TV: ({{ number_format(@$q1, 0) }} ที่) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนที่ว่าง ยกเว้น TV: ({{ number_format(@$q1, 0) }} ที่) </h4>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนที่ว่าง TV: ({{ number_format(@$q2, 0) }} ที่) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนที่ว่าง TV: ({{ number_format(@$q2, 0) }} ที่) </h4>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-box"></i> จำนวน Account ที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$acc, 0) }}) </h1>
+                                                    <h4><i class="fa fa-box"></i> จำนวน Account ที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$acc, 0) }}) </h4>
                                                 </div>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td>
+                                        <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน: ({{ number_format(@$nubb, 0) }} คน) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ: ({{ number_format(@$nub, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน: ({{ number_format(@$nubc, 0) }} คน) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 3 วัน: ({{ number_format(@$nubb, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$nubd, 0) }} คน) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 2 วัน: ({{ number_format(@$nubc, 0) }} คน) </h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card">
+                                                    <h4><i class="fa fa-user"></i> จำนวนคนที่ใกล้หมดอายุ 1 วัน: ({{ number_format(@$nubd, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                         </tr>
 
-                                        <tr>
+                                        <!-- <tr>
                                             <td>
                                                 <div class="flashing-card">
-                                                    <h1><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ: ({{ number_format(@$nub, 0) }} คน) </h1>
+                                                    <h4><i class="fa fa-user"></i> จำนวนคนที่หมดอายุ: ({{ number_format(@$nub, 0) }} คน) </h4>
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </tr> -->
 
 
                                        
