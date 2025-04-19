@@ -183,17 +183,17 @@ public function dashbord_y(Request $r){
 //    ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
 //    ->count();
 
-$acc_a = users_in::where('open',0)->whereNotNull('type_f')
+$acc_a = users_in::whereNotNull('type_f')
 ->where('t_house','บ้านบล็อก')
 ->count();
-$acc_b = users_in::where('open',0)->whereNotNull('type_f')
+$acc_b = users_in::whereNotNull('type_f')
 ->where('t_house','บ้านอุทธรณ์')
 ->count();
-$acc_c = users_in::where('open',0)->whereNotNull('type_f')
+$acc_c = users_in::whereNotNull('type_f')
 ->where('t_house','บ้านต่ออายุ')
 ->count();
 
-$acc = users_in::where('open',0)->whereNotNull('type_f')
+$acc = users_in::whereNotNull('type_f')
 ->whereNull('t_house')
 ->count();
 

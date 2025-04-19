@@ -253,7 +253,7 @@
                                                     if($items->type=='PC'){
                                                         $paga='TV '.@$items->package;
                                                     }else{
-                                                        $paga='จำนวนลูกค้า '.@$items->package;
+                                                        $paga=@$items->package;
                                                     }
 
                                                     ?>
