@@ -289,25 +289,24 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->line, 20) }}
+                                                    <td>{{@$user->line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{ \Illuminate\Support\Str::limit(@$useraa->line, 20) }}
+                                                    {{@$useraa->line}}
                                                     @endforeach
                                                     </td>
-
-                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->line, 20) }}
+                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{ \Illuminate\Support\Str::limit(@$useraa->line, 20) }}
+                                                    {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                     @endforeach
                                                     </td>
 
@@ -427,25 +426,25 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->line, 20) }}
+                                                    <td>{{@$user->line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{ \Illuminate\Support\Str::limit(@$useraa->line, 20) }}
+                                                    {{@$useraa->line}}
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->line, 20) }}
+                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{ \Illuminate\Support\Str::limit(@$useraa->line, 20) }}
+                                                    {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                     @endforeach
                                                     </td>
 
@@ -566,25 +565,25 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->line, 20) }}
+                                                    <td>{{@$user->line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{ \Illuminate\Support\Str::limit(@$useraa->line, 20) }}
+                                                    {{@$useraa->line}}
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->line, 20) }}
+                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{ \Illuminate\Support\Str::limit(@$useraa->line, 20) }}
+                                                    {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                     @endforeach
                                                     </td>
 
@@ -711,25 +710,25 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->line, 20) }}
+                                                    <td>{{@$user->line}}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{ \Illuminate\Support\Str::limit(@$useraa->line, 20) }}
+                                                    {{@$useraa->line}}
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->line, 20) }}
+                                                    <td>{{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{ \Illuminate\Support\Str::limit(@$useraa->line, 20) }}
+                                                    {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                     @endforeach
                                                     </td>
 
