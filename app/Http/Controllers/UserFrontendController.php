@@ -86,9 +86,9 @@ class UserFrontendController extends Controller
         // ลบเช็คเวลา
 
         if($r->type=='netflix'){
-            $users=users::where('username',$r->username)->where('password',$r->password)->whereNotNull('type_netflix')->orderBy('id','asc')->first();
+            $users=users::where('open',0)->where('username',$r->username)->where('password',$r->password)->whereNotNull('type_netflix')->orderBy('id','asc')->first();
         }else{
-            $users=users::where('username',$r->username)->where('password',$r->password)->whereNotNull('type_youtube')->orderBy('id','asc')->first();
+            $users=users::where('open',0)->where('username',$r->username)->where('password',$r->password)->whereNotNull('type_youtube')->orderBy('id','asc')->first();
         }
 
         if($users){

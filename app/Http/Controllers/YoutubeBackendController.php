@@ -1446,7 +1446,7 @@ class YoutubeBackendController extends Controller
                 ->whereNotNull('password')
                 ->whereDate('date_start', '<=', $date) // ยังไม่หมดอายุ (start <= ปัจจุบัน)
                 ->whereDate('date_end', '>=', $date) // ยังไม่หมดอายุ (end >= ปัจจุบัน)
-                ->limit(5)->get();
+                ->get();
 
     // เช็คว่ามี users หรือไม่
     if ($users->isEmpty()) {
