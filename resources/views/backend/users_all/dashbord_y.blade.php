@@ -277,14 +277,24 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{@$user->link_line}}
+                                                    <td><div style="display: flex; align-items: center; gap: 10px;">
+                                                    {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user->link_line}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </div>
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$useraa->link_line}}
+                                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                                    {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user->link_line}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </div>
                                                     @endforeach
                                                     </td>
 
@@ -415,14 +425,24 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{@$user->link_line}}
+                                                    <td><div style="display: flex; align-items: center; gap: 10px;">
+                                                    {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user->link_line}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </div>
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$useraa->link_line}}
+                                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                                    {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user->link_line}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </div>
                                                     @endforeach
                                                     </td>
 
@@ -554,14 +574,24 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{@$user->link_line}}
+                                                    <td><div style="display: flex; align-items: center; gap: 10px;">
+                                                    {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user->link_line}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </div>
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$useraa->link_line}}
+                                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                                    {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user->link_line}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </div>
                                                     @endforeach
                                                     </td>
 
@@ -699,14 +729,24 @@
                                                     @endforeach
                                                     </td>
 
-                                                    <td>{{@$user->link_line}}
+                                                    <td><div style="display: flex; align-items: center; gap: 10px;">
+                                                    {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user->link_line}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </div>
                                                     @foreach($gub as $key=>$gubs)
                                                     <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    {{@$useraa->link_line}}
+                                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                                    {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
+                                                    <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$user->link_line}}')">
+                                                            <i class="fa fa-copy"></i> Copy
+                                                        </button>
+                                                    </div>
                                                     @endforeach
                                                     </td>
 
@@ -781,6 +821,41 @@
 @endsection
 
 @section('script')
+
+
+<script>
+                                    function fallbackCopyTextToClipboard(text) {
+                                        const textArea = document.createElement("textarea");
+                                        textArea.value = text;
+                                        document.body.appendChild(textArea);
+                                        textArea.focus();
+                                        textArea.select();
+                                        try {
+                                            document.execCommand("copy");
+                                            // alert("คัดลอกข้อมูลสำเร็จ!");
+                                        } catch (err) {
+                                            console.error("คัดลอกไม่สำเร็จ: ", err);
+                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                                        }
+                                        document.body.removeChild(textArea);
+                                    }
+
+                                    function copyUserInfo(link_line) {
+                                        let textToCopy = link_line;;
+
+                                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                            }).catch(err => {
+                                                console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                fallbackCopyTextToClipboard(textToCopy);
+                                            });
+                                        } else {
+                                            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+                                            fallbackCopyTextToClipboard(textToCopy);
+                                        }
+                                    }
+                                    </script>
 
 
 @endsection
