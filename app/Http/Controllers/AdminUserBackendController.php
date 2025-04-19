@@ -327,8 +327,12 @@ $acc = users_in::whereNotNull('type_f')
 
 
         $acc = users_in::where('open',0)->whereNull('type_f')
-        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
         ->count();
+
+        $accs = users_in::where('open',0)->whereNull('type_f')
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+        ->get();
 
        return view('backend.users_all.dashbord',[
            'item'=>$item,
@@ -341,6 +345,7 @@ $acc = users_in::whereNotNull('type_f')
            'nubd'=>$nubd,
 
            'acc'=>$acc,
+           'accs'=>$accs,
 
            'page'=>"all",
            'list'=>"dashbord",

@@ -156,6 +156,17 @@ input:checked+.slider:before {
                     cursor: pointer;
                     /* แสดงเป็นรูปมือเมื่อเลื่อนไปที่ปุ่ม */
                 }
+
+                /* เลือกปุ่มที่มีไอคอน fa-copy อยู่ข้างใน */
+    button.btn.btn-sm.btn-primary:has(i.fa-copy) {
+        padding: 2px 6px;
+        font-size: 12px;
+        line-height: 1;
+        height: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
                 </style>
 
                 <!-- Page-body start -->
@@ -206,7 +217,7 @@ input:checked+.slider:before {
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
-                                                <div class="flashing-card">
+                                                <div class="flashing-card toggle-btn" data-target="#table-expired-aaa">
                                                     <h4><i class="fa fa-box"></i> จำนวน Account ที่ใกล้หมดอายุ 1 วัน:
                                                         ({{ number_format(@$acc, 0) }}) </h4>
                                                 </div>
@@ -345,13 +356,13 @@ input:checked+.slider:before {
                                                         @endforeach
                                                     </td>
                                                     <td>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
 
                                                         @foreach($gub as $key=>$gubs)
                                                         <?php
@@ -359,13 +370,13 @@ input:checked+.slider:before {
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                         <br>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @endforeach
                                                     </td>
 
@@ -502,26 +513,26 @@ input:checked+.slider:before {
                                                     </td>
 
                                                     <td>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @foreach($gub as $key=>$gubs)
                                                         <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                         <br>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @endforeach
                                                     </td>
 
@@ -657,26 +668,26 @@ input:checked+.slider:before {
                                                     </td>
 
                                                     <td>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @foreach($gub as $key=>$gubs)
                                                         <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                         <br>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @endforeach
                                                     </td>
 
@@ -816,7 +827,7 @@ input:checked+.slider:before {
                                                 </td>
 
                                                 <td>
-                                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                                    
                                                         {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                         <button class="btn btn-sm btn-primary"
                                                             onclick="copyUserInfo('{{$user->link_line}}')">
@@ -829,7 +840,7 @@ input:checked+.slider:before {
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                     <br>
-                                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                                    
                                                         {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                         <button class="btn btn-sm btn-primary"
                                                             onclick="copyUserInfo('{{$user->link_line}}')">
@@ -882,6 +893,72 @@ input:checked+.slider:before {
                                         </tbody>
                                     </table>
                                 </div>
+
+
+
+
+
+                                <div class="dt-responsive table-responsive" id="table-expired-aaa">
+                                    <h3><i class="fa fa-user"></i> จำนวน Account ที่ใกล้หมดอายุ 1 วัน
+                                        ({{ number_format(@$acc, 0) }} คน) </h3>
+                                    <table id="" class="table table-striped table-bordered nowrap">
+                                        <thead>
+                                            <tr>
+
+                                                <th>#</th>
+                                                <th>Name Account</th>
+                                                <th>Email / Password</th>
+                                                <th>วันที่ใช้งาน</th>
+                                                <th>Tool</th>
+
+                                            </tr>
+                                        </thead>
+                                        <!-- <tbody class="sortable"> -->
+                                        <tbody class="">
+                                            @foreach($accs as $key=>$items)
+                                            <tr>
+                                            <td>{{$key+1}}</td>
+                                            <td>{{$items->name}}</td>
+                                                    <td>{{$items->email}} <br> {{$items->password}}</td>
+                                                    <?php
+                                                    $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
+
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
+
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
+                                                    ?>
+                                                    <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
+                                                <td> <a href="{{url('users_in_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a></td>
+                                            </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
 
                             </div>
 

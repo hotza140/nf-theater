@@ -156,6 +156,17 @@ input:checked+.slider:before {
                     cursor: pointer;
                     /* แสดงเป็นรูปมือเมื่อเลื่อนไปที่ปุ่ม */
                 }
+
+    /* เลือกปุ่มที่มีไอคอน fa-copy อยู่ข้างใน */
+    button.btn.btn-sm.btn-primary:has(i.fa-copy) {
+        padding: 2px 6px;
+        font-size: 12px;
+        line-height: 1;
+        height: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
                 </style>
 
                 <!-- Page-body start -->
@@ -209,31 +220,39 @@ input:checked+.slider:before {
 
                                         <tr>
                                             <td>
+                                                <a href="{{url('y_users_in?_token=2dmZjV3LHJYWy2zQ9zoObRZu6k17bmSYl9wPiLEL&status_account=11&search=')}}">
                                                 <div class="flashing-card">
                                                     <h4><i class="fa fa-user"></i> จำนวนบ้านปกติ:
                                                         ({{ number_format(@$acc, 0) }} บ้าน) </h4>
                                                 </div>
+                                                </a>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
+                                            <a href="{{url('y_users_in?_token=2dmZjV3LHJYWy2zQ9zoObRZu6k17bmSYl9wPiLEL&status_account=22&search=')}}">
                                                 <div class="flashing-card">
                                                     <h4><i class="fa fa-user"></i> จำนวนบ้านบล็อก:
                                                         ({{ number_format(@$acc_a, 0) }} บ้าน) </h4>
                                                 </div>
+                                                </a>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
+                                            <a href="{{url('y_users_in?_token=2dmZjV3LHJYWy2zQ9zoObRZu6k17bmSYl9wPiLEL&status_account=33&search=')}}">
                                                 <div class="flashing-card">
                                                     <h4><i class="fa fa-user"></i> จำนวนบ้านอุทธรณ์:
                                                         ({{ number_format(@$acc_b, 0) }} บ้าน) </h4>
                                                 </div>
+                                                </a>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
+                                            <a href="{{url('y_users_in?_token=2dmZjV3LHJYWy2zQ9zoObRZu6k17bmSYl9wPiLEL&status_account=44&search=')}}">
                                                 <div class="flashing-card">
                                                     <h4><i class="fa fa-user"></i> จำนวนบ้านต่ออายุ:
                                                         ({{ number_format(@$acc_c, 0) }} บ้าน) </h4>
                                                 </div>
+                                                </a>
                                             </td>
                                         </tr>
                                     </table>
@@ -325,26 +344,26 @@ input:checked+.slider:before {
                                                     </td>
 
                                                     <td>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @foreach($gub as $key=>$gubs)
                                                         <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                         <br>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @endforeach
                                                     </td>
 
@@ -479,26 +498,26 @@ input:checked+.slider:before {
                                                     </td>
 
                                                     <td>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @foreach($gub as $key=>$gubs)
                                                         <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                         <br>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @endforeach
                                                     </td>
 
@@ -634,26 +653,26 @@ input:checked+.slider:before {
                                                     </td>
 
                                                     <td>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @foreach($gub as $key=>$gubs)
                                                         <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                         <br>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @endforeach
                                                     </td>
 
@@ -793,26 +812,26 @@ input:checked+.slider:before {
                                                     </td>
 
                                                     <td>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @foreach($gub as $key=>$gubs)
                                                         <?php
                                                     $useraa=DB::table('tb_users')->where('id',@$gubs->id_user)->first();
                                                     $accountsass=DB::table('tb_users_in')->where('id',@$gubs->id_user_in)->first();
                                                     ?>
                                                         <br>
-                                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                                        
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
-                                                        </div>
+                                                        
                                                         @endforeach
                                                     </td>
 
