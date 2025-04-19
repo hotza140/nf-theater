@@ -87,6 +87,7 @@
                                                     <th>#</th>
                                                     <th>Admin name</th>
                                                     <th>เลข Account</th>
+                                                    <th>Detail</th>
                                                     <th>วันที่เปลี่ยน</th>
 
                                                 </tr>
@@ -103,6 +104,7 @@
                                                     <td>{{$key+1}}</td>
                                                     <td>{{@$admin->name}} </td>
                                                     <td>{{@$acc->name}}</td>
+                                                    <td>{{@$items->detail}} </td>
                                                     <td>{{@$formatted_date1}}</td>
 
                                                 </tr>

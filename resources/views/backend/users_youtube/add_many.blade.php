@@ -52,7 +52,7 @@
                                         }else{
                                             $runtotal=$runnum+1;
                                         }
-                                        $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
+                                        $xxxx = str_pad($runtotal, 6, '0', STR_PAD_LEFT);
                                         $run = "NF{$xxxx}";
 
                                         if(@$item->username!=null){

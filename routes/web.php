@@ -105,7 +105,8 @@ Route::group(['middleware' => ['admin']],function(){
 
     Route::get('/dashbord_y',[App\Http\Controllers\AdminUserBackendController::class,'dashbord_y']);
 
-    Route::get('/day_his/{id}',[App\Http\Controllers\AdminUserBackendController::class,'day_his']);
+    Route::get('/day_his/{item}/{id}',[App\Http\Controllers\AdminUserBackendController::class,'day_his']);
+    Route::get('/day_his_y/{item}/{id}',[App\Http\Controllers\AdminUserBackendController::class,'day_his_y']);
 
 
     Route::get('/his_dash',[App\Http\Controllers\AdminUserBackendController::class,'his_dash']);

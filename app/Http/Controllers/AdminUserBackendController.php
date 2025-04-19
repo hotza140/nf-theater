@@ -45,6 +45,7 @@ class AdminUserBackendController extends Controller
             $subQuery->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
         });
         })
+        ->orderby('id','desc')
         ->get();
 
       return view('backend.users_all.his_dash',[
@@ -62,6 +63,7 @@ class AdminUserBackendController extends Controller
             $subQuery->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
         });
     })
+    ->orderby('id','desc')
     ->get();
 
    return view('backend.users_all.his_dash_y',[
@@ -291,6 +293,7 @@ $acc = users_in::whereNotNull('type_f')
         ->orderBy('id_user_in', 'asc')
         ->count();
 
+
         $itemd = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
         ->whereHas('user_in', function ($query) {
@@ -327,11 +330,11 @@ $acc = users_in::whereNotNull('type_f')
 
 
         $acc = users_in::where('open',0)->whereNull('type_f')
-        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
         ->count();
 
         $accs = users_in::where('open',0)->whereNull('type_f')
-        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+2 days', strtotime($date)))])
+        ->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+1 days', strtotime($date)))])
         ->get();
 
        return view('backend.users_all.dashbord',[
@@ -353,18 +356,160 @@ $acc = users_in::whereNotNull('type_f')
    }
 
    
-   public function day_his($id){
+   public function day_his($item,$id){
+    $sss = users_in_in_history::where('id',$id)->first();
+    $id=$sss->id_user_in;
+
+    $date=date('Y-m-d');
+    $startDate = date('Y-m-d', strtotime('+4 days', strtotime($date))); // มากกว่า 3 วัน (เริ่มจากวันที่ 4)
+    $endDate = date('Y-m-d', strtotime('+7 days', strtotime($date))); // ไม่เกิน 7 วัน
+ 
     $ddd = users_in_in::pluck('id')->ToArray();
-    $sss = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->where('id_user_in',$id)->first();
-    $users_update = users_in_in_history::whereNotIn('id_user_in_in',$ddd)->where('id_user_in',$id)->update(['status_check' => 1]);
+ 
+    if(@$item==0){
+    $detail='แบบหมดอายุ';
+    $item = users_in_in_history::whereNotIn('id_user_in_in', $ddd)
+    ->whereNull('status_check')
+    ->where('id_user_in',$id)
+    ->whereHas('user_in', function ($query) {
+        $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        })
+    ->groupBy('id_user_in')
+    ->orderBy('id_user_in','asc')->update(['status_check' => 1]);
+    }
+ 
+ 
+    if(@$item==3){
+    $detail='แบบ3วัน';
+    $itemb = users_in_in_history::whereIn('id_user_in_in', $ddd)
+    ->whereNull('status_check')
+    ->where('id_user_in',$id)
+    ->whereHas('user_in', function ($query) {
+        $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        })
+    ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
+    ->groupBy('id_user_in')
+    ->orderBy('id_user_in', 'asc')
+    ->update(['status_check' => 1]);
+    }
+ 
+
+    if(@$item==2){
+    $detail='แบบ2วัน';
+    $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+    ->whereNull('status_check')
+    ->where('id_user_in',$id)
+    ->whereHas('user_in', function ($query) {
+        $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        })
+    ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
+    ->groupBy('id_user_in')
+    ->orderBy('id_user_in', 'asc')
+    ->update(['status_check' => 1]);
+    }
+ 
+
+    if(@$item==1){
+    $detail='แบบ1วัน';
+    $itemd = users_in_in_history::whereIn('id_user_in_in', $ddd)
+    ->whereNull('status_check')
+    ->where('id_user_in',$id)
+    ->whereHas('user_in', function ($query) {
+        $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+        })
+    ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
+    ->groupBy('id_user_in')
+    ->orderBy('id_user_in', 'asc')
+    ->update(['status_check' => 1]);
+    }
 
     $aaa_his = new log_dash();
     $aaa_his->id_user = Auth::guard('admin')->user()->id;
-    $aaa_his->id_in_in_history = @$sss->id;
+    $aaa_his->id_in_in_history = $sss->id;
+    $aaa_his->detail =$detail;
     $aaa_his->save();
 
     return redirect()->back()->with('message','Sucess!');
     }
+
+
+
+
+    public function day_his_y($item,$id){
+        $sss = users_in_in_history::where('id',$id)->first();
+        $id=$sss->id_user_in;
+    
+        $date=date('Y-m-d');
+        $startDate = date('Y-m-d', strtotime('+4 days', strtotime($date))); // มากกว่า 3 วัน (เริ่มจากวันที่ 4)
+        $endDate = date('Y-m-d', strtotime('+7 days', strtotime($date))); // ไม่เกิน 7 วัน
+     
+        $ddd = users_in_in::pluck('id')->ToArray();
+     
+        if(@$item==0){
+        $detail='แบบหมดอายุ';
+        $item = users_in_in_history::whereNotIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->where('id_user_in',$id)
+        ->whereHas('user_in', function ($query) {
+            $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in','asc')->update(['status_check' => 1]);
+        }
+     
+     
+        if(@$item==3){
+        $detail='แบบ3วัน';
+        $itemb = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->where('id_user_in',$id)
+        ->whereHas('user_in', function ($query) {
+            $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->update(['status_check' => 1]);
+        }
+     
+    
+        if(@$item==2){
+        $detail='แบบ2วัน';
+        $itemc = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->where('id_user_in',$id)
+        ->whereHas('user_in', function ($query) {
+            $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->update(['status_check' => 1]);
+        }
+     
+    
+        if(@$item==1){
+        $detail='แบบ1วัน';
+        $itemd = users_in_in_history::whereIn('id_user_in_in', $ddd)
+        ->whereNull('status_check')
+        ->where('id_user_in',$id)
+        ->whereHas('user_in', function ($query) {
+            $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+            })
+        ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
+        ->groupBy('id_user_in')
+        ->orderBy('id_user_in', 'asc')
+        ->update(['status_check' => 1]);
+        }
+    
+        $aaa_his = new log_dash();
+        $aaa_his->id_user = Auth::guard('admin')->user()->id;
+        $aaa_his->id_in_in_history = $sss->id;
+        $aaa_his->detail =$detail;
+        $aaa_his->save();
+    
+        return redirect()->back()->with('message','Sucess!');
+        }
 
    
 

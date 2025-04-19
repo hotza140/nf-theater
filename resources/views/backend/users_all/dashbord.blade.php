@@ -169,6 +169,9 @@ input:checked+.slider:before {
     }
                 </style>
 
+
+<?php $date=date('Y-m-d'); ?>
+
                 <!-- Page-body start -->
                 <div class="page-body">
                     <div class="row">
@@ -300,15 +303,22 @@ input:checked+.slider:before {
                                                 @foreach($item as $key=>$accountsas)
                                                 <?php
                                             $ddd = App\Models\users_in_in::pluck('id')->ToArray();
-                                             $gub=DB::table('tb_users_in_in_history')->whereNotIn('id_user_in_in', $ddd)
-                                             ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)->get();
+                                            
+                                            $gub=App\Models\users_in_in_history::whereNotIn('id_user_in_in', $ddd)
+                                            ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)
+                                            ->whereHas('user_in', function ($query) {
+                                                $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+                                                })
+                                            ->groupBy('id_user_in')
+                                            ->orderBy('id_user_in','asc')->get();
+
                                              $user=DB::table('tb_users')->where('id',@$accountsas->id_user)->first();
                                              $accountsass=DB::table('tb_users_in')->where('id',@$accountsas->id_user_in)->first();
                                             ?>
 
                                                 <tr>
                                                     <td>{{$key+1}}
-                                                        <a href="{{url('day_his/'.$accountsas->id_user_in)}}"
+                                                        <a href="{{url('day_his/0/'.$accountsas->id)}}"
                                                             class="btn btn-danger" style="color:white;"
                                                             onclick="javascript:return confirm('Confirm?')">
                                                             <span>เปลี่ยนทั้งหมด</span>
@@ -456,15 +466,24 @@ input:checked+.slider:before {
                                                 @foreach($itemb as $key=>$accountsas)
                                                 <?php
                                             $ddd = App\Models\users_in_in::pluck('id')->ToArray();
-                                             $gub=DB::table('tb_users_in_in_history')->whereNotIn('id_user_in_in', $ddd)
-                                             ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)->get();
+
+                                            $gub = App\Models\users_in_in_history::whereIn('id_user_in_in', $ddd)
+                                            ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)
+                                            ->whereHas('user_in', function ($query) {
+                                                $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+                                                })
+                                            ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
+                                            ->groupBy('id_user_in')
+                                            ->orderBy('id_user_in', 'asc')
+                                            ->get();
+
                                              $user=DB::table('tb_users')->where('id',@$accountsas->id_user)->first();
                                              $accountsass=DB::table('tb_users_in')->where('id',@$accountsas->id_user_in)->first();
                                             ?>
 
                                                 <tr>
                                                     <td>{{$key+1}}
-                                                        <a href="{{url('day_his/'.$accountsas->id_user_in)}}"
+                                                    <a href="{{url('day_his/3/'.$accountsas->id)}}"
                                                             class="btn btn-danger" style="color:white;"
                                                             onclick="javascript:return confirm('Confirm?')">
                                                             <span>เปลี่ยนทั้งหมด</span>
@@ -611,15 +630,24 @@ input:checked+.slider:before {
                                                 @foreach($itemc as $key=>$accountsas)
                                                 <?php
                                             $ddd = App\Models\users_in_in::pluck('id')->ToArray();
-                                             $gub=DB::table('tb_users_in_in_history')->whereNotIn('id_user_in_in', $ddd)
-                                             ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)->get();
+
+                                            $gub = App\Models\users_in_in_history::whereIn('id_user_in_in', $ddd)
+                                            ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)
+                                            ->whereHas('user_in', function ($query) {
+                                                $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+                                                })
+                                            ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
+                                            ->groupBy('id_user_in')
+                                            ->orderBy('id_user_in', 'asc')
+                                            ->get();
+
                                              $user=DB::table('tb_users')->where('id',@$accountsas->id_user)->first();
                                              $accountsass=DB::table('tb_users_in')->where('id',@$accountsas->id_user_in)->first();
                                             ?>
 
                                                 <tr>
                                                     <td>{{$key+1}}
-                                                        <a href="{{url('day_his/'.$accountsas->id_user_in)}}"
+                                                    <a href="{{url('day_his/2/'.$accountsas->id)}}"
                                                             class="btn btn-danger" style="color:white;"
                                                             onclick="javascript:return confirm('Confirm?')">
                                                             <span>เปลี่ยนทั้งหมด</span>
@@ -770,19 +798,28 @@ input:checked+.slider:before {
                                             @foreach($itemd as $key=>$accountsas)
                                             <?php
                                             $ddd = App\Models\users_in_in::pluck('id')->ToArray();
-                                             $gub=DB::table('tb_users_in_in_history')->whereNotIn('id_user_in_in', $ddd)
-                                             ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)->get();
+
+                                            $gub = App\Models\users_in_in_history::whereIn('id_user_in_in', $ddd)
+                                            ->whereNull('status_check')->where('id','!=',$accountsas->id)->where('id_user_in',$accountsas->id_user_in)
+                                            ->whereHas('user_in', function ($query) {
+                                                $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
+                                                })
+                                            ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
+                                            ->groupBy('id_user_in')
+                                            ->orderBy('id_user_in', 'asc')
+                                            ->get();
+
                                              $user=DB::table('tb_users')->where('id',@$accountsas->id_user)->first();
                                              $accountsass=DB::table('tb_users_in')->where('id',@$accountsas->id_user_in)->first();
                                             ?>
 
                                             <tr>
                                                 <td>{{$key+1}}
-                                                    <a href="{{url('day_his/'.$accountsas->id_user_in)}}"
-                                                        class="btn btn-danger" style="color:white;"
-                                                        onclick="javascript:return confirm('Confirm?')">
-                                                        <span>เปลี่ยนทั้งหมด</span>
-                                                    </a>
+                                                <a href="{{url('day_his/1/'.$accountsas->id)}}"
+                                                            class="btn btn-danger" style="color:white;"
+                                                            onclick="javascript:return confirm('Confirm?')">
+                                                            <span>เปลี่ยนทั้งหมด</span>
+                                                        </a>
 
                                                 </td>
                                                 <!-- <td>
