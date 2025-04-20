@@ -258,6 +258,8 @@
 
                                                     ?>
 
+                                                    
+
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>
                                                     @if($items->username == null and $items->password==null)
@@ -375,10 +377,12 @@
                                                         @endforeach
                                                     </td>
 
+                                                    <?php $link = url('frong'); ?>
+
                                                     <td>
                                                     <a href="{{url('y_users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <!-- <a href="{{url('y_users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a> -->
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->email}}', '{{@$paga}}', '{{$items->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->email}}', '{{@$paga}}', '{{$link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
