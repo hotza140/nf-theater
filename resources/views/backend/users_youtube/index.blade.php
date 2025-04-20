@@ -377,7 +377,7 @@
                                                         @endforeach
                                                     </td>
 
-                                                    <?php $link = url('frong'); ?>
+                                                    <?php $link = url('frontlogin'); ?>
 
                                                     <td>
                                                     <a href="{{url('y_users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
