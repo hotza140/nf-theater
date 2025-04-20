@@ -122,9 +122,9 @@
                             {{@$userProfile->useremail}}</h2>
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package :
                             @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
-                        <p class="mail-profile">Account Email: : {{@$ac->email}}<span id="emailYT"></span></p>
+                        <!--<p class="mail-profile">Account Email: : {{--@$ac->email--}}<span id="emailYT"></span></p>-->
                         <!--nftheater134+27@gmail.com-->
-                        <p class="pass-profile">Password : {{@$ac->password}}<span id="passYT"></span></p>
+                        <!--<p class="pass-profile">Password : {{--@$ac->password--}}<span id="passYT"></span></p>-->
                         <!--0123456-->
 
                         <?php
