@@ -385,10 +385,12 @@
                                                         @endforeach
                                                     </td>
 
+                                                    <?php $link = url('frontlogin'); ?>
+
                                                     <td>
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <!-- <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a> -->
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$paga}}', '{{$items->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$paga}}', '{{$link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
