@@ -76,8 +76,8 @@ class AdminUserBackendController extends Controller
 public function dashbord_y(Request $r){
     // ลบเช็คเวลา
    $date=date('Y-m-d');
-   $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
-   $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+   $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
+   $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
    $accounts=users_in_in::whereIn('id',@$users_check)->delete();
    $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
    // ลบเช็คเวลา
@@ -223,8 +223,8 @@ $acc = users_in::whereNotNull('type_f')
     public function dashbord(Request $r){
          // ลบเช็คเวลา
         $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
         $accounts=users_in_in::whereIn('id',@$users_check)->delete();
         $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
         // ลบเช็คเวลา
@@ -888,8 +888,8 @@ $acc = users_in::whereNotNull('type_f')
      public function users_all(Request $r){
         // ลบเช็คเวลา
         $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
         $accounts=users_in_in::whereIn('id',@$users_check)->delete();
         $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
         // ลบเช็คเวลา
@@ -929,8 +929,8 @@ $acc = users_in::whereNotNull('type_f')
      public function users(Request $r){
         // ลบเช็คเวลา
         $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
         $accounts=users_in_in::whereIn('id',@$users_check)->delete();
         $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
         // ลบเช็คเวลา
@@ -1685,8 +1685,8 @@ $acc = users_in::whereNotNull('type_f')
        public function users_in(Request $r){
          // ลบเช็คเวลา
         $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
         $accounts=users_in_in::whereIn('id',@$users_check)->delete();
         $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
         // ลบเช็คเวลา
@@ -1924,8 +1924,8 @@ $acc = users_in::whereNotNull('type_f')
       public function users_in_edit($id){
          // ลบเช็คเวลา
          $date=date('Y-m-d');
-         $users_check = users_in_in::whereDate('date_end', '<', $date)->pluck('id')->toArray();
-         $users_check_user = users_in_in::whereDate('date_end', '<', $date)->pluck('id_user')->toArray();
+         $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
+         $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
          $accounts=users_in_in::whereIn('id',@$users_check)->delete();
          $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
          // ลบเช็คเวลา
