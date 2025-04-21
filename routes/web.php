@@ -87,9 +87,10 @@ Route::group(['middleware' => ['users']],function(){
     // change password for username
     Route::post('changepassusercus',[App\Http\Controllers\UserFrontendController::class,'changepassusercus'])->name('frontend.changepassusercus');
 
-    // mail confirm over
+    // mail & OTP confirm over
     Route::post('confirmmailck',[App\Http\Controllers\UserFrontendController::class,'confirmmailck'])->name('frontend.confirmmailck');
-    
+    Route::post('confirmOTPck',[App\Http\Controllers\UserFrontendController::class,'confirmOTPck'])->name('frontend.confirmOTPck');
+    Route::post('sentOTPtoMck',[App\Http\Controllers\UserFrontendController::class,'sentOTPtoMck'])->name('frontend.sentOTPtoMck');
 });
 
 // image Slip Base64

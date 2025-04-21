@@ -19,10 +19,17 @@
                         <p class="text-p2" style="text-align:">ตรวจสอบความถูกต้องและยืนยันข้อมูล</p>
                     </div>
                     <div class="div-menber">
-                        <form><label class="form-label text-form-h">เบอร์โทรศัพท์</label><input class="form-control"
-                                type="text" placeholder="กรุณาระบุเบอร์โทรศัพท์เพื่อรับรหัส">
-                            <div class="form-member-bt"><button class="btn btn-primary bt-pay" type="button">รับรหัส
-                                    OTP</button></div>
+                        <form method="POST" enctype="multipart/form-data" action="{{route('frontend.confirmOTPck')}}" id="confirmOTPPOSt">
+                            @csrf
+                            <input type="hidden" name="tokenOTP" id="tokenOTP">
+                            <input type="hidden" name="ref_code" id="ref_code">
+                            <label class="form-label text-form-h" id="lbphone">{!!@$usersCKmail->phone?'<b style="font-size:14px;">เบอร์โทรศัพท์ที่ยืนยันปัจจุบัน</b>':'เบอร์โทรศัพท์'!!}</label>
+                            <input class="form-control" type="text" name="phone" placeholder="กรุณาระบุเบอร์โทรศัพท์เพื่อรับรหัส" id="phoneOTP" value="{{@$usersCKmail->phone??''}}">
+                            <input class="form-control" type="text" name="otp_code_confirm" style="display: none;" placeholder="กรุณากรอกรหัสยืนเบอร์โทร" id="phoneOTPconfirm">
+                            <div class="form-member-bt">
+                                <button class="btn btn-primary bt-pay" type="button" onclick="sentOTPtoMck(`${document.getElementById('phoneOTP').value}`)" id="btnOTP1">รับรหัส OTP</button>
+                                <button class="btn btn-primary bt-pay" type="submit" id="btnOTP2" style="display: none;background-color:gray !important;color:aliceblue !important;">ยืนยัน OTP</button>
+                            </div>
                         </form>
                         <form method="POST" enctype="multipart/form-data" action="{{route('frontend.confirmmailck')}}" id="confirmmailPOSt">
                             @csrf
@@ -53,5 +60,38 @@
                 alert('คุณป้อนข้อมูลเมลที่จะยืนยันไม่ถูกต้อง โปรดตรวจสอบ!')
             }
         }
+    }
+
+    function sentOTPtoMck(phone='') {alert(phone)
+        fetch('{{route('frontend.sentOTPtoMck')}}', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                _token : "{{csrf_token()}}",
+                phone
+            }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Success:', data);
+            if(data.status==1) {
+                let ress = JSON.parse(data.res);
+                document.getElementById('btnOTP1').style.display= 'none';
+                document.getElementById('btnOTP2').style.display= 'block';
+                document.getElementById('lbphone').innerHTML= 'กรอกรหัสยืนเบอร์โทร';
+                document.getElementById('lbphone').style = 'font-size:20px !important;'  // background-color: red !important;
+                document.getElementById('phoneOTP').style.display = 'none';
+                document.getElementById('phoneOTPconfirm').style = 'block';
+                document.getElementById('tokenOTP').value = ress.result.token;
+                document.getElementById('ref_code').value = data.ref_code;
+            } else {
+                alert('เบอร์โทรไม่ถูกต้องในการยืนยัน!')
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 </script>

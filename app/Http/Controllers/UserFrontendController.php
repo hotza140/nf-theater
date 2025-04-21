@@ -43,6 +43,7 @@ use App\Models\DefaultConfig;
 use App\Models\PointSumbalance;
 use App\Models\OrderPayPackageTruewallet;
 use App\Models\ConfirmMail;
+use App\Models\ConfirmOtp;
 
 class UserFrontendController extends Controller
 {
@@ -912,5 +913,104 @@ class UserFrontendController extends Controller
             // return redirect()->back();
             return view('frontend.mailcus.thankyouconfirmmail');
         }
+    }
+
+    public function confirmOTPck (Request $request) {
+        // ConfirmOtp
+        $phone = @$request->phone;
+        $otp_code_confirm = @$request->otp_code_confirm;
+        $ref_code = @$request->ref_code;
+        $tokenOTP = @$request->tokenOTP;
+        $users = Auth::guard('users')->user();
+        $ConfirmOtp = ConfirmOtp::where('phone',$phone)->where('ref_code',$ref_code)->where('username',$users->username)->first();
+        if($ConfirmOtp) {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://portal-otp.smsmkt.com/api/otp-validate',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_HTTPHEADER => array(
+                    "Content-Type: application/json",
+                    "api_key:12bfd5289ffb0a66b969c82c0ea11368",
+                    "secret_key:dQxlQKKje3SrWqeS",
+                ),
+                CURLOPT_POSTFIELDS =>json_encode(array(
+                "token"=>"$tokenOTP",
+                "otp_code"=>"$otp_code_confirm",
+                "ref_code"=>"",
+                )),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            // echo $response;
+            $rsc = json_decode($response);
+            if($rsc->code=='000'&&$rsc->result->status==true) {
+                $ConfirmOtp->otp_code_confirm=$otp_code_confirm;
+                $ConfirmOtp->save();
+                $users = users::where('username',$users->username)->get();
+                foreach ($users as $key => $value) {
+                    # code...
+                    $value->phone = $phone;
+                    $value->save();
+                }
+                return redirect()->route('frontend.profile')->with('message','Success!');
+            }
+        }
+        return redirect()->route('frontend.profile')->with('message','ยืนยันเบอร์ไม่สำเร็จ กรุณายืนยันใหม่!');
+    }
+    public function sentOTPtoMck (Request $request) {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required|digits_between:10,15'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 2,
+                'errors' => $validator->errors()
+            ], 200);
+        }
+
+        $phone = @$request->phone;
+        $randomNumber = rand(100000, 999999);
+        $users = Auth::guard('users')->user();
+        $ConfirmOtp = new ConfirmOtp();
+        $ConfirmOtp->username = $users->username;
+        $ConfirmOtp->phone = $phone;
+        $ConfirmOtp->ref_code = $randomNumber;
+        $ConfirmOtp->save();
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://portal-otp.smsmkt.com/api/otp-send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: application/json",
+                "api_key:12bfd5289ffb0a66b969c82c0ea11368",
+                "secret_key:dQxlQKKje3SrWqeS",
+            ),
+            CURLOPT_POSTFIELDS =>json_encode(array(
+            "project_key"=>"77a92a0dbd",
+            "phone"=>"$phone",
+            "ref_code"=>"",
+            )),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        // echo $response;
+
+        return response()->json([
+            'status' => 1, 'res' => $response , 'ref_code' => $ConfirmOtp->ref_code
+        ], 200);
     }
 }
