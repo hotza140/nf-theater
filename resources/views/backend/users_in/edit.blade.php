@@ -670,12 +670,13 @@
                                                     <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
                                                     <td>{{@$user_ins->created_at}}</td>
 
-                                                    
+                                                    <?php $link = url('frontlogin'); ?>
+
 
                                                     <td>
                                                     <!-- <a href="{{url('users_in_in_edit/'.$user_ins->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a> -->
                                                         <a href="{{url('users_in_in_destroy/'.$user_ins->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('You Want To Delete?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a>
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{@$user_aa->username}}', '{{@$user_aa->password}}', '{{@$user_aa->name}}', '{{@$paga}}', '{{@$user_aa->link}}')">
+                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{@$user_aa->username}}', '{{@$user_aa->password}}', '{{@$user_aa->name}}', '{{@$paga}}', '{{@$link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
