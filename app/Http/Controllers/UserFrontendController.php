@@ -122,8 +122,18 @@ class UserFrontendController extends Controller
 
     public function nFYtPackage(Request $r) {
         $id = $r->id;
-        $Packagewatch = Packagewatch::find($id); 
-        $PackageSubwatch = PackageSubwatch::where('package_Code',$Packagewatch->package_Code)->get();
+
+        if($id==1){
+            $check = users::where('id',Auth::guard('users')->user()->id)->first();
+            $ag = PackageSubwatch::where('id',@$check->id_package)->first();
+
+            $Packagewatch = Packagewatch::find($id); 
+            $PackageSubwatch = PackageSubwatch::where('package_Code',$Packagewatch->package_Code)->where('type',@$ag->type)->get();
+        }else{
+            $Packagewatch = Packagewatch::find($id); 
+            $PackageSubwatch = PackageSubwatch::where('package_Code',$Packagewatch->package_Code)->get();
+        }
+
         if($r->id==1) return view('frontend.netflix-pricing',compact('Packagewatch','PackageSubwatch','id'));
         else if($r->id==2) return view('frontend.youtube-pricing',compact('Packagewatch','PackageSubwatch','id'));
     }
