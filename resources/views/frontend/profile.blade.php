@@ -24,8 +24,8 @@
 
     <div class="container profile-plans-white" style="padding-right: 24px;">
         <div class="row">
-            <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center align-items-sm-center">
-                <div class="img-profile-a"><img class="net-profile-icon" src="assets/img/Frame%201%20(1).png"
+            <div class="col-12 col-sm-2 d-flex d-sm-flex justify-content-center align-items-sm-center">
+                <div class="img-profile-a"><img class="net-profile-icon" src="assets/img/Frame%201%20(1).png" 
                         alt="Netflix Icon">
                     {{-- <div class="edit-icon"><a data-bs-target="#modal-edit-img" data-bs-toggle="modal"><button
                                 class="btn btn-primary edit-bt" type="button" style="padding: 6px;"><svg
@@ -55,12 +55,19 @@
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package :
                             @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
 
+
+                        <!-- <br> -->
                         @if(@$userProfile->type_mail==null)
 
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID :
                             {{@$ac->email}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
-                        <p class="pass-profile">Password : {{@$ac->password}}<span id="passwordnf"></span></p>
+
+                            <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i>Password :
+                            {{@$ac->password}}</h2><span class="name-profile"
+                            style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
+
+                        <!-- <h2 class="pass-profile">Password : {{@$ac->password}}<span id="passwordnf"></span></h2> -->
 
                         @else
 
@@ -68,20 +75,34 @@
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID :
                             {{@$ac->email01}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
-                        <p class="pass-profile">Password : {{@$ac->password01}}<span id="passwordnf"></span></p>
+
+                            <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i>Password :
+                            {{@$ac->password01}}</h2><span class="name-profile"
+                            style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
+
+
+                        <!-- <h2 class="pass-profile">Password : {{@$ac->password01}}<span id="passwordnf"></span></h2> -->
                         @else
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID :
                             {{@$ac->email02}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
-                        <p class="pass-profile">Password : {{@$ac->password02}}<span id="passwordnf"></span></p>
+
+                            <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i>Password :
+                            {{@$ac->password02}}</h2><span class="name-profile"
+                            style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
+
+
+                        <!-- <h2 class="pass-profile">Password : {{@$ac->password02}}<span id="passwordnf"></span></h2> -->
                         @endif
 
                         @endif
 
                         <?php
-                                $date_start = @$pak->date_start; // วันที่เริ่มต้น (Y-m-d)
+                        $today = date('Y-m-d');
+                        $date_start = date('Y-m-d');
+                                // $date_start = @$pak->date_start; // วันที่เริ่มต้น (Y-m-d)
                                 $date_end = @$pak->date_end; // วันที่สิ้นสุด (Y-m-d)
-                                $today = date('Y-m-d'); // วันที่ปัจจุบัน
+                                
 
                                 if ($date_start && $date_end) {
                                     if (strtotime($today) < strtotime($date_start)) {
@@ -109,8 +130,7 @@
                                 ?>
 
                         @if(@$pak->date_start!=null)
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>{{@$formatted_date1}}
-                            ถึง {{@$formatted_date2}} ({{@$status}})</h2>
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>วันสิ้นสุด {{@$formatted_date2}} ({{@$status}})</h2>
                         @endif
                     </div>
                     @endif
@@ -128,9 +148,11 @@
                         <!--0123456-->
 
                         <?php
-                                                    $date_start = @$pak->date_start; // วันที่เริ่มต้น (Y-m-d)
+                        $today = date('Y-m-d');
+                        $date_start = date('Y-m-d');
+                                                    // $date_start = @$pak->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = @$pak->date_end; // วันที่สิ้นสุด (Y-m-d)
-                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
+                                                     // วันที่ปัจจุบัน
 
                                                     if ($date_start && $date_end) {
                                                         if (strtotime($today) < strtotime($date_start)) {
@@ -158,8 +180,7 @@
                                                     ?>
 
                         @if(@$pak->date_start!=null)
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>{{@$formatted_date1}}
-                            ถึง {{@$formatted_date2}} ({{@$status}})</h2>
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>วันสิ้นสุด {{@$formatted_date2}} ({{@$status}})</h2>
                         @endif
 
                     </div>
@@ -211,10 +232,10 @@
                     <!--Netflix ยาวนานถึง 2 เดือน-->
                 </div>
             </div>
-            <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
+            <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px; width: 110px;">
                 <div style="margin: 0;padding: 0;height: auto;">
-                    <p class="net-price" style="text-align: center;height: auto;" id="priceShNF">{{
-                        number_format($userProfile->Subpackage_Paymoney, 0, '.', ',') }}</p>
+                    <p class="net-price" style="text-align: center;height: auto;" id="priceShNF">
+                    {{number_format($userProfile->Subpackage_Paymoney, 0, '.', ',') }}</p>
                     <!--269-->
                 </div>
                 <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span
