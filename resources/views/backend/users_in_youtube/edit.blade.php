@@ -615,15 +615,18 @@
                                                     <td>{{@$user_aa->email}}</td>
                                                     <td>{{@$user_aa->line}}</td>
                                                     <td>{{@$paga}}</td>
+                                                    
                                                     <?php
-                                                    $date_start = @$user_aa->date_start; // วันที่เริ่มต้น (Y-m-d)
-                                                    $date_end = @$user_aa->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                    $date_start = $user_aa->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = $user_aa->date_end; // วันที่สิ้นสุด (Y-m-d)
                                                     $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
                                                     if ($date_start && $date_end) {
-                                                        if (strtotime($today) < strtotime($date_start)) {
-                                                            $status = "ยังไม่เข้าช่วง";
-                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                        // if (strtotime($today) < strtotime($date_start)) {
+                                                        //     $status = "ยังไม่เข้าช่วง";
+                                                        // } else
+                                                        
+                                                        if (strtotime($today) <= strtotime($date_end)) {
                                                             $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
                                                             $status = "เหลืออีก $days_remaining วัน";
                                                         } else {
@@ -634,7 +637,7 @@
                                                     }
 
                                                     if ($date_start) {
-                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                        $formatted_date1 = date('d/m/Y', strtotime($today));
                                                     } else {
                                                         $formatted_date1 = null;
                                                     }

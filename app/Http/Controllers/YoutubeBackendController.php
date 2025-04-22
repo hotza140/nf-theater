@@ -678,6 +678,14 @@ class YoutubeBackendController extends Controller
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
 
                 if(@$aaa==null){
+                    $aaa_his=new users_in_in_history();
+                    $aaa_his->id_user=$item->id;  
+                    $aaa_his->id_user_in=$user->id;    
+                }else{
+                    $aaa_his=users_in_in_history::where('id_user_in_in',@$aaa->id)->first();
+                }   
+
+                if(@$aaa==null){
                     $aaa=new users_in_in();
                     $aaa->id_user=$item->id;  
                     $aaa->id_user_in=$user->id;
@@ -686,10 +694,7 @@ class YoutubeBackendController extends Controller
                 $aaa->date_start=$r->date_start; 
                 $aaa->date_end=$r->date_end;
                 $aaa->save();
-    
-                $aaa_his=new users_in_in_history();
-                $aaa_his->id_user=$item->id;  
-                $aaa_his->id_user_in=$user->id;    
+        
                 $aaa_his->type='MOBILE';
                 $aaa_his->id_user_in_in = $aaa->id;
 
@@ -726,6 +731,14 @@ class YoutubeBackendController extends Controller
 
             $aaa=users_in_in::where('id_user',@$r->id)->first();
 
+            if(@$aaa==null){
+                $aaa_his=new users_in_in_history();
+                $aaa_his->id_user=$item->id;  
+                $aaa_his->id_user_in=$user->id;    
+            }else{
+                $aaa_his=users_in_in_history::where('id_user_in_in',@$aaa->id)->first();
+            }   
+
                 if(@$aaa==null){
                     $aaa=new users_in_in();
                     $aaa->id_user=$item->id;  
@@ -735,11 +748,7 @@ class YoutubeBackendController extends Controller
                 $aaa->type_mail = $newTypeMail;
                 $aaa->date_start=$r->date_start; 
                 $aaa->date_end=$r->date_end;
-                $aaa->save();
-    
-                $aaa_his=new users_in_in_history();
-                $aaa_his->id_user=$item->id;  
-                $aaa_his->id_user_in=$user->id;    
+                $aaa->save();    
                 $aaa_his->type='PC';
                 $aaa_his->id_user_in_in = $aaa->id;
                 $aaa_his->type_mail = $newTypeMail;

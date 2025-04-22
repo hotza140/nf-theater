@@ -282,6 +282,7 @@ $acc = users_in::whereNotNull('type_f')
         ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->get();
+        
 
         $nubc = users_in_in_history::whereIn('id_user_in_in', $ddd)
         ->whereNull('status_check')
@@ -1219,6 +1220,14 @@ $acc = users_in::whereNotNull('type_f')
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
 
                 if(@$aaa==null){
+                    $aaa_his=new users_in_in_history();
+                    $aaa_his->id_user=$item->id;  
+                    $aaa_his->id_user_in=$user->id;    
+                }else{
+                    $aaa_his=users_in_in_history::where('id_user_in_in',@$aaa->id)->first();
+                }   
+
+                if(@$aaa==null){
                     $aaa=new users_in_in();
                     $aaa->id_user=$item->id;  
                     $aaa->id_user_in=$user->id;
@@ -1228,9 +1237,7 @@ $acc = users_in::whereNotNull('type_f')
                 $aaa->date_end=$r->date_end;
                 $aaa->save();
     
-                $aaa_his=new users_in_in_history();
-                $aaa_his->id_user=$item->id;  
-                $aaa_his->id_user_in=$user->id;    
+                
                 $aaa_his->type='MOBILE';
                 $aaa_his->id_user_in_in = $aaa->id;
 
@@ -1267,6 +1274,14 @@ $acc = users_in::whereNotNull('type_f')
 
             $aaa=users_in_in::where('id_user',@$r->id)->first();
 
+            if(@$aaa==null){
+                $aaa_his=new users_in_in_history();
+                $aaa_his->id_user=$item->id;  
+                $aaa_his->id_user_in=$user->id;    
+            }else{
+                $aaa_his=users_in_in_history::where('id_user_in_in',@$aaa->id)->first();
+            }   
+
                 if(@$aaa==null){
                     $aaa=new users_in_in();
                     $aaa->id_user=$item->id;  
@@ -1277,10 +1292,7 @@ $acc = users_in::whereNotNull('type_f')
                 $aaa->date_start=$r->date_start; 
                 $aaa->date_end=$r->date_end;
                 $aaa->save();
-    
-                $aaa_his=new users_in_in_history();
-                $aaa_his->id_user=$item->id;  
-                $aaa_his->id_user_in=$user->id;    
+       
                 $aaa_his->type='PC';
                 $aaa_his->id_user_in_in = $aaa->id;
                 $aaa_his->type_mail = $newTypeMail;
