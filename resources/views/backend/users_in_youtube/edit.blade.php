@@ -604,7 +604,7 @@
                                                     if(@$user_aa->type=='PC'){
                                                         $paga='TV '.@$user_aa->package;
                                                     }else{
-                                                        $paga='ยกเว้นทีวี '.@$user_aa->package;
+                                                        $paga=@$user_aa->package;
                                                     }
 
                                                     $paga=@$user_aa->package;
