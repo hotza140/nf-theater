@@ -1215,7 +1215,7 @@ $acc = users_in::whereNotNull('type_f')
             $aaa=users_in_in::where('id_user',@$r->id)->first();
     
             if($item->username!=null and $item->password!=null){
-            if (@$user!=null or @$aaa!=null) {
+            if (@$user!=null) {
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
 
                 if(@$aaa==null){
@@ -1257,7 +1257,7 @@ $acc = users_in::whereNotNull('type_f')
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
     
             if($item->username!=null and $item->password!=null){
-            if (@$user!=null or @$aaa!=null) {
+            if (@$user!=null) {
 
             // นับจำนวน users_in_in ที่มีอยู่แล้ว
             $countExisting = users_in_in::where('id_user_in', $user->id)->count();
