@@ -956,6 +956,7 @@ $acc = users_in::whereNotNull('type_f')
                     $query->where('date_end',$date_new);
                 } else {
                 $query->where('name', 'LIKE', '%' . $search . '%')
+                      ->orWhere('email', 'LIKE', '%' . $search . '%')
                       ->orWhere('username', 'LIKE', '%' . $search . '%')
                       ->orWhere('phone', 'LIKE', '%' . $search . '%')
                       ->orWhere('line', 'LIKE', '%' . $search . '%')

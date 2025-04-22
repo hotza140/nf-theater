@@ -425,6 +425,7 @@ class YoutubeBackendController extends Controller
                       ->orWhere('username', 'LIKE', '%' . $search . '%')
                       ->orWhere('phone', 'LIKE', '%' . $search . '%')
                       ->orWhere('line', 'LIKE', '%' . $search . '%')
+                      ->orWhere('email', 'LIKE', '%' . $search . '%')
                       ->orWhereHas('userIn', function($query) use ($search) {
                           $query->where('tb_users_in.name', 'LIKE', '%' . $search . '%'); // ระบุชื่อคอลัมน์จากตาราง tb_users_in
                       });
