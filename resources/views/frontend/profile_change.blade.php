@@ -43,25 +43,32 @@
                                 <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package : @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
                                 @if(@$userProfile->type_mail==null)
                                 <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID : {{@$ac->email}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
-                                <p class="pass-profile">Password : {{@$ac->password}}<span id="passwordnf"></span></p>
+                                <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i>Password : {{@$ac->password}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
+
+                                <!-- <p class="pass-profile">Password : {{@$ac->password}}<span id="passwordnf"></span></p> -->
 
                                 @else
 
                                 @if(@$pak->type_mail==1)
                                 <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID : {{@$ac->email01}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
-                                <p class="pass-profile">Password : {{@$ac->password01}}<span id="passwordnf"></span></p>
+                                <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i>Password : {{@$ac->password01}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
+                                
+                                <!-- <p class="pass-profile">Password : {{@$ac->password01}}<span id="passwordnf"></span></p> -->
                                 @else
                                 <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID : {{@$ac->email02}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
-                                <p class="pass-profile">Password : {{@$ac->password02}}<span id="passwordnf"></span></p>
+                                <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i>Password : {{@$ac->password02}}</h2><span class="name-profile" style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
+                                
+                                <!-- <p class="pass-profile">Password : {{@$ac->password02}}<span id="passwordnf"></span></p> -->
                                 @endif
 
 
                                 @endif
 
                                 <?php
-                                $date_start = @$pak->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                 $today = date('Y-m-d');
+                                 $date_start =date('Y-m-d');
+                                // $date_start = @$pak->date_start; // วันที่เริ่มต้น (Y-m-d)
                                 $date_end = @$pak->date_end; // วันที่สิ้นสุด (Y-m-d)
-                                $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
                                 if ($date_start && $date_end) {
                                     if (strtotime($today) < strtotime($date_start)) {
@@ -89,7 +96,7 @@
                                 ?>
 
                 @if(@$pak->date_start!=null)
-                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</h2>
+                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>วันสิ้นสุด {{@$formatted_date2}} ({{@$status}})</h2>
                 @endif
                             </div>
                     </div>
