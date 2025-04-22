@@ -670,8 +670,16 @@ class YoutubeBackendController extends Controller
 
             if($item->type=='MOBILE'){
 
-            $user = (new users_in())->getEligibleUser_youtube();
-            $aaa=users_in_in::where('id_user',@$r->id)->first();
+
+                $aaa=users_in_in::where('id_user',@$r->id)->first();
+                if(@$aaa==null){
+                    $user = (new users_in())->getEligibleUser_youtube();
+                }else{
+                    $user = users_in::where('id', @$aaa->id_user_in)->first();
+                }
+
+            // $user = (new users_in())->getEligibleUser_youtube();
+            // $aaa=users_in_in::where('id_user',@$r->id)->first();
     
             if($item->username!=null and $item->password!=null){
             if (@$user!=null or @$aaa!=null ) {
@@ -717,8 +725,15 @@ class YoutubeBackendController extends Controller
 
             }else{
 
-                $user = (new users_in())->getEligibleUser_pc();
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
+                if(@$aaa==null){
+                    $user = (new users_in())->getEligibleUser_pc();
+                }else{
+                    $user = users_in::where('id', @$aaa->id_user_in)->first();
+                }
+
+                // $user = (new users_in())->getEligibleUser_pc();
+                // $aaa=users_in_in::where('id_user',@$r->id)->first();
     
             if($item->username!=null and $item->password!=null){
             if (@$user!=null or @$aaa!=null ) {

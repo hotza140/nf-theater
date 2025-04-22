@@ -1212,8 +1212,16 @@ $acc = users_in::whereNotNull('type_f')
 
             if($item->type=='MOBILE'){
 
-            $user = (new users_in())->getEligibleUser();
-            $aaa=users_in_in::where('id_user',@$r->id)->first();
+
+                $aaa=users_in_in::where('id_user',@$r->id)->first();
+                if(@$aaa==null){
+                    $user = (new users_in())->getEligibleUser();
+                }else{
+                    $user = users_in::where('id', @$aaa->id_user_in)->first();
+                }
+
+            // $user = (new users_in())->getEligibleUser();
+            // $aaa=users_in_in::where('id_user',@$r->id)->first();
     
             if($item->username!=null and $item->password!=null){
             if (@$user!=null) {
@@ -1260,8 +1268,16 @@ $acc = users_in::whereNotNull('type_f')
 
             }else{
 
-                $user = (new users_in())->getEligibleUser_pc();
                 $aaa=users_in_in::where('id_user',@$r->id)->first();
+                if(@$aaa==null){
+                    $user = (new users_in())->getEligibleUser_pc();
+                }else{
+                    $user = users_in::where('id', @$aaa->id_user_in)->first();
+                }
+
+                // $user = (new users_in())->getEligibleUser_pc();
+                // $aaa=users_in_in::where('id_user',@$r->id)->first();
+                
     
             if($item->username!=null and $item->password!=null){
             if (@$user!=null) {
