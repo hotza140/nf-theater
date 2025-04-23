@@ -21,18 +21,23 @@
       overflow: hidden;
       border: 1px solid #ccc;
       background-color: #d83840;
+      /* border-radius: 10px 10px 0 0; */
     }
     
     /* Style the buttons inside the tab */
     .tab button {
       background-color: inherit;
       float: left;
-      border: none;
+      /* border: none; */
+      border: 1px solid #ccc;
       outline: none;
       cursor: pointer;
       padding: 14px 16px;
       transition: 0.3s;
       font-size: 17px;
+      border-radius: 10px 10px 0 0;
+      background-color:#de0914; /*  #d83840 */
+      color:#faf8f8;
     }
     
     /* Change background color of buttons on hover */
@@ -53,6 +58,7 @@
       border: 1px solid #ccc;
       border-top: none;
     }
+
 </style>
 
 {{-- <div class="con-bk" style="background: url(&quot;assets/img/backgrown-net1.jpg&quot;)">
@@ -80,8 +86,8 @@
     {{-- <h1 class="head-pack" style="font-family: Prompt, sans-serif;">ส่วนของการชำระเงินระบบ Payment</h1> --}}
     <div class="net-plans" style="background-color: aliceblue;">
         <div class="tab" style="color: black">
-            <button class="tablinks" onclick="openCity(event, 'BankQr')">ขำระด้วย Scan QR ธนาคาร</button>
-            <button class="tablinks" onclick="openCity(event, 'TrueMoneyWallet')">ชำระด้วย โอนผ่านทาง TrueMoney Wallet.</button>
+            <button class="tablinks btn" onclick="openCity(event, 'BankQr')" id="btns1">ขำระด้วย Scan QR ธนาคาร</button>
+            <button class="tablinks btn" onclick="openCity(event, 'TrueMoneyWallet')" id="btns2">ชำระด้วย โอนผ่านทาง TrueMoney Wallet.</button>
         </div>
         <div id="BankQr" class="tabcontent">
             <form action="{{route('frontend.afterSaveOrderPackage')}}" method="post" enctype="multipart/form-data" id="SaveOrderPackageFront">
@@ -208,7 +214,8 @@
       document.getElementById(cityName).style.display = "block";
       evt.currentTarget.className += " active";
     }
-    openCity(document.getElementById('BankQr'), 'BankQr');
+    // openCity(document.getElementById('BankQr'), 'BankQr');
+    openCity({ currentTarget: document.getElementById('btns1') }, 'BankQr');
 </script>
 
 <script>

@@ -429,7 +429,7 @@ class UserFrontendController extends Controller
         $OrderPayPackage->package_Name =$request->package_Name;
         $OrderPayPackage->Subpackage_Code =$request->Subpackage_Code;
         $OrderPayPackage->Subpackage_Name =$request->Subpackage_Name;
-        $OrderPayPackage->Subpackage_Paymoney =$request->Subpackage_Paymoney;
+        $OrderPayPackage->Subpackage_Paymoney =$PackageSubwatch->Subpackage_Paymoney;
         $OrderPayPackage->Orderemail =$request->Orderemail;
         $OrderPayPackage->RefPayment =$request->RefPayment;
         $OrderPayPackage->imgSlip = $filename;
@@ -523,7 +523,7 @@ class UserFrontendController extends Controller
         $OrderPayPackage->package_Name =$request->package_Name;
         $OrderPayPackage->Subpackage_Code =$request->Subpackage_Code;
         $OrderPayPackage->Subpackage_Name =$request->Subpackage_Name;
-        $OrderPayPackage->Subpackage_Paymoney =$request->Subpackage_Paymoney;
+        $OrderPayPackage->Subpackage_Paymoney =$PackageSubwatch->Subpackage_Paymoney;
         $OrderPayPackage->Orderemail =$request->Orderemail;
         $OrderPayPackage->imgSlip = $filename;
         $OrderPayPackage->receive_point = $PackageSubwatch->Making_Scoring;
@@ -569,11 +569,13 @@ class UserFrontendController extends Controller
 
         if ( $file && $file->isValid()) { // $file && $file->isValid() && 0
 
+            $PackageSubwatch = PackageSubwatch::where('Subpackage_Code',$request->Subpackage_Code)->first();
+
             // Prepare the cURL request body with the file
             $body = [
                 'log' => true,
                 'files' => new \CURLFile($file->getRealPath(), $file->getMimeType(), $file->getClientOriginalName()),
-                "amount"=> $request->Subpackage_Paymoney,
+                "amount"=> $PackageSubwatch->Subpackage_Paymoney, //$request->Subpackage_Paymoney,
             ];
 
             // Initialize cURL
