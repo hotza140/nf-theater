@@ -213,7 +213,7 @@ input:checked+.slider:before {
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
-                                                <div class="flashing-card toggle-btn" data-target="#table-expired-2">
+                                                <div class="flashing-card" >
                                                     <h4><i class="fa fa-user"></i> ลูกค้าที่ออนไลน์บนเว็ปไซต์:
                                                         ({{ number_format(@$dar, 0) }} คน) </h4>
                                                 </div>
