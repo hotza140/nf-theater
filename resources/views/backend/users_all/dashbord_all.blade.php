@@ -195,6 +195,8 @@ input:checked+.slider:before {
 
                                         $dar = App\Models\users::distinct('username')->whereDate('created_at',$date)->count();
 
+                                        $mon = App\Models\users::where('time_online', '>=', Carbon\Carbon::now('Asia/Bangkok')->subMinutes(10))->count();
+
                                         ?>
 
                                         <tr>
@@ -215,7 +217,7 @@ input:checked+.slider:before {
                                             <td>
                                                 <div class="flashing-card" >
                                                     <h4><i class="fa fa-user"></i> ลูกค้าที่ออนไลน์บนเว็ปไซต์:
-                                                        ({{ number_format(@$dar, 0) }} คน) </h4>
+                                                        ({{ number_format(@$mon, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                         </tr>
