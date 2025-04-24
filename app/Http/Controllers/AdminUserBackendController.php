@@ -37,6 +37,13 @@ use App\Models\created_history;
 class AdminUserBackendController extends Controller
 {
 
+    
+public function dashbord_all(Request $r){
+
+  return view('backend.users_all.dashbord_all',[
+  ]);
+}
+
     public function his_dash(Request $r){
     //    $item = log_dash::whereNull('type_f')->orderBy('id','desc')->get();
 

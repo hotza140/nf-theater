@@ -101,6 +101,8 @@ Route::post('getimgSlipBase64',[App\Http\Controllers\UserFrontendController::cla
 
 
 Route::group(['middleware' => ['admin']],function(){
+  Route::get('/dashbord_all',[App\Http\Controllers\AdminUserBackendController::class,'dashbord_all']);
+
     Route::get('/backend',[App\Http\Controllers\AdminUserBackendController::class,'users_all']);
     Route::get('/dashbord',[App\Http\Controllers\AdminUserBackendController::class,'dashbord']);
 
