@@ -296,7 +296,7 @@ input:checked+.slider:before {
                                             ->whereHas('user_in', function ($query) {
                                                 $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
                                                 })
-                                            ->groupBy('id_user_in')
+                                            // ->groupBy('id_user_in')
                                             ->orderBy('id_user_in','asc')->get();
 
                                              $user=DB::table('tb_users')->where('id',@$accountsas->id_user)->first();
@@ -459,7 +459,7 @@ input:checked+.slider:before {
                                                 $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
                                                 })
                                             ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
-                                            ->groupBy('id_user_in')
+                                            // ->groupBy('id_user_in')
                                             ->orderBy('id_user_in', 'asc')
                                             ->get();
 
@@ -624,7 +624,7 @@ input:checked+.slider:before {
                                                 $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
                                                 })
                                             ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
-                                            ->groupBy('id_user_in')
+                                            // ->groupBy('id_user_in')
                                             ->orderBy('id_user_in', 'asc')
                                             ->get();
                                              
@@ -791,7 +791,7 @@ input:checked+.slider:before {
                                                 $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
                                                 })
                                             ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
-                                            ->groupBy('id_user_in')
+                                            // ->groupBy('id_user_in')
                                             ->orderBy('id_user_in', 'asc')
                                             ->get();
                                              $user=DB::table('tb_users')->where('id',@$accountsas->id_user)->first();

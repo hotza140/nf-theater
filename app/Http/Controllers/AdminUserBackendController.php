@@ -41,6 +41,8 @@ class AdminUserBackendController extends Controller
 public function dashbord_all(Request $r){
 
   return view('backend.users_all.dashbord_all',[
+    'page'=>"all",
+    'list'=>"dashbord_all",
   ]);
 }
 
@@ -129,7 +131,7 @@ public function dashbord_y(Request $r){
        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
        })
    ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
-   ->groupBy('id_user_in')
+//    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
    ->count();
 
@@ -149,7 +151,7 @@ public function dashbord_y(Request $r){
        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
        })
    ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
-   ->groupBy('id_user_in')
+//    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
    ->count();
 
@@ -169,7 +171,7 @@ public function dashbord_y(Request $r){
        $query->whereNotNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
        })
    ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
-   ->groupBy('id_user_in')
+//    ->groupBy('id_user_in')
    ->orderBy('id_user_in', 'asc')
    ->count();
 
@@ -276,7 +278,7 @@ $acc = users_in::whereNotNull('type_f')
             $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
             })
         ->whereDate('date_end',date('Y-m-d', strtotime('+3 days', strtotime($date))))
-        ->groupBy('id_user_in')
+        // ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->count();
 
@@ -297,7 +299,7 @@ $acc = users_in::whereNotNull('type_f')
             $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
             })
         ->whereDate('date_end',date('Y-m-d', strtotime('+2 days', strtotime($date))))
-        ->groupBy('id_user_in')
+        // ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->count();
 
@@ -318,7 +320,7 @@ $acc = users_in::whereNotNull('type_f')
             $query->whereNull('type_f'); // กรองเฉพาะ type_f ที่ไม่เป็น NULL
             })
         ->whereDate('date_end',date('Y-m-d', strtotime('+1 days', strtotime($date))))
-        ->groupBy('id_user_in')
+        // ->groupBy('id_user_in')
         ->orderBy('id_user_in', 'asc')
         ->count();
 
