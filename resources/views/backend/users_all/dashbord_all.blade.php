@@ -158,19 +158,19 @@ input:checked+.slider:before {
                 }
 
                 /* เลือกปุ่มที่มีไอคอน fa-copy อยู่ข้างใน */
-    button.btn.btn-sm.btn-primary:has(i.fa-copy) {
-        padding: 2px 6px;
-        font-size: 12px;
-        line-height: 1;
-        height: auto;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-    }
+                button.btn.btn-sm.btn-primary:has(i.fa-copy) {
+                    padding: 2px 6px;
+                    font-size: 12px;
+                    line-height: 1;
+                    height: auto;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 4px;
+                }
                 </style>
 
 
-<?php $date=date('Y-m-d'); ?>
+                <?php $date=date('Y-m-d'); ?>
 
                 <!-- Page-body start -->
                 <div class="page-body">
@@ -179,7 +179,7 @@ input:checked+.slider:before {
                             <!-- Zero config.table start -->
                             <div class="card">
                                 <div class="card-header">
-                                <h2>Dashbord Super</h2>
+                                    <h2>Dashbord Super</h2>
                                 </div>
                             </div>
                             <div class="card-block">
@@ -195,14 +195,14 @@ input:checked+.slider:before {
 
                                         <tr>
                                             <td>
-                                                <div class="flashing-card toggle-btn" data-target="#table-expired" >
+                                                <div class="flashing-card toggle-btn" data-target="#table-expired">
                                                     <h4><i class="fa fa-user"></i> จำนวนผู้ใช้ทั้งหมด:
                                                         ({{ number_format(@$all_user, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             <td>
-                                                <div class="flashing-card toggle-btn" data-target="#table-expired-2" >
+                                                <div class="flashing-card toggle-btn" data-target="#table-expired-2">
                                                     <h4><i class="fa fa-user"></i> จำนวนลูกค้าที่สมัครวันนี้:
                                                         ({{ number_format(@$all_user, 0) }} คน) </h4>
                                                 </div>
@@ -214,10 +214,11 @@ input:checked+.slider:before {
                                 <br><br><br>
 
 
-                                <div id="table-container" style="position: relative; min-height: 300px;">
+                                <div id="table-container" style="position: relative; min-height: 5000px;">
 
                                     <div class="dt-responsive table-responsive" id="table-expired">
-                                        <h3><i class="fa fa-user"></i>จำนวนผู้ใช้ทั้งหมด ({{ number_format(@$all_user, 0) }} คน) </h3>
+                                        <h3><i class="fa fa-user"></i>จำนวนผู้ใช้ทั้งหมด
+                                            ({{ number_format(@$all_user, 0) }} คน) </h3>
                                         <table id="" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
@@ -233,9 +234,9 @@ input:checked+.slider:before {
                                                 @foreach($pak as $key=>$paks)
                                                 <?php $nus = App\Models\users::distinct('username')->where('id_package',$paks->id)->count(); ?>
                                                 <tr>
-                                                <td>{{@$key+1}}</td>
-                                                <td>{{@$paks->Subpackage_Name}}</td>
-                                                <td>{{@$nus}}</td>
+                                                    <td>{{@$key+1}}</td>
+                                                    <td>{{@$paks->Subpackage_Name}}</td>
+                                                    <td>{{@$nus}}</td>
                                                 </tr>
                                                 @endforeach
 
@@ -246,34 +247,63 @@ input:checked+.slider:before {
                                     <br><br><br><br>
 
 
+                                    <div class="dt-responsive table-responsive" id="table-expired-2">
+                                        <h3><i class="fa fa-user"></i>จำนวนลูกค้าที่สมัครวันนี้
+                                            ({{ number_format(@$all_user, 0) }} คน) </h3>
+                                        <table id="" class="table table-striped table-bordered nowrap">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>#</th>
+                                                    <th>Name Package</th>
+                                                    <th>จำนวนคนทีใช้งาน Package</th>
+
+                                                </tr>
+                                            </thead>
+                                            <!-- <tbody class="sortable"> -->
+                                            <tbody class="">
+                                                @foreach($pak as $key=>$paks)
+                                                <?php $nus = App\Models\users::distinct('username')->where('id_package',$paks->id)->count(); ?>
+                                                <tr>
+                                                    <td>{{@$key+1}}</td>
+                                                    <td>{{@$paks->Subpackage_Name}}</td>
+                                                    <td>{{@$nus}}</td>
+                                                </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
 
 
 
-                                 
 
 
+
+
+
+
+                                </div>
 
                             </div>
 
+
+
+
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>
+            <!-- Page-body end -->
         </div>
-        <!-- Page-body end -->
     </div>
-</div>
-<!-- Main-body end -->
+    <!-- Main-body end -->
 
 
-<div id="styleSelector">
+    <div id="styleSelector">
 
 
-</div>
+    </div>
 </div>
 </div>
 </div>

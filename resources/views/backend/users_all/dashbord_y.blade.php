@@ -261,7 +261,7 @@ input:checked+.slider:before {
                                 </div>
                                 <br><br><br>
 
-                                <div id="table-container" style="position: relative; min-height: 300px;">
+                                <div id="table-container" style="position: relative; min-height: 5000px;">
 
                                     <div class="dt-responsive table-responsive" id="table-expired">
                                         <h3><i class="fa fa-user"></i>จำนวนคนที่หมดอายุ ({{ number_format(@$nub, 0) }}
