@@ -235,7 +235,7 @@ input:checked+.slider:before {
                                                 <?php $nus = App\Models\users::distinct('username')->where('id_package',$paks->id)->count(); ?>
                                                 <tr>
                                                     <td>{{@$key+1}}</td>
-                                                    <td>{{@$paks->Subpackage_Name}}</td>
+                                                    <td>{{@$paks->Subpackage_Name}} @if(@$paks->type=='PC') (รวมจอ)  @endif </td>
                                                     <td>{{@$nus}}</td>
                                                 </tr>
                                                 @endforeach
@@ -266,7 +266,7 @@ input:checked+.slider:before {
                                                 <?php $nus = App\Models\users::distinct('username')->where('id_package',$paks->id)->count(); ?>
                                                 <tr>
                                                     <td>{{@$key+1}}</td>
-                                                    <td>{{@$paks->Subpackage_Name}}</td>
+                                                    <td>{{@$paks->Subpackage_Name}} @if(@$paks->type=='PC') (รวมจอ)  @endif </td>
                                                     <td>{{@$nus}}</td>
                                                 </tr>
                                                 @endforeach
