@@ -191,6 +191,10 @@ input:checked+.slider:before {
                                         $all_user = App\Models\users::distinct('username')->count();
                                         $pak =App\Models\PackageSubwatch::get();
 
+                                        $date=('Y-m-d');
+
+                                        $dar = App\Models\users::distinct('username')->whereDate('created_at',$date)->count();
+
                                         ?>
 
                                         <tr>
@@ -204,7 +208,14 @@ input:checked+.slider:before {
                                             <td>
                                                 <div class="flashing-card toggle-btn" data-target="#table-expired-2">
                                                     <h4><i class="fa fa-user"></i> จำนวนลูกค้าที่สมัครวันนี้:
-                                                        ({{ number_format(@$all_user, 0) }} คน) </h4>
+                                                        ({{ number_format(@$dar, 0) }} คน) </h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card toggle-btn" data-target="#table-expired-2">
+                                                    <h4><i class="fa fa-user"></i> ลูกค้าที่ออนไลน์บนเว็ปไซต์:
+                                                        ({{ number_format(@$dar, 0) }} คน) </h4>
                                                 </div>
                                             </td>
                                         </tr>
@@ -249,7 +260,7 @@ input:checked+.slider:before {
 
                                     <div class="dt-responsive table-responsive" id="table-expired-2">
                                         <h3><i class="fa fa-user"></i>จำนวนลูกค้าที่สมัครวันนี้
-                                            ({{ number_format(@$all_user, 0) }} คน) </h3>
+                                            ({{ number_format(@$dar, 0) }} คน) </h3>
                                         <table id="" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
@@ -263,12 +274,14 @@ input:checked+.slider:before {
                                             <!-- <tbody class="sortable"> -->
                                             <tbody class="">
                                                 @foreach($pak as $key=>$paks)
-                                                <?php $nus = App\Models\users::distinct('username')->where('id_package',$paks->id)->count(); ?>
+                                                <?php $aaa = App\Models\users::distinct('username')->where('id_package',$paks->id)->whereDate('created_at',$date)->count(); ?>
+                                                @if(@$aaa!=0)
                                                 <tr>
                                                     <td>{{@$key+1}}</td>
                                                     <td>{{@$paks->Subpackage_Name}} @if(@$paks->type=='PC') (รวมจอ)  @endif </td>
-                                                    <td>{{@$nus}}</td>
+                                                    <td>{{@$aaa}}</td>
                                                 </tr>
+                                                @endif
                                                 @endforeach
 
                                             </tbody>
