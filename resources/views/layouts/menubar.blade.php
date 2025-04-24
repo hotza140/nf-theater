@@ -524,6 +524,17 @@
                                             </a>
                                         </li>
                                         @endif
+
+                                        @if(Auth::guard('admin')->user()->type == 0)
+                                        <li class="{{ isset($list) && $list == 'dashbord_all' ? 'active' : '' }}">
+                                            <a href="{{ url('dashbord_all') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">Dashbord Super</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        @endif
+
                                         <li class="{{ isset($list) && $list == 'users_all' ? 'active' : '' }}">
                                             <a href="{{ url('users_all') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
