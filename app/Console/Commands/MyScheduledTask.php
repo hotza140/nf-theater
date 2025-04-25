@@ -45,3 +45,5 @@ class MyScheduledTask extends Command
 
 }
 
+// php artisan task:run ในการเรียกใช้งานตามเวลากำหนด
+

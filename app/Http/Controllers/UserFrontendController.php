@@ -57,6 +57,10 @@ class UserFrontendController extends Controller
  ///LOGOUT---------------
     public function logoutfrontend(){
         // Auth::logout();
+        $iduser = Auth::guard('users')->user()->id;
+        $users_updatetime = users::find($iduser);
+        $users_updatetime->time_online = null;
+        $users_updatetime->save();
         Auth::guard('users')->logout();
         return redirect()->route('frontend.login')->with('message','Sucess!');
     }
@@ -96,6 +100,11 @@ class UserFrontendController extends Controller
 
         if($users){
                 Auth::guard('users')->login($users); 
+
+                $iduser = Auth::guard('users')->user()->id;
+                $users_updatetime = users::find($iduser);
+                $users_updatetime->time_online = date('Y-m-d H:i:s');
+                $users_updatetime->save();
 
                 return redirect()->route('frontend.profile');
                 // if($r->type=='netflix'){
@@ -1101,4 +1110,15 @@ class UserFrontendController extends Controller
         return response()->json(['idbfOver'=>$idbfOver]);
     }
     // --------------------------Send Mail beforeOverdue2-----------------------------//
+
+    // --------------------------Update Time Online User-----------------------------//
+    public function OnlineUserUpdatetimeNow(Request $request) {
+        $iduser = @$request->iduser??null;
+        if($iduser) {
+            $users_updatetime = users::find($iduser);
+            $users_updatetime->time_online = date('Y-m-d H:i:s');
+            $users_updatetime->save();
+        }
+    }
+    // --------------------------Update Time Online User-----------------------------//
 }

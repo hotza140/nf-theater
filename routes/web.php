@@ -107,6 +107,9 @@ Route::post('beforeOverdueSentMail',[App\Http\Controllers\UserFrontendController
 // Check2 BeforeOverdue day...
 Route::get('chkbeforeOverdue2',[App\Http\Controllers\UserFrontendController::class,'chkbeforeOverdue2'])->name('frontend.chkbeforeOverdue2');
 
+// Update Time Online User
+Route::post('OnlineUserUpdatetimeNow',[App\Http\Controllers\UserFrontendController::class,'OnlineUserUpdatetimeNow'])->name('frontend.OnlineUserUpdatetimeNow');
+
 // ------------------------
 
 

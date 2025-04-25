@@ -64,4 +64,43 @@
     }
 </script>
 
+<script>
+    function datetimeShow() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const formatted = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        // console.log(formatted); // Output: "2025-04-25 15:45:12"
+        return formatted;
+    }
+</script>
+
+<script>
+    function OnlineUserUpdatetimeNow() {
+        console.log(`Check Online Update {{@$userCKReferFrst->id}} {{@$userCKReferFrst->name}} ${datetimeShow()}`);
+        fetch('{{ route("frontend.OnlineUserUpdatetimeNow") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ iduser : {{@$userCKReferFrst->id??0}}}),
+        })
+        .then(response => response.json())
+        .then(data => {
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    setInterval(() => {
+        OnlineUserUpdatetimeNow();
+    }, 60000);
+</script>
+
 
