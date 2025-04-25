@@ -101,6 +101,14 @@ Route::post('getimgSlipBase64',[App\Http\Controllers\UserFrontendController::cla
 
 
 Route::group(['middleware' => ['admin']],function(){
+  Route::post('/youtube_in_yay',[App\Http\Controllers\AdminUserBackendController::class,'youtube_in_yay']);
+
+  Route::post('/edit_time_netflix_send',[App\Http\Controllers\AdminUserBackendController::class,'edit_time_netflix_send']);
+  Route::post('/edit_time_youtube_send',[App\Http\Controllers\AdminUserBackendController::class,'edit_time_youtube_send']);
+
+  Route::get('/edit_time_netflix',[App\Http\Controllers\AdminUserBackendController::class,'edit_time_netflix']);
+  Route::get('/edit_time_youtube',[App\Http\Controllers\AdminUserBackendController::class,'edit_time_youtube']);
+
   Route::get('/dashbord_all',[App\Http\Controllers\AdminUserBackendController::class,'dashbord_all']);
 
     Route::get('/backend',[App\Http\Controllers\AdminUserBackendController::class,'users_all']);

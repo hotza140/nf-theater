@@ -80,6 +80,8 @@
 
                                     <a style="color:white;" class="btn btn-success" href="{{url('y_users_in_add')}}"> <i class="fa fa-plus"></i> Add</a>
 
+
+                                    <a style="color:white;" class="btn btn-info" href="{{url('edit_time_youtube')}}"> <i class="fa fa-plus"></i>จัดการเพิ่มเวลาทั้งหมดของ Account Yotoube</a>
                                     
                                         <br>
                                         <form class="form-horizontal" action="{{url('y_users_in')}}" method="GET" enctype="multipart/form-data">

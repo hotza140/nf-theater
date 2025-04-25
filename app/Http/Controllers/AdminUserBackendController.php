@@ -37,6 +37,170 @@ use App\Models\created_history;
 class AdminUserBackendController extends Controller
 {
 
+    public function youtube_in_yay(Request $r){
+
+        $id=$r->id;
+        $id_user_in=$r->id_user_in;
+       
+
+        if (@$id!=null) {
+         $save=users_in_in::where('id',$id)->first();
+            $save->id_user_in=$id_user_in;
+            $save->save();
+        }
+
+         return redirect()->back()->with('success','Success.');
+      
+     }
+
+     public function edit_time_netflix_send(Request $r){
+
+        $date_start=$r->date_start;
+        $date_end=$r->date_end;
+        $id=$r->selected_ids;
+       
+
+        if (!empty($id)) {
+         $item=users_in::whereNull('type_f')->whereIn('id',$id)->pluck('id')->ToArray();
+         foreach($item as $items){
+            $save=users_in::whereNull('type_f')->where('id',$items)->first();
+            $save->date_start=$date_start;
+            $save->date_end=$date_end;
+            $save->save();
+         }
+        }
+
+         return redirect()->back()->with('success','Success.');
+      
+     }
+
+
+
+       public function edit_time_netflix(Request $r){
+
+         $item=users_in::whereNull('type_f')->orderby('id','desc')->get();
+         $search = $r->search;
+         $status_account = $r->status_account;
+
+         // ตรวจสอบว่า search เป็นวันที่ในรูปแบบ 14/03/2025 หรือไม่
+           $date_new = null;
+           if (!empty($search) && preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $search)) {
+               $date_parts = explode('/', $search);
+               $date_new = $date_parts[2] . '-' . $date_parts[1] . '-' . $date_parts[0]; // แปลงเป็น Y-m-d
+           }
+
+           if (!empty($search) or !empty($status_account)) {
+               $item = users_in::whereNull('type_f')->where(function ($query) use ($search, $status_account, $date_new) {
+                   // ถ้า search เป็นวันที่ ให้ใช้ date_new แทน search
+                   if ($date_new !== null) {
+                       $query->where('date_end',$date_new);
+                   } else {
+                       $query->where('name', 'LIKE', '%' . $search . '%')
+                           ->orWhere('email', 'LIKE', '%' . $search . '%')
+                           ->orWhere('country', 'LIKE', '%' . $search . '%');
+                   }
+               });
+
+               if ($status_account == '0') {
+                   $item = $item->where('date_end', '>=', $date);
+               } elseif ($status_account == '1') {
+                   $item = $item->where('date_end', '<', $date);
+               } elseif ($status_account == '2') {
+                   $item = $item->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))]);
+               }
+
+               $item = $item->orderBy('id', 'desc')->get();
+           }
+
+         return view('backend.users_all.edit_time_netflix',[
+             'item'=>$item,
+             'page'=>"all",
+             'list'=>"users_in",
+
+             'search'=>$search,
+             'status_account'=>$status_account,
+         ]);
+     }
+
+
+     public function edit_time_youtube_send(Request $r){
+
+        $date_start=$r->date_start;
+        $time=$r->time;
+        $id=$r->selected_ids;
+       
+
+        if (!empty($id)) {
+            $item = users_in::whereNotNull('type_f')->whereIn('id', $id)->pluck('id')->toArray();
+            foreach ($item as $items) {
+                $save = users_in::whereNotNull('type_f')->where('id', $items)->first();
+                $save->date_start = $date_start;
+                $save->time = $time;
+                $save->save();
+            }
+        }
+
+        
+
+         return redirect()->back()->with('success','Success.');
+      
+     }
+
+
+
+     public function edit_time_youtube(Request $r){
+
+         $item=users_in::whereNotNull('type_f')->orderby('id','desc')->get();
+         $search = $r->search;
+         $status_account = $r->status_account;
+
+         // ตรวจสอบว่า search เป็นวันที่ในรูปแบบ 14/03/2025 หรือไม่
+           $date_new = null;
+           if (!empty($search) && preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $search)) {
+               $date_parts = explode('/', $search);
+               $date_new = $date_parts[2] . '-' . $date_parts[1] . '-' . $date_parts[0]; // แปลงเป็น Y-m-d
+           }
+
+           if (!empty($search) or !empty($status_account)) {
+               $item = users_in::whereNotNull('type_f')->where(function ($query) use ($search, $status_account, $date_new) {
+                   // ถ้า search เป็นวันที่ ให้ใช้ date_new แทน search
+                   if ($date_new !== null) {
+                       $query->where('date_end',$date_new);
+                   } else {
+                       $query->where('name', 'LIKE', '%' . $search . '%')
+                           ->orWhere('email', 'LIKE', '%' . $search . '%')
+                           ->orWhere('country', 'LIKE', '%' . $search . '%');
+                   }
+               });
+
+               if ($status_account == '0') {
+                   $item = $item->where('date_end', '>=', $date);
+               } elseif ($status_account == '1') {
+                   $item = $item->where('date_end', '<', $date);
+               }
+               elseif ($status_account == '11') {
+                   $item = $item->whereNull('t_house');
+               }elseif ($status_account == '22') {
+                   $item = $item->where('t_house','บ้านบล็อก');
+               }elseif ($status_account == '33') {
+                   $item = $item->where('t_house','บ้านอุทธรณ์');
+               }elseif ($status_account == '44') {
+                   $item = $item->where('t_house','บ้านต่ออายุ');
+               }
+
+               $item = $item->orderBy('id', 'desc')->get();
+           }
+
+         return view('backend.users_all.edit_time_youtube',[
+             'item'=>$item,
+             'page'=>"all",
+             'list'=>"users_in_youtube",
+
+             'search'=>$search,
+             'status_account'=>$status_account,
+         ]);
+     }
+
     
 public function dashbord_all(Request $r){
 

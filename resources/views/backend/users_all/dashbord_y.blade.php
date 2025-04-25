@@ -277,7 +277,7 @@ input:checked+.slider:before {
                                                     <th>Line</th>
                                                     <th>Link Line</th>
                                                     <th>Name Account</th>
-                                                    <th>Email</th>
+                                                    <th>Email / Password</th>
                                                     <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
@@ -356,7 +356,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -369,7 +369,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -379,7 +379,7 @@ input:checked+.slider:before {
 
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                    <td>{{@$accountsass->email}}</td>
+                                                    <td>{{@$accountsass->email}} @if(Auth::guard('admin')->user()->type == 0) / {{@$accountsass->password}}  @endif</td>
                                                     <!-- <td>{{@$accountsass->password}}</td> -->
                                                     @else
                                                     <?php  
@@ -439,7 +439,7 @@ input:checked+.slider:before {
                                                     <th>Line</th>
                                                     <th>Link Line</th>
                                                     <th>Name Account</th>
-                                                    <th>Email</th>
+                                                    <th>Email / Password</th>
                                                     <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
@@ -521,7 +521,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -534,7 +534,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -544,7 +544,7 @@ input:checked+.slider:before {
 
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                    <td>{{@$accountsass->email}}</td>
+                                                    <td>{{@$accountsass->email}}   @if(Auth::guard('admin')->user()->type == 0) / {{@$accountsass->password}}  @endif</td>
                                                     <!-- <td>{{@$accountsass->password}}</td> -->
                                                     @else
                                                     <?php  
@@ -605,7 +605,7 @@ input:checked+.slider:before {
                                                     <th>Line</th>
                                                     <th>Link Line</th>
                                                     <th>Name Account</th>
-                                                    <th>Email</th>
+                                                    <th>Email / Password</th>
                                                     <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
@@ -685,7 +685,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -698,7 +698,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -708,7 +708,7 @@ input:checked+.slider:before {
 
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                    <td>{{@$accountsass->email}}</td>
+                                                    <td>{{@$accountsass->email}}   @if(Auth::guard('admin')->user()->type == 0) / {{@$accountsass->password}}  @endif</td>
                                                     <!-- <td>{{@$accountsass->password}}</td> -->
                                                     @else
                                                     <?php  
@@ -773,7 +773,7 @@ input:checked+.slider:before {
                                                     <th>Line</th>
                                                     <th>Link Line</th>
                                                     <th>Name Account</th>
-                                                    <th>Email</th>
+                                                    <th>Email / Password</th>
                                                     <!-- <th>Password</th> -->
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
@@ -851,7 +851,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -864,7 +864,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -874,7 +874,7 @@ input:checked+.slider:before {
 
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                    <td>{{@$accountsass->email}}</td>
+                                                    <td>{{@$accountsass->email}}   @if(Auth::guard('admin')->user()->type == 0) / {{@$accountsass->password}}  @endif</td>
                                                     <!-- <td>{{@$accountsass->password}}</td> -->
                                                     @else
                                                     <?php  

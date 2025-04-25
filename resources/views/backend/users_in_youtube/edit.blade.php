@@ -567,6 +567,7 @@
                                                     <th>วันที่ใช้งานคงเหลือ</th>
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>Tool</th>
+                                                    <th>Tool</th>
 
                                                 </tr>
                                             </thead>
@@ -659,6 +660,38 @@
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                     </td>
+
+
+                                                    <form method="post" id="{{$user_ins->id}}" action="{{ url('youtube_in_yay')}}"  enctype="multipart/form-data" >
+                                                    @csrf
+
+                                                    <?php 
+                                                    $ccc=App\Models\users_in::whereNotNull('type_f')->orderby('id','desc')->get();
+                                                    ?>
+
+                                                    <input type="hidden" name="id"  value="{{$user_ins->id}}" >
+
+                                                    <td>
+                                                    <div style="display: flex; align-items: center; gap: 10px;">
+
+                                                    <select name="id_user_in" id="id_user_in" class="form-control add_select2"  required >
+                                                    <option value="{{@$item->id}}" >{{@$item->name}}</option>
+                                                    @foreach($ccc as $key=>$cccs)
+                                                    <option value="{{@$cccs->id}}" >{{@$cccs->name}}</option>
+                                                    @endforeach
+                                                    </select>
+
+                                                    <button type="submit" class="btn btn-success" style="color:white;"
+                                                onclick="return confirm('Confirm!');"> <i
+                                                    class="fa fa-check-circle-o"></i> ย้าย Account </button>
+                                                    
+                                                    </div>
+
+                                                    </td>
+
+                                                    </form>
+
+                                                    
                                                 </tr>
                                                 @endforeach
 

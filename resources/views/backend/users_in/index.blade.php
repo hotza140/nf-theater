@@ -80,6 +80,8 @@
 
                                     <a style="color:white;" class="btn btn-success" href="{{url('users_in_add')}}"> <i class="fa fa-plus"></i> Add</a>
 
+                                    <a style="color:white;" class="btn btn-info" href="{{url('edit_time_netflix')}}"> <i class="fa fa-plus"></i>จัดการเพิ่มเวลาทั้งหมดของ Account Netflix</a>
+
                                     
                                         <br>
                                         <form class="form-horizontal" action="{{url('users_in')}}" method="GET" enctype="multipart/form-data">
