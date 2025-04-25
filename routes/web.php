@@ -91,10 +91,24 @@ Route::group(['middleware' => ['users']],function(){
     Route::post('confirmmailck',[App\Http\Controllers\UserFrontendController::class,'confirmmailck'])->name('frontend.confirmmailck');
     Route::post('confirmOTPck',[App\Http\Controllers\UserFrontendController::class,'confirmOTPck'])->name('frontend.confirmOTPck');
     Route::post('sentOTPtoMck',[App\Http\Controllers\UserFrontendController::class,'sentOTPtoMck'])->name('frontend.sentOTPtoMck');
+
+    
 });
 
 // image Slip Base64
 Route::post('getimgSlipBase64',[App\Http\Controllers\UserFrontendController::class,'getimgSlipBase64'])->name('frontend.getimgSlipBase64');
+
+// Check BeforeOverdue day...
+Route::get('useCallBathCheck',[App\Http\Controllers\UserFrontendController::class,'useCallBathCheck'])->name('frontend.useCallBathCheck');
+Route::view('callchkbeforeOverdue','frontend.mailcus.callchkbeforeOverdue')->name('frontend.callchkbeforeOverdue');
+Route::post('chkbeforeOverdue',[App\Http\Controllers\UserFrontendController::class,'chkbeforeOverdue'])->name('frontend.chkbeforeOverdue');
+Route::post('beforeOverdueSentMail',[App\Http\Controllers\UserFrontendController::class,'beforeOverdueSentMail'])->name('frontend.beforeOverdueSentMail');
+
+// Check2 BeforeOverdue day...
+Route::get('chkbeforeOverdue2',[App\Http\Controllers\UserFrontendController::class,'chkbeforeOverdue2'])->name('frontend.chkbeforeOverdue2');
+
+// Update Time Online User
+Route::post('OnlineUserUpdatetimeNow',[App\Http\Controllers\UserFrontendController::class,'OnlineUserUpdatetimeNow'])->name('frontend.OnlineUserUpdatetimeNow');
 
 // ------------------------
 

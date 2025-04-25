@@ -33,6 +33,7 @@ use App\Models\PackageSubwatch;
 use App\Models\Reward;
 use App\Models\RewardUserLog;
 use App\Mail\CustConfirmMail;
+use App\Mail\CheckBeforeOverdue;
 use App\Models\OrderPayPackage;
 use App\Models\PayPackNotmatch;
 
@@ -44,6 +45,7 @@ use App\Models\PointSumbalance;
 use App\Models\OrderPayPackageTruewallet;
 use App\Models\ConfirmMail;
 use App\Models\ConfirmOtp;
+use Illuminate\Support\Facades\Http;
 
 class UserFrontendController extends Controller
 {
@@ -55,6 +57,10 @@ class UserFrontendController extends Controller
  ///LOGOUT---------------
     public function logoutfrontend(){
         // Auth::logout();
+        $iduser = Auth::guard('users')->user()->id;
+        $users_updatetime = users::find($iduser);
+        $users_updatetime->time_online = null;
+        $users_updatetime->save();
         Auth::guard('users')->logout();
         return redirect()->route('frontend.login')->with('message','Sucess!');
     }
@@ -94,6 +100,11 @@ class UserFrontendController extends Controller
 
         if($users){
                 Auth::guard('users')->login($users); 
+
+                $iduser = Auth::guard('users')->user()->id;
+                $users_updatetime = users::find($iduser);
+                $users_updatetime->time_online = date('Y-m-d H:i:s');
+                $users_updatetime->save();
 
                 return redirect()->route('frontend.profile');
                 // if($r->type=='netflix'){
@@ -1025,4 +1036,89 @@ class UserFrontendController extends Controller
             'status' => 1, 'res' => $response , 'ref_code' => $ConfirmOtp->ref_code
         ], 200);
     }
+
+    // --------------------------Send Mail beforeOverdue-----------------------------//
+    public function chkbeforeOverdue () {
+        // ลบเช็คเวลาผู้ใช้งานที่หมดอายุ
+        $date=date('Y-m-d');
+        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+        // ลบเช็คเวลาผู้ใช้งานที่หมดอายุ
+
+        $vd = 3; // ตรวจสอบการแจ้งเตือนก่อน 3 วัน
+        $date = date('Y-m-d');
+        $DaysLater = date('Y-m-d', strtotime("+$vd days"));
+
+        $users_check_user = users_in_in::whereDate('date_end', '>', $date)
+            ->whereDate('date_end', '<=', $DaysLater)
+            ->pluck('id_user')
+            ->toArray();
+        $users_bfover = users::whereIn('id',@$users_check_user)->whereNotNull('email')->pluck('id')->toArray();
+        return response()->json(['users_bfover'=>$users_bfover]);
+    }
+    public function beforeOverdueSentMail (Request $request) {
+        $users_bfover = users::find($request->idbfOver);
+        $idbfOver = @$request->idbfOver??0;
+        $ImageLinklogo = asset('assets/img/avata.png');
+        Mail::to($users_bfover->email)->send(new CheckBeforeOverdue($idbfOver,$ImageLinklogo));
+        return response()->json(['idbfOver'=>$idbfOver]);
+    }
+    public function useCallBathCheck() {
+        $response = Http::get(url('callchkbeforeOverdue')); 
+
+        if ($response->successful()) {
+            $data = $response->body(); // or ->json() if response is JSON
+            // Do something with $data
+        } else {
+            // Handle error
+            Log::error('Failed to call URL: ' . $response->status());
+        }
+    }
+    // --------------------------Send Mail beforeOverdue-----------------------------//
+
+
+    // --------------------------Send Mail beforeOverdue2-----------------------------//
+    public static function chkbeforeOverdue2 () {
+        // ลบเช็คเวลาผู้ใช้งานที่หมดอายุ
+        $date=date('Y-m-d');
+        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
+        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
+        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
+        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
+        // ลบเช็คเวลาผู้ใช้งานที่หมดอายุ
+
+        $vd = 3; // ตรวจสอบการแจ้งเตือนก่อน 3 วัน
+        $date = date('Y-m-d');
+        $DaysLater = date('Y-m-d', strtotime("+$vd days"));
+
+        $users_check_user = users_in_in::whereDate('date_end', '>', $date)
+            ->whereDate('date_end', '<=', $DaysLater)
+            ->pluck('id_user')
+            ->toArray();
+        $users_bfover = users::whereIn('id',@$users_check_user)->whereNotNull('email')->pluck('id')->toArray();
+        foreach ($users_bfover as $key => $value) {
+            # code...
+            self::beforeOverdueSentMail2($value);
+        }
+    }
+    public static function beforeOverdueSentMail2 ($idbfOver) {
+        $users_bfover = users::find($idbfOver);
+        $ImageLinklogo = public_path('assets/img/avata.png');
+        Mail::to($users_bfover->email)->queue(new CheckBeforeOverdue($idbfOver,$ImageLinklogo));
+        return response()->json(['idbfOver'=>$idbfOver]);
+    }
+    // --------------------------Send Mail beforeOverdue2-----------------------------//
+
+    // --------------------------Update Time Online User-----------------------------//
+    public function OnlineUserUpdatetimeNow(Request $request) {
+        $iduser = @$request->iduser??null;
+        if($iduser) {
+            $users_updatetime = users::find($iduser);
+            $users_updatetime->time_online = date('Y-m-d H:i:s');
+            $users_updatetime->save();
+        }
+    }
+    // --------------------------Update Time Online User-----------------------------//
 }

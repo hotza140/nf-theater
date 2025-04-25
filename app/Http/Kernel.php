@@ -65,4 +65,14 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'users' => \App\Http\Middleware\User::class,
     ];
+
+    // protected $commands = [
+    //     \App\Console\Commands\MyScheduledTask::class,
+    // ];
+
+    // protected function schedule(Schedule $schedule)
+    // {
+    //     $schedule->command('task:run')->dailyAt('21:30'); // you can use ->everyMinute(), ->hourly(), etc. ->dailyAt('13:00');  ->daily();
+    // }
 }
+
