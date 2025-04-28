@@ -232,7 +232,7 @@ input:checked+.slider:before {
                                     <div class="dt-responsive table-responsive" id="table-expired">
                                         <h3><i class="fa fa-user"></i>จำนวนผู้ใช้ทั้งหมด
                                             ({{ number_format(@$all_user, 0) }} คน) </h3>
-                                        <table id="" class="table table-striped table-bordered nowrap">
+                                        <table id="simpletable_no2" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
 
@@ -263,7 +263,7 @@ input:checked+.slider:before {
                                     <div class="dt-responsive table-responsive" id="table-expired-2">
                                         <h3><i class="fa fa-user"></i>จำนวนลูกค้าที่สมัครวันนี้
                                             ({{ number_format(@$dar, 0) }} คน) </h3>
-                                        <table id="" class="table table-striped table-bordered nowrap">
+                                        <table id="simpletable_no" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
 
@@ -289,7 +289,6 @@ input:checked+.slider:before {
                                             </tbody>
                                         </table>
                                     </div>
-
 
 
 
