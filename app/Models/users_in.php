@@ -157,7 +157,7 @@ class users_in extends Authenticatable
     public function getEligibleUser_youtube()
     {
         $date = date('Y-m-d');
-        $eligibleUsers = self::where('open',0)->whereNotNull('type_f')->where(function ($query) use ($date) {
+        $eligibleUsers = self::where('open',0)->whereNotNull('type_f')->whereNull('t_house')->where(function ($query) use ($date) {
             $query->whereHas('users_in_in_mobile', function ($subQuery) use ($date) {
                 $subQuery->whereHas('user', function ($userQuery) use ($date) {
                     $userQuery->whereNotNull('type_youtube')

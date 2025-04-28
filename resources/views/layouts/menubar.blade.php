@@ -529,7 +529,7 @@
                                         <li class="{{ isset($list) && $list == 'dashbord_all' ? 'active' : '' }}">
                                             <a href="{{ url('dashbord_all') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">Dashbord Super</span>
+                                                <span class="pcoded-mtext">Dashboard Super</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -555,7 +555,7 @@
                                     <li class="{{ isset($list) && $list == 'dashbord' ? 'active' : '' }}">
                                             <a href="{{ url('dashbord') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">Dashbord Netflix</span>
+                                                <span class="pcoded-mtext">Dashboard Netflix</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -590,7 +590,7 @@
                                         <li class="{{ isset($list) && $list == 'dashbord_y' ? 'active' : '' }}">
                                             <a href="{{ url('dashbord_y') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">Dashbord Youtube</span>
+                                                <span class="pcoded-mtext">Dashboard Youtube</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -1062,6 +1062,12 @@
         @if(session('message'))
         <script>
         alert('{{session("message")}}');
+        </script>
+        @endif
+
+        @if(session('success'))
+        <script>
+        alert('{{session("success")}}');
         </script>
         @endif
 

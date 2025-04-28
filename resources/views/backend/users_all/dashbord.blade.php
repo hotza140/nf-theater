@@ -368,7 +368,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -382,7 +382,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -534,7 +534,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -547,7 +547,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -698,7 +698,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -711,7 +711,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -866,7 +866,7 @@ input:checked+.slider:before {
                                                 <td>
                                                     
                                                         {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                        <button class="btn btn-sm btn-primary" style="float: right;"
+                                                        <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                             onclick="copyUserInfo('{{$user->link_line}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
@@ -879,7 +879,7 @@ input:checked+.slider:before {
                                                     <br>
                                                     
                                                         {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                        <button class="btn btn-sm btn-primary" style="float: right;"
+                                                        <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                             onclick="copyUserInfo('{{$user->link_line}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>

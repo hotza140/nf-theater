@@ -179,7 +179,7 @@ input:checked+.slider:before {
                             <!-- Zero config.table start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h2>Dashbord Super</h2>
+                                    <h2>Dashboard Super</h2>
                                 </div>
                             </div>
                             <div class="card-block">
@@ -248,7 +248,7 @@ input:checked+.slider:before {
                                                 <?php $nus = App\Models\users::distinct('username')->where('id_package',$paks->id)->count(); ?>
                                                 <tr>
                                                     <td>{{@$key+1}}</td>
-                                                    <td>{{@$paks->Subpackage_Name}} @if(@$paks->type=='PC') (รวมจอ)  @endif </td>
+                                                    <td>{{@$paks->Subpackage_Name}} @if(@$paks->type=='PC') (รวมทีวี)  @endif </td>
                                                     <td>{{@$nus}}</td>
                                                 </tr>
                                                 @endforeach
@@ -280,7 +280,7 @@ input:checked+.slider:before {
                                                 @if(@$aaa!=0)
                                                 <tr>
                                                     <td>{{@$key+1}}</td>
-                                                    <td>{{@$paks->Subpackage_Name}} @if(@$paks->type=='PC') (รวมจอ)  @endif </td>
+                                                    <td>{{@$paks->Subpackage_Name}} @if(@$paks->type=='PC') (รวมทีวี)  @endif </td>
                                                     <td>{{@$aaa}}</td>
                                                 </tr>
                                                 @endif

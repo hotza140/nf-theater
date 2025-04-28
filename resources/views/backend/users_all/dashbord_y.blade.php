@@ -277,8 +277,8 @@ input:checked+.slider:before {
                                                     <th>Line</th>
                                                     <th>Link Line</th>
                                                     <th>Name Account</th>
-                                                    <th>Email / Password</th>
-                                                    <!-- <th>Password</th> -->
+                                                    <th>Email</th>
+                                                    <th>Password</th>
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
 
@@ -356,7 +356,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -369,7 +369,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -379,8 +379,16 @@ input:checked+.slider:before {
 
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                    <td>{{@$accountsass->email}} @if(Auth::guard('admin')->user()->type == 0) / {{@$accountsass->password}}  @endif</td>
-                                                    <!-- <td>{{@$accountsass->password}}</td> -->
+                                                    <td>{{@$accountsass->email}} <button class="btn btn-sm btn-primary" style="float: right;" type="button"
+                                                                onclick="copyUserInfo_b('{{$accountsass->email}}')">
+                                                                <i class="fa fa-copy"></i> Copy
+                                                            </button></td>
+                                                    <td> ****** @if(Auth::guard('admin')->user()->type == 0)  
+                                                    <button class="btn btn-sm btn-primary" style="float: right;" type="button"
+                                                                onclick="copyUserInfo_a('{{$accountsass->password}}')">
+                                                                <i class="fa fa-copy"></i> Copy
+                                                            </button>
+                                                            @endif</td>
                                                     @else
                                                     <?php  
                                                         if($accountsas->type_mail==1){
@@ -439,8 +447,8 @@ input:checked+.slider:before {
                                                     <th>Line</th>
                                                     <th>Link Line</th>
                                                     <th>Name Account</th>
-                                                    <th>Email / Password</th>
-                                                    <!-- <th>Password</th> -->
+                                                    <th>Email</th>
+                                                    <th>Password</th>
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
 
@@ -521,7 +529,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -534,7 +542,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -544,8 +552,16 @@ input:checked+.slider:before {
 
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                    <td>{{@$accountsass->email}}   @if(Auth::guard('admin')->user()->type == 0) / {{@$accountsass->password}}  @endif</td>
-                                                    <!-- <td>{{@$accountsass->password}}</td> -->
+                                                    <td>{{@$accountsass->email}} <button class="btn btn-sm btn-primary" style="float: right;" type="button"
+                                                                onclick="copyUserInfo_b('{{$accountsass->email}}')">
+                                                                <i class="fa fa-copy"></i> Copy
+                                                            </button></td>
+                                                    <td> ****** @if(Auth::guard('admin')->user()->type == 0)  
+                                                    <button class="btn btn-sm btn-primary" style="float: right;" type="button"
+                                                                onclick="copyUserInfo_a('{{$accountsass->password}}')">
+                                                                <i class="fa fa-copy"></i> Copy
+                                                            </button>
+                                                            @endif</td>
                                                     @else
                                                     <?php  
                                                         if($accountsas->type_mail==1){
@@ -605,8 +621,8 @@ input:checked+.slider:before {
                                                     <th>Line</th>
                                                     <th>Link Line</th>
                                                     <th>Name Account</th>
-                                                    <th>Email / Password</th>
-                                                    <!-- <th>Password</th> -->
+                                                    <th>Email</th>
+                                                    <th>Password</th>
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
 
@@ -685,7 +701,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -698,7 +714,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -708,8 +724,16 @@ input:checked+.slider:before {
 
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                    <td>{{@$accountsass->email}}   @if(Auth::guard('admin')->user()->type == 0) / {{@$accountsass->password}}  @endif</td>
-                                                    <!-- <td>{{@$accountsass->password}}</td> -->
+                                                    <td>{{@$accountsass->email}} <button class="btn btn-sm btn-primary" style="float: right;" type="button"
+                                                                onclick="copyUserInfo_b('{{$accountsass->email}}')">
+                                                                <i class="fa fa-copy"></i> Copy
+                                                            </button></td>
+                                                    <td> ****** @if(Auth::guard('admin')->user()->type == 0)  
+                                                    <button class="btn btn-sm btn-primary" style="float: right;" type="button"
+                                                                onclick="copyUserInfo_a('{{$accountsass->password}}')">
+                                                                <i class="fa fa-copy"></i> Copy
+                                                            </button>
+                                                            @endif</td>
                                                     @else
                                                     <?php  
                                                         if($accountsas->type_mail==1){
@@ -773,8 +797,8 @@ input:checked+.slider:before {
                                                     <th>Line</th>
                                                     <th>Link Line</th>
                                                     <th>Name Account</th>
-                                                    <th>Email / Password</th>
-                                                    <!-- <th>Password</th> -->
+                                                    <th>Email</th>
+                                                    <th>Password</th>
                                                     <th>วันที่เชื่อมต่อ</th>
                                                     <th>วันหมดอายุ</th>
 
@@ -851,7 +875,7 @@ input:checked+.slider:before {
                                                     <td>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$user->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -864,7 +888,7 @@ input:checked+.slider:before {
                                                         <br>
                                                         
                                                             {{ \Illuminate\Support\Str::limit(@$useraa->link_line, 20) }}
-                                                            <button class="btn btn-sm btn-primary" style="float: right;"
+                                                            <button class="btn btn-sm btn-primary" style="float: right;" type="button"
                                                                 onclick="copyUserInfo('{{$user->link_line}}')">
                                                                 <i class="fa fa-copy"></i> Copy
                                                             </button>
@@ -874,8 +898,16 @@ input:checked+.slider:before {
 
                                                     <td>{{@$accountsass->name}}</td>
                                                     @if($accountsas->type=='MOBILE' or $accountsas->type=='')
-                                                    <td>{{@$accountsass->email}}   @if(Auth::guard('admin')->user()->type == 0) / {{@$accountsass->password}}  @endif</td>
-                                                    <!-- <td>{{@$accountsass->password}}</td> -->
+                                                    <td>{{@$accountsass->email}} <button class="btn btn-sm btn-primary" style="float: right;" type="button"
+                                                                onclick="copyUserInfo_b('{{$accountsass->email}}')">
+                                                                <i class="fa fa-copy"></i> Copy
+                                                            </button></td>
+                                                    <td> ****** @if(Auth::guard('admin')->user()->type == 0)  
+                                                    <button class="btn btn-sm btn-primary" style="float: right;" type="button"
+                                                                onclick="copyUserInfo_a('{{$accountsass->password}}')">
+                                                                <i class="fa fa-copy"></i> Copy
+                                                            </button>
+                                                            @endif</td>
                                                     @else
                                                     <?php  
                                                         if($accountsas->type_mail==1){
@@ -993,6 +1025,77 @@ function copyUserInfo(link_line) {
     } else {
         console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
         fallbackCopyTextToClipboard(textToCopy);
+    }
+}
+</script>
+
+
+
+<script>
+function fallbackCopyTextToClipboard_a(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand("copy");
+        // alert("คัดลอกข้อมูลสำเร็จ!");
+    } catch (err) {
+        console.error("คัดลอกไม่สำเร็จ: ", err);
+        alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+    }
+    document.body.removeChild(textArea);
+}
+
+function copyUserInfo_a(password) {
+    let textToCopy = password;;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert("คัดลอกข้อมูลสำเร็จ!");
+        }).catch(err => {
+            console.error('คัดลอกไม่สำเร็จ: ', err);
+            fallbackCopyTextToClipboard_a(textToCopy);
+        });
+    } else {
+        console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+        fallbackCopyTextToClipboard_a(textToCopy);
+    }
+}
+</script>
+
+
+<script>
+function fallbackCopyTextToClipboard_b(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand("copy");
+        // alert("คัดลอกข้อมูลสำเร็จ!");
+    } catch (err) {
+        console.error("คัดลอกไม่สำเร็จ: ", err);
+        alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+    }
+    document.body.removeChild(textArea);
+}
+
+function copyUserInfo_b(email) {
+    let textToCopy = email;;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert("คัดลอกข้อมูลสำเร็จ!");
+        }).catch(err => {
+            console.error('คัดลอกไม่สำเร็จ: ', err);
+            fallbackCopyTextToClipboard_b(textToCopy);
+        });
+    } else {
+        console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+        fallbackCopyTextToClipboard_b(textToCopy);
     }
 }
 </script>

@@ -38,18 +38,45 @@ class AdminUserBackendController extends Controller
 {
 
     public function youtube_in_yay(Request $r){
-
         $id=$r->id;
         $id_user_in=$r->id_user_in;
-       
 
-        if (@$id!=null) {
-         $save=users_in_in::where('id',$id)->first();
-            $save->id_user_in=$id_user_in;
+        // $user = (new users_in())->getEligibleUser_youtube();
+        $date = date('Y-m-d');
+        $user = users_in::where('open',0)->where('id','!=',$id_user_in)->whereNotNull('type_f')->whereNull('t_house')->where(function ($query) use ($date) {
+            $query->whereHas('users_in_in_mobile', function ($subQuery) use ($date) {
+                $subQuery->whereHas('user', function ($userQuery) use ($date) {
+                    $userQuery->whereNotNull('type_youtube')
+                              ->whereDate('date_start', '<=', $date)
+                              ->whereDate('date_end', '>=', $date)
+                              ->where('open', 0);
+                });
+            });
+            $query->orDoesntHave('users_in_in_mobile');
+        })
+        ->withCount('users_in_in_mobile') // นับเฉพาะ MOBILE
+        ->having('users_in_in_mobile_count', '<', 5)
+        ->first();
+
+        if ($user !== null) {
+            $save=users_in_in::where('id',$id)->first();
+            $save->id_user_in=$user->id;
             $save->save();
-        }
+        }    
 
-         return redirect()->back()->with('success','Success.');
+        // if (@$id!=null) {
+        //  $save=users_in_in::where('id',$id)->first();
+        //     $save->id_user_in=$id_user_in;
+        //     $save->save();
+        // }
+
+         
+
+         if ($user !== null) {
+         return redirect()->to('y_users_in_edit/'.$user->id)->with('success','Success.');
+         }else{
+            return redirect()->back()->with('success','ไม่มี Account ว่าง.');
+         }
       
      }
 

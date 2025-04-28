@@ -41,6 +41,8 @@
                                         $xxxx = str_pad($runtotal, 5, '0', STR_PAD_LEFT);
                                         $run = "NF-{$xxxx}";
 
+                                        $run = 'YT';
+
                                         if(@$item->name!=null){
                                             $run=@$item->name;
                                         }
