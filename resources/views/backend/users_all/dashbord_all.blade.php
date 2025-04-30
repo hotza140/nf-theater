@@ -117,10 +117,10 @@ input:checked+.slider:before {
                 .flashing-card {
                     width: 350px;
                     height: 200px;
-                    background-color: #800020;
-                    /* สีเลือดหมู */
+                    background-color: #800020; /* สีเลือดหมู */
                     color: white;
                     display: flex;
+                    flex-direction: column; /* ⭐ เพิ่มบรรทัดนี้ */
                     align-items: center;
                     justify-content: center;
                     border-radius: 20px;
@@ -129,8 +129,7 @@ input:checked+.slider:before {
                     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
                     box-shadow: 0 10px 25px rgba(128, 0, 32, 0.6);
                     transition: transform 0.3s ease, box-shadow 0.3s ease;
-                    margin-bottom: 20px;
-                    /* ✅ เพิ่มระยะห่างด้านล่างของกล่อง */
+                    margin-bottom: 20px; /* ✅ เพิ่มระยะห่างด้านล่างของกล่อง */
                 }
 
                 .flashing-card:hover {
@@ -211,6 +210,68 @@ input:checked+.slider:before {
                                         </tr>
 
 
+                                        <?php 
+                                        $i1=App\Models\users_in::whereNull('type_f')->count();
+                                        $i2=App\Models\users_in::whereNotNull('type_f')->count();
+
+
+
+                                        $e1 = App\Models\users_in::whereNull('type_f')->pluck('id')->ToArray();
+                                        $e2 = App\Models\users_in::whereNotNull('type_f')->pluck('id')->ToArray();
+
+                                        $na = App\Models\users_in::whereNull('type_f')->count();
+                                        $ta = App\Models\users_in::whereNotNull('type_f')->count();
+
+                                        $aa=$na*5;
+                                        $ab=$na*2;
+                                        $bb=$ta*5;
+
+                                        $in = App\Models\users_in_in::whereNull('type_mail')->whereIn('id_user_in',@$e1)->count();
+                                        $q1=$aa-$in;
+
+                                        $in1 = App\Models\users_in_in::whereNotNull('type_mail')->whereIn('id_user_in',@$e1)->count();
+                                        $q11=$ab-$in1;
+
+                                        $inn = App\Models\users_in_in::whereIn('id_user_in',@$e2)->count();
+                                        $q2=$bb-$inn;
+
+                                        ?>
+                                        <tr>
+                                        <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวนที่ว่างใน Netflix(ไม่รวมทีวี):
+                                                        ({{ number_format(@$q1, 0) }})</h4>
+
+                                                        <h4><i class="fa fa-user"></i> จำนวนที่ว่างใน Netflix(รวมทีวี):
+                                                        ({{ number_format(@$q11, 0) }})</h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวนที่ว่างใน Youtube:
+                                                        ({{ number_format(@$q2, 0) }})</h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวน Account Netflix:
+                                                        ({{ number_format(@$i1, 0) }}) </h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวน Account YouTube Premium:
+                                                        ({{ number_format(@$i2, 0) }}) </h4>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+
+
                                         <?php  
                                         $all_user = App\Models\users::distinct('username')->count();
                                         $pak =App\Models\PackageSubwatch::get();
@@ -246,61 +307,6 @@ input:checked+.slider:before {
                                             </td>
                                         </tr>
 
-
-
-
-
-                                        <?php 
-                                        $i1=App\Models\users_in::whereNull('type_f')->count();
-                                        $i2=App\Models\users_in::whereNotNull('type_f')->count();
-
-
-
-                                        $e1 = App\Models\users_in::whereNull('type_f')->pluck('id')->ToArray();
-                                        $e2 = App\Models\users_in::whereNotNull('type_f')->pluck('id')->ToArray();
-
-                                        $na = App\Models\users_in::whereNull('type_f')->count();
-                                        $ta = App\Models\users_in::whereNotNull('type_f')->count();
-
-                                        $aa=$na*7;
-                                        $bb=$ta*5;
-
-                                        $in = App\Models\users_in_in::whereIn('id_user_in',@$e1)->count();
-                                        $q1=$aa-$in;
-
-                                        $inn = App\Models\users_in_in::whereIn('id_user_in',@$e2)->count();
-                                        $q2=$bb-$inn;
-
-                                        ?>
-                                        <tr>
-                                        <td>
-                                                <div class="flashing-card " >
-                                                    <h4><i class="fa fa-user"></i> จำนวนที่ว่างใน Account Netflix:
-                                                        ({{ number_format(@$q1, 0) }})</h4>
-                                                </div>
-                                            </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <div class="flashing-card " >
-                                                    <h4><i class="fa fa-user"></i> จำนวนที่ว่างใน Account Youtube:
-                                                        ({{ number_format(@$q2, 0) }})</h4>
-                                                </div>
-                                            </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <div class="flashing-card " >
-                                                    <h4><i class="fa fa-user"></i> จำนวน Account Netflix:
-                                                        ({{ number_format(@$i1, 0) }}) </h4>
-                                                </div>
-                                            </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                            <td>
-                                                <div class="flashing-card " >
-                                                    <h4><i class="fa fa-user"></i> จำนวน Account YouTube Premium:
-                                                        ({{ number_format(@$i2, 0) }}) </h4>
-                                                </div>
-                                            </td>
-                                        </tr>
 
                                     </table>
                                 </div>
