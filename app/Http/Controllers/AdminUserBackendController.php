@@ -31,6 +31,7 @@ use App\Models\admin;
 use App\Models\country;
 use App\Models\alert;
 use App\Models\log_dash;
+use App\Models\dash_regis_to;
 
 use App\Models\created_history;
 
@@ -1197,6 +1198,7 @@ $acc = users_in::whereNotNull('type_f')
         ]);
     }
     public function users_store(Request $r){
+        $xxz=null;
         $acc=null;
         $item=new users();
         // $ca=users::where('username',$r->username)->orderby('id','desc')->first();
@@ -1262,7 +1264,8 @@ $acc = users_in::whereNotNull('type_f')
         }else{
             $item->status_account=1;
             $item->save();
-            return redirect()->to('users')->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+            $xxz=1;
+            // return redirect()->to('users')->with('message','สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
         }
         }else{
             $item->status_account=1;
@@ -1305,7 +1308,8 @@ $acc = users_in::whereNotNull('type_f')
         } else {
             $item->status_account = 1;
             $item->save();
-            return redirect()->to('users')->with('message', 'สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Manual');
+            $xxz=1;
+            // return redirect()->to('users')->with('message', 'สร้างสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Manual');
         }
         }else{
             $item->status_account=1;
@@ -1359,7 +1363,21 @@ $acc = users_in::whereNotNull('type_f')
 
         $his->save();
 
-        return redirect()->to('users')->with('message','Sucess!');
+
+        $dash_regis_to=new dash_regis_to();
+        $dash_regis_to->id_user=$item->id; 
+        $dash_regis_to->id_package=$item->id_package; 
+        $dash_regis_to->id_admin=Auth::guard('admin')->user()->id;
+        $dash_regis_to->date=date('Y-m-d');
+        $dash_regis_to->type=0;
+        $dash_regis_to->save();
+
+
+        if(@$xxz!=null){
+            return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+        }else{
+            return redirect()->to('users')->with('message','Sucess!');
+        }
 
     }
     public function users_update(Request $r,$id){
@@ -1399,6 +1417,7 @@ $acc = users_in::whereNotNull('type_f')
     }
 
     public function users_update_date(Request $r){
+        $xxz=null;
         $item=users::where('id',$r->id)->first();
         $item->date_start=$r->date_start;
         $item->date_end=$r->date_end;
@@ -1459,7 +1478,8 @@ $acc = users_in::whereNotNull('type_f')
             }else{
                 $item->status_account=1;
                 $item->save();
-                return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+                $xxz=1;
+                // return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
             }
             }else{
             $item->status_account=1;
@@ -1522,7 +1542,8 @@ $acc = users_in::whereNotNull('type_f')
             }else{
                 $item->status_account=1;
                 $item->save();
-                return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+                $xxz=1;
+                // return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
             }
             }else{
                 $item->status_account=1;
@@ -1533,7 +1554,22 @@ $acc = users_in::whereNotNull('type_f')
     
             }
 
-        return redirect()->back()->with('message','Sucess!');
+
+
+            $dash_regis_to=new dash_regis_to();
+        $dash_regis_to->id_user=$item->id; 
+        $dash_regis_to->id_package=$item->id_package; 
+        $dash_regis_to->id_admin=Auth::guard('admin')->user()->id;
+        $dash_regis_to->date=date('Y-m-d');
+        $dash_regis_to->type=1;
+        $dash_regis_to->save();
+
+
+        if(@$xxz!=null){
+            return redirect()->back()->with('message','ต่ออายุสำเร็จ! แต่ไม่มี Account ที่ว่างให้ใส่ใน User นี้ กรุณาเพิ่ม User นี้เข้า Account แบบ Mannual');
+        }else{
+            return redirect()->back()->with('message','Sucess!');
+        }
     }
 
     public function users_edit($id){
@@ -1761,6 +1797,15 @@ $acc = users_in::whereNotNull('type_f')
                 $his->save();
 
 
+                $dash_regis_to=new dash_regis_to();
+                $dash_regis_to->id_user=$item->id; 
+                $dash_regis_to->id_package=$item->id_package; 
+                $dash_regis_to->id_admin=Auth::guard('admin')->user()->id;
+                $dash_regis_to->date=date('Y-m-d');
+                $dash_regis_to->type=0;
+                $dash_regis_to->save();
+
+
             }
         }
 
@@ -1845,6 +1890,15 @@ $acc = users_in::whereNotNull('type_f')
         $aaa_his->date_end=$r->date_end;
         $aaa_his->save();
 
+
+        $dash_regis_to=new dash_regis_to();
+        $dash_regis_to->id_user=$item->id; 
+        $dash_regis_to->id_package=$item->id_package; 
+        $dash_regis_to->id_admin=Auth::guard('admin')->user()->id;
+        $dash_regis_to->date=date('Y-m-d');
+        $dash_regis_to->type=0;
+        $dash_regis_to->save();
+
         return redirect()->back()->with('message','Sucess!');
         }
 
@@ -1872,6 +1926,16 @@ $acc = users_in::whereNotNull('type_f')
             $aaa_his->date_start=$r->date_start; 
             $aaa_his->date_end=$r->date_end;
             $aaa_his->save();
+
+
+            $dash_regis_to=new dash_regis_to();
+            $dash_regis_to->id_user=$item->id; 
+            $dash_regis_to->id_package=$item->id_package; 
+            $dash_regis_to->id_admin=Auth::guard('admin')->user()->id;
+            $dash_regis_to->date=date('Y-m-d');
+            $dash_regis_to->type=0;
+            $dash_regis_to->save();
+
             return redirect()->back()->with('message','Sucess!');
             }else{
                 return redirect()->back()->with('message','Fail มีคนใช้อีเมลนี้แล้ว!');

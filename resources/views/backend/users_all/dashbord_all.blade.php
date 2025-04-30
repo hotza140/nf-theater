@@ -187,6 +187,30 @@ input:checked+.slider:before {
                                 <div style="overflow-x: auto; white-space: nowrap;">
                                     <table>
 
+
+
+                                    <?php 
+                                        $ty1=App\Models\dash_regis_to::where('type',0)->count();
+                                        $ty2=App\Models\dash_regis_to::where('type',1)->count();
+                                        ?>
+                                        <tr>
+                                        <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวนลูกค้าที่สมัคร:
+                                                        ({{ number_format(@$ty1, 0) }}) </h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                                            <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวนลูกค้าที่ต่ออายุ:
+                                                        ({{ number_format(@$ty2, 0) }}) </h4>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
                                         <?php  
                                         $all_user = App\Models\users::distinct('username')->count();
                                         $pak =App\Models\PackageSubwatch::get();
@@ -218,6 +242,62 @@ input:checked+.slider:before {
                                                 <div class="flashing-card" >
                                                     <h4><i class="fa fa-user"></i> ลูกค้าที่ออนไลน์บนเว็ปไซต์:
                                                         ({{ number_format(@$mon, 0) }} คน) </h4>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+
+
+
+                                        <?php 
+                                        $i1=App\Models\users_in::whereNull('type_f')->count();
+                                        $i2=App\Models\users_in::whereNotNull('type_f')->count();
+
+
+
+                                        $e1 = App\Models\users_in::whereNull('type_f')->pluck('id')->ToArray();
+                                        $e2 = App\Models\users_in::whereNotNull('type_f')->pluck('id')->ToArray();
+
+                                        $na = App\Models\users_in::whereNull('type_f')->count();
+                                        $ta = App\Models\users_in::whereNotNull('type_f')->count();
+
+                                        $aa=$na*7;
+                                        $bb=$ta*5;
+
+                                        $in = App\Models\users_in_in::whereIn('id_user_in',@$e1)->count();
+                                        $q1=$aa-$in;
+
+                                        $inn = App\Models\users_in_in::whereIn('id_user_in',@$e2)->count();
+                                        $q2=$bb-$inn;
+
+                                        ?>
+                                        <tr>
+                                        <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวนที่ว่างใน Account Netflix:
+                                                        ({{ number_format(@$q1, 0) }})</h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวนที่ว่างใน Account Youtube:
+                                                        ({{ number_format(@$q2, 0) }})</h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวน Account Netflix:
+                                                        ({{ number_format(@$i1, 0) }}) </h4>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>
+                                                <div class="flashing-card " >
+                                                    <h4><i class="fa fa-user"></i> จำนวน Account YouTube Premium:
+                                                        ({{ number_format(@$i2, 0) }}) </h4>
                                                 </div>
                                             </td>
                                         </tr>

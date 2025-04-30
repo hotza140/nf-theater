@@ -189,9 +189,9 @@ input:checked+.slider:before {
                                     <table>
 
                                         <?php  
-                                        $e1 = App\Models\users_in::where('open',0)->whereNull('type_f')->pluck('id')->ToArray();
+                                        $e1 = App\Models\users_in::whereNull('type_f')->pluck('id')->ToArray();
 
-                                        $na = App\Models\users_in::where('open',0)->whereNull('type_f')->count();
+                                        $na = App\Models\users_in::whereNull('type_f')->count();
 
                                         $aa=$na*5;
                                         $bb=$na*2;
