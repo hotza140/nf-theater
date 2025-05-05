@@ -17,10 +17,10 @@
                             @csrf
                             <div class="mb-3"><input class="form-control form-control log-input" type="text" placeholder="ชื่อผู้ใช้งาน" required name="username"></div>
                             <div class="mb-4"><input class="form-control form-control log-input" type="password" placeholder="รหัสผ่าน" required name="password"></div>
-                            <div style="text-align: left;padding-left:25%;color:#BB0000;font-size:18px;">
+                            <!-- <div style="text-align: left;padding-left:25%;color:#BB0000;font-size:18px;">
                                 <div class="mb-3"><input type="radio" name="type" value="netflix"> <span style="cursor: pointer;" onclick="document.querySelector(`input[value='netflix']`).click();">NetFlix</span> </div>
                                 <div class="mb-4"><input type="radio" name="type" value="youtube"> <span style="cursor: pointer;" onclick="document.querySelector(`input[value='youtube']`).click();">YouTube</span> </div>
-                            </div>
+                            </div> -->
                             <button class="change-button" type="submit">เข้าสู่ระบบ</button>
                         </form>
                     </div>

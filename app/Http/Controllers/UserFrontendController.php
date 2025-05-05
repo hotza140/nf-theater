@@ -92,11 +92,13 @@ class UserFrontendController extends Controller
         $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
         // ลบเช็คเวลา
 
-        if($r->type=='netflix'){
-            $users=users::where('open',0)->where('username',$r->username)->where('password',$r->password)->whereNotNull('type_netflix')->orderBy('id','asc')->first();
-        }else{
-            $users=users::where('open',0)->where('username',$r->username)->where('password',$r->password)->whereNotNull('type_youtube')->orderBy('id','asc')->first();
-        }
+        // if($r->type=='netflix'){
+        //     $users=users::where('open',0)->where('username',$r->username)->where('password',$r->password)->whereNotNull('type_netflix')->orderBy('id','asc')->first();
+        // }else{
+        //     $users=users::where('open',0)->where('username',$r->username)->where('password',$r->password)->whereNotNull('type_youtube')->orderBy('id','asc')->first();
+        // }
+
+        $users=users::where('open',0)->where('username',$r->username)->where('password',$r->password)->orderBy('id','asc')->first();
 
         if($users){
                 Auth::guard('users')->login($users); 
