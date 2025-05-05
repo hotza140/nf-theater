@@ -2239,7 +2239,7 @@ $acc = users_in::whereNotNull('type_f')
           $vv = users_in_in::where('id_user_in',$id)->pluck('id')->toArray();
 
           $de = users_in_in::where('id_user_in',$id)->delete();
-          $ff = users::whereIn('id',$ge)->update(['status_account' => 2]);
+          $ff = users::whereIn('id',$ge)->update(['status_account' => 1]);
 
           $aaa = users_in_in_history::whereIn('id_user_in_in',$vv)->update(['status_check' => 1]);
 

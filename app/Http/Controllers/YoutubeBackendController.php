@@ -1390,7 +1390,7 @@ class YoutubeBackendController extends Controller
 
           $ge = users_in_in::where('id_user_in',$id)->pluck('id_user')->toArray();
           $de = users_in_in::where('id_user_in',$id)->delete();
-          $ff = users::whereIn('id',$ge)->update(['status_account' => 2]);
+          $ff = users::whereIn('id',$ge)->update(['status_account' => 1]);
 
           $aaa = users_in_in_history::whereIn('id_user_in_in',$vv)->update(['status_check' => 1]);
 
