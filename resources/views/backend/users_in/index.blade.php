@@ -94,6 +94,7 @@
                                             <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
                                             <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option>
                                             <option  value="2" @if(@$status_account==2) selected  @endif >Account ที่ใกล้หมดอายุ 1 วัน</option>
+                                            <option  value="3" @if(@$status_account==3) selected  @endif >ค้นหาจากกลุ่มวันหมดอายุของ User</option>
                                             </select>
                                             </div>
                                             <div class="col-sm-2">
@@ -122,6 +123,7 @@
                                                     <th>Name Account</th>
                                                     <th>Email / Password</th>
                                                     <th>วันที่ใช้งาน</th>
+                                                    <th>กลุ่มวันเริ่มต้นและหมดอายุของ User</th>
                                                     <th>Tool</th>
 
                                                 </tr>
@@ -200,8 +202,27 @@
                                                     } else {
                                                         $formatted_date2 = null;
                                                     }
+
+
+
+                                                    $date_ss = $items->date_ss; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_ee = $items->date_ee; // วันที่สิ้นสุด (Y-m-d)
+
+                                                    if ($date_ss) {
+                                                        $formatted_date11 = date('d/m/Y', strtotime($date_ss));
+                                                    } else {
+                                                        $formatted_date11 = null;
+                                                    }
+                                                    if ($date_ee) {
+                                                        $formatted_date22 = date('d/m/Y', strtotime($date_ee));
+                                                    } else {
+                                                        $formatted_date22 = null;
+                                                    }
                                                     ?>
                                                     <td>{{@$formatted_date1}} ถึง {{@$formatted_date2}} ({{@$status}})</td>
+
+
+                                                    <td>{{@$formatted_date11}} ถึง {{@$formatted_date22}}</td>
                                                     <!-- <td>{{$items->country}}</td> -->
                                                     <td>
                                                     <a href="{{url('users_in_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>

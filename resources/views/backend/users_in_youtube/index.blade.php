@@ -92,6 +92,7 @@
                                         <select name="status_account" id="" class="form-control">
                                             <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
                                             <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
+                                            <option  value="3" @if(@$status_account==3) selected  @endif >ค้นหาจากกลุ่มวันหมดอายุของ User</option>
 
                                             <optgroup label="สถานะบ้าน">                                          
                                             <option value="11" @if(@$status_account==11) selected @endif>ปกติ</option>
@@ -129,6 +130,7 @@
                                                     <th>Email</th>
                                                     <th>Password</th>
                                                     <th>วันที่ใช้งาน</th>
+                                                    <th>กลุ่มวันเริ่มต้นและหมดอายุของ User</th>
                                                     <th>Tool</th>
 
                                                 </tr>
@@ -226,8 +228,27 @@
                                                     } else {
                                                         $formatted_date2 = null;
                                                     }
+
+
+
+                                                    $date_ss = $items->date_ss; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_ee = $items->date_ee; // วันที่สิ้นสุด (Y-m-d)
+
+                                                    if ($date_ss) {
+                                                        $formatted_date11 = date('d/m/Y', strtotime($date_ss));
+                                                    } else {
+                                                        $formatted_date11 = null;
+                                                    }
+                                                    if ($date_ee) {
+                                                        $formatted_date22 = date('d/m/Y', strtotime($date_ee));
+                                                    } else {
+                                                        $formatted_date22 = null;
+                                                    }
+
                                                     ?>
                                                     <td>{{@$formatted_date1}} {{ $items->time ? \Carbon\Carbon::parse($items->time)->format('H:i') : '' }}</td>
+                                                    
+                                                    <td>{{@$formatted_date11}} ถึง {{@$formatted_date22}}</td>
                                                     <!-- <td>{{$items->country}}</td> -->
                                                     <td>
                                                     <a href="{{url('y_users_in_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>

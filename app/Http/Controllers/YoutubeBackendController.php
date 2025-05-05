@@ -1263,7 +1263,12 @@ class YoutubeBackendController extends Controller
                 $item = users_in::whereNotNull('type_f')->where(function ($query) use ($search, $status_account, $date_new) {
                     // ถ้า search เป็นวันที่ ให้ใช้ date_new แทน search
                     if ($date_new !== null) {
-                        $query->where('date_end',$date_new);
+
+                        if ($status_account == '3') {
+                            $query->where('date_ee',$date_new);
+                        }else{
+                            $query->where('date_end',$date_new);
+                        }
                     } else {
                         $query->where('name', 'LIKE', '%' . $search . '%')
                             ->orWhere('email', 'LIKE', '%' . $search . '%')
@@ -1312,6 +1317,9 @@ class YoutubeBackendController extends Controller
                 }   
   
           $item->password=$r->password;
+
+          $item->date_ss=$r->date_ss;
+          $item->date_ee=$r->date_ee;
   
           $item->name=$r->name;
           $item->email=$r->email;
@@ -1346,6 +1354,9 @@ class YoutubeBackendController extends Controller
                 } 
   
            $item->password=$r->password;
+
+           $item->date_ss=$r->date_ss;
+           $item->date_ee=$r->date_ee;
   
           $item->name=$r->name;
           $item->email=$r->email;
