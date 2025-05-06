@@ -126,7 +126,7 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Reward Day</label>
+                                                <label class="col-form-label">Reward Month</label>
                                                 <input type="number" name="reward_Day" class="form-control" id=""
                                                       value="{{$item->reward_Day}}" required>
                                             </div>

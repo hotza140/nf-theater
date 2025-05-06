@@ -204,7 +204,7 @@
                                                             {{-- <th>Open/Close</th> --}}
                                                             {{-- <th>Sub Package Code</th> --}}
                                                             <th>Sub Package Name</th>
-                                                            <th>จำนวนวัน</th>
+                                                            <th>จำนวนเดือน</th>
                                                             <th>ราคา</th>
                                                             <th>รูปแบบ</th>
                                                             <th>แต้มของ Package</th>
@@ -229,7 +229,7 @@
                                                             </form>
                                                             </td> --}}
                                                             <td>{{$items->Subpackage_Name}}</td>
-                                                            <td>{{$items->Subpackage_Dayuse}} วัน</td>
+                                                            <td>{{$items->Subpackage_Dayuse}} เดือน</td>
                                                             <td>{{$items->Subpackage_Paymoney}} บาท</td>
                                                             <td>{{$items->type=='MOBILE'?'ยกเว้นทีวี':'TV'}}</td>
                                                             <td>{{$items->Making_Scoring}} แต้ม</td>

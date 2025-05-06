@@ -100,7 +100,7 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">จำนวนวัน</label>
+                                                <label class="col-form-label">จำนวนเดือน</label>
                                                 <input type="number" name="Subpackage_Dayuse" class="form-control" id=""
                                                       value="{{@$item->Subpackage_Dayuse}}">
                                             </div>

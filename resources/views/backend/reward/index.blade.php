@@ -88,7 +88,7 @@
                                                     <th>Reward Name</th>
                                                     {{-- <th>Reward Code</th> --}}
                                                     <th>Rewards Score</th>
-                                                    <th>Reware Day</th>
+                                                    <th>Rewards Month</th>
                                                     {{-- <th>Reware Gift</th> --}}
                                                     <th>Tool</th>
 
