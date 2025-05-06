@@ -261,10 +261,10 @@ window.onload = function () {
                 }
             };
 
-            document.querySelector(`.day_select[data-index="${index}"]`).addEventListener('change', function() {
-                document.querySelector(`.day_input[data-index="${index}"]`).value = this.value;
-                updateEndDate(index, parseInt(this.value, 10));
-            });
+            // document.querySelector(`.day_select[data-index="${index}"]`).addEventListener('change', function() {
+            //     document.querySelector(`.day_input[data-index="${index}"]`).value = this.value;
+            //     updateEndDate(index, parseInt(this.value, 10));
+            // });
 
             document.querySelector(`.day_input[data-index="${index}"]`).addEventListener('input', function() {
                 updateEndDate(index, parseInt(this.value, 10));
