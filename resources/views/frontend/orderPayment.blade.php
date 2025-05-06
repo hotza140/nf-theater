@@ -121,6 +121,13 @@
                                 name="qr_code_image" id="qr_code_image" required onchange="ChgImageCheckQr(this);">
                             <div id="showFileNameForSave" style="display: none;color:black;margin-left:10px;"></div>
                         </div>
+
+                        <div class="form-div">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="copyUserInfo('1658146994')">
+                        <i class="fa fa-copy"></i> คัดลอกเลขบัญชี
+                        </button>
+                        </div>
+
                         <div id="showWaitForSave" style="display: none;color:black;margin-left:10px;" class="animated-char">Please waitting.....</div>
                     </div>
                 </div>
@@ -161,6 +168,15 @@
                         name="qr_code_imagetruewallet" id="qr_code_imagetruewallet" required>
                     <div id="showFileNameForSave" style="display: none;color:black;margin-left:10px;"></div>
                 </div>
+
+
+                <div class="form-div">
+                <button type="button" class="btn btn-sm btn-primary" onclick="copyUserInfo2('0803944419')">
+                <i class="fa fa-copy"></i> คัดลอกเลขเบอร์ทรูวอเลต
+                </button>
+                </div>
+
+
                 <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;text-align:center; background-color:rgb(228, 228, 228);">
                     <button class="btn btn-primary bt-pay" id="btnChkOKTrueWallet">
                         บันทึกรายการสั่งซื้อ
@@ -171,6 +187,77 @@
         </div>
     </div>
 </div>
+
+                                    <script>
+                                    function fallbackCopyTextToClipboard(text) {
+                                        const textArea = document.createElement("textarea");
+                                        textArea.value = text;
+                                        document.body.appendChild(textArea);
+                                        textArea.focus();
+                                        textArea.select();
+                                        try {
+                                            document.execCommand("copy");
+                                            // alert("คัดลอกข้อมูลสำเร็จ!");
+                                        } catch (err) {
+                                            console.error("คัดลอกไม่สำเร็จ: ", err);
+                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                                        }
+                                        document.body.removeChild(textArea);
+                                    }
+
+                                    function copyUserInfo(email) {
+                                        let textToCopy = `${email}`;
+
+                                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                            }).catch(err => {
+                                                console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                fallbackCopyTextToClipboard(textToCopy);
+                                            });
+                                        } else {
+                                            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+                                            fallbackCopyTextToClipboard(textToCopy);
+                                        }
+                                    }
+                                    </script>
+
+
+
+<script>
+                                    function fallbackCopyTextToClipboard2(text) {
+                                        const textArea = document.createElement("textarea");
+                                        textArea.value = text;
+                                        document.body.appendChild(textArea);
+                                        textArea.focus();
+                                        textArea.select();
+                                        try {
+                                            document.execCommand("copy");
+                                            // alert("คัดลอกข้อมูลสำเร็จ!");
+                                        } catch (err) {
+                                            console.error("คัดลอกไม่สำเร็จ: ", err);
+                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                                        }
+                                        document.body.removeChild(textArea);
+                                    }
+
+                                    function copyUserInfo2(email) {
+                                        let textToCopy = `${email}`;
+
+                                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                            }).catch(err => {
+                                                console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                fallbackCopyTextToClipboard2(textToCopy);
+                                            });
+                                        } else {
+                                            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+                                            fallbackCopyTextToClipboard2(textToCopy);
+                                        }
+                                    }
+                                    </script>
+
 <script>
     function ChgImageCheckQr(thv) {
         document.getElementById('showWaitForSave').style.display = 'block';
