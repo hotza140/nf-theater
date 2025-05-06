@@ -1265,7 +1265,7 @@ class YoutubeBackendController extends Controller
                     if ($date_new !== null) {
 
                         if ($status_account == '3') {
-                            $query->where('date_ee',$date_new);
+                            $query->where('date_ee',$search);
                         }else{
                             $query->where('date_end',$date_new);
                         }

@@ -280,7 +280,8 @@
                                         </div>
 
                                 <div class="form-group row">
-                                <div class="col-sm-2">
+
+                                <!-- <div class="col-sm-2">
                                     <label class="col-form-label">Select Days</label>
                                     <select class="form-control" id="day_select">
                                         <option value="">Select days</option>
@@ -295,7 +296,9 @@
                                         <div class="col-sm-2">
                                             <label class="col-form-label">Enter Days*</label>
                                             <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
-                                        </div>
+                                        </div> -->
+
+
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id="date_start"
@@ -384,18 +387,18 @@
         }
     }
 
-    function updateEndDate(days) {
-        const dateStartInput = document.getElementById('date_start');
-        const dateEndInput = document.getElementById('date_end');
+    function updateEndDate(months) {
+    const dateStartInput = document.getElementById('date_start');
+    const dateEndInput = document.getElementById('date_end');
 
-        if (!isNaN(days) && days > 0) {
-            const startDate = new Date(dateStartInput.value);
-            startDate.setDate(startDate.getDate() + days);
-            dateEndInput.value = startDate.toISOString().split('T')[0];
-        } else {
-            dateEndInput.value = '';
-        }
+    if (!isNaN(months) && months > 0) {
+        const startDate = new Date(dateStartInput.value);
+        startDate.setMonth(startDate.getMonth() + months); // เปลี่ยนจากวันเป็นเดือน
+        dateEndInput.value = startDate.toISOString().split('T')[0];
+    } else {
+        dateEndInput.value = '';
     }
+}
 
     // เรียกใช้เมื่อโหลดหน้าเว็บ
     window.onload = function () {

@@ -131,7 +131,7 @@
 
                                         ?>
 
-                                        <div class="form-group row">
+                                        <!-- <div class="form-group row">
 
                                         <div class="col-sm-2">
                                     <label class="col-form-label">Select Days</label>
@@ -150,7 +150,7 @@
                                             <label class="col-form-label">Enter Days*</label>
                                             <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
                                         </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="form-group row">
                                             <div class="col-sm-2">
@@ -253,12 +253,22 @@
         function updateEndDate(days) {
             if (!isNaN(days) && days > 0) {
                 const startDate = new Date(dateStartInput.value);
-                startDate.setDate(startDate.getDate() + days);
+                startDate.setMonth(startDate.getMonth() + days); // เปลี่ยนจาก setDate เป็น setMonth
                 dateEndInput.value = startDate.toISOString().split('T')[0];
             } else {
                 dateEndInput.value = '';
             }
         }
+
+        // function updateEndDate(days) {
+        //     if (!isNaN(days) && days > 0) {
+        //         const startDate = new Date(dateStartInput.value);
+        //         startDate.setDate(startDate.getDate() + days);
+        //         dateEndInput.value = startDate.toISOString().split('T')[0];
+        //     } else {
+        //         dateEndInput.value = '';
+        //     }
+        // }
 
         // โหลดข้อมูลเริ่มต้น
         updatePackage();

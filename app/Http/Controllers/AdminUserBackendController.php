@@ -2000,7 +2000,7 @@ $acc = users_in::whereNotNull('type_f')
                     // ถ้า search เป็นวันที่ ให้ใช้ date_new แทน search
                     if ($date_new !== null) {
                         if ($status_account == '3') {
-                            $query->where('date_ee',$date_new);
+                            $query->where('date_ee',$search);
                         }else{
                             $query->where('date_end',$date_new);
                         }

@@ -172,17 +172,12 @@
 
 
                                         <br><br>
-                                        <h3>กลุ่มวันเริ่มต้นและหมดอายุของ User</h3>
+                                        <h3>รอบบิล</h3>
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">วันเริ่มต้นของ User ที่อยู่ใน Account นี้ เอาไว้จัดกลุ่ม</label>
-                                                <input type="date" name="date_ss" class="form-control" id=""
-                                                      value="{{@$item->date_ss}}">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">วันสิ้นสุดของ User ที่อยู่ใน Account นี้ เอาไว้จัดกลุ่ม</label>
-                                                <input type="date" name="date_ee" class="form-control" id=""
+                                                <label class="col-form-label">กรอกข้อมูลรอบบิล</label>
+                                                <input type="text" name="date_ee" class="form-control" id=""
                                                       value="{{@$item->date_ee}}">
                                             </div>
                                         </div>
@@ -437,7 +432,8 @@
                                         </div>
 
                                         <div class="form-group row">
-                                        <div class="col-sm-2">
+
+                                        <!-- <div class="col-sm-2">
                                     <label class="col-form-label">Select Days</label>
                                     <select class="form-control" id="day_select">
                                         <option value="">Select days</option>
@@ -452,7 +448,8 @@
                                         <div class="col-sm-2">
                                             <label class="col-form-label">Enter Days*</label>
                                             <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
-                                        </div>
+                                        </div> -->
+
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id="date_start"
@@ -521,10 +518,20 @@
             }
         }
 
-        function updateEndDate(days) {
-            if (!isNaN(days) && days > 0) {
+        // function updateEndDate(days) {
+        //     if (!isNaN(days) && days > 0) {
+        //         const startDate = new Date(dateStartInput.value);
+        //         startDate.setDate(startDate.getDate() + days);
+        //         dateEndInput.value = startDate.toISOString().split('T')[0];
+        //     } else {
+        //         dateEndInput.value = '';
+        //     }
+        // }
+
+        function updateEndDate(months) {
+            if (!isNaN(months) && months > 0) {
                 const startDate = new Date(dateStartInput.value);
-                startDate.setDate(startDate.getDate() + days);
+                startDate.setMonth(startDate.getMonth() + months); // เปลี่ยนจากวันเป็นเดือน
                 dateEndInput.value = startDate.toISOString().split('T')[0];
             } else {
                 dateEndInput.value = '';
