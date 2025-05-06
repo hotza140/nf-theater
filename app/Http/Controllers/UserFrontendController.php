@@ -484,7 +484,7 @@ class UserFrontendController extends Controller
          $account = users_in_in::where('id_user', $userIs->id)->orderBy('id','desc')->first();
          $uu = users::where('id', $userIs->id)->first();
             $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$request->Subpackage_Name)->first();
-            $new_date_end = date('Y-m-d', strtotime($account->date_end . ' + ' . $pack_id->Subpackage_Dayuse . ' days'));
+            $new_date_end = date('Y-m-d', strtotime($account->date_end . ' + ' . $pack_id->Subpackage_Dayuse . ' months'));
 
             $account->date_end=$new_date_end;
             $account->save();
