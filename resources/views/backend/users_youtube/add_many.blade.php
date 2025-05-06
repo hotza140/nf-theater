@@ -169,6 +169,8 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002
     var dayInput = formGroup.querySelector("input[name^='users'][name$='[day]']");
     var dateEndInput = formGroup.querySelector("input[name^='users'][name$='[date_end]']"); // เพิ่ม Date End
 
+    var dateSTARTInput = formGroup.querySelector("input[name^='users'][name$='[date_start]']"); // เพิ่ม Date End
+
     // Clear existing options
     if (packageSelect) {
         packageSelect.innerHTML = "";
@@ -193,7 +195,7 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002
                 dayInput.value = days; // Update days
             }
             if (dateEndInput) {
-                dateEndInput.value = calculateDateEnd(days); // อัปเดต Date End
+                dateEndInput.value = calculateDateEnd(days,dateSTARTInput); // อัปเดต Date End
             }
         } else {
             if (dayInput) dayInput.value = ''; // Clear day input if no options
@@ -208,7 +210,7 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002
                 dayInput.value = days || ''; // Update days
             }
             if (dateEndInput) {
-                dateEndInput.value = calculateDateEnd(days || 0); // อัปเดต Date End
+                dateEndInput.value = calculateDateEnd(days,dateSTARTInput); // อัปเดต Date End
             }
         });
     } else {
@@ -223,10 +225,15 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002
 //     return today.toISOString().split('T')[0]; // แปลงเป็นรูปแบบ YYYY-MM-DD
 // }
 
-function calculateDateEnd(months) {
-    var today = new Date();
-    today.setMonth(today.getMonth() + parseInt(months)); // บวกจำนวนเดือนแทนวัน
-    return today.toISOString().split('T')[0]; // แปลงเป็นรูปแบบ YYYY-MM-DD
+function calculateDateEnd(months, dateSTARTInput) {
+    // กำหนด startDate จากค่าใน dateSTARTInput
+    const startDate = new Date(dateSTARTInput.value);
+
+    // เพิ่มเดือนตามจำนวนที่ระบุ
+    startDate.setMonth(startDate.getMonth() + parseInt(months));
+
+    // คืนค่าวันที่ในรูปแบบ YYYY-MM-DD
+    return startDate.toISOString().split('T')[0];
 }
 
 // เรียกใช้อัตโนมัติเมื่อหน้าโหลดเสร็จ
@@ -247,7 +254,7 @@ window.onload = function () {
             const updateEndDate = (index, days) => {
                 if (!isNaN(days) && days > 0) {
                     const startDate = new Date(document.querySelector(`.date_start[data-index="${index}"]`).value);
-                    startDate.setDate(startDate.getDate() + days);
+                    startDate.setMonth(startDate.getMonth() + days);
                     document.querySelector(`.date_end[data-index="${index}"]`).value = startDate.toISOString().split('T')[0];
                 } else {
                     document.querySelector(`.date_end[data-index="${index}"]`).value = '';
