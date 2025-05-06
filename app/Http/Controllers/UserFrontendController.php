@@ -84,13 +84,7 @@ class UserFrontendController extends Controller
  ///frontend Login---------------
     public function login_frontend(Request $r)
     {
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+       
 
         // if($r->type=='netflix'){
         //     $users=users::where('open',0)->where('username',$r->username)->where('password',$r->password)->whereNotNull('type_netflix')->orderBy('id','asc')->first();
@@ -121,13 +115,7 @@ class UserFrontendController extends Controller
 
     public function change_profile($id)
     {
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+       
         $users=users::where('id',$id)->first();
         Auth::guard('users')->login($users); 
         return redirect()->to('profile');
@@ -186,20 +174,14 @@ class UserFrontendController extends Controller
             // return redirect()->back()->with('message','Sucess!');
         }
         
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+       
 
 
         ///ส่วนเพิ่มวัน auto
         $account = users_in_in::where('id_user', $userIs->id)->orderBy('id','desc')->first();
         $uu = users::where('id', $userIs->id)->first();
            $pack_id=DB::table('tb_package_subwatch')->where('id',$userIs->id_package)->first();
-           $new_date_end = date('Y-m-d', strtotime($account->date_end . ' + ' . $Reward->reward_Day . ' days'));
+           $new_date_end = date('Y-m-d', strtotime($account->date_end . ' + ' . $Reward->reward_Day . 'month'));
 
            $account->date_end=$new_date_end;
            $account->save();
@@ -226,13 +208,7 @@ class UserFrontendController extends Controller
     }
 
     public function profileRdSh (Request $request) {
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+       
         
         $users = Auth::guard('users')->user();
 
@@ -316,13 +292,7 @@ class UserFrontendController extends Controller
 
 
     public function profile_change (Request $request) {
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+       
         
         $users = Auth::guard('users')->user();
 
@@ -472,19 +442,13 @@ class UserFrontendController extends Controller
 
 
 
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+       
 
          ///ส่วนเพิ่มวัน auto
          $account = users_in_in::where('id_user', $userIs->id)->orderBy('id','desc')->first();
          $uu = users::where('id', $userIs->id)->first();
             $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$request->Subpackage_Name)->first();
-            $new_date_end = date('Y-m-d', strtotime($account->date_end . ' + ' . $pack_id->Subpackage_Dayuse . ' months'));
+            $new_date_end = date('Y-m-d', strtotime($account->date_end . ' + ' . $pack_id->Subpackage_Dayuse . ' month'));
 
             $account->date_end=$new_date_end;
             $account->save();
