@@ -276,12 +276,12 @@
                                         <option value="180">180 วัน</option>
                                         <option value="365">365 วัน</option>
                                     </select>
-                                </div>
-                                        <div class="col-sm-2">
+                                </div> -->
+                                        <div class="col-sm-2" style="display: none;">
                                             <label class="col-form-label">Enter Days*</label>
-                                            <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days" required >
-                                        </div> -->
-                                        
+                                            <input type="number" class="form-control" id="day_input" name="day" placeholder="Enter number of days"  >
+                                        </div>
+
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
                                                 <input type="date" name="date_start" class="form-control" id="date_start"

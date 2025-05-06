@@ -131,11 +131,12 @@
                                                     <option value="180">180 วัน</option>
                                                     <option value="365">365 วัน</option>
                                                 </select>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <label class="col-form-label">Enter Days*</label>
-                                                <input type="number" class="form-control day_input" name="users[{{ $i }}][day]" placeholder="Enter number of days" required data-index="{{ $i }}">
                                             </div> -->
+
+                                            <div class="col-sm-2" style="display: none;">
+                                                <label class="col-form-label">Enter Days*</label>
+                                                <input type="number" class="form-control day_input" name="users[{{ $i }}][day]" placeholder="Enter number of days"  data-index="{{ $i }}">
+                                            </div>
 
                                             <div class="col-sm-2">
                                                 <label class="col-form-label">Date Start</label>
