@@ -117,7 +117,8 @@
                                             </div>
 
                                             <div class="form-group row">
-                                            <div class="col-sm-2">
+
+                                            <!-- <div class="col-sm-2">
                                                 <label class="col-form-label">Select Days</label>
                                                 <select class="form-control day_select" data-index="{{ $i }}">
                                                     <option value="">Select days</option>
@@ -128,10 +129,10 @@
                                                     <option value="180">180 วัน</option>
                                                     <option value="365">365 วัน</option>
                                                 </select>
-                                            </div>
-                                            <div class="col-sm-2">
+                                            </div> -->
+                                            <div class="col-sm-2" style="display: none;">
                                                 <label class="col-form-label">Enter Days*</label>
-                                                <input type="number" class="form-control day_input" name="users[{{ $i }}][day]" placeholder="Enter number of days" required data-index="{{ $i }}">
+                                                <input type="number" class="form-control day_input" name="users[{{ $i }}][day]" placeholder="Enter number of days"  data-index="{{ $i }}">
                                             </div>
 
                                             <div class="col-sm-2">
@@ -216,9 +217,15 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002
 }
 
 // ฟังก์ชันคำนวณวันหมดอายุ (Date End)
-function calculateDateEnd(days) {
+// function calculateDateEnd(days) {
+//     var today = new Date();
+//     today.setDate(today.getDate() + parseInt(days)); // บวกจำนวนวันที่ Subpackage_Dayuse
+//     return today.toISOString().split('T')[0]; // แปลงเป็นรูปแบบ YYYY-MM-DD
+// }
+
+function calculateDateEnd(months) {
     var today = new Date();
-    today.setDate(today.getDate() + parseInt(days)); // บวกจำนวนวันที่ Subpackage_Dayuse
+    today.setMonth(today.getMonth() + parseInt(months)); // บวกจำนวนเดือนแทนวัน
     return today.toISOString().split('T')[0]; // แปลงเป็นรูปแบบ YYYY-MM-DD
 }
 

@@ -106,17 +106,12 @@
 
 
                                         <br><br>
-                                        <h3>กลุ่มวันเริ่มต้นและหมดอายุของ User</h3>
+                                        <h3>รอบบิล</h3>
 
                                         <div class="form-group row">
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">วันเริ่มต้นของ User ที่อยู่ใน Account นี้ เอาไว้จัดกลุ่ม</label>
-                                                <input type="date" name="date_ss" class="form-control" id=""
-                                                      value="{{@$item->date_ss}}">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="col-form-label">วันสิ้นสุดของ User ที่อยู่ใน Account นี้ เอาไว้จัดกลุ่ม</label>
-                                                <input type="date" name="date_ee" class="form-control" id=""
+                                                <label class="col-form-label">กรอกข้อมูลรอบบิล</label>
+                                                <input type="text" name="date_ee" class="form-control" id=""
                                                       value="{{@$item->date_ee}}">
                                             </div>
                                         </div>

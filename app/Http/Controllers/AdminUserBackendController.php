@@ -422,13 +422,7 @@ $acc = users_in::whereNotNull('type_f')
 
 
     public function dashbord(Request $r){
-         // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+        
 
 
         $date=date('Y-m-d');
@@ -1088,13 +1082,7 @@ $acc = users_in::whereNotNull('type_f')
      }
 
      public function users_all(Request $r){
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+       
 
 
        $item=users ::orderByRaw(
@@ -1129,13 +1117,7 @@ $acc = users_in::whereNotNull('type_f')
    }
      
      public function users(Request $r){
-        // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+       
 
         $item=users ::whereNotNull('type_netflix')->orderByRaw(
             '(SELECT id_user_in FROM tb_users_in_in WHERE tb_users_in_in.id_user = tb_users.id ORDER BY id_user_in DESC LIMIT 1) DESC'
@@ -1976,13 +1958,7 @@ $acc = users_in::whereNotNull('type_f')
   
        //User_in//
        public function users_in(Request $r){
-         // ลบเช็คเวลา
-        $date=date('Y-m-d');
-        $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-        $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-        $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-        $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-        // ลบเช็คเวลา
+        
 
           $item=users_in::whereNull('type_f')->orderby('id','desc')->paginate(10);
           $search = $r->search;
@@ -2000,7 +1976,7 @@ $acc = users_in::whereNotNull('type_f')
                     // ถ้า search เป็นวันที่ ให้ใช้ date_new แทน search
                     if ($date_new !== null) {
                         if ($status_account == '3') {
-                            $query->where('date_ee',$date_new);
+                            $query->where('date_ee',$search);
                         }else{
                             $query->where('date_end',$date_new);
                         }
