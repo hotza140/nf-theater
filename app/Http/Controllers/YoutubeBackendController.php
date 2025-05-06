@@ -1252,9 +1252,14 @@ class YoutubeBackendController extends Controller
                             $query->where('date_end',$date_new);
                         }
                     } else {
-                        $query->where('name', 'LIKE', '%' . $search . '%')
+
+                        if ($status_account == '3') {
+                            $query->where('date_ee',$search);
+                        }else{
+                            $query->where('name', 'LIKE', '%' . $search . '%')
                             ->orWhere('email', 'LIKE', '%' . $search . '%')
                             ->orWhere('country', 'LIKE', '%' . $search . '%');
+                         }   
                     }
                 });
 
