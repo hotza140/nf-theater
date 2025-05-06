@@ -228,7 +228,7 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00001
 //     return today.toISOString().split('T')[0]; // แปลงเป็นรูปแบบ YYYY-MM-DD
 // }
 
-function calculateDateEnd(months, dateSTARTInput) {
+function calculateDateEnd(months,dateSTARTInput) {
     // กำหนด startDate จากค่าใน dateSTARTInput
     const startDate = new Date(dateSTARTInput.value);
 

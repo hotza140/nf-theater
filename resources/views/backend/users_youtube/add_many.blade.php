@@ -130,6 +130,7 @@
                                                     <option value="365">365 วัน</option>
                                                 </select>
                                             </div> -->
+
                                             <div class="col-sm-2" style="display: none;">
                                                 <label class="col-form-label">Enter Days*</label>
                                                 <input type="number" class="form-control day_input" name="users[{{ $i }}][day]" placeholder="Enter number of days"  data-index="{{ $i }}">
@@ -225,7 +226,7 @@ $pag_MOBILE = DB::table('tb_package_subwatch')->where('package_Code', 'PNF-00002
 //     return today.toISOString().split('T')[0]; // แปลงเป็นรูปแบบ YYYY-MM-DD
 // }
 
-function calculateDateEnd(months, dateSTARTInput) {
+function calculateDateEnd(months,dateSTARTInput) {
     // กำหนด startDate จากค่าใน dateSTARTInput
     const startDate = new Date(dateSTARTInput.value);
 
