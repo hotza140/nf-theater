@@ -1791,11 +1791,22 @@ $acc = users_in::whereNotNull('type_f')
             }
         }
 
-        if($check==1){
-            return redirect()->to('users')->with('message', 'สร้างผู้ใช้สำเร็จ แต่มีบาง User ที่ไม่มี Account!');
+
+        if($r->id==null){
+            if($check==1){
+                return redirect()->to('users_in_edit/'.$r->id)->with('message', 'สร้างผู้ใช้สำเร็จ แต่มีบาง User ที่ไม่มี Account!');
+            }else{
+                return redirect()->to('users_in_edit/'.$r->id)->with('message', 'สร้างผู้ใช้สำเร็จ!');
+            }
         }else{
-            return redirect()->to('users')->with('message', 'สร้างผู้ใช้สำเร็จ!');
+            if($check==1){
+                return redirect()->to('users')->with('message', 'สร้างผู้ใช้สำเร็จ แต่มีบาง User ที่ไม่มี Account!');
+            }else{
+                return redirect()->to('users')->with('message', 'สร้างผู้ใช้สำเร็จ!');
+            }
         }
+
+      
     }
 
     //users//

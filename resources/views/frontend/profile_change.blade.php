@@ -35,7 +35,8 @@
                     <div class="net-plan-details">
 
                         <?php 
-                        $pak=DB::table('tb_users_in_in')->where('id_user',@$userProfile->id)->first();
+                        $c_dd=date('Y-m-d');
+                        $pak=DB::table('tb_users_in_in')->whereDate('date_start','<=',@$c_dd)->where('id_user',@$userProfile->id)->first();
                         $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
                         ?>
                             <div id="showUNetflix">
@@ -124,7 +125,8 @@
                 <div class="col d-flex align-items-center">
                     <div class="net-plan-details">
                         <?php 
-                        $pak=DB::table('tb_users_in_in')->where('id_user',@$userProfile->id)->first();
+                        $c_dd=date('Y-m-d');
+                        $pak=DB::table('tb_users_in_in')->whereDate('date_start','<=',@$c_dd)->where('id_user',@$userProfile->id)->first();
                         $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
                         ?>
                         <div id="showUYoutube">
