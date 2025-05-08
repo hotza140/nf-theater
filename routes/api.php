@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('receiveconfirmmailck',[App\Http\Controllers\UserFrontendController::class,'receiveconfirmmailck'])->name('api.receiveconfirmmailck');
 
-Route::get('test_api',[App\Http\Controllers\ApiController::class,'test_api']);
+Route::get('api_call_bot',[App\Http\Controllers\ApiController::class,'api_call_bot']);
+Route::get('api_call_bot_fall_back',[App\Http\Controllers\ApiController::class,'api_call_bot_fall_back']);

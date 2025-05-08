@@ -48,7 +48,7 @@ class ApiController extends Controller
 
   
      
-    public function test_api()
+    public function api_call_bot()
     {
         try {
 
@@ -110,6 +110,59 @@ dd($account);
                 'status' => false,
                 'message' => $e->getMessage(),
             ], 400);
+        }
+
+
+        
+    }
+
+
+
+
+
+    public function api_call_bot_fall_back()
+    {
+        try {
+            // จำลองการเรียก API ภายนอก (เช่นด้วย Guzzle หรือ Http client)
+            $response = Http::get('https://example.com/api'); // หรือ post(...)
+    
+            if ($response->failed()) {
+                throw new \Exception('API call failed.');
+            }
+    
+            $data = $response->json();
+    
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return response()->json([
+                    'status' => false,
+                    'message' => $data['reason'] ?? 'Unknown error',
+                    'result' => [
+                        'email' => $data['email'] ?? null,
+                        'profile' => $data['profile'] ?? null,
+                        'new_password' => $data['new_password'] ?? null,
+                        'new_profile' => $data['new_profile'] ?? null,
+                    ],
+                ], 400);
+            }
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'Success',
+                'result' => [
+                    'email' => $data['email'] ?? null,
+                    'profile' => $data['profile'] ?? null,
+                    'new_password' => $data['new_password'] ?? null,
+                    'new_profile' => $data['new_profile'] ?? null,
+                ],
+            ]);
+    
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Exception: ' . $e->getMessage(),
+                'result' => [],
+            ], 500);
         }
     }
 
