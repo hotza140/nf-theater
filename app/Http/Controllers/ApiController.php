@@ -92,8 +92,6 @@ foreach ($item as $aaa) {
         }
     }
 }
-
-dd($account);
             
 
             return response()->json([
@@ -123,49 +121,60 @@ dd($account);
     public function api_call_bot_fall_back()
     {
         try {
-            // จำลองการเรียก API ภายนอก (เช่นด้วย Guzzle หรือ Http client)
-            $response = Http::get('https://example.com/api'); // หรือ post(...)
+            // เรียก API ภายนอก
+            $response = Http::get('https://example.com/api');
+            $data = $response->json(); // แปลง JSON เป็น array
     
-            if ($response->failed()) {
-                throw new \Exception('API call failed.');
-            }
+            // ตรวจสอบสถานะ success ก่อนทำอย่างอื่น
+            if (isset($data['success']) && $data['success'] === true) {
+                $email = $data['email'] ?? null;
+                $newPassword = $data['new_password'] ?? null;
     
-            $data = $response->json();
+                // กรณีมี profile
+                $profiles = $data['profile'] ?? [];
     
-            if (isset($data['status']) && $data['status'] === 'error') {
+                $profileResults = [];
+    
+                foreach ($profiles as $profileName => $profileData) {
+                    if ($profileData['success']) {
+                        $profileResults[] = [
+                            'name' => $profileName,
+                            'new_profile' => $profileData['new_profile']
+                        ];
+                    } else {
+                        $profileResults[] = [
+                            'name' => $profileName,
+                            'error' => $profileData['reason']
+                        ];
+                    }
+                }
+    
+                return response()->json([
+                    'status' => true,
+                    'email' => $email,
+                    'new_password' => $newPassword,
+                    'profiles' => $profileResults
+                ]);
+            } else {
+                // กรณี success = false
                 return response()->json([
                     'status' => false,
-                    'message' => $data['reason'] ?? 'Unknown error',
-                    'result' => [
-                        'email' => $data['email'] ?? null,
-                        'profile' => $data['profile'] ?? null,
-                        'new_password' => $data['new_password'] ?? null,
-                        'new_profile' => $data['new_profile'] ?? null,
-                    ],
+                    'email' => $data['email'] ?? null,
+                    'new_password' => $data['new_password'] ?? null,
+                    'message' => $data['reason'] ?? 'ไม่สามารถดำเนินการได้'
                 ], 400);
             }
     
-            return response()->json([
-                'status' => true,
-                'message' => 'Success',
-                'result' => [
-                    'email' => $data['email'] ?? null,
-                    'profile' => $data['profile'] ?? null,
-                    'new_password' => $data['new_password'] ?? null,
-                    'new_profile' => $data['new_profile'] ?? null,
-                ],
-            ]);
-    
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             return response()->json([
-                'status' => false,
-                'message' => 'Exception: ' . $e->getMessage(),
                 'result' => [],
-            ], 500);
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 400);
         }
     }
-
+    
 
 
 
