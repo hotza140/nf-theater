@@ -97,7 +97,7 @@
                                 ?>
 
                 @if(@$pak->date_start!=null)
-                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>วันสิ้นสุด {{@$formatted_date2}} ({{@$status}})</h2>
+                <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>วันสิ้นสุด {{@$formatted_date2}} </h2>
                 @endif
                             </div>
                     </div>
