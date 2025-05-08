@@ -76,7 +76,7 @@ foreach ($item as $aaa) {
 
     // ดึงชื่อผู้ใช้ที่ type_netflix ไม่เป็น null
     $users_check_user = users_in_in::whereDate('date_end', '>=', $date)
-        ->where('id_user_in', @$row->id_user_in) // ใช้ id_user_in แทน $row->id
+        ->where('id_user_in', @$row->id) // ใช้ id_user_in แทน $row->id
         ->pluck('id_user')
         ->toArray();
 
