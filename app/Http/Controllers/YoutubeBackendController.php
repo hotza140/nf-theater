@@ -1055,7 +1055,7 @@ class YoutubeBackendController extends Controller
         }
 
 
-        if($r->id==null){
+        if($r->id!=null){
             if($check==1){
                 return redirect()->to('y_users_in_edit/'.$r->id)->with('message', 'สร้างผู้ใช้สำเร็จ แต่มีบาง User ที่ไม่มี Account!');
             }else{
