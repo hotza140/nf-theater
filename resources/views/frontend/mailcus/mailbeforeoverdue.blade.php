@@ -82,7 +82,11 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align: center;padding:10px;">
-                <a class="button button3" href="{{route('frontend.login')}}"
+                {{-- <a class="button button3" href="{{route('frontend.login')}}"
+                    style="color: #e7e7e7 !important;">
+                    ต่ออายุ Package
+                </a> --}}
+                <a class="button button3" href="https://www.nf-theater.com/frontlogin"
                     style="color: #e7e7e7 !important;">
                     ต่ออายุ Package
                 </a>
