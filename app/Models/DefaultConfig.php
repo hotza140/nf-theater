@@ -12,4 +12,7 @@ class DefaultConfig extends Authenticatable
     protected $table = "tb_default_config";
     protected $primarykey = "id";
 
+    protected $fillable = [
+        'referrer_point','content_mail'
+    ];
 }

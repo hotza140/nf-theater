@@ -157,8 +157,10 @@ class PackageBackendController extends Controller
 
     public function updateDefault(Request $request) {
         $DefaultConfig = DefaultConfig::find(1);
-        $DefaultConfig->referrer_point = $request->referrer_point;
-        $DefaultConfig->save();
+        // $DefaultConfig->referrer_point = $request->referrer_point;
+        // $DefaultConfig->save();
+        $saveData = $request->all();
+        $DefaultConfig->update($saveData);
         return redirect()->to('package')->with('message','Sucess!');
     }
 }
