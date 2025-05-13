@@ -218,6 +218,41 @@
                 <!-- Page-body end -->
             </div>
 
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- Page-header start -->
+                    <div class="page-header card">
+                        @php
+                            $DefaultConfig = App\Models\DefaultConfig::find(1);
+                        @endphp
+                        <div class="dt-responsive table-responsive" style="padding: 25px;">
+                            <form action="{{route('backend.updateDefault')}}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <b>Config Content Mail Notify Before Overdue.</b>
+                                <div>
+                                    <div>{namecus} => หมายถึงชื่อลูกค้า </div>
+                                    <div>{dateend} => วันที่ใกล้หมาดอายุ</div>
+                                    <div>{package} => ชื่อแพ็คเกจใกล้หมดอายุ</div>
+                                </div>
+                                <table style="margin-top: 10px;width:100%">
+                                    <tr>
+                                        {{-- <td style="padding: 5px;">Content Mail : </td> --}}
+                                        <td style="padding: 5px;">
+                                            <div><Label>Content Mail : </Label></div>
+                                            <textarea name="content_mail" id="content_mail" style="width: 100%;height:80px;">{{$DefaultConfig->content_mail}}</textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        {{-- <td></td> --}}
+                                        <td style="padding : 10px;text-align:end"><button class="btn btn-primary">Change</button></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Main-body end -->
 

@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\users;
 use App\Models\users_in_in;
+use App\Models\DefaultConfig;
 
 class CheckBeforeOverdue extends Mailable
 {
@@ -35,6 +36,7 @@ class CheckBeforeOverdue extends Mailable
         $users = users::find($this->idbfOver);
         $users_in_in = users_in_in::where('id_user',$this->idbfOver)->first();
         $ImageLinklogo = $this->ImageLinklogo;
-        return $this->view('frontend.mailcus.mailbeforeoverdue',compact('users','users_in_in','ImageLinklogo'));
+        $DefaultConfig = DefaultConfig::find(1);
+        return $this->view('frontend.mailcus.mailbeforeoverdue',compact('users','users_in_in','ImageLinklogo','DefaultConfig'));
     }
 }

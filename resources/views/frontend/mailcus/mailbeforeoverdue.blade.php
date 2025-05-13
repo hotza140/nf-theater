@@ -63,15 +63,30 @@
             <td><img src="{{$message->embed($ImageLinklogo)}}" alt="" style="width: 80px;"></td>
             <td style="font-size: 28px;"><b>แจ้งการหมดอายุของ Package ที่ใช้บริการจาก NF THEATER.</b></td>
         </tr>
+        @php
+            $namecus = @$users->name;
+            $dateend = '<b style="color:#f44336;">'.date('d-m-Y',strtotime($users_in_in->date_end)).'</b>';
+            $package = $users->package;
+            // $msghows = "เรียนท่านผู้ใช้บริการ คุณ{namecus} ขณะนี้ท่านมีเวลาถึงวันที่ {dateend} ก่อนจะหมดเวลาในการต่ออายุ {package} โปรดตรวจสอบ!.";
+            $msghows = $DefaultConfig->content_mail;
+            $msghows = str_replace("{namecus}",$namecus,$msghows);
+            $msghows = str_replace("{dateend}",$dateend,$msghows);
+            $msghows = str_replace("{package}",$package,$msghows);
+        @endphp
         <tr>
             <td colspan="2">
-              เรียนท่านผู้ใช้บริการ คุณ{{$users->name}} ขณะท่านมีเวลาถึงวันที่ <b style="color:#f44336;">{{date('d-m-Y',strtotime($users_in_in->date_end))}}</b> 
-              ก่อนจะหมดเวลาในการต่ออายุ <b style="color:#008CBA;">{{$users->package}}</b> โปรดตรวจสอบ!.
+              {{-- เรียนท่านผู้ใช้บริการ คุณ{{$users->name}} ขณะนี้ท่านมีเวลาถึงวันที่ <b style="color:#f44336;">{{date('d-m-Y',strtotime($users_in_in->date_end))}}</b> 
+              ก่อนจะหมดเวลาในการต่ออายุ <b style="color:#008CBA;">{{$users->package}}</b> โปรดตรวจสอบ!. --}}
+              {!!$msghows!!}
             </td>
         </tr>
         <tr>
             <td colspan="2" style="text-align: center;padding:10px;">
-                <a class="button button3" href="{{route('frontend.login')}}"
+                {{-- <a class="button button3" href="{{route('frontend.login')}}"
+                    style="color: #e7e7e7 !important;">
+                    ต่ออายุ Package
+                </a> --}}
+                <a class="button button3" href="https://www.nf-theater.com/frontlogin"
                     style="color: #e7e7e7 !important;">
                     ต่ออายุ Package
                 </a>
