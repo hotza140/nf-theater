@@ -1055,7 +1055,7 @@ class UserFrontendController extends Controller
         $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
         // ลบเช็คเวลาผู้ใช้งานที่หมดอายุ
 
-        $vd = 3; // ตรวจสอบการแจ้งเตือนก่อน 3 วัน
+        $vd = 5; // ตรวจสอบการแจ้งเตือนก่อน 5 วัน
         $date = date('Y-m-d');
         $DaysLater = date('Y-m-d', strtotime("+$vd days"));
 
