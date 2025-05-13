@@ -305,7 +305,7 @@
                                                     }
 
                                                     if ($date_start) {
-                                                        $formatted_date1 = date('d/m/Y', strtotime($today));
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
                                                     } else {
                                                         $formatted_date1 = null;
                                                     }
@@ -339,7 +339,7 @@
                                                     }
 
                                                     if ($date_start) {
-                                                        $formatted_date1 = date('d/m/Y', strtotime($today));
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
                                                     } else {
                                                         $formatted_date1 = null;
                                                     }
