@@ -289,7 +289,7 @@
                                                     <?php
                                                     $date_start = $items->date_start; // วันที่เริ่มต้น (Y-m-d)
                                                     $date_end = $items->date_end; // วันที่สิ้นสุด (Y-m-d)
-                                                    $today = $items->date_start; // วันที่ปัจจุบัน
+                                                    $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
                                                     if ($date_start && $date_end) {
                                                         // if (strtotime($today) < strtotime($date_start)) {
