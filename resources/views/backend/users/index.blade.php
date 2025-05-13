@@ -301,11 +301,9 @@
                                                     $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
                                                     if ($date_start && $date_end) {
-                                                        // if (strtotime($today) < strtotime($date_start)) {
-                                                        //     $status = "ยังไม่เข้าช่วง";
-                                                        // } else
-                                                        
-                                                        if (strtotime($today) <= strtotime($date_end)) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) <= strtotime($date_end)) {
                                                             $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
                                                             $status = "เหลืออีก $days_remaining วัน";
                                                         } else {
@@ -337,10 +335,9 @@
                                                     $today = date('Y-m-d'); // วันที่ปัจจุบัน
 
                                                     if ($date_start && $date_end) {
-                                                        // if (strtotime($today) < strtotime($date_start)) {
-                                                        //     $status = "ยังไม่เข้าช่วง";
-                                                        // } else
-                                                        if (strtotime($today) <= strtotime($date_end)) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) <= strtotime($date_end)) {
                                                             $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
                                                             $status = "เหลืออีก $days_remaining วัน";
                                                         } else {
