@@ -94,7 +94,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password</label>
-                                                <input type="text" name="password" class="form-control" id="" readonly  value="{{@$password}}" placeholder="รหัสผ่าน" >
+                                                <input type="text" name="password" class="form-control" id=""   value="{{@$password}}" placeholder="รหัสผ่าน" >
                                             </div>
                                             @else
                                             <div class="col-sm-3">
@@ -104,7 +104,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password</label>
-                                                <input type="text" name="password" class="form-control" id="" readonly  value="" placeholder="รหัสผ่าน" >
+                                                <input type="text" name="password" class="form-control" id=""   value="" placeholder="รหัสผ่าน" >
                                             </div>
                                             @endif
                                         </div>

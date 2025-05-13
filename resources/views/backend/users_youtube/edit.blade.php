@@ -92,7 +92,7 @@
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password</label>
-                                                <input type="text" name="password" class="form-control" id="" readonly required  value="{{@$password}}" placeholder="รหัสผ่าน" >
+                                                <input type="text" name="password" class="form-control" id=""    value="{{@$password}}" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 
