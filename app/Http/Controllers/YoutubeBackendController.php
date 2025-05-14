@@ -1491,6 +1491,9 @@ class YoutubeBackendController extends Controller
         $item_his->save();
         }
 
+        $user->status_account=0;
+        $user->save();
+
        
         return redirect()->back()->with('message','Sucess!');
 

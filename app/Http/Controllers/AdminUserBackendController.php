@@ -2330,6 +2330,9 @@ $acc = users_in::whereNotNull('type_f')
         $item_his->save();
         }
 
+        $user->status_account=0;
+        $user->save();
+
        
         return redirect()->back()->with('message','Sucess!');
 
