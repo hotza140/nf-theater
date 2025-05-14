@@ -200,6 +200,20 @@
                                                         }
                                                     </style>
 
+<style>
+.clickable-span {
+  cursor: pointer;
+  color: #007bff; /* สีคล้ายลิงก์ */
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.clickable-span:hover {
+  text-decoration: underline;
+  color: #0056b3; /* สีตอน hover */
+}
+</style>
+
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
                                         <table id="" class="table table-striped table-bordered nowrap">
@@ -262,7 +276,8 @@
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>
                                                     @if($items->password==null)
-                                                    {{$items->username}} <span class="status-expired">ตัวแทน</span>
+                                                    {{$items->username}} <span class="status-expired">ตัวแทน</span> 
+                                                    <a href="{{url('users_all_destroy/'.$items->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>ลบทั้งหมด</a>
                                                     @else
                                                     {{$items->username}}
                                                         @endif
@@ -270,9 +285,24 @@
                                                     </td>
                                                     <td>{{$items->name}}
                                                     <a href="{{url('users_destroy/'.$items->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
-                                                        @foreach($t_users as $t_userss)
+                                                    @if($items->password==null)
+                                                    <?php
+                                                     $ggg=App\Models\users_in_in::where('id_user',@$items->id)->orderby('id','desc')->first();
+                                                     $ttt=DB::table('tb_users_in')->where('id',@$ggg->id_user_in)->first();
+                                                    ?>
+
+                                                    <span class="clickable-span" onclick="copyUserInfo_tan('{{@$ttt->name}}', '{{@$ttt->email}}', '{{@$ttt->password}}', '{{$items->username}}')">Copy</span>
+                                                    @endif    
+                                                    @foreach($t_users as $t_userss)
                                                         <br><a href="{{url('users_edit/'.$t_userss->id)}}" target="_blank">{{$t_userss->name}}</a>
                                                         <a href="{{url('users_destroy/'.$t_userss->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>Delete</a>
+                                                        @if($items->password==null)
+                                                        <?php
+                                                     $gggg=App\Models\users_in_in::where('id_user',@$t_userss->id)->orderby('id','desc')->first();
+                                                     $tttt=DB::table('tb_users_in')->where('id',@$gggg->id_user_in)->first();
+                                                    ?>
+                                                        <span class="clickable-span" onclick="copyUserInfo_tan('{{@$tttt->name}}', '{{@$tttt->email}}', '{{@$tttt->password}}', '{{$items->username}}')">Copy</span>
+                                                        @endif
                                                         @endforeach
                                                     </td>
                                                     <td>{{$items->line}}
@@ -387,9 +417,11 @@
                                                     <td>
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <!-- <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a> -->
+                                                        @if($items->password!=null)
                                                         <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$paga}}', '{{$link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
+                                                        @endif
                                                     </td>
 
                                                     <td>
@@ -426,6 +458,42 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+
+                                    <script>
+                                    function fallbackCopyTextToClipboard_tan(text) {
+                                        const textArea = document.createElement("textarea");
+                                        textArea.value = text;
+                                        document.body.appendChild(textArea);
+                                        textArea.focus();
+                                        textArea.select();
+                                        try {
+                                            document.execCommand("copy");
+                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                        } catch (err) {
+                                            console.error("คัดลอกไม่สำเร็จ: ", err);
+                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                                        }
+                                        document.body.removeChild(textArea);
+                                    }
+
+                                    function copyUserInfo_tan(name, email, password, username) {
+                                        let textToCopy = `ชื่อ Account : ${name}\nMail : ${email}\nPassword : ${password}\nชื่อโปรไฟล์: ${username}`;
+
+                                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                                alert("คัดลอกข้อมูลสำเร็จ!");
+                                            }).catch(err => {
+                                                console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                fallbackCopyTextToClipboard_tan(textToCopy);
+                                            });
+                                        } else {
+                                            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+                                            fallbackCopyTextToClipboard_tan(textToCopy);
+                                        }
+                                    }
+                                    </script>
+
 
                                     <script>
                                     function fallbackCopyTextToClipboard(text) {

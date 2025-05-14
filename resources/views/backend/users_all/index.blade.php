@@ -211,7 +211,7 @@
                                                     @endif
 
 
-                                                    @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0)
+                                                    @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0 or Auth::guard('admin')->user()->type == 3)
                                                 <td>
                                                      <form method="GET" action="{{url('y_users_add')}}" id="form{{$items->id}}" name="form{{$items->id}}" target="_blank">
                                                         @csrf
