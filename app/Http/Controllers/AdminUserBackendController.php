@@ -1183,11 +1183,11 @@ $acc = users_in::whereNotNull('type_f')
         $xxz=null;
         $acc=null;
         $item=new users();
-        // $ca=users::where('username',$r->username)->orderby('id','desc')->first();
+        $ca=users::whereNotNull('email')->where('email',$r->email)->orderby('id','desc')->first();
 
-        // if($ca!=null){
-        //         return redirect()->back()->with('message','Username Already Have in Data!');
-        //     }
+        if($ca!=null){
+                return redirect()->back()->with('message','Email Already Have in Data!');
+            }
 
         // if($r->password!=null){
         //     $item->password=Hash::make($r->password);
@@ -1364,10 +1364,10 @@ $acc = users_in::whereNotNull('type_f')
     }
     public function users_update(Request $r,$id){
         $item=users::where('id',$id)->first();
-        // $ca=users::where('id','!=',$id)->where('username',$r->username)->orderby('id','desc')->first();
-        // if($ca!=null){
-        //         return redirect()->back()->with('message','Username Already Have in Data!');
-        //     }
+        $ca=users::whereNotNull('email')->where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
+        if($ca!=null){
+                return redirect()->back()->with('message','Email Already Have in Data!');
+            }
 
         // if($r->password!=null){
         //     $item->password=Hash::make($r->password);
