@@ -586,7 +586,7 @@
 
 
 
-                                        @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0)
+                                        @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0 or Auth::guard('admin')->user()->type == 3)
                                         <li class="{{ isset($list) && $list == 'dashbord_y' ? 'active' : '' }}">
                                             <a href="{{ url('dashbord_y') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -596,7 +596,7 @@
                                         </li>
                                         @endif
 
-                                        @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0)
+                                        @if(Auth::guard('admin')->user()->type == 2 or Auth::guard('admin')->user()->type == 0 or Auth::guard('admin')->user()->type == 3)
                                         <li class="{{ isset($list) && $list == 'users_youtube' ? 'active' : '' }}">
                                             <a href="{{ url('y_users') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>

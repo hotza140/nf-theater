@@ -115,6 +115,8 @@
                                                     <td style="color: #dfce00;" >SUPER ADMIN</td>
                                                     @elseif($items->type==1)
                                                     <td style="color: #d712b5;" >Admin Netflix</td>
+                                                    @elseif($items->type==3)
+                                                    <td style="color:rgb(202, 13, 13);" >Master Admin Youtube</td>
                                                     @else
                                                     <td style="color: #ff0000;" >Admin Youtube</td>
                                                     @endif

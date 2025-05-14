@@ -38,6 +38,26 @@ use App\Models\created_history;
 class AdminUserBackendController extends Controller
 {
 
+
+    public function users_all_destroy($id){
+        $fff=users::where('id',$id)->first();
+        $item=users::whereNull('password')->where('username',$fff->username)->pluck('id')->toArray();
+
+
+        $vv = users_in_in::whereIn('id_user',$item)->pluck('id')->toArray();
+
+     
+        $aaa = users_in_in_history::whereIn('id_user_in_in',$vv)->update(['status_check' => 1]);
+
+        $de = users_in_in::whereIn('id_user',$item)->delete();
+
+        $ggg=users::whereNull('password')->where('username',$fff->username)->delete();
+
+
+        return redirect()->back()->with('message','Sucess!');
+    }
+
+
     public function youtube_in_yay(Request $r){
         $id=$r->id;
         $id_user_in=$r->id_user_in;
