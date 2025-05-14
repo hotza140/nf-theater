@@ -698,6 +698,8 @@
                                                         <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{@$user_aa->username}}', '{{@$user_aa->password}}', '{{@$user_aa->name}}', '{{@$paga}}', '{{@$link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
+
+                                                        <a href="{{url('users_edit/'.$user_ins->id_user)}}" target="_blank" class="btn btn-sm btn-danger"  style="color:white;">Edit</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach

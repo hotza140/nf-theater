@@ -52,11 +52,15 @@ class ApiController extends Controller
     {
         try {
 
+            $ddd = users_in_in::pluck('id')->ToArray();
+
       // ลบเช็คเวลา
 $date = date('Y-m-d');
-$item = users_in_in::whereDate('date_end', '<=', $date)
-    ->groupBy('id_user_in')
-    ->get();
+$item = users_in_in_history::whereDate('date_end', '<=', $date)
+->whereNotIn('id_user_in_in',$ddd)
+->whereNull('status_check')
+->groupBy('id_user_in')
+->get();
 // ลบเช็คเวลา
 
 $account = [];
@@ -75,8 +79,10 @@ foreach ($item as $aaa) {
     }
 
     // ดึงชื่อผู้ใช้ที่ type_netflix ไม่เป็น null
-    $users_check_user = users_in_in::whereDate('date_end', '<=', $date)
+    $users_check_user = users_in_in_history::whereDate('date_end', '<=', $date)
         ->where('id_user_in', @$row->id) // ใช้ id_user_in แทน $row->id
+        ->whereNotIn('id_user_in_in',$ddd)
+        ->whereNull('status_check')
         ->pluck('id_user')
         ->toArray();
 
