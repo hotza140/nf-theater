@@ -46,6 +46,7 @@ use App\Models\OrderPayPackageTruewallet;
 use App\Models\ConfirmMail;
 use App\Models\ConfirmOtp;
 use Illuminate\Support\Facades\Http;
+use App\Models\UserNotifymailLog;
 
 class UserFrontendController extends Controller
 {
@@ -861,7 +862,7 @@ class UserFrontendController extends Controller
         $ConfirmMail = ConfirmMail::where('username_confirm',$users->username)->where('email_confirm',$request->emailconfirm)->where('open_ck',2)->first();
         if($ConfirmMail) {
             return redirect()->back()->with('message',"warning! เมลนี้ ได้รับการยืนยันแล้วเป็นปัจจุบัน.");
-        }
+        } else if(@$users->email) return redirect()->back()->with('message',"warning! คุณมีเมลอยู่แล้วไม่ต้องยืนยันใหม่.");
         $messF = self::SendMailSMTPT1($request);
         return redirect()->back()->with('message',"{$messF}");
     }
@@ -1073,6 +1074,15 @@ class UserFrontendController extends Controller
         $users_bfover = users::find($idbfOver);
         $ImageLinklogo = public_path('assets/img/avata.png');
         Mail::to($users_bfover->email)->queue(new CheckBeforeOverdue($idbfOver,$ImageLinklogo));
+        UserNotifymailLog::create([
+            'user_id'   => $users_bfover->id,
+            'package'   => $users_bfover->package,
+            'name'      => $users_bfover->name,
+            'username'  => $users_bfover->username,
+            'email'     => $users_bfover->email,
+            'date_start'=> $users_bfover->date_start,
+            'date_end'  => $users_bfover->date_end,
+        ]);
         return response()->json(['idbfOver'=>$idbfOver]);
     }
     // --------------------------Send Mail beforeOverdue2-----------------------------//
@@ -1087,4 +1097,35 @@ class UserFrontendController extends Controller
         }
     }
     // --------------------------Update Time Online User-----------------------------//
+
+    public function searchTimeTestBeforeOverdue(Request $request) {
+        $users_testmail = users::where('username',@$request->userID)->first(); 
+        $users_in_intestmail = users_in_in::where('id_user',@$users_testmail->id)->first();
+        return response()->json(['user_testmail'=>$users_testmail,'users_in_intestmail'=>$users_in_intestmail]);
+    }
+    public function TestBeforeOverdue(Request $request) { 
+        // userID , userininId ,datestart_u ,dateend_u ,datestart ,dateend
+        $vd = 5; // ตรวจสอบการแจ้งเตือนก่อน 5 วัน
+        $date = date('Y-m-d');
+        $DaysLater = date('Y-m-d', strtotime("+$vd days"));
+        DB::update("UPDATE tb_users_in_in SET date_start='{$request->datestart}',date_end='{$request->dateend}' WHERE id = {$request->userininId};");
+        $checkSendMail = 0;
+        $users_check_user = users_in_in::whereDate('date_end', '>', $date)
+            ->whereDate('date_end', '<=', $DaysLater)->where('id_user',$request->userID)
+            ->pluck('id_user')
+            ->toArray();
+        $users_bfover = users::whereIn('id',@$users_check_user)->whereNotNull('email')->pluck('id')->toArray();
+        foreach ($users_bfover as $key => $value) {
+            # code...
+            self::beforeOverdueSentMail2($value);
+            $checkSendMail = 1;
+        }
+        DB::update("UPDATE tb_users_in_in SET date_start='{$request->datestart_u}',date_end='{$request->dateend_u}' WHERE id = {$request->userininId};");
+        return response()->json(['data'=>$checkSendMail]);
+    }
+
+    public function logmailnotify(Request $request) {
+        $UserNotifymailLog = UserNotifymailLog::paginate(30);
+        return view('backend.package.logmailnotify',compact('UserNotifymailLog'))->with('i', ($request->input('page', 1) - 1) * 10);
+    }
 }

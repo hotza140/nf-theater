@@ -35,7 +35,7 @@
                             @csrf
                             <label class="form-label text-form-h" id="emailconf">{!!@$ConfirmMailCK->email_confirm?'<b style="font-size:14px;">อีเมล์ที่ยืนยันปัจจุบัน</b>':'อีเมล์'!!}</label>
                                 <input class="form-control"
-                                value="{{@$ConfirmMailCK->email_confirm??''}}"
+                                value="{{@$usersCKmail->email??@$ConfirmMailCK->email_confirm??''}}"
                                 type="email" placeholder="กรุณาระบุอีเมล์" id="emailconfirm" name="emailconfirm"
                                 onkeydown="if('{{@$ConfirmMailCK->email_confirm??''}}'!='') document.getElementById('emailconf').innerHTML = `อีเมล์แก้ไขใหม่`">
                             <div class="form-member-bt"><button class="btn btn-primary bt-pay"
