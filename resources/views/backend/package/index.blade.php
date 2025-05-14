@@ -266,40 +266,42 @@
                         <i class="fa fa-refresh fa-spin"></i>Loading
                         </button> --}}
                         <div class="dt-responsive table-responsive" style="padding: 25px;">
-                            สามารถทดสอบ ได้ด้วยการกรอก user ที่ต้องการทดสอบที่เตรียมหรือสมัครไว้ที่ยังไม่หมดอายุหรือสม้คร package มาใหม่
-                            <table>
-                                <tr>
-                                    <td style="padding: 5px;">
-                                        <label for="">ป้อนรหัส user เพี่อทดสอบ</label><br>
-                                        <input type="text" name="user_u" id="user_u">
-                                    </td>
-                                    <td>
-                                        <br>
-                                        <button type="button" class="btn btn-warning" onclick="searchTimeTestBeforeOverdue(document.getElementById('user_u').value)">ค้นหา</button>
-                                    </td>
-                                    <td style="padding: 5px;">
-                                        <label for="">วันที่เริ่มต้น</label><br>
-                                        <input type="hidden" name="datestart_u" id="datestart_u">
-                                        <input type="date" name="datestart" id="datestart">
-                                    </td>
-                                    <td style="padding: 5px;">
-                                        <label for="">วันที่สิ้นสุด</label><br>
-                                        <input type="hidden" name="dateend_u" id="dateend_u">
-                                        <input type="date" name="dateend" id="dateend">
-                                    </td>
-                                    <td style="padding: 5px;">
-                                        <label for="">เมล</label><br>
-                                        <input type="text" name="mailtest" id="mailtest" readonly>
-                                    </td>
-                                    <td style="padding: 5px;">
-                                        <br>
-                                        <input type="hidden" name="userIDTmail" id="userIDTmail">
-                                        <input type="hidden" name="userininmail" id="userininmail">
-                                        <button type="button" class="btn btn-warning" id="btnw1" onclick="TestBeforeOverdue(document.getElementById('userIDTmail').value,document.getElementById('userininmail').value)">ทดสอบส่งเมล</button>
-                                        <button class="btn btn-warning buttonload" style="display: none" id="btnw2"><i class="fa fa-circle-o-notch fa-spin"></i>Waitting..</button>
-                                    </td>
-                                </tr>
-                            </table>     
+                            <div style="border-style: groove;padding:15px;">
+                                <b style="font-size: 18px;">*สามารถทดสอบ ได้ด้วยการกรอก user ที่ต้องการทดสอบที่เตรียมหรือสมัครไว้ที่ยังไม่หมดอายุหรือสม้คร package มาใหม่</b>
+                                <table>
+                                    <tr>
+                                        <td style="padding: 5px;">
+                                            <label for="">ป้อนรหัส user เพี่อทดสอบ</label><br>
+                                            <input type="text" name="user_u" id="user_u">
+                                        </td>
+                                        <td>
+                                            <br>
+                                            <button type="button" class="btn btn-warning" onclick="searchTimeTestBeforeOverdue(document.getElementById('user_u').value)">ค้นหา</button>
+                                        </td>
+                                        <td style="padding: 5px;">
+                                            <label for="">วันที่เริ่มต้น</label><br>
+                                            <input type="hidden" name="datestart_u" id="datestart_u">
+                                            <input type="date" name="datestart" id="datestart">
+                                        </td>
+                                        <td style="padding: 5px;">
+                                            <label for="">วันที่สิ้นสุด</label><br>
+                                            <input type="hidden" name="dateend_u" id="dateend_u">
+                                            <input type="date" name="dateend" id="dateend">
+                                        </td>
+                                        <td style="padding: 5px;">
+                                            <label for="">เมล</label><br>
+                                            <input type="text" name="mailtest" id="mailtest" readonly>
+                                        </td>
+                                        <td style="padding: 5px;">
+                                            <br>
+                                            <input type="hidden" name="userIDTmail" id="userIDTmail">
+                                            <input type="hidden" name="userininmail" id="userininmail">
+                                            <button type="button" class="btn btn-warning" id="btnw1" onclick="TestBeforeOverdue(document.getElementById('userIDTmail').value,document.getElementById('userininmail').value)">ทดสอบส่งเมล</button>
+                                            <button class="btn btn-warning buttonload" style="display: none" id="btnw2"><i class="fa fa-circle-o-notch fa-spin"></i>Waitting..</button>
+                                        </td>
+                                    </tr>
+                                </table>     
+                            </div>
                             <br>
                             <br>
                             &nbsp;&nbsp;<span style="font-size: 25px;"><b> Log Notify Mail ส่งให้ลูกค้า </b></span><br>

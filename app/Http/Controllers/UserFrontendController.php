@@ -1072,6 +1072,7 @@ class UserFrontendController extends Controller
     }
     public static function beforeOverdueSentMail2 ($idbfOver) {
         $users_bfover = users::find($idbfOver);
+        $user_in_in = users_in_in::where('id_user',$users_bfover->id)->first();
         $ImageLinklogo = public_path('assets/img/avata.png');
         Mail::to($users_bfover->email)->queue(new CheckBeforeOverdue($idbfOver,$ImageLinklogo));
         UserNotifymailLog::create([
@@ -1080,8 +1081,8 @@ class UserFrontendController extends Controller
             'name'      => $users_bfover->name,
             'username'  => $users_bfover->username,
             'email'     => $users_bfover->email,
-            'date_start'=> $users_bfover->date_start,
-            'date_end'  => $users_bfover->date_end,
+            'date_start'=> $user_in_in->date_start,
+            'date_end'  => $user_in_in->date_end,
         ]);
         return response()->json(['idbfOver'=>$idbfOver]);
     }
@@ -1125,7 +1126,18 @@ class UserFrontendController extends Controller
     }
 
     public function logmailnotify(Request $request) {
-        $UserNotifymailLog = UserNotifymailLog::paginate(30);
+        $search = @$request->search??'';
+        $datestart = @$request->datestart??'';
+        $dateend = @$request->dateend??'';
+        $UserNotifymailLog = UserNotifymailLog::query(); // better than select('*')
+        if(@$search) $UserNotifymailLog->where(function($qsr) use ($search) {
+            $qrr->orwhere('package','like',"%$search%");
+            $qrr->orwhere('name','like',"%$search%");
+            $qrr->orwhere('username','like',"%$search%");
+            $qrr->orwhere('email','like',"%$search%");
+        });
+        if(@$datestart && @$dateend) $UserNotifymailLog->whereDate('date_end', '>=', $datestart)->whereDate('date_end', '<=', $dateend);
+        $UserNotifymailLog = $UserNotifymailLog->paginate(30);
         return view('backend.package.logmailnotify',compact('UserNotifymailLog'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }

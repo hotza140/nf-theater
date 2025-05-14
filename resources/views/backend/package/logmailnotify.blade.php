@@ -17,6 +17,12 @@
     </style>
 </head>
 <body>
+    <div style="text-align: end">
+        Date Start : <input type="date" name="datestart" id="datestart" value="{{@$datestart}}">&nbsp;
+        Date End : <input type="date" name="dateend" id="dateend" value="{{@$dateend}}">&nbsp;
+        Find : <input type="text" name="search" id="search" value="{{@$search}}">&nbsp;
+        <input type="button" value="Find" onclick="document.location.href=`{{route('logmailnotify')}}?search=${document.getElementById('search').value}&datestart=${document.getElementById('datestart').value}&dateend=${document.getElementById('dateend').value}`">
+    </div>
     <div style="padding:15px;">
         <table style="width: 100%">
             <tr style="font-size: 18px; background-color: antiquewhite;height:50px;">
@@ -25,6 +31,7 @@
                 <th>username</th>
                 <th>email</th>
                 <th>package</th>
+                <th>date</th>
             </tr>
             @foreach($UserNotifymailLog as $key => $value)
                 <tr>
@@ -33,6 +40,7 @@
                     <td>{{$value->username}}</td>
                     <td>{{$value->email}}</td>
                     <td>{{$value->package}}</td>
+                    <td style="text-align: center;">{{date('d-m-Y',strtotime($value->date_end))}}</td>
                 </tr>
             @endforeach
         </table>
