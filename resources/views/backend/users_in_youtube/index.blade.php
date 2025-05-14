@@ -192,7 +192,7 @@
                                                     </td>
 
                                                     <td>
-                                                    @if(Auth::guard('admin')->user()->type == 0)    
+                                                    @if(Auth::guard('admin')->user()->type == 0 or Auth::guard('admin')->user()->type == 3)    
                                                     <!-- {{$items->password}} -->******
                                                     <button class="btn btn-sm btn-primary" style="float: right;" onclick="copyUserInfo_pass('{{$items->password}}')">
                                                             <i class="fa fa-copy"></i> Copy

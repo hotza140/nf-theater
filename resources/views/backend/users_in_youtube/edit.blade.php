@@ -115,7 +115,7 @@
                                                      required value="{{@$item->email}}">
                                             </div>
 
-                                            @if(Auth::guard('admin')->user()->type == 0)
+                                            @if(Auth::guard('admin')->user()->type == 0 or Auth::guard('admin')->user()->type == 3)
 
                                             <div class="col-sm-3">
                                                 <label class="col-form-label">Password*</label>

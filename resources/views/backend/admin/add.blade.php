@@ -60,6 +60,7 @@
                                                 <option @if(@$item->type == '0') selected @endif value="0">Super</option>
                                                 <option @if(@$item->type == '1') selected @endif value="1">Admin Netflix</option>
                                                 <option @if(@$item->type == '2') selected @endif value="2">Admin Youtube</option>
+                                                <option @if(@$item->type == '3') selected @endif value="3">Master Admin Youtube</option>
                                             </select>
                                             </div>
                                         </div>
