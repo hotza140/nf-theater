@@ -469,7 +469,7 @@
                                         textArea.select();
                                         try {
                                             document.execCommand("copy");
-                                            alert("คัดลอกข้อมูลสำเร็จ!");
+                                            // alert("คัดลอกข้อมูลสำเร็จ!");
                                         } catch (err) {
                                             console.error("คัดลอกไม่สำเร็จ: ", err);
                                             alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
