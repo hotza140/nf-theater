@@ -291,7 +291,7 @@
                                                      $ttt=DB::table('tb_users_in')->where('id',@$ggg->id_user_in)->first();
                                                     ?>
 
-                                                    <span class="clickable-span" onclick="copyUserInfo_tan('{{@$ttt->name}}', '{{@$ttt->email}}', '{{@$ttt->password}}', '{{$items->username}}')">Copy</span>
+                                                    <span class="clickable-span" onclick="copyUserInfo_tan('{{@$ttt->name}}', '{{@$ttt->email}}', '{{@$ttt->password}}', '{{$items->name}}')">Copy</span>
                                                     @endif    
                                                     @foreach($t_users as $t_userss)
                                                         <br><a href="{{url('users_edit/'.$t_userss->id)}}" target="_blank">{{$t_userss->name}}</a>
@@ -301,7 +301,7 @@
                                                      $gggg=App\Models\users_in_in::where('id_user',@$t_userss->id)->orderby('id','desc')->first();
                                                      $tttt=DB::table('tb_users_in')->where('id',@$gggg->id_user_in)->first();
                                                     ?>
-                                                        <span class="clickable-span" onclick="copyUserInfo_tan('{{@$tttt->name}}', '{{@$tttt->email}}', '{{@$tttt->password}}', '{{$items->username}}')">Copy</span>
+                                                        <span class="clickable-span" onclick="copyUserInfo_tan('{{@$tttt->name}}', '{{@$tttt->email}}', '{{@$tttt->password}}', '{{$items->name}}')">Copy</span>
                                                         @endif
                                                         @endforeach
                                                     </td>
