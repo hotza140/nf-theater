@@ -84,6 +84,8 @@ foreach ($item as $aaa) {
     ->pluck('name')
     ->toArray();
 
+    if (!empty($users_update)) {
+
     $email = @$row->email;
 
     if (!isset($account[$email])) {
@@ -98,6 +100,8 @@ foreach ($item as $aaa) {
         if (!in_array($name, $account[$email]['profile'])) {
             $account[$email]['profile'][] = $name;
         }
+    }
+
     }
 
 
