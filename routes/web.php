@@ -358,6 +358,10 @@ Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendContro
     Route::get('/register',[App\Http\Controllers\AdminUserBackendController::class,'register'])->name('register');
     Route::get('/verify',[App\Http\Controllers\AdminUserBackendController::class,'verify'])->name('verify');
 
+    Route::post('searchTimeTestBeforeOverdue',[App\Http\Controllers\UserFrontendController::class,'searchTimeTestBeforeOverdue'])->name('searchTimeTestBeforeOverdue');
+    Route::post('TestBeforeOverdue',[App\Http\Controllers\UserFrontendController::class,'TestBeforeOverdue'])->name('TestBeforeOverdue');
+    Route::get('logmailnotify',[App\Http\Controllers\UserFrontendController::class,'logmailnotify'])->name('logmailnotify');
+
   });
 
 

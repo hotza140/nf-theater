@@ -250,6 +250,63 @@
                                 </table>
                             </form>
                         </div>
+                        <!-- Add icon library -->
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+                        <!-- Add font awesome icons to buttons (note that the fa-spin class rotates the icon) -->
+                        {{-- <button class="buttonload">
+                        <i class="fa fa-spinner fa-spin"></i>Loading
+                        </button>
+
+                        <button class="buttonload">
+                        <i class="fa fa-circle-o-notch fa-spin"></i>Loading
+                        </button>
+
+                        <button class="buttonload">
+                        <i class="fa fa-refresh fa-spin"></i>Loading
+                        </button> --}}
+                        <div class="dt-responsive table-responsive" style="padding: 25px;">
+                            <div style="border-style: groove;padding:15px;">
+                                <b style="font-size: 18px;">*สามารถทดสอบ ได้ด้วยการกรอก user ที่ต้องการทดสอบที่เตรียมหรือสมัครไว้ที่ยังไม่หมดอายุหรือสม้คร package มาใหม่</b>
+                                <table>
+                                    <tr>
+                                        <td style="padding: 5px;">
+                                            <label for="">ป้อนรหัส user เพี่อทดสอบ</label><br>
+                                            <input type="text" name="user_u" id="user_u">
+                                        </td>
+                                        <td>
+                                            <br>
+                                            <button type="button" class="btn btn-warning" onclick="searchTimeTestBeforeOverdue(document.getElementById('user_u').value)">ค้นหา</button>
+                                        </td>
+                                        <td style="padding: 5px;">
+                                            <label for="">วันที่เริ่มต้น</label><br>
+                                            <input type="hidden" name="datestart_u" id="datestart_u">
+                                            <input type="date" name="datestart" id="datestart">
+                                        </td>
+                                        <td style="padding: 5px;">
+                                            <label for="">วันที่สิ้นสุด</label><br>
+                                            <input type="hidden" name="dateend_u" id="dateend_u">
+                                            <input type="date" name="dateend" id="dateend">
+                                        </td>
+                                        <td style="padding: 5px;">
+                                            <label for="">เมล</label><br>
+                                            <input type="text" name="mailtest" id="mailtest" readonly>
+                                        </td>
+                                        <td style="padding: 5px;">
+                                            <br>
+                                            <input type="hidden" name="userIDTmail" id="userIDTmail">
+                                            <input type="hidden" name="userininmail" id="userininmail">
+                                            <button type="button" class="btn btn-warning" id="btnw1" onclick="TestBeforeOverdue(document.getElementById('userIDTmail').value,document.getElementById('userininmail').value)">ทดสอบส่งเมล</button>
+                                            <button class="btn btn-warning buttonload" style="display: none" id="btnw2"><i class="fa fa-circle-o-notch fa-spin"></i>Waitting..</button>
+                                        </td>
+                                    </tr>
+                                </table>     
+                            </div>
+                            <br>
+                            <br>
+                            &nbsp;&nbsp;<span style="font-size: 25px;"><b> Log Notify Mail ส่งให้ลูกค้า </b></span><br>
+                            <iframe src="{{route('logmailnotify')}}" frameborder="0" id="ifm01" style="width: 100%;height:990px;"></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -302,6 +359,60 @@
         });
     });
 });
+
+function searchTimeTestBeforeOverdue(userID) { 
+    fetch('{{ route("searchTimeTestBeforeOverdue") }}', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userID }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if(data.users_in_intestmail!=null) {
+            document.getElementById('datestart').value = document.getElementById('datestart_u').value = data.users_in_intestmail.date_start;
+            document.getElementById('dateend').value = document.getElementById('dateend_u').value = data.users_in_intestmail.date_end;
+            document.getElementById('userIDTmail').value = data.users_in_intestmail.id_user;
+            document.getElementById('mailtest').value = data.user_testmail.email;
+            document.getElementById('userininmail').value = data.users_in_intestmail.id;
+            if(data?.user_testmail?.email?.trim()=='undefined'||data?.user_testmail?.email?.trim()==''||data?.user_testmail?.email?.trim()==null) alert('กรุณาเลือกท่านลูกค้าท่านใหม่ เพราะไม่มีเมลทดสอบ...');
+            // alert(data?.user_testmail?.email?.trim());
+        } else alert('No have data...')
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function TestBeforeOverdue(userID,userininId) { 
+    document.getElementById('btnw2').style.display = 'block';
+    document.getElementById('btnw1').style.display = 'none';
+    let datestart_u = document.getElementById('datestart_u').value;
+    let datestart = document.getElementById('datestart').value;
+    let dateend_u = document.getElementById('dateend_u').value;
+    let dateend = document.getElementById('dateend').value;
+    fetch('{{ route("TestBeforeOverdue") }}', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userID ,userininId ,datestart_u ,dateend_u ,datestart ,dateend }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if(data.data==1) alert('Sent test mail success.');
+        else alert('Sorry , not Sent mail.');
+        document.location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 </script>
 
 
