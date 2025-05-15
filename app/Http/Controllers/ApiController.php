@@ -56,7 +56,7 @@ class ApiController extends Controller
 
         // ลบเช็คเวลา
         $date = date('Y-m-d');
-        $item = users_in_in_history::withTrashed()->whereDate('date_end', '<=', $date)
+        $item = users_in_in_history::whereDate('date_end', '<=', $date)
         ->whereNotIn('id_user_in_in',$ddd)
         ->whereNull('status_check')
         ->groupBy('id_user_in')
@@ -67,19 +67,19 @@ $account = [];
 // dd($item);
 
 foreach ($item as $aaa) {
-    $row = users_in::withTrashed()->where('id',$aaa->id_user_in)->first();
+    $row = users_in::where('id',$aaa->id_user_in)->first();
 
     if($row!=null){
 
     // ดึงชื่อผู้ใช้ที่ type_netflix ไม่เป็น null
-    $users_check_user = users_in_in_history::withTrashed()->whereDate('date_end', '<=', $date)
+    $users_check_user = users_in_in_history::whereDate('date_end', '<=', $date)
     ->where('id_user_in', @$row->id) // ใช้ id_user_in แทน $row->id
     ->whereNotIn('id_user_in_in',$ddd)
     ->whereNull('status_check')
     ->pluck('id_user')
     ->toArray();
 
-    $users_update = users::withTrashed()->whereIn('id', $users_check_user)
+    $users_update = users::whereIn('id', $users_check_user)
     ->whereNotNull('type_netflix')
     ->pluck('name')
     ->toArray();
