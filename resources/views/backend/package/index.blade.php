@@ -289,8 +289,9 @@
                                             <input type="date" name="dateend" id="dateend">
                                         </td>
                                         <td style="padding: 5px;">
+                                            <input type="hidden" name="mailtest_u" id="mailtest_u">
                                             <label for="">เมล</label><br>
-                                            <input type="text" name="mailtest" id="mailtest" readonly>
+                                            <input type="text" name="mailtest" id="mailtest">
                                         </td>
                                         <td style="padding: 5px;">
                                             <br>
@@ -377,6 +378,7 @@ function searchTimeTestBeforeOverdue(userID) {
             document.getElementById('dateend').value = document.getElementById('dateend_u').value = data.users_in_intestmail.date_end;
             document.getElementById('userIDTmail').value = data.users_in_intestmail.id_user;
             document.getElementById('mailtest').value = data.user_testmail.email;
+            document.getElementById('mailtest_u').value = data.user_testmail.email;
             document.getElementById('userininmail').value = data.users_in_intestmail.id;
             if(data?.user_testmail?.email?.trim()=='undefined'||data?.user_testmail?.email?.trim()==''||data?.user_testmail?.email?.trim()==null) alert('กรุณาเลือกท่านลูกค้าท่านใหม่ เพราะไม่มีเมลทดสอบ...');
             // alert(data?.user_testmail?.email?.trim());
@@ -394,13 +396,14 @@ function TestBeforeOverdue(userID,userininId) {
     let datestart = document.getElementById('datestart').value;
     let dateend_u = document.getElementById('dateend_u').value;
     let dateend = document.getElementById('dateend').value;
+    let mailtest_u = document.getElementById('mailtest_u').value;
     fetch('{{ route("TestBeforeOverdue") }}', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userID ,userininId ,datestart_u ,dateend_u ,datestart ,dateend }),
+        body: JSON.stringify({ userID ,userininId ,datestart_u ,dateend_u ,datestart ,dateend ,mailtest_u }),
     })
     .then(response => response.json())
     .then(data => {
