@@ -37,6 +37,7 @@ class CustConfirmMail extends Mailable
         $emailconfirmIS = $this->emailconfirm;
         // $base64Image = $this->base64Image;
         $ImageLinklogo = $this->ImageLinklogo;
-        return $this->view('frontend.mailcus.mailtocusauto',compact('genTokenIS','emailconfirmIS','ImageLinklogo'))->subject($subject); // ,'base64Image'
+        return $this->subject('Confirm mail.')
+                    ->view('frontend.mailcus.mailtocusauto',compact('genTokenIS','emailconfirmIS','ImageLinklogo'))->subject($subject); // ,'base64Image'
     }
 }

@@ -1029,7 +1029,8 @@ class UserFrontendController extends Controller
         $users_bfover = users::find($request->idbfOver);
         $idbfOver = @$request->idbfOver??0;
         $ImageLinklogo = asset('assets/img/avata.png');
-        Mail::to($users_bfover->email)->send(new CheckBeforeOverdue($idbfOver,$ImageLinklogo));
+        $subjectIS = "แจ้งเตือน package ใกล้หมดอายุ.";
+        Mail::to($users_bfover->email)->queue(new CheckBeforeOverdue($idbfOver,$ImageLinklogo,$subjectIS));
         return response()->json(['idbfOver'=>$idbfOver]);
     }
     public function useCallBathCheck() {
@@ -1074,7 +1075,8 @@ class UserFrontendController extends Controller
         $users_bfover = users::find($idbfOver);
         $user_in_in = users_in_in::where('id_user',$users_bfover->id)->first();
         $ImageLinklogo = public_path('assets/img/avata.png');
-        Mail::to($users_bfover->email)->queue(new CheckBeforeOverdue($idbfOver,$ImageLinklogo));
+        $subjectIS = "แจ้งเตือน package ใกล้หมดอายุ.";
+        Mail::to($users_bfover->email)->queue(new CheckBeforeOverdue($idbfOver,$ImageLinklogo,$subjectIS));
         UserNotifymailLog::create([
             'user_id'   => $users_bfover->id,
             'package'   => $users_bfover->package,
