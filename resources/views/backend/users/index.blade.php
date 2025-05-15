@@ -301,7 +301,7 @@
                                                      $gggg=App\Models\users_in_in::where('id_user',@$t_userss->id)->orderby('id','desc')->first();
                                                      $tttt=DB::table('tb_users_in')->where('id',@$gggg->id_user_in)->first();
                                                     ?>
-                                                        <span class="clickable-span" onclick="copyUserInfo_tan('{{@$tttt->name}}', '{{@$tttt->email}}', '{{@$tttt->password}}', '{{$items->name}}')">Copy</span>
+                                                        <span class="clickable-span" onclick="copyUserInfo_tan('{{@$tttt->name}}', '{{@$tttt->email}}', '{{@$tttt->password}}', '{{@$t_userss->name}}')">Copy</span>
                                                         @endif
                                                         @endforeach
                                                     </td>
