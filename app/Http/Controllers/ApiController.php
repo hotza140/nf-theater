@@ -69,6 +69,7 @@ $account = [];
 foreach ($item as $aaa) {
     $row = users_in::where('id',$aaa->id_user_in)->first();
 
+    if($row!=null){
     $email = @$row->email;
 
     if (!isset($account[$email])) {
@@ -96,6 +97,7 @@ foreach ($item as $aaa) {
         if (!in_array($name, $account[$email]['profile'])) {
             $account[$email]['profile'][] = $name;
         }
+    }
     }
 }
             
