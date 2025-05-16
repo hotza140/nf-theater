@@ -59,6 +59,7 @@ class ApiController extends Controller
         $item = users_in_in_history::whereDate('date_end', '<=', $date)
         ->whereNotIn('id_user_in_in',$ddd)
         ->whereNull('status_check')
+        ->whereNull('api_status')
         ->groupBy('id_user_in')
         ->get();
         // ลบเช็คเวลา
@@ -164,6 +165,13 @@ foreach ($item as $aaa) {
 
                 $row->password=$newPassword;
                 $row->save();
+
+
+                $users_check_user = users_in_in_history::whereDate('date_end', '<=', $date)
+                ->where('id_user_in', @$row->id) // ใช้ id_user_in แทน $row->id
+                ->whereNotIn('id_user_in_in',$ddd)
+                ->whereNull('status_check')
+                ->update(['api_status' => '1']);
 
 
                 return response()->json([
