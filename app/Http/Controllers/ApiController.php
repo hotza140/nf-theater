@@ -135,12 +135,17 @@ foreach ($item as $aaa) {
 
 
 
-    public function api_call_bot_fall_back()
+    public function api_call_bot_fall_back(Request $r)
     {
         try {
 
-            $response = Http::get('https://example.com/api');
-            $data = $response->json();
+            $data = $r->all();
+            if (empty($data)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'ข้อมูลไม่ถูกต้อง'
+                ], 400);
+            }
 
             // ตรวจสอบว่า success เป็น true
             if ($data['success']) {
