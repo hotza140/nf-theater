@@ -1076,7 +1076,10 @@ class UserFrontendController extends Controller
         $user_in_in = users_in_in::where('id_user',$users_bfover->id)->first();
         $ImageLinklogo = public_path('assets/img/avata.png');
         $subjectIS = "แจ้งเตือน package ใกล้หมดอายุ.";
+        // Mail::to($users_bfover->email)->queue(new CheckBeforeOverdue($idbfOver,$ImageLinklogo,$subjectIS));
+
         Mail::to($users_bfover->email)->queue(new CheckBeforeOverdue($idbfOver,$ImageLinklogo,$subjectIS));
+
         UserNotifymailLog::create([
             'user_id'   => $users_bfover->id,
             'package'   => $users_bfover->package,
@@ -1112,7 +1115,7 @@ class UserFrontendController extends Controller
         $date = date('Y-m-d');
         $DaysLater = date('Y-m-d', strtotime("+$vd days"));
         DB::update("UPDATE tb_users_in_in SET date_start='{$request->datestart}',date_end='{$request->dateend}' WHERE id = {$request->userininId};");
-        DB::update("UPDATE tb_users SET mailtest_u='{$request->mailtest}' WHERE id = {$request->userID};");
+        DB::update("UPDATE tb_users SET email='{$request->mailtest}' WHERE id = {$request->userID};");
         $checkSendMail = 0;
         $users_check_user = users_in_in::whereDate('date_end', '>', $date)
             ->whereDate('date_end', '<=', $DaysLater)->where('id_user',$request->userID)
@@ -1125,7 +1128,7 @@ class UserFrontendController extends Controller
             $checkSendMail = 1;
         }
         DB::update("UPDATE tb_users_in_in SET date_start='{$request->datestart_u}',date_end='{$request->dateend_u}' WHERE id = {$request->userininId};");
-        DB::update("UPDATE tb_users SET mailtest_u='{$request->mailtest_u}' WHERE id = {$request->userID};");
+        DB::update("UPDATE tb_users SET email='{$request->mailtest_u}' WHERE id = {$request->userID};");
         return response()->json(['data'=>$checkSendMail]);
     }
 

@@ -397,13 +397,14 @@ function TestBeforeOverdue(userID,userininId) {
     let dateend_u = document.getElementById('dateend_u').value;
     let dateend = document.getElementById('dateend').value;
     let mailtest_u = document.getElementById('mailtest_u').value;
+    let mailtest = document.getElementById('mailtest').value;
     fetch('{{ route("TestBeforeOverdue") }}', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userID ,userininId ,datestart_u ,dateend_u ,datestart ,dateend ,mailtest_u }),
+        body: JSON.stringify({ userID ,userininId ,datestart_u ,dateend_u ,datestart ,dateend ,mailtest_u ,mailtest }),
     })
     .then(response => response.json())
     .then(data => {
