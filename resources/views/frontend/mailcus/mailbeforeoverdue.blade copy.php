@@ -1,4 +1,10 @@
-
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Send Mail NTL.</title>
+    <meta name="description" content="Reset Password Email Template.">
     <style>
         .button {
           background-color: #04AA6D; /* Green */
@@ -36,7 +42,8 @@
           text-decoration: none;
         }
     </style>
-
+</head>
+<body>
     <table>
         <tr>
             <td><img src="{{$message->embed($ImageLinklogo)}}" alt="" style="width: 80px;"></td>
@@ -66,3 +73,5 @@
             </td>
         </tr>
     </table>
+</body>
+</html>
