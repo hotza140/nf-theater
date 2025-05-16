@@ -138,47 +138,38 @@ foreach ($item as $aaa) {
     public function api_call_bot_fall_back()
     {
         try {
-            // เรียก API ภายนอก
+
             $response = Http::get('https://example.com/api');
-            $data = $response->json(); // แปลง JSON เป็น array
-    
-            // ตรวจสอบสถานะ success ก่อนทำอย่างอื่น
-            if (isset($data['success']) && $data['success'] === true) {
-                $email = $data['email'] ?? null;
-                $newPassword = $data['new_password'] ?? null;
-    
-                // กรณีมี profile
-                $profiles = $data['profile'] ?? [];
-    
-                $profileResults = [];
-    
-                foreach ($profiles as $profileName => $profileData) {
-                    if ($profileData['success']) {
-                        $profileResults[] = [
-                            'name' => $profileName,
-                            'new_profile' => $profileData['new_profile']
-                        ];
-                    } else {
-                        $profileResults[] = [
-                            'name' => $profileName,
-                            'error' => $profileData['reason']
-                        ];
-                    }
+            $data = $response->json();
+
+            // ตรวจสอบว่า success เป็น true
+            if ($data['success']) {
+                $email = $data['email'];
+                $newPassword = $data['new_password'];
+                $profile=$data['profile'];
+
+                $row = users_in::whereNull('type_f')->where('email',$email)->first();
+
+                if($row==null){
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'ไม่พบบัญชีที่ตรงกัน'
+                    ], 400);
                 }
-    
+
+                $row->password=$newPassword;
+                $row->save();
+
+
                 return response()->json([
                     'status' => true,
-                    'email' => $email,
-                    'new_password' => $newPassword,
-                    'profiles' => $profileResults
+                    'message' => 'success!.'
                 ]);
+
             } else {
-                // กรณี success = false
                 return response()->json([
                     'status' => false,
-                    'email' => $data['email'] ?? null,
-                    'new_password' => $data['new_password'] ?? null,
-                    'message' => $data['reason'] ?? 'ไม่สามารถดำเนินการได้'
+                    'message' => 'ไม่สามารถดำเนินการได้'
                 ], 400);
             }
     
