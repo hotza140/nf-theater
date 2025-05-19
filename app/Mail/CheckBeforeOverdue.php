@@ -38,7 +38,15 @@ class CheckBeforeOverdue extends Mailable
         $users_in_in = users_in_in::where('id_user',$this->idbfOver)->first();
         $ImageLinklogo = $this->ImageLinklogo;
         $DefaultConfig = DefaultConfig::find(1);
+        $namecus = @$users->name;
+        $dateend = date('d-m-Y',strtotime($users_in_in->date_end));
+        $package = $users->package;
+        // $msghows = "เรียนท่านผู้ใช้บริการ คุณ{namecus} ขณะนี้ท่านมีเวลาถึงวันที่ {dateend} ก่อนจะหมดเวลาในการต่ออายุ {package} โปรดตรวจสอบ!.";
+        $msghows = $DefaultConfig->content_mail;
+        $msghows = str_replace("{namecus}",'',$msghows);
+        $msghows = str_replace("{dateend}",'',$msghows);
+        $msghows = str_replace("{package}",$package,$msghows);
         return $this->subject($this->subjectIS)
-                ->view('frontend.mailcus.mailbeforeoverdue',compact('users','users_in_in','ImageLinklogo','DefaultConfig'));
+                ->view('frontend.mailcus.mailbeforeoverdue',compact('users','users_in_in','ImageLinklogo','DefaultConfig','msghows','dateend'));
     }
 }

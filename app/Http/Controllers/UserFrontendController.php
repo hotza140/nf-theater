@@ -47,6 +47,8 @@ use App\Models\ConfirmMail;
 use App\Models\ConfirmOtp;
 use Illuminate\Support\Facades\Http;
 use App\Models\UserNotifymailLog;
+use App\Http\Controllers\ArticleController;
+use App\Mail\TestMail;
 
 class UserFrontendController extends Controller
 {

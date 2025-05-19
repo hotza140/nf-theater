@@ -364,4 +364,4 @@ Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendContro
 
   });
 
-
+  Route::get('testmail',[App\Http\Controllers\ArticleController::class,'testmail']);
