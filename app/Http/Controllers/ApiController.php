@@ -140,6 +140,8 @@ foreach ($item as $aaa) {
     {
         try {
 
+            $date=date('Y-m-d');
+
             $data = $r->all();
             if (empty($data)) {
                 return response()->json([
