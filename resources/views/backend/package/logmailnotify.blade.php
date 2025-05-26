@@ -45,7 +45,7 @@
             @endforeach
         </table>
     </div> 
-    <div class="col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-2">
+    <div class="col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-2 ml-2">
         <nav class="w-full sm:w-auto sm:mr-auto">
             {{ $UserNotifymailLog->appends(Request::except('page'))->links() }}
         </nav>
