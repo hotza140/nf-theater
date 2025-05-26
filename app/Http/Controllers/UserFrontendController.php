@@ -1146,6 +1146,7 @@ class UserFrontendController extends Controller
             $qrr->orwhere('email','like',"%$search%");
         });
         if(@$datestart && @$dateend) $UserNotifymailLog->whereDate('date_end', '>=', $datestart)->whereDate('date_end', '<=', $dateend);
+        $UserNotifymailLog->orderby('date_end','DESC');
         $UserNotifymailLog = $UserNotifymailLog->paginate(30);
         return view('backend.package.logmailnotify',compact('UserNotifymailLog'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
