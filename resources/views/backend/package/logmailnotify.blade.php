@@ -46,7 +46,7 @@
         </table>
     </div> 
     <div class="col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-2 ml-2">
-        <nav class="w-full sm:w-auto sm:mr-auto">
+        <nav class="w-full sm:w-auto sm:mr-auto" style="margin-left:20px;">
             {{ $UserNotifymailLog->appends(Request::except('page'))->links() }}
         </nav>
         {{-- <select class="w-20 form-select box mt-3 sm:mt-0" onchange="reloadpage(0,this.value)" id="selectpage">
