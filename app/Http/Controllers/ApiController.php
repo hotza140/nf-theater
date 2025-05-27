@@ -168,6 +168,8 @@ foreach ($item as $aaa) {
                 $row->password=$newPassword;
                 $row->save();
 
+                $ddd = users_in_in::pluck('id')->ToArray();
+
 
                 $users_check_user = users_in_in_history::whereDate('date_end', '<=', $date)
                 ->where('id_user_in', @$row->id) // ใช้ id_user_in แทน $row->id
