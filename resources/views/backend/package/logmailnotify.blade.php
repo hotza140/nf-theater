@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {{-- <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Krona+One&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Prompt&amp;display=swap"> --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Prompt&amp;display=swap">
     {{-- <link rel="stylesheet" href="assets/css/styles.css"> --}}
     {{-- <link rel="stylesheet" href="assets/css/Edit-Form.css"> --}}
     <title>Document</title>
@@ -45,8 +45,8 @@
             @endforeach
         </table>
     </div> 
-    <div class="col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-2">
-        <nav class="w-full sm:w-auto sm:mr-auto">
+    <div class="col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-2 ml-2">
+        <nav class="w-full sm:w-auto sm:mr-auto" style="margin-left:20px;">
             {{ $UserNotifymailLog->appends(Request::except('page'))->links() }}
         </nav>
         {{-- <select class="w-20 form-select box mt-3 sm:mt-0" onchange="reloadpage(0,this.value)" id="selectpage">

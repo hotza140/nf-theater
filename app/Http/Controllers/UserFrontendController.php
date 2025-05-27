@@ -1140,13 +1140,14 @@ class UserFrontendController extends Controller
         $dateend = @$request->dateend??'';
         $UserNotifymailLog = UserNotifymailLog::query(); // better than select('*')
         if(@$search) $UserNotifymailLog->where(function($qsr) use ($search) {
-            $qrr->orwhere('package','like',"%$search%");
-            $qrr->orwhere('name','like',"%$search%");
-            $qrr->orwhere('username','like',"%$search%");
-            $qrr->orwhere('email','like',"%$search%");
+            $qsr->orwhere('package','like',"%$search%");
+            $qsr->orwhere('name','like',"%$search%");
+            $qsr->orwhere('username','like',"%$search%");
+            $qsr->orwhere('email','like',"%$search%");
         });
         if(@$datestart && @$dateend) $UserNotifymailLog->whereDate('date_end', '>=', $datestart)->whereDate('date_end', '<=', $dateend);
+        $UserNotifymailLog->orderby('date_end','DESC');
         $UserNotifymailLog = $UserNotifymailLog->paginate(30);
-        return view('backend.package.logmailnotify',compact('UserNotifymailLog'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return view('backend.package.logmailnotify',compact('UserNotifymailLog','search','datestart','dateend'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 }
