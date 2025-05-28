@@ -95,6 +95,8 @@
                                             <option  value="1" @if(@$status_account==1) selected  @endif >หมดอายุ</option>
                                             <option  value="2" @if(@$status_account==2) selected  @endif >Account ที่ใกล้หมดอายุ 1 วัน</option>
                                             <option  value="3" @if(@$status_account==3) selected  @endif >ค้นหาจากกลุ่มวันหมดอายุของ User</option>
+                                            <option  value="4" @if(@$status_account==4) selected  @endif >ค้นหาบ้านที่ Open</option>
+                                            <option  value="5" @if(@$status_account==5) selected  @endif >ค้นหาบ้านที่ Close</option>
                                             </select>
                                             </div>
                                             <div class="col-sm-2">

@@ -2032,6 +2032,13 @@ $acc = users_in::whereNotNull('type_f')
                     $item = $item->whereBetween('date_end', [$date, date('Y-m-d', strtotime('+3 days', strtotime($date)))]);
                 }
 
+                elseif ($status_account == '4') {
+                    $item = $item->where('open',0);
+                }
+                elseif ($status_account == '5') {
+                    $item = $item->where('open',1);
+                }
+
                 $item = $item->orderBy('id', 'desc')->paginate(10);
             }
 

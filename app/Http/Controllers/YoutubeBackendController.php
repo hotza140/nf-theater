@@ -1292,6 +1292,12 @@ class YoutubeBackendController extends Controller
                 }elseif ($status_account == '44') {
                     $item = $item->where('t_house','บ้านต่ออายุ');
                 }
+                elseif ($status_account == '4') {
+                    $item = $item->where('open',0);
+                }
+                elseif ($status_account == '5') {
+                    $item = $item->where('open',1);
+                }
 
                 $item = $item->orderBy('id', 'desc')->paginate(10);
             }

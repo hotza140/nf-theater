@@ -93,6 +93,8 @@
                                             <option  value="999" @if(@$status_account==999) selected  @endif >ทั้งหมด</option>
                                             <option  value="0" @if(@$status_account==0) selected  @endif >ยังไม่หมดอายุ</option>
                                             <option  value="3" @if(@$status_account==3) selected  @endif >ค้นหาจากกลุ่มวันหมดอายุของ User</option>
+                                            <option  value="4" @if(@$status_account==4) selected  @endif >ค้นหาบ้านที่ Open</option>
+                                            <option  value="5" @if(@$status_account==5) selected  @endif >ค้นหาบ้านที่ Close</option>
 
                                             <optgroup label="สถานะบ้าน">                                          
                                             <option value="11" @if(@$status_account==11) selected @endif>ปกติ</option>
