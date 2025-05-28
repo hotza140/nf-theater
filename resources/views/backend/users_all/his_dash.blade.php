@@ -94,7 +94,7 @@
                                             </thead>
                                             <tbody class="">
                                             @foreach($item as $key=>$items)
-                                            <?php  $date_start = $items->created_at;   $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                            <?php  $date_start = $items->created_at;   $formatted_date1 = date('d/m/Y H:i', strtotime($date_start));
                                              $in=DB::table('tb_users_in_in_history')->where('id',$items->id_in_in_history)->first(); 
                                              $admin=DB::table('tb_admin')->where('id',$items->id_user)->first();
                                              $acc=DB::table('tb_users_in')->where('id',@$in->id_user_in)->first(); 
