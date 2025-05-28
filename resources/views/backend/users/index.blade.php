@@ -418,10 +418,37 @@
                                                     <a href="{{url('users_edit/'.$items->id)}}" class="btn btn-sm btn-warning" style="color:white;"><i class="fa fa-gear"></i>Edit</a>
                                                         <!-- <a href="{{url('users_destroy/'.$items->id)}}" class="btn btn-sm btn-danger" onclick="javascript:return confirm('Confirm?')"  style="color:white;"><i class="fa fa-trash"></i>Delete</a> -->
                                                         @if($items->password!=null)
-                                                        <button class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$paga}}', '{{$link}}')">
+                                                        <button type="button" class="btn btn-sm btn-primary" onclick="copyUserInfo('{{$items->username}}', '{{$items->password}}', '{{$items->name}}', '{{@$paga}}', '{{$link}}')">
                                                             <i class="fa fa-copy"></i> Copy
                                                         </button>
                                                         @endif
+
+
+                                                        @if($items->password==null)
+                                                        <?php  $ars = App\Models\users::whereNotNull('type_netflix')->where('username',$items->username)->orderBy('id','asc')->get();  ?>
+                                                        @php
+                                                        $userDataList = [];
+                                                        @endphp
+
+                                                        @foreach($ars as $arss)
+                                                            @php
+                                                                $userIn = App\Models\users_in_in::where('id_user', $arss->id)->orderBy('id', 'desc')->first();
+                                                                $userDetails = DB::table('tb_users_in')->where('id', $userIn->id_user_in ?? null)->first();
+
+                                                                if ($userDetails) {
+                                                                    $userDataList[] = [
+                                                                        'account' => $userDetails->name,
+                                                                        'email' => $userDetails->email,
+                                                                        'password' => $userDetails->password,
+                                                                        'profile' => $arss->name
+                                                                    ];
+                                                                }
+                                                            @endphp
+                                                        @endforeach
+
+                                                        <button type="button" class="btn btn-sm btn-primary" onclick="copyAllUserInfo()"><i class="fa fa-copy"></i>Copy ทั้งหมด</button>
+                                                        @endif
+
                                                     </td>
 
                                                     <td>
@@ -458,6 +485,51 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+
+
+
+                                    <script>
+                                    const allUserData = @json($userDataList);
+
+                                    function fallbackCopyTextToClipboard_tan(text) {
+                                        const textArea = document.createElement("textarea");
+                                        textArea.value = text;
+                                        document.body.appendChild(textArea);
+                                        textArea.focus();
+                                        textArea.select();
+                                        try {
+                                            document.execCommand("copy");
+                                        } catch (err) {
+                                            console.error("คัดลอกไม่สำเร็จ: ", err);
+                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                                        }
+                                        document.body.removeChild(textArea);
+                                    }
+
+                                    function copyAllUserInfo() {
+                                        let textToCopy = '';
+                                        allUserData.forEach((user, index) => {
+                                            textToCopy += `--- ชุดที่ ${index + 1} ---\n`;
+                                            textToCopy += `ชื่อ Account : ${user.account}\n`;
+                                            textToCopy += `Mail : ${user.email}\n`;
+                                            textToCopy += `Password : ${user.password}\n`;
+                                            textToCopy += `ชื่อโปรไฟล์: ${user.profile}\n\n`;
+                                        });
+
+                                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                                alert("คัดลอกข้อมูลทั้งหมดสำเร็จ!");
+                                            }).catch(err => {
+                                                console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                fallbackCopyTextToClipboard_tan(textToCopy);
+                                            });
+                                        } else {
+                                            fallbackCopyTextToClipboard_tan(textToCopy);
+                                        }
+                                    }
+                                </script>
+
 
 
                                     <script>
