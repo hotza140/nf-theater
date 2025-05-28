@@ -1240,7 +1240,7 @@ $acc = users_in::whereNotNull('type_f')
         $xxz=null;
         $acc=null;
         $item=new users();
-        $ca=users::whereNotNull('email')->where('email',$r->email)->orderby('id','desc')->first();
+        $ca=users::whereNotNull('type_netflix')->whereNotNull('email')->where('email',$r->email)->orderby('id','desc')->first();
 
         if($ca!=null){
                 return redirect()->back()->with('message','Email Already Have in Data!');
@@ -1421,7 +1421,7 @@ $acc = users_in::whereNotNull('type_f')
     }
     public function users_update(Request $r,$id){
         $item=users::where('id',$id)->first();
-        $ca=users::whereNotNull('email')->where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
+        $ca=users::whereNotNull('type_netflix')->whereNotNull('email')->where('id','!=',$id)->where('email',$r->email)->orderby('id','desc')->first();
         if($ca!=null){
                 return redirect()->back()->with('message','Email Already Have in Data!');
             }
