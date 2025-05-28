@@ -116,7 +116,9 @@ Route::post('OnlineUserUpdatetimeNow',[App\Http\Controllers\UserFrontendControll
 
 Route::group(['middleware' => ['admin']],function(){
   Route::post('/youtube_in_yay',[App\Http\Controllers\AdminUserBackendController::class,'youtube_in_yay']);
-
+  
+  Route::post('/save_pass',[App\Http\Controllers\AdminUserBackendController::class,'save_pass']);
+  
   Route::get('/y_users_in_line/{id}',[App\Http\Controllers\AdminUserBackendController::class,'y_users_in_line']);
   Route::get('/users_in_line/{id}',[App\Http\Controllers\AdminUserBackendController::class,'users_in_line']);
 

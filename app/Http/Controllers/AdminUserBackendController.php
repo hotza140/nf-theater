@@ -32,11 +32,23 @@ use App\Models\country;
 use App\Models\alert;
 use App\Models\log_dash;
 use App\Models\dash_regis_to;
+use App\Models\delete_pass;
 
 use App\Models\created_history;
 
 class AdminUserBackendController extends Controller
 {
+
+    public function save_pass(Request $r){
+        $item=delete_pass::first();
+        if($item==null){
+            $item=new delete_pass();
+        }
+        $item->text=$r->text;
+        $item->save();
+        return redirect()->back()->with('message','Sucess!');
+    }
+
     public function users_in_line($id){
 
         $all=users_in_in::where('id_user_in',$id)->pluck('id_user')->ToArray();

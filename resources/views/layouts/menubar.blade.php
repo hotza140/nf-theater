@@ -730,6 +730,45 @@
         </div>
 
 
+<!-- ยืนยันก่อนลบ Delete -->
+<?php $textsss = DB::table('delete_pass')->first(); ?>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // ดึงรหัสผ่านจาก PHP
+  const deletePassword = @json($textsss->text ?? null);
+
+  const elems = document.querySelectorAll('[onclick*="confirm("]');
+  
+  elems.forEach(el => {
+    const html = el.innerHTML.trim();
+
+    if (
+      html === '<i class="fa fa-trash"></i>Delete' ||
+      html === '<i class="fa fa-trash"></i>ลบทั้งหมด'
+    ) {
+      el.onclick = function(event) {
+        if (!deletePassword) {
+          alert('ยังไม่ตั้งค่ารหัสผ่านสำหรับการลบ');
+          event.preventDefault();
+          return false;
+        }
+
+        const password = prompt('กรุณากรอกรหัสเพื่อยืนยันการลบ:');
+        if (password === deletePassword) {
+          return true;
+        } else {
+          alert('รหัสผิด! ไม่สามารถลบได้');
+          event.preventDefault();
+          return false;
+        }
+      }
+    }
+  });
+});
+</script>
+    <!-- ยืนยันก่อนลบ Delete -->
+
+
         <!-- คลุมดำ -->
         <script>
         document.querySelectorAll('input[type="text"]').forEach(function(input) {

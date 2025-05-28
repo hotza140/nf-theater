@@ -76,6 +76,27 @@
 
                                     <a style="color:white;" class="btn btn-success" href="{{url('admin_add')}}"> <i class="fa fa-plus"></i> Add</a>
 
+
+                                    <br>
+                                    <div class="form-group row">
+                                        <form class="form-horizontal" action="{{url('save_pass')}}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <?php $text=DB::table('delete_pass')->first(); ?>
+
+                                        <h3>เปลี่ยน Password การลบ</h3>
+
+                                            <div class="col-sm-2">
+                                                <input type="text" name="text" value="{{@$text->text}}">
+                                            </div>
+
+                                            <div class="col-sm-1">
+                                                <button type="submit" class="btn btn-warning" style="color:white;" onclick="javascript:return confirm('Confirm?')" >
+                                                    <i class="fa fa-check-circle-o"></i> Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                        </form>
+
                                 </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
