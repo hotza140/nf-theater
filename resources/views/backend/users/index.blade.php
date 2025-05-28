@@ -238,6 +238,10 @@
 
                                                 </tr>
                                             </thead>
+
+                                            @php
+                                            $allUserData = [];
+                                            @endphp
                                             <!-- <tbody class="sortable"> -->
                                             <tbody class="">
                                             @foreach($item as $key=>$items)
@@ -425,13 +429,11 @@
 
 
                                                         @if($items->password==null)
-                                                        <?php  $ars = App\Models\users::whereNotNull('type_netflix')->where('username',$items->username)->orderBy('id','asc')->get();  ?>
                                                         @php
-                                                        $userDataList = [];
-                                                        @endphp
+                                                            $ars = App\Models\users::whereNotNull('type_netflix')->where('username', $items->username)->orderBy('id', 'asc')->get();
+                                                            $userDataList = [];
 
-                                                        @foreach($ars as $arss)
-                                                            @php
+                                                            foreach ($ars as $arss) {
                                                                 $userIn = App\Models\users_in_in::where('id_user', $arss->id)->orderBy('id', 'desc')->first();
                                                                 $userDetails = DB::table('tb_users_in')->where('id', $userIn->id_user_in ?? null)->first();
 
@@ -440,13 +442,18 @@
                                                                         'account' => $userDetails->name,
                                                                         'email' => $userDetails->email,
                                                                         'password' => $userDetails->password,
-                                                                        'profile' => $arss->name
+                                                                        'profile' => $arss->name,
                                                                     ];
                                                                 }
-                                                            @endphp
-                                                        @endforeach
+                                                            }
 
-                                                        <button type="button" class="btn btn-sm btn-primary" onclick="copyAllUserInfo()"><i class="fa fa-copy"></i>Copy ทั้งหมด</button>
+                                                            // เก็บ array นี้ไว้ใน $allUserData ด้วย key
+                                                            $allUserData[$key] = $userDataList;
+                                                        @endphp
+
+                                                        <button type="button" class="btn btn-sm btn-primary" onclick="copyAllUserInfo('{{ $key }}')">
+                                                            <i class="fa fa-copy"></i> Copy ทั้งหมด
+                                                        </button>
                                                         @endif
 
                                                     </td>
@@ -487,12 +494,10 @@
                                     </div>
 
 
-
-
                                     <script>
-                                    const allUserData = @json($userDataList);
+                                    const allUserData = @json($allUserData);
 
-                                    function fallbackCopyTextToClipboard_tan(text) {
+                                    function fallbackCopyTextToClipboard_tan_all(text) {
                                         const textArea = document.createElement("textarea");
                                         textArea.value = text;
                                         document.body.appendChild(textArea);
@@ -500,6 +505,7 @@
                                         textArea.select();
                                         try {
                                             document.execCommand("copy");
+                                            alert("คัดลอกสำเร็จ");
                                         } catch (err) {
                                             console.error("คัดลอกไม่สำเร็จ: ", err);
                                             alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
@@ -507,28 +513,36 @@
                                         document.body.removeChild(textArea);
                                     }
 
-                                    function copyAllUserInfo() {
+                                    function copyAllUserInfo(key) {
                                         let textToCopy = '';
-                                        allUserData.forEach((user, index) => {
+                                        let data = allUserData[key] || [];
+
+                                        data.forEach((user, index) => {
                                             textToCopy += `--- ชุดที่ ${index + 1} ---\n`;
-                                            textToCopy += `ชื่อ Account : ${user.account}\n`;
-                                            textToCopy += `Mail : ${user.email}\n`;
-                                            textToCopy += `Password : ${user.password}\n`;
-                                            textToCopy += `ชื่อโปรไฟล์: ${user.profile}\n\n`;
+                                            textToCopy += `ชื่อ Account : ${user.account || '-'}\n`;
+                                            textToCopy += `Mail : ${user.email || '-'}\n`;
+                                            textToCopy += `Password : ${user.password || '-'}\n`;
+                                            textToCopy += `ชื่อโปรไฟล์: ${user.profile || '-'}\n\n`;
                                         });
+
+                                        if (!textToCopy.trim()) {
+                                            alert("ไม่มีข้อมูลให้คัดลอก");
+                                            return;
+                                        }
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
                                             navigator.clipboard.writeText(textToCopy).then(() => {
                                                 alert("คัดลอกข้อมูลทั้งหมดสำเร็จ!");
                                             }).catch(err => {
                                                 console.error('คัดลอกไม่สำเร็จ: ', err);
-                                                fallbackCopyTextToClipboard_tan(textToCopy);
+                                                fallbackCopyTextToClipboard_tan_all(textToCopy);
                                             });
                                         } else {
-                                            fallbackCopyTextToClipboard_tan(textToCopy);
+                                            fallbackCopyTextToClipboard_tan_all(textToCopy);
                                         }
                                     }
                                 </script>
+
 
 
 
