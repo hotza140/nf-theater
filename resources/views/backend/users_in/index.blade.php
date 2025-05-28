@@ -220,7 +220,7 @@
                                                         </button>
 
 
-                                                        <a href="{{url('users_in_line/'.$items->id)}}" class="btn btn-sm btn-danger" target="_blank"  style="color:white;">All Line</a>
+                                                        <a href="{{url('users_in_line/'.$items->id)}}" class="btn btn-sm btn-warning" target="_blank"  style="color:white;">All Line</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
