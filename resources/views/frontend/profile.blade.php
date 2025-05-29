@@ -6,7 +6,7 @@
     <div class="profile-plans">
         <button class="btn btn-primary logout-bt" type="button"
             onclick="document.location.href=`{{url('profile_change')}}`;">
-            </svg>Change Profile</button>&nbsp;
+            </svg>สลับโปรไฟล์/แพ็กเกจ</button>&nbsp; <!--Change Profile-->
 
         <button class="btn btn-primary logout-bt" type="button"
             onclick="document.location.href=`{{route('logoutfrontend')}}`;">
@@ -25,16 +25,16 @@
     <div class="container profile-plans-white" style="padding-right: 24px;">
         <div class="row">
             <div class="col-12 col-sm-2 d-flex d-sm-flex justify-content-center align-items-sm-center">
-                <div class="img-profile-a"><img class="net-profile-icon" src="assets/img/Frame%201%20(1).png" 
-                        alt="Netflix Icon">
-                    {{-- <div class="edit-icon"><a data-bs-target="#modal-edit-img" data-bs-toggle="modal"><button
+                <div class="img-profile-a">
+                    <img class="net-profile-icon imgprofileIS" src="assets/img/Frame%201%20(1).png" alt="Netflix Icon">
+                    <div class="edit-icon"><a data-bs-target="#modal-edit-img01" data-bs-toggle="modal"><button
                                 class="btn btn-primary edit-bt" type="button" style="padding: 6px;"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                     viewBox="0 0 16 16" class="bi bi-pencil">
                                     <path
                                         d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z">
                                     </path>
-                                </svg></button></a></div> --}}
+                                </svg></button></a></div>
                 </div>
             </div>
             <div class="col d-flex align-items-center">
@@ -47,24 +47,24 @@
                                 ?>
 
                     {{-- @if(@$selectNfYt=='NetFlix') --}}
-                    <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Username :
+                    <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Username :</b>
                         {{@$users->username}}</h2>
                     @if(@$userProfile->type_netflix==1)
                     <div id="showUNetflix">
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Profile :
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Profile :</b>
                             {{@$userProfile->utypename}}</h2>
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package :
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Package :</b>
                             @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
 
 
                         <!-- <br> -->
                         @if(@$userProfile->type_mail==null)
 
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID :
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Account ID :</b>
                             {{@$ac->email}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
-                            <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i>Password :
+                            <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i><b>Password :</b>
                             {{@$ac->password}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
@@ -73,22 +73,22 @@
                         @else
 
                         @if(@$pak->type_mail==1)
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID :
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Account ID :</b>
                             {{@$ac->email01}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
-                            <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i>Password :
+                            <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i><b>Password :</b>
                             {{@$ac->password01}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
 
                         <!-- <h2 class="pass-profile">Password : {{@$ac->password01}}<span id="passwordnf"></span></h2> -->
                         @else
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Account ID :
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Account ID :</b>
                             {{@$ac->email02}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
-                            <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i>Password :
+                            <h2 class="pack-h2" style="color:red;" ><i class="fas fa-user" style="margin-right: 5px;"></i><b>Password :</b>
                             {{@$ac->password02}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
@@ -131,7 +131,7 @@
                                 ?>
 
                         @if(@$pak->date_start!=null)
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>วันสิ้นสุด {{@$formatted_date2}} </h2>
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>วันสิ้นสุด</b> {{@$formatted_date2}} </h2>
                         @endif
                     </div>
                     @endif
@@ -139,9 +139,9 @@
                     @if(@$userProfile->type_youtube==1)
                     <div id="showUYoutube">
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Youtube Package.</h2>
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Email : <!--Profile-->
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Email :</b> <!--Profile-->
                             {{@$userProfile->useremail}}</h2>
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package :
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Package :</b>
                             @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
                         <!--<p class="mail-profile">Account Email: : {{--@$ac->email--}}<span id="emailYT"></span></p>-->
                         <!--nftheater134+27@gmail.com-->
@@ -181,7 +181,7 @@
                                                     ?>
 
                         @if(@$pak->date_start!=null)
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>วันสิ้นสุด {{@$formatted_date2}} </h2>
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>วันสิ้นสุด</b> {{@$formatted_date2}} </h2>
                         @endif
 
                     </div>
@@ -293,6 +293,8 @@
                     src="assets/img/NF4%20(1).png"></a></div>
         <div class="box-link-m"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img
                     src="assets/img/NF6%20(1).png"></a></div>
+        <div class="box-link-m"><a href="{{route('frontend.Helpmanage')}}" target="_blank"><img
+                    src="assets/img/NF_help01.png"></a></div>
     </div>
 </div>
 <div>
@@ -391,6 +393,35 @@
                 </div>
                 <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;"><button
                         class="btn btn-primary bt-pay" type="button">ชำระเงิน</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-edit-img01" style="margin-top: 150px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="h-pop">
+                        <h4 class="modal-title" style="color: var(--bs-emphasis-color);">แก้ไขโปรไฟล์รูปภาพ</h4>
+                    </div>
+                    <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                    </div>
+                </div>
+                <form action="{{route('frontend.changepassusercus')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-div">
+                            <img class="net-profile-icon imgprofileIS" src="assets/img/Frame%201%20(1).png" alt="Netflix Icon" id="imgprofile">
+                        </div>
+                        <div class="form-div"><label class="form-label"
+                                style="color: var(--bs-emphasis-color);">รูปถาพโปรไฟล์</label><input accept="image/*" name="picture"
+                                class="form-control" type="file" onchange="document.getElementById('imgprofile').src=window.URL.createObjectURL(this.files[0])"></div>
+                    </div>
+                    <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px; display:none;">
+                        <button class="btn btn-primary bt-pay" id="SaveChgPass">บันทึกการแก้ไข</button></div>
+                </form>
+                <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;"><button
+                        class="btn btn-primary bt-pay"
+                        onclick="document.getElementById('SaveChgPass').click()">บันทึกการแก้ไข</button></div>
             </div>
         </div>
     </div>
@@ -639,4 +670,40 @@
     document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;
     document.getElementById('ProfileBtn').style = `display:none;`;
 </script>
+
+<script>
+    function ShowSlipImgProfile(img,path) {
+        fetch('{{route('frontend.getimgSlipBase64')}}', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                _token : "{{csrf_token()}}",
+                img,path
+            }),
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data }))) // Get status + body
+        .then(({ status, body }) => {
+            console.log('Success:', body , status);
+            if(status==200) {
+                let imgPrfile = document.querySelectorAll('.imgprofileIS'); //.src = body.img;
+                imgPrfile.forEach(element => {
+                    element.src = body.img;
+                });
+            } 
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+@if(@$userCKReferFrst->picture)
+    <script>
+        ShowSlipImgProfile('{{$userCKReferFrst->picture}}','imguser/{{$userCKReferFrst->username}}'); 
+    </script>
+@endif
+
+
 @endsection
