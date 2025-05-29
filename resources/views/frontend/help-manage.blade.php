@@ -9,7 +9,7 @@
 
 <div class="net-container" style="text-align: center;">
     <h1 class="head-pro">NF THEATER</h1>
-    <h3>เลือกแพ็กเกจที่จะต่ออายุ</h3>
+    <h3>วิธีใช้งานโปรแกรม</h3>
 </div>
 
 <!--ส่วนของปุ่มไว้เลือกรายการบริการเช่น netflix youtube confirm service customer etc.-->
