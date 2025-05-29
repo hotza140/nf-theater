@@ -23,7 +23,7 @@
                 <div class="net-plan-info" style="width: 100%">
                     <div class="net-plan-details">
                         <h2 class="pack-h2" style="color: aliceblue;">{{$itemHpm->helpma_Name}}</h2>
-                        <p class="pack-h3"> <img src="{{asset('/img/upload/helpma/'.$itemHpm->picture)}}" alt="" style="width: 100%"> </p>
+                        <p class="pack-h3"> <img src="{{asset('/img/upload/helpma/'.$itemHpm->picture)}}" alt="" style="width: 100%;border-radius:15px;"> </p>
                     </div>
                 </div>
             </div>

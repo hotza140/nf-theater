@@ -60,7 +60,7 @@
                         <!-- <br> -->
                         @if(@$userProfile->type_mail==null)
 
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Account ID :</b>
+                        <h2 class="pack-h2" style="color:red;"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Account ID :</b>
                             {{@$ac->email}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
@@ -73,7 +73,7 @@
                         @else
 
                         @if(@$pak->type_mail==1)
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Account ID :</b>
+                        <h2 class="pack-h2" style="color:red;"><i class="fas fa-user" style="margin-right: 5px;color:red;"></i><b>Account ID :</b>
                             {{@$ac->email01}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
@@ -84,7 +84,7 @@
 
                         <!-- <h2 class="pass-profile">Password : {{@$ac->password01}}<span id="passwordnf"></span></h2> -->
                         @else
-                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Account ID :</b>
+                        <h2 class="pack-h2" style="color:red;"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Account ID :</b>
                             {{@$ac->email02}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
@@ -409,8 +409,8 @@
                 <form action="{{route('frontend.changepassusercus')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-div">
-                            <img class="net-profile-icon imgprofileIS" src="assets/img/Frame%201%20(1).png" alt="Netflix Icon" id="imgprofile">
+                        <div class="form-div text-center">
+                            <img class="net-profile-icon imgprofileIS" src="assets/img/Frame%201%20(1).png" alt="Netflix Icon" id="imgprofile" style="width: 280px;">
                         </div>
                         <div class="form-div"><label class="form-label"
                                 style="color: var(--bs-emphasis-color);">รูปถาพโปรไฟล์</label><input accept="image/*" name="picture"
