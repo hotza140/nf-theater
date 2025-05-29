@@ -347,7 +347,7 @@ Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendContro
     //gift
 
     //helpma
-    Route::get('helpma',[App\Http\Controllers\HelpmaBackendController::class,'helpma']);
+    Route::get('helpma',[App\Http\Controllers\HelpmaBackendController::class,'helpma'])->name('helpma');
     Route::get('helpma_destroy/{id}',[App\Http\Controllers\HelpmaBackendController::class,'helpma_destroy']);
     Route::get('helpma_add',[App\Http\Controllers\HelpmaBackendController::class,'helpma_add']);
     Route::post('helpma_store',[App\Http\Controllers\HelpmaBackendController::class,'helpma_store']);
