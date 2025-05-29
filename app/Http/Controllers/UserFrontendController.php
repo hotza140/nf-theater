@@ -49,6 +49,7 @@ use Illuminate\Support\Facades\Http;
 use App\Models\UserNotifymailLog;
 use App\Http\Controllers\ArticleController;
 use App\Mail\TestMail;
+use App\Models\Helpma;
 
 class UserFrontendController extends Controller
 {
@@ -652,6 +653,39 @@ class UserFrontendController extends Controller
 
     public function changepassusercus(Request $request) {
         $validator = \Validator::make($request->all(), [
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', // max size in KB
+        ]);
+        
+        if ($validator->fails()) {
+            // return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->with('message','Image Wrong type or maxsize !');
+        }
+        
+        $userCurrentimg = Auth::guard('users')->user();
+        $users = users::find($userCurrentimg->id);
+
+        if($request->picture!=null){
+            $uploadedFile=$request->picture;
+            $fileName = $uploadedFile->getClientOriginalName();
+            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif']; // , 'pdf', 'doc', 'docx', 'xls', 'xlsx'
+            if (in_array($fileExtension, $allowedExtensions)) {
+                if (\Storage::disk('frongdrv')->exists('Frongdrv/imguser/'.$users->username.'/'.$users->picture)) {
+                    \Storage::disk('frongdrv')->delete('Frongdrv/imguser/'.$users->username.'/'.$users->picture);
+                }
+                $picture = $_FILES['picture']['name'];
+                $picture = date('YmdHis').'_'.$picture;
+                \Storage::disk('frongdrv')->put('Frongdrv/imguser/'.$users->username.'/'.$picture, file_get_contents($request->file('picture')));
+                $users->picture = $picture;
+                $users->save();
+            }
+        }
+
+        return redirect()->back()->with('message','Success!');
+    }
+
+    public function changepassusercus02(Request $request) {
+        $validator = \Validator::make($request->all(), [
             'oldpass' => 'required',
             'newpass' => 'required|min:6',
             'newpassre' => 'required|same:newpass',
@@ -1149,5 +1183,10 @@ class UserFrontendController extends Controller
         $UserNotifymailLog->orderby('date_end','DESC');
         $UserNotifymailLog = $UserNotifymailLog->paginate(30);
         return view('backend.package.logmailnotify',compact('UserNotifymailLog','search','datestart','dateend'))->with('i', ($request->input('page', 1) - 1) * 10);
+    }
+
+    public function Helpmanage(Request $request) {
+        $Helpmanage = Helpma::orderby('type_no','asc')->get();
+        return view('frontend.help-manage',compact('Helpmanage'));
     }
 }

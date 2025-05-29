@@ -211,6 +211,9 @@
                                         </table>
                                     </form>
                                 </div>
+                                <div class="dt-responsive table-responsive" style="padding: 25px;">
+                                    <button class="btn btn-primary" onclick="document.location.href=`{{route('helpma')}}`">Click Help Program Manage</button>
+                                </div>
                             </div>
                         </div>
                     </div>

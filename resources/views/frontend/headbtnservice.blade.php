@@ -21,29 +21,30 @@
         <div class="box-link-m"><a class="cursor-box" onclick="shareAndCopyTF(`https://lin.ee/jgB0ld5`);"><img src="assets/img/NF5%20(1).png"></a></div>
         <div class="box-link-m"><a class="cursor-box" data-bs-toggle="modal" data-bs-target="#modal-points"><img src="assets/img/NF4%20(1).png"></a></div>
         <div class="box-link-m"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img src="assets/img/NF6%20(1).png"></a></div>
+        <div class="box-link-m"><a href="{{route('frontend.Helpmanage')}}" target="_blank"><img src="assets/img/NF_help01.png"></a></div>
     </div>
 </div>
 
 <script>
     document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;
-    showmargin();
-    function showmargin() {
-        let dlinkin = document.querySelector('.d-link-in');
-        let boxlinkm = document.querySelectorAll('.box-link-m');
-        let widthall = 0;
-        let heightIS = 0;
-        boxlinkm.forEach(element => {
-            widthall += element.offsetWidth;
-            heightIS  = element.offsetHeight;
-        });
-        dlinkin.style = `margin-left: ${((dlinkin.offsetWidth-widthall+210)/2)}px;`;
-        let boxlinkmImg = document.querySelectorAll('.box-link-m img')
-        boxlinkmImg.forEach(element => {
-            element.style = `width:107%;`;
-        });
-    }
-    window.addEventListener('resize', () => {
-        // console.log('Window resized. New width:', document.body.clientWidth);
-        showmargin();
-    });
+    // showmargin();
+    // function showmargin() {
+    //     let dlinkin = document.querySelector('.d-link-in');
+    //     let boxlinkm = document.querySelectorAll('.box-link-m');
+    //     let widthall = 0;
+    //     let heightIS = 0;
+    //     boxlinkm.forEach(element => {
+    //         widthall += element.offsetWidth;
+    //         heightIS  = element.offsetHeight;
+    //     });
+    //     // dlinkin.style = `margin-left: ${((dlinkin.offsetWidth-widthall)/2)}px;`; // +210
+    //     let boxlinkmImg = document.querySelectorAll('.box-link-m img')
+    //     boxlinkmImg.forEach(element => {
+    //         element.style = `width:100%;`;
+    //     });
+    // }
+    // window.addEventListener('resize', () => {
+    //     // console.log('Window resized. New width:', document.body.clientWidth);
+    //     // showmargin();
+    // });
 </script>

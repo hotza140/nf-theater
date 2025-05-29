@@ -24,7 +24,7 @@
         @endif
         {{-- <button class="btn btn-primary logout-bt" type="button" id="ReferFriend" onclick="shareAndCopyTF(`https://lin.ee/jgB0ld5`);">แนะนำเพื่อน</button> --}}
         {{-- <button class="btn btn-primary logout-bt" type="button" id="RewardsBtn" onclick="document.location.href=`{{route('frontend.rewards')}}`;">Rewards</button> --}}
-        <button class="btn btn-primary logout-bt" type="button" id="ProfileBtn" onclick="document.location.href=`{{route('frontend.profile')}}`;">Profile</button>
+        <button class="btn btn-primary logout-bt" type="button" id="ProfileBtn" onclick="document.location.href=`{{route('frontend.profile')}}`;">หน้าหลัก</button> <!--Profile-->
     </div>
     @yield('contentfront')
     

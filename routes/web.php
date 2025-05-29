@@ -92,7 +92,7 @@ Route::group(['middleware' => ['users']],function(){
     Route::post('confirmOTPck',[App\Http\Controllers\UserFrontendController::class,'confirmOTPck'])->name('frontend.confirmOTPck');
     Route::post('sentOTPtoMck',[App\Http\Controllers\UserFrontendController::class,'sentOTPtoMck'])->name('frontend.sentOTPtoMck');
 
-    
+    Route::get('Helpmanage',[App\Http\Controllers\UserFrontendController::class,'Helpmanage'])->name('frontend.Helpmanage');
 });
 
 // image Slip Base64
@@ -345,6 +345,16 @@ Route::get('y_users_status_edit/{id}',[App\Http\Controllers\YoutubeBackendContro
     Route::post('gift_update/{id}',[App\Http\Controllers\GiftBackendController::class,'gift_update']);
     Route::post('gift_open_close',[App\Http\Controllers\GiftBackendController::class,'gift_open_close']);
     //gift
+
+    //helpma
+    Route::get('helpma',[App\Http\Controllers\HelpmaBackendController::class,'helpma'])->name('helpma');
+    Route::get('helpma_destroy/{id}',[App\Http\Controllers\HelpmaBackendController::class,'helpma_destroy']);
+    Route::get('helpma_add',[App\Http\Controllers\HelpmaBackendController::class,'helpma_add']);
+    Route::post('helpma_store',[App\Http\Controllers\HelpmaBackendController::class,'helpma_store']);
+    Route::get('helpma_edit/{id}',[App\Http\Controllers\HelpmaBackendController::class,'helpma_edit']);
+    Route::post('helpma_update/{id}',[App\Http\Controllers\HelpmaBackendController::class,'helpma_update']);
+    Route::post('helpma_open_close',[App\Http\Controllers\HelpmaBackendController::class,'helpma_open_close']);
+    //helpma
 
     //orderpaypackage
     Route::get('orderpaypackage',[App\Http\Controllers\OrderPayPackageController::class,'orderpaypackage']);
