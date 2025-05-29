@@ -52,7 +52,7 @@ class AdminUserBackendController extends Controller
     public function users_in_line($id){
 
         $all=users_in_in::where('id_user_in',$id)->pluck('id_user')->ToArray();
-        $item=users::whereIn('id',$all)->pluck('line')->ToArray();
+        $item=users::whereIn('id',$all)->pluck('link_line')->ToArray();
 
         return view('backend.users_in.users_in_line',[
             'item'=>$item,
@@ -65,7 +65,7 @@ class AdminUserBackendController extends Controller
     public function y_users_in_line($id){
 
         $all=users_in_in::where('id_user_in',$id)->pluck('id_user')->ToArray();
-        $item=users::whereIn('id',$all)->pluck('line')->ToArray();
+        $item=users::whereIn('id',$all)->pluck('link_line')->ToArray();
 
         return view('backend.users_in_youtube.y_users_in_line',[
             'item'=>$item,
