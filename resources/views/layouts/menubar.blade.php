@@ -855,7 +855,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
       <script>
-   $(document).ready(function() {
+$(document).ready(function() {
     var table = $('.db_table').DataTable({
         dom: '<"wrapper"B>',
         buttons: [
@@ -863,20 +863,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 extend: 'excel',
                 filename: '{{ isset($pageName) ? $pageName : "Export_data" }}',
                 exportOptions: {
-                        modifier: {
-                            page: 'all' // ทำให้ export ข้อมูลทั้งหมด
-                        }
-                },
+                    modifier: {
+                        page: 'all'
+                    }
+                }
             }
-        ]
-    });
-
-    $('.db_table').addClass('hidden-table');
-    $('.buttons-excel').addClass('hidden-button');
-
-    $('.export_excel_file').off('click').on('click', function() {
-        // table.button('.buttons-excel').trigger('click');
-        $('.buttons-excel').trigger('click');
+        ],
+        stateSaveCallback: function(settings, data) {
+            localStorage.setItem('DataTables_' + settings.sInstance, JSON.stringify(data));
+        },
+        stateLoadCallback: function(settings) {
+            return JSON.parse(localStorage.getItem('DataTables_' + settings.sInstance));
+        }
     });
 });
 </script>
