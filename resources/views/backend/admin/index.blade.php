@@ -85,8 +85,39 @@
 
                                         <h3>เปลี่ยน Password การลบ</h3>
 
+                                        <input type="hidden" name="ttt" value="0">
+
                                             <div class="col-sm-2">
                                                 <input type="text" name="text" value="{{@$text->text}}">
+                                            </div>
+
+                                            <div class="col-sm-1">
+                                                <button type="submit" class="btn btn-warning" style="color:white;" onclick="javascript:return confirm('Confirm?')" >
+                                                    <i class="fa fa-check-circle-o"></i> Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                        </form>
+
+
+
+
+
+                                        <br>
+                                    <div class="form-group row">
+                                        <form class="form-horizontal" action="{{url('save_pass')}}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <?php $text=DB::table('delete_pass')->first(); ?>
+
+                                        <input type="hidden" name="ttt" value="1">
+
+                                        <h3>เปลี่ยน ข้อความ User Coppy </h3>
+
+                                            <div class="col-sm-2">
+                                                <input type="text" name="title1" value="{{@$text->title1}}">
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <input type="text" name="title2" value="{{@$text->title2}}">
                                             </div>
 
                                             <div class="col-sm-1">

@@ -52,12 +52,24 @@ class AdminUserBackendController extends Controller
     }
 
     public function save_pass(Request $r){
-        $item=delete_pass::first();
-        if($item==null){
-            $item=new delete_pass();
+
+        if($r->ttt=0){
+            $item=delete_pass::first();
+            if($item==null){
+                $item=new delete_pass();
+            }
+            $item->text=$r->text;
+            $item->save();
+        }elseif($r->ttt=1){
+            $item=delete_pass::first();
+            if($item==null){
+                $item=new delete_pass();
+            }
+            $item->title1=$r->title1;
+            $item->title2=$r->title2;
+            $item->save();
         }
-        $item->text=$r->text;
-        $item->save();
+       
         return redirect()->back()->with('message','Sucess!');
     }
 
@@ -358,7 +370,7 @@ public function dashbord_y(Request $r){
  $accounts=users_in_in::whereIn('id',@$users_check)->delete();
  $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
  // ลบเช็คเวลา
- 
+
    $date=date('Y-m-d');
    $startDate = date('Y-m-d', strtotime('+4 days', strtotime($date))); // มากกว่า 3 วัน (เริ่มจากวันที่ 4)
    $endDate = date('Y-m-d', strtotime('+7 days', strtotime($date))); // ไม่เกิน 7 วัน
