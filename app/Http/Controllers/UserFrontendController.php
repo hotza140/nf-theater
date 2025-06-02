@@ -922,6 +922,7 @@ class UserFrontendController extends Controller
             $users = users::where('username',$ConfirmMail->username_confirm)->get();
             foreach ($users as $key => $value) {
                 # code...
+                $value->otp_status_email = date('Y-m-d');
                 $value->email = $ConfirmMail->email_confirm;
                 $value->save();
             }
@@ -981,6 +982,7 @@ class UserFrontendController extends Controller
                 $users = users::where('username',$users->username)->get();
                 foreach ($users as $key => $value) {
                     # code...
+                    $value->otp_status_phone = date('Y-m-d');
                     $value->phone = $phone;
                     $value->save();
                 }
