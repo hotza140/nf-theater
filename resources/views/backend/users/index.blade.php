@@ -494,7 +494,18 @@
                                     </div>
 
 
+                                    @php
+                                        $t_ddd = \App\Models\delete_pass::first();
+                                    @endphp
+
+
                                     <script>
+
+                                    const labels = {
+                                        package: @json(@$t_ddd->title1),
+                                        link: @json(@$t_ddd->title2)
+                                    };
+                                    
                                     const allUserData = @json($allUserData);
 
                                     function fallbackCopyTextToClipboard_tan_all(text) {
@@ -544,6 +555,10 @@
                                 </script>
 
 
+                                    @php
+                                        $t_ddd = \App\Models\delete_pass::first();
+                                    @endphp
+
 
 
                                     <script>
@@ -562,6 +577,11 @@
                                         }
                                         document.body.removeChild(textArea);
                                     }
+
+                                    const labels = {
+                                        package: @json(@$t_ddd->title1),
+                                        link: @json(@$t_ddd->title2)
+                                    };
 
                                     function copyUserInfo_tan(name, email, password, username) {
                                         let textToCopy = `ชื่อ Account : ${name}\nMail : ${email}\nPassword : ${password}\nชื่อโปรไฟล์: ${username}`;

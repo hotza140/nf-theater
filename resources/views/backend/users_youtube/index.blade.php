@@ -419,6 +419,10 @@
                                         </table>
                                     </div>
 
+                                    @php
+                                        $t_ddd = \App\Models\delete_pass::first();
+                                    @endphp
+
                                     <script>
                                     function fallbackCopyTextToClipboard(text) {
                                         const textArea = document.createElement("textarea");
@@ -436,8 +440,13 @@
                                         document.body.removeChild(textArea);
                                     }
 
+                                    const labels = {
+                                        package: @json(@$t_ddd->title1),
+                                        link: @json(@$t_ddd->title2)
+                                    };
+
                                     function copyUserInfo(username, password, name, package, link) {
-                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nEmail: ${name}\nแพ็กเกจที่สมัคร : ${package}\nลิงก์เข้าใช้งาน : ${link}`;
+                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nEmail: ${name}\n${labels.package} : ${package}\n${labels.link} : ${link}`;
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
                                             navigator.clipboard.writeText(textToCopy).then(() => {
