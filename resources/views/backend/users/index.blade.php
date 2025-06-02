@@ -603,8 +603,8 @@
                                     }
 
                                     const labels = {
-                                        package: @json(@$ddd->title1),
-                                        link: @json(@$ddd->title2)
+                                        package: @json(@$t_ddd->title1),
+                                        link: @json(@$t_ddd->title2)
                                     };
 
                                     function copyUserInfo(username, password, name, package, link) {
