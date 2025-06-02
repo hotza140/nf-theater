@@ -35,6 +35,8 @@ use App\Models\dash_regis_to;
 
 use App\Models\created_history;
 
+use App\Models\api_log_clear;
+
 
 use JfBiswajit\PHPBigQuery\Facades\BigQuery;
 use Google\Cloud\BigQuery\BigQueryClient;
@@ -170,12 +172,33 @@ foreach ($item as $aaa) {
 
                 $ddd = users_in_in::pluck('id')->ToArray();
 
+                $save = users_in_in_history::whereDate('date_end', '<=', $date)
+                ->where('id_user_in', @$row->id) // ใช้ id_user_in แทน $row->id
+                ->whereNotIn('id_user_in_in',$ddd)
+                ->whereNull('status_check')
+                ->pluck('id_user')->ToArray();
+
+                if (!empty($save)) {
+                $saveString = implode(',', $save);
+
+                $profile = DB::table('users')->whereIn('id',$save)->pluck('name')->ToArray();
+                $ym = implode(', ', $profile);
+                $detail=$row->name.' Profile ที่แก้ใข -> '.@$ym;
+                }
+
 
                 $users_check_user = users_in_in_history::whereDate('date_end', '<=', $date)
                 ->where('id_user_in', @$row->id) // ใช้ id_user_in แทน $row->id
                 ->whereNotIn('id_user_in_in',$ddd)
                 ->whereNull('status_check')
                 ->update(['api_status' => '1']);
+
+                $new=new api_log_clear();
+                $new->id_user=@$saveString;
+                $new->id_user_in=@$row->id;
+                $new->detail=@$detail;
+                $new->save();
+
 
 
                 return response()->json([

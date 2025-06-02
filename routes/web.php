@@ -156,6 +156,16 @@ Route::group(['middleware' => ['admin']],function(){
  //admin
 
 
+   //api_log_clear
+   Route::get('api_log_clear',[App\Http\Controllers\AdminUserBackendController::class,'api_log_clear']);
+   Route::get('api_log_clear_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'api_log_clear_destroy']);
+   Route::get('api_log_clear_add',[App\Http\Controllers\AdminUserBackendController::class,'api_log_clear_add']);
+   Route::post('api_log_clear_store',[App\Http\Controllers\AdminUserBackendController::class,'api_log_clear_store']);
+   Route::get('api_log_clear_edit/{id}',[App\Http\Controllers\AdminUserBackendController::class,'api_log_clear_edit']);
+   Route::post('api_log_clear_update/{id}',[App\Http\Controllers\AdminUserBackendController::class,'api_log_clear_update']);
+   //api_log_clear
+
+
   //country
   Route::get('country',[App\Http\Controllers\AdminUserBackendController::class,'country']);
   Route::get('country_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'country_destroy']);

@@ -34,10 +34,22 @@ use App\Models\log_dash;
 use App\Models\dash_regis_to;
 use App\Models\delete_pass;
 
+use App\Models\api_log_clear;
+
 use App\Models\created_history;
 
 class AdminUserBackendController extends Controller
 {
+
+    public function api_log_clear($id){
+        $item=api_log_clear::orderBy('id','desc')->get();
+
+        return view('backend.users_all.api_log_clear',[
+            'item'=>$item,
+            'page'=>"all",
+            'list'=>"api_log_clear",
+        ]);
+    }
 
     public function save_pass(Request $r){
         $item=delete_pass::first();
