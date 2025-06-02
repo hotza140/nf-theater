@@ -539,7 +539,7 @@
                                         <li class="{{ isset($list) && $list == 'api_log_clear' ? 'active' : '' }}">
                                             <a href="{{ url('api_log_clear') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext">API LOG CLEAR</span>
+                                                <span class="pcoded-mtext">Api Log Clear</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>

@@ -41,7 +41,7 @@ use App\Models\created_history;
 class AdminUserBackendController extends Controller
 {
 
-    public function api_log_clear($id){
+    public function api_log_clear(){
         $item=api_log_clear::orderBy('id','desc')->get();
 
         return view('backend.users_all.api_log_clear',[
