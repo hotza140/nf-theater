@@ -21,7 +21,7 @@
         <div class="box-link-m"><a class="cursor-box" onclick="shareAndCopyTF(`https://lin.ee/jgB0ld5`);"><img src="assets/img/NF5%20(1).png"></a></div>
         <div class="box-link-m"><a class="cursor-box" data-bs-toggle="modal" data-bs-target="#modal-points"><img src="assets/img/NF4%20(1).png"></a></div>
         <div class="box-link-m"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img src="assets/img/NF6%20(1).png"></a></div>
-        <div class="box-link-m"><a href="{{route('frontend.Helpmanage')}}" target="_blank"><img src="assets/img/NF_help01.png"></a></div>
+        {{-- <div class="box-link-m"><a href="{{route('frontend.Helpmanage')}}" target="_blank"><img src="assets/img/NF_help01.png"></a></div> --}}
     </div>
 </div>
 
