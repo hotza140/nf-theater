@@ -857,11 +857,11 @@ document.addEventListener('DOMContentLoaded', () => {
       <script>
 $(document).ready(function() {
     var table = $('.db_table').DataTable({
-        dom: '<"wrapper"B>',
+        dom: '<"wrapper d-flex justify-content-between align-items-center"fB>t',
         buttons: [
             {
                 extend: 'excel',
-                filename: '{{ isset($pageName) ? $pageName : "Export_data" }}',
+                filename: @json(isset($pageName) ? $pageName : 'Export_data'),
                 exportOptions: {
                     modifier: {
                         page: 'all'
@@ -869,6 +869,17 @@ $(document).ready(function() {
                 }
             }
         ],
+        order: [],
+        stateSave: true,
+        lengthChange: false,
+        language: {
+            info: "",
+            infoEmpty: "",
+            paginate: {
+                previous: '<i class="fa fa-angle-left"></i>',
+                next: '<i class="fa fa-angle-right"></i>'
+            }
+        },
         stateSaveCallback: function(settings, data) {
             localStorage.setItem('DataTables_' + settings.sInstance, JSON.stringify(data));
         },
