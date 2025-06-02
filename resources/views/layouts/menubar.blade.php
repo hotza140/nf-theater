@@ -545,6 +545,16 @@
                                         </li>
                                         @endif
 
+                                        @if(Auth::guard('admin')->user()->type == 0)
+                                        <li class="{{ isset($list) && $list == 'otp_his' ? 'active' : '' }}">
+                                            <a href="{{ url('otp_his') }}">
+                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                                <span class="pcoded-mtext">OTP and Mail History</span>
+                                                <span class="pcoded-mcaret"></span>
+                                            </a>
+                                        </li>
+                                        @endif
+
                                         <li class="{{ isset($list) && $list == 'users_all' ? 'active' : '' }}">
                                             <a href="{{ url('users_all') }}">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -842,6 +852,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         </script>
       <!-- แสดงภาพตอนเลือกไฟล -->
+
+
+      <script>
+   $(document).ready(function() {
+    var table = $('.db_table').DataTable({
+        dom: '<"wrapper"B>',
+        buttons: [
+            {
+                extend: 'excel',
+                filename: '{{ isset($pageName) ? $pageName : "Export_data" }}',
+                exportOptions: {
+                        modifier: {
+                            page: 'all' // ทำให้ export ข้อมูลทั้งหมด
+                        }
+                },
+            }
+        ]
+    });
+
+    $('.db_table').addClass('hidden-table');
+    $('.buttons-excel').addClass('hidden-button');
+
+    $('.export_excel_file').off('click').on('click', function() {
+        // table.button('.buttons-excel').trigger('click');
+        $('.buttons-excel').trigger('click');
+    });
+});
+</script>
 
 
 

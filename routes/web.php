@@ -165,6 +165,15 @@ Route::group(['middleware' => ['admin']],function(){
    Route::post('api_log_clear_update/{id}',[App\Http\Controllers\AdminUserBackendController::class,'api_log_clear_update']);
    //api_log_clear
 
+      //otp_his
+      Route::get('otp_his',[App\Http\Controllers\AdminUserBackendController::class,'otp_his']);
+      Route::get('otp_his_destroy/{id}',[App\Http\Controllers\AdminUserBackendController::class,'otp_his_destroy']);
+      Route::get('otp_his_add',[App\Http\Controllers\AdminUserBackendController::class,'otp_his_add']);
+      Route::post('otp_his_store',[App\Http\Controllers\AdminUserBackendController::class,'otp_his_store']);
+      Route::get('otp_his_edit/{id}',[App\Http\Controllers\AdminUserBackendController::class,'otp_his_edit']);
+      Route::post('otp_his_update/{id}',[App\Http\Controllers\AdminUserBackendController::class,'otp_his_update']);
+      //api_log_clear
+
 
   //country
   Route::get('country',[App\Http\Controllers\AdminUserBackendController::class,'country']);

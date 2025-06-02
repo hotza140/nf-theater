@@ -40,6 +40,17 @@ use App\Models\created_history;
 
 class AdminUserBackendController extends Controller
 {
+    public function otp_his(){
+        $item=users::whereNotNull('otp_status_mail')->orderBy('otp_status_mail','desc')->get();
+        $item2=users::whereNotNull('otp_status_phone')->orderBy('otp_status_phone','desc')->get();
+
+        return view('backend.users_all.otp_his',[
+            'item'=>$item,
+            'item2'=>$item2,
+            'page'=>"all",
+            'list'=>"otp_his",
+        ]);
+    }
 
     public function api_log_clear(){
         $item=api_log_clear::orderBy('id','desc')->get();
