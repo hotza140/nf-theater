@@ -293,8 +293,8 @@
                     src="assets/img/NF4%20(1).png"></a></div>
         <div class="box-link-m"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img
                     src="assets/img/NF6%20(1).png"></a></div>
-        <div class="box-link-m"><a href="{{route('frontend.Helpmanage')}}" target="_blank"><img
-                    src="assets/img/NF_help01.png"></a></div>
+        {{-- <div class="box-link-m"><a href="{{route('frontend.Helpmanage')}}" target="_blank"><img
+                    src="assets/img/NF_help01.png"></a></div> --}}
     </div>
 </div>
 <div>
