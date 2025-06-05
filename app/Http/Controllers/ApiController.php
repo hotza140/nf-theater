@@ -181,7 +181,7 @@ foreach ($item as $aaa) {
                 if (!empty($save)) {
                 $saveString = implode(',', $save);
 
-                $profile = DB::table('users')->whereIn('id',$save)->pluck('name')->ToArray();
+                $profile = DB::table('tb_users')->whereIn('id',$save)->pluck('name')->ToArray();
                 $ym = implode(', ', $profile);
                 $detail=$row->name.' Profile ที่แก้ใข -> '.@$ym;
                 }
