@@ -295,7 +295,7 @@
                 <div class="box-link-m" style="text-align: center;">
                     {{-- <span><b>{{$checkyoutubenoHave ? 'Youtube' : ($checknetflixnoHave ? 'Netflix' : '')}}</b></span> --}}
                     <a class="cursor-box" href="https://lin.ee/4V1Jzlj" target="_blank">
-                        <img src="assets/img/{{$checkyoutubenoHave ? 'ss3.png' : ($checknetflixnoHave ? 'ss2.png' : '')}}">
+                        <img src="assets/img/{{$checkyoutubenoHave ? 'ss2.png' : ($checknetflixnoHave ? 'ss3.png' : '')}}">
                     </a>
                 </div>
             @endif
