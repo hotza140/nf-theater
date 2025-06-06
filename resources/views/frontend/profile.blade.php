@@ -293,9 +293,9 @@
             @endphp
             @if(!@$usersckis)
                 <div class="box-link-m" style="text-align: center;">
-                    <span><b>{{$checkyoutubenoHave ? 'Youtube' : ($checknetflixnoHave ? 'Netflix' : '')}}</b></span>
+                    {{-- <span><b>{{$checkyoutubenoHave ? 'Youtube' : ($checknetflixnoHave ? 'Netflix' : '')}}</b></span> --}}
                     <a class="cursor-box" href="https://lin.ee/4V1Jzlj" target="_blank">
-                        <img src="assets/img/NF7%20(1).png">
+                        <img src="assets/img/{{$checkyoutubenoHave ? 'ss3.png' : ($checknetflixnoHave ? 'ss2.png' : '')}}">
                     </a>
                 </div>
             @endif
