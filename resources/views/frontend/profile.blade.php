@@ -280,6 +280,25 @@
             @else
                 <div class="box-link-m"><a href="{{route('frontend.youtube')}}?id=2"><img src="assets/img/NF11%20(1).png"></a></div>
             @endif
+            @php
+                $checknetflixnoHave = 0;
+                $checkyoutubenoHave = 0;
+                if(@$userProfile->type_netflix==1) {
+                    $usersckis = App\Models\users::where('type_youtube',1)->where('username',$userProfile->username)->first();
+                    if(!@$usersckis) $checkyoutubenoHave = 1;
+                } else {
+                    $usersckis = App\Models\users::where('type_netflix',1)->where('username',$userProfile->username)->first();
+                    if(!@$usersckis) $checknetflixnoHave = 1;
+                }
+            @endphp
+            @if(!@$usersckis)
+                <div class="box-link-m" style="text-align: center;">
+                    {{-- <span><b>{{$checkyoutubenoHave ? 'Youtube' : ($checknetflixnoHave ? 'Netflix' : '')}}</b></span> --}}
+                    <a class="cursor-box" href="https://lin.ee/4V1Jzlj" target="_blank">
+                        <img src="assets/img/{{$checkyoutubenoHave ? 'ss2.png' : ($checknetflixnoHave ? 'ss3.png' : '')}}">
+                    </a>
+                </div>
+            @endif
         @else
             <div class="box-link-m"><a class="cursor-box" href="https://lin.ee/4V1Jzlj" target="_blank"><img src="assets/img/NF7%20(1).png"></a></div><!--ต้องเอาไลน์ OA มาแสดง-->
         @endif
