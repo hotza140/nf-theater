@@ -83,6 +83,7 @@
                                                
                                                     <th>#</th>
                                                     <th>รายละเอียด</th>
+                                                    <th>Date</th>
 
                                                 </tr>
                                             </thead>
@@ -92,6 +93,7 @@
                                             <tr class="num" id="{{$items->id}}">
                                                     <td>{{$key+1}}</td>
                                                     <td>{{$items->detail}}</td>
+                                                    <td>{{$items->created_at}}</td>
                                                 </tr>
                                                 @endforeach
 
