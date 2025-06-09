@@ -90,10 +90,16 @@
                                             <!-- <tbody class="sortable"> -->
                                             <tbody class="">
                                             @foreach($item as $key=>$items)
+                                            <?php  
+                                                    $date_start = $items->created_at;
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    }
+                                                     ?>
                                             <tr class="num" id="{{$items->id}}">
                                                     <td>{{$key+1}}</td>
                                                     <td>{{$items->detail}}</td>
-                                                    <td>{{$items->created_at}}</td>
+                                                    <td>{{@$date_start}}</td>
                                                 </tr>
                                                 @endforeach
 
