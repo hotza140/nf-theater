@@ -424,7 +424,7 @@
                                     @endphp
 
                                     <script>
-                                    function window.fallbackCopyTextToClipboard(text) {
+                                    function fallbackCopyTextToClipboard(text) {
                                         const textArea = document.createElement("textarea");
                                         textArea.value = text;
                                         document.body.appendChild(textArea);
@@ -445,7 +445,7 @@
                                         link: @json(@$t_ddd->title2)
                                     };
 
-                                    function window.copyUserInfo(username, password, name, package, link) {
+                                    function copyUserInfo(username, password, name, package, link) {
                                         let textToCopy = `Username : ${username}\nPassword : ${password}\nEmail: ${name}\n${labels.package} : ${package}\n${labels.link} : ${link}`;
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
