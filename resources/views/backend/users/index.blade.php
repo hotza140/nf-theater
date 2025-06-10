@@ -498,151 +498,90 @@
                                         $t_ddd = \App\Models\delete_pass::first();
                                     @endphp
 
-
                                     <script>
+                                        const labels = {
+                                            package: @json(@$t_ddd->title1),
+                                            link: @json(@$t_ddd->title2)
+                                        };
 
-                                    const labels = {
-                                        package: @json(@$t_ddd->title1),
-                                        link: @json(@$t_ddd->title2)
-                                    };
-                                    
-                                    const allUserData = @json($allUserData);
+                                        const allUserData = @json($allUserData);
 
-                                    function window.fallbackCopyTextToClipboard_tan_all(text) {
-                                        const textArea = document.createElement("textarea");
-                                        textArea.value = text;
-                                        document.body.appendChild(textArea);
-                                        textArea.focus();
-                                        textArea.select();
-                                        try {
-                                            document.execCommand("copy");
-                                            alert("คัดลอกสำเร็จ");
-                                        } catch (err) {
-                                            console.error("คัดลอกไม่สำเร็จ: ", err);
-                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
-                                        }
-                                        document.body.removeChild(textArea);
-                                    }
-
-                                    function window.copyAllUserInfo(key) {
-                                        let textToCopy = '';
-                                        let data = allUserData[key] || [];
-
-                                        data.forEach((user, index) => {
-                                            textToCopy += `--- ชุดที่ ${index + 1} ---\n`;
-                                            textToCopy += `ชื่อ Account : ${user.account || '-'}\n`;
-                                            textToCopy += `Mail : ${user.email || '-'}\n`;
-                                            textToCopy += `Password : ${user.password || '-'}\n`;
-                                            textToCopy += `ชื่อโปรไฟล์: ${user.profile || '-'}\n\n`;
-                                        });
-
-                                        if (!textToCopy.trim()) {
-                                            alert("ไม่มีข้อมูลให้คัดลอก");
-                                            return;
-                                        }
-
-                                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                                            navigator.clipboard.writeText(textToCopy).then(() => {
-                                                alert("คัดลอกข้อมูลทั้งหมดสำเร็จ!");
-                                            }).catch(err => {
-                                                console.error('คัดลอกไม่สำเร็จ: ', err);
-                                                fallbackCopyTextToClipboard_tan_all(textToCopy);
-                                            });
-                                        } else {
-                                            fallbackCopyTextToClipboard_tan_all(textToCopy);
-                                        }
-                                    }
-                                </script>
-
-
-                                    @php
-                                        $t_ddd = \App\Models\delete_pass::first();
-                                    @endphp
-
-
-
-                                    <script>
-                                    function window.fallbackCopyTextToClipboard_tan(text) {
-                                        const textArea = document.createElement("textarea");
-                                        textArea.value = text;
-                                        document.body.appendChild(textArea);
-                                        textArea.focus();
-                                        textArea.select();
-                                        try {
-                                            document.execCommand("copy");
-                                            // alert("คัดลอกข้อมูลสำเร็จ!");
-                                        } catch (err) {
-                                            console.error("คัดลอกไม่สำเร็จ: ", err);
-                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
-                                        }
-                                        document.body.removeChild(textArea);
-                                    }
-
-                                    const labels = {
-                                        package: @json(@$t_ddd->title1),
-                                        link: @json(@$t_ddd->title2)
-                                    };
-
-                                    function window.copyUserInfo_tan(name, email, password, username) {
-                                        let textToCopy = `ชื่อ Account : ${name}\nMail : ${email}\nPassword : ${password}\nชื่อโปรไฟล์: ${username}`;
-
-                                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                                            navigator.clipboard.writeText(textToCopy).then(() => {
+                                        function fallbackCopy(text) {
+                                            const textArea = document.createElement("textarea");
+                                            textArea.value = text;
+                                            document.body.appendChild(textArea);
+                                            textArea.focus();
+                                            textArea.select();
+                                            try {
+                                                document.execCommand("copy");
                                                 alert("คัดลอกข้อมูลสำเร็จ!");
-                                            }).catch(err => {
-                                                console.error('คัดลอกไม่สำเร็จ: ', err);
-                                                fallbackCopyTextToClipboard_tan(textToCopy);
-                                            });
-                                        } else {
-                                            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
-                                            fallbackCopyTextToClipboard_tan(textToCopy);
+                                            } catch (err) {
+                                                console.error("คัดลอกไม่สำเร็จ: ", err);
+                                                alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                                            }
+                                            document.body.removeChild(textArea);
                                         }
-                                    }
+
+                                        function copyAllUserInfo(key) {
+                                            let textToCopy = '';
+                                            let data = allUserData[key] || [];
+
+                                            data.forEach((user, index) => {
+                                                textToCopy += `--- ชุดที่ ${index + 1} ---\n`;
+                                                textToCopy += `ชื่อ Account : ${user.account || '-'}\n`;
+                                                textToCopy += `Mail : ${user.email || '-'}\n`;
+                                                textToCopy += `Password : ${user.password || '-'}\n`;
+                                                textToCopy += `ชื่อโปรไฟล์: ${user.profile || '-'}\n\n`;
+                                            });
+
+                                            if (!textToCopy.trim()) {
+                                                alert("ไม่มีข้อมูลให้คัดลอก");
+                                                return;
+                                            }
+
+                                            if (navigator.clipboard && navigator.clipboard.writeText) {
+                                                navigator.clipboard.writeText(textToCopy).then(() => {
+                                                    alert("คัดลอกข้อมูลทั้งหมดสำเร็จ!");
+                                                }).catch(err => {
+                                                    console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                    fallbackCopy(textToCopy);
+                                                });
+                                            } else {
+                                                fallbackCopy(textToCopy);
+                                            }
+                                        }
+
+                                        function copyUserInfo_tan(name, email, password, username) {
+                                            let textToCopy = `ชื่อ Account : ${name}\nMail : ${email}\nPassword : ${password}\nชื่อโปรไฟล์: ${username}`;
+
+                                            if (navigator.clipboard && navigator.clipboard.writeText) {
+                                                navigator.clipboard.writeText(textToCopy).then(() => {
+                                                    alert("คัดลอกข้อมูลสำเร็จ!");
+                                                }).catch(err => {
+                                                    console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                    fallbackCopy(textToCopy);
+                                                });
+                                            } else {
+                                                fallbackCopy(textToCopy);
+                                            }
+                                        }
+
+                                        function copyUserInfo(username, password, name, pkg, link) {
+                                            let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\n${labels.package} : ${pkg}\n${labels.link} : ${link}`;
+
+                                            if (navigator.clipboard && navigator.clipboard.writeText) {
+                                                navigator.clipboard.writeText(textToCopy).then(() => {
+                                                    alert("คัดลอกข้อมูลสำเร็จ!");
+                                                }).catch(err => {
+                                                    console.error('คัดลอกไม่สำเร็จ: ', err);
+                                                    fallbackCopy(textToCopy);
+                                                });
+                                            } else {
+                                                fallbackCopy(textToCopy);
+                                            }
+                                        }
                                     </script>
 
-                                    @php
-                                        $t_ddd = \App\Models\delete_pass::first();
-                                    @endphp
-
-
-                                    <script>
-                                    function window.fallbackCopyTextToClipboard(text) {
-                                        const textArea = document.createElement("textarea");
-                                        textArea.value = text;
-                                        document.body.appendChild(textArea);
-                                        textArea.focus();
-                                        textArea.select();
-                                        try {
-                                            document.execCommand("copy");
-                                            alert("คัดลอกข้อมูลสำเร็จ!");
-                                        } catch (err) {
-                                            console.error("คัดลอกไม่สำเร็จ: ", err);
-                                            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
-                                        }
-                                        document.body.removeChild(textArea);
-                                    }
-
-                                    const labels = {
-                                        package: @json(@$t_ddd->title1),
-                                        link: @json(@$t_ddd->title2)
-                                    };
-
-                                    function window.copyUserInfo(username, password, name, package, link) {
-                                        let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\n${labels.package} : ${package}\n${labels.link} : ${link}`;
-
-                                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                                            navigator.clipboard.writeText(textToCopy).then(() => {
-                                                alert("คัดลอกข้อมูลสำเร็จ!");
-                                            }).catch(err => {
-                                                console.error('คัดลอกไม่สำเร็จ: ', err);
-                                                fallbackCopyTextToClipboard(textToCopy);
-                                            });
-                                        } else {
-                                            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
-                                            fallbackCopyTextToClipboard(textToCopy);
-                                        }
-                                    }
-                                    </script>
 
                                     <!-- Pagination -->
                                     <style>
