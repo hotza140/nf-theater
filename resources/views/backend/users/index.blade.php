@@ -508,7 +508,7 @@
                                     
                                     const allUserData = @json($allUserData);
 
-                                    function fallbackCopyTextToClipboard_tan_all(text) {
+                                    function window.fallbackCopyTextToClipboard_tan_all(text) {
                                         const textArea = document.createElement("textarea");
                                         textArea.value = text;
                                         document.body.appendChild(textArea);
@@ -524,7 +524,7 @@
                                         document.body.removeChild(textArea);
                                     }
 
-                                    function copyAllUserInfo(key) {
+                                    function window.copyAllUserInfo(key) {
                                         let textToCopy = '';
                                         let data = allUserData[key] || [];
 
@@ -562,7 +562,7 @@
 
 
                                     <script>
-                                    function fallbackCopyTextToClipboard_tan(text) {
+                                    function window.fallbackCopyTextToClipboard_tan(text) {
                                         const textArea = document.createElement("textarea");
                                         textArea.value = text;
                                         document.body.appendChild(textArea);
@@ -583,7 +583,7 @@
                                         link: @json(@$t_ddd->title2)
                                     };
 
-                                    function copyUserInfo_tan(name, email, password, username) {
+                                    function window.copyUserInfo_tan(name, email, password, username) {
                                         let textToCopy = `ชื่อ Account : ${name}\nMail : ${email}\nPassword : ${password}\nชื่อโปรไฟล์: ${username}`;
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -606,7 +606,7 @@
 
 
                                     <script>
-                                    function fallbackCopyTextToClipboard(text) {
+                                    function window.fallbackCopyTextToClipboard(text) {
                                         const textArea = document.createElement("textarea");
                                         textArea.value = text;
                                         document.body.appendChild(textArea);
@@ -627,7 +627,7 @@
                                         link: @json(@$t_ddd->title2)
                                     };
 
-                                    function copyUserInfo(username, password, name, package, link) {
+                                    function window.copyUserInfo(username, password, name, package, link) {
                                         let textToCopy = `Username : ${username}\nPassword : ${password}\nชื่อโปรไฟล์: ${name}\n${labels.package} : ${package}\n${labels.link} : ${link}`;
 
                                         if (navigator.clipboard && navigator.clipboard.writeText) {
