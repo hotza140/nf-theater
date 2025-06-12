@@ -42,74 +42,65 @@ class AdminUserBackendController extends Controller
 {
 
     public function im_account_netflix(Request $request)
-{
-    $request->validate([
-        'csv_file' => 'required|file|mimes:csv,txt'
-    ]);
-
-    $file = $request->file('csv_file');
-
-    if (($handle = fopen($file->getRealPath(), 'r')) !== false) {
-        $header = fgetcsv($handle); // อ่านแถวแรกเป็นหัวตาราง
-
-        while (($data = fgetcsv($handle)) !== false) {
+    {
+        $data = $request->input('data');
+    
+        if (!is_array($data)) {
+            return response()->json(['error' => 'Invalid data format'], 400);
+        }
+    
+        foreach ($data as $row) {
+            // ป้องกัน array ขนาดไม่ครบ
+            $row = array_pad($row, 9, null);
+    
             // แปลงวันที่
-            if (!isset($data[3]) || trim($data[3]) === '') {
+            if (!isset($row[3]) || trim($row[3]) === '') {
                 $formattedDate = null;
             } else {
-                $dateParts = explode('/', $data[3]); // แปลง 17/04/2025 → 2025-17-04
-                if (count($dateParts) === 3) {
-                    $formattedDate = "{$dateParts[2]}-{$dateParts[0]}-{$dateParts[1]}";
-                } else {
-                    $formattedDate = null; // ถ้า format ผิด
-                }
+                $dateParts = explode('/', $row[3]); // ex: 17/04/2025
+                $formattedDate = count($dateParts) === 3 ? "{$dateParts[2]}-{$dateParts[0]}-{$dateParts[1]}" : null;
             }
-
-            $name = trim($data[0]);
-            $email = strtolower(trim($data[1]));
-            $email01 = isset($data[5]) ? strtolower(trim($data[5])) : null;
-            $email02 = isset($data[7]) ? strtolower(trim($data[7])) : null;
-
-            // ตรวจสอบซ้ำ
+    
+            $name     = trim($row[0]);
+            $email    = strtolower(trim($row[1]));
+            $email01  = strtolower(trim($row[5] ?? ''));
+            $email02  = strtolower(trim($row[7] ?? ''));
+    
             $exists = \App\Models\users_in::where('name', $name)
                 ->orWhere(function ($query) use ($email, $email01, $email02) {
                     $query->where('email', $email)
-                        ->orWhere('email01', $email)
-                        ->orWhere('email02', $email)
-                        ->orWhere('email', $email01)
-                        ->orWhere('email01', $email01)
-                        ->orWhere('email02', $email01)
-                        ->orWhere('email', $email02)
-                        ->orWhere('email01', $email02)
-                        ->orWhere('email02', $email02);
+                          ->orWhere('email01', $email)
+                          ->orWhere('email02', $email)
+                          ->orWhere('email', $email01)
+                          ->orWhere('email01', $email01)
+                          ->orWhere('email02', $email01)
+                          ->orWhere('email', $email02)
+                          ->orWhere('email01', $email02)
+                          ->orWhere('email02', $email02);
                 })
                 ->exists();
-
+    
             if ($exists) {
-                // ถ้าซ้ำข้ามไม่บันทึก
                 continue;
             }
-
-            users_in::create([
-                'name'      => $name,
-                'email'     => $email,
-                'password'  => $data[2],
-                'date_end'  => $formattedDate,
-                'date_ee'   => $data[4] ?? null,
-
-                'email01'   => $email01,
-                'password01'=> $data[6] ?? null,
-                'email02'   => $email02,
-                'password02'=> $data[8] ?? null,
-                'type_f'    => null,
+    
+            \App\Models\users_in::create([
+                'name'       => $name,
+                'email'      => $email,
+                'password'   => $row[2],
+                'date_end'   => $formattedDate,
+                'date_ee'    => $row[4] ?? null,
+                'email01'    => $email01,
+                'password01' => $row[6] ?? null,
+                'email02'    => $email02,
+                'password02' => $row[8] ?? null,
+                'type_f'     => null,
             ]);
         }
-
-        fclose($handle);
+    
+        return response()->json(['success' => true]);
     }
-
-    return back()->with('success', 'นำเข้าสำเร็จ');
-}
+    
 
 
     // public function im_account_netflix(Request $request)
