@@ -68,6 +68,27 @@
                             {{@$ac->password}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
+                            @if(@$ac->email)
+                                <!--copy clipboard mail pass-->
+                                <style>
+                                    .icon-red {
+                                        fill: red;
+                                    }
+                                </style>
+                                <!--background-color: rgb(245, 156, 156);-->
+                                <div class="edit-icon" title="Copy to Clipboard.">
+                                    <button style="border:none;border-radius:50%;" onclick="this.style='border:none;border-radius:50%;background-color: rgb(245, 156, 156);'; setTimeout(() => { this.style='border:none;border-radius:50%;background-color: none;' }, 250); copyUserInfo('{{@$ac->email}}', '{{@$ac->password}}');">
+                                        <svg aria-hidden="true" focusable="false" class="icon icon-red" xmlns="http://www.w3.org/2000/svg" 
+                                                viewBox="0 0 448 512" width="1em" height="1em">
+                                                <path
+                                                    d="M320 448H48c-26.5 0-48-21.5-48-48V128h48v272h272v48zm128-80V48c0-26.5-21.5-48-48-48H128c-26.5 
+                                                    0-48 21.5-48 48v320c0 26.5 21.5 48 48 48h272c26.5 0 48-21.5 48-48z" />
+                                            </svg>
+                                    </button>
+                                </div>
+                                <!--copy clipboard mail pass-->
+                            @endif
+
                         <!-- <h2 class="pass-profile">Password : {{@$ac->password}}<span id="passwordnf"></span></h2> -->
 
                         @else
@@ -81,6 +102,26 @@
                             {{@$ac->password01}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
+                            @if(@$ac->email01)
+                                <!--copy clipboard mail01 pass01-->
+                                <style>
+                                    .icon-red {
+                                        fill: red;
+                                    }
+                                </style>
+                                <!--background-color: rgb(245, 156, 156);-->
+                                <div class="edit-icon" title="Copy to Clipboard.">
+                                    <button style="border:none;border-radius:50%;" onclick="this.style='border:none;border-radius:50%;background-color: rgb(245, 156, 156);'; setTimeout(() => { this.style='border:none;border-radius:50%;background-color: none;' }, 250); copyUserInfo('{{@$ac->email01}}', '{{@$ac->password01}}');">
+                                        <svg aria-hidden="true" focusable="false" class="icon icon-red" xmlns="http://www.w3.org/2000/svg" 
+                                                viewBox="0 0 448 512" width="1em" height="1em">
+                                                <path
+                                                    d="M320 448H48c-26.5 0-48-21.5-48-48V128h48v272h272v48zm128-80V48c0-26.5-21.5-48-48-48H128c-26.5 
+                                                    0-48 21.5-48 48v320c0 26.5 21.5 48 48 48h272c26.5 0 48-21.5 48-48z" />
+                                            </svg>
+                                    </button>
+                                </div>
+                                <!--copy clipboard mail01 pass01-->
+                            @endif
 
                         <!-- <h2 class="pass-profile">Password : {{@$ac->password01}}<span id="passwordnf"></span></h2> -->
                         @else
@@ -92,6 +133,26 @@
                             {{@$ac->password02}}</h2><span class="name-profile"
                             style="color: var(--bs-emphasis-color);font-size:15px;" id="userid"></span>
 
+                            @if(@$ac->email02)
+                                <!--copy clipboard mail02 pass02-->
+                                <style>
+                                    .icon-red {
+                                        fill: red;
+                                    }
+                                </style>
+                                <!--background-color: rgb(245, 156, 156);-->
+                                <div class="edit-icon" title="Copy to Clipboard.">
+                                    <button style="border:none;border-radius:50%;" onclick="this.style='border:none;border-radius:50%;background-color: rgb(245, 156, 156);'; setTimeout(() => { this.style='border:none;border-radius:50%;background-color: none;' }, 250); copyUserInfo('{{@$ac->email02}}', '{{@$ac->password02}}');">
+                                        <svg aria-hidden="true" focusable="false" class="icon icon-red" xmlns="http://www.w3.org/2000/svg" 
+                                                viewBox="0 0 448 512" width="1em" height="1em">
+                                                <path
+                                                    d="M320 448H48c-26.5 0-48-21.5-48-48V128h48v272h272v48zm128-80V48c0-26.5-21.5-48-48-48H128c-26.5 
+                                                    0-48 21.5-48 48v320c0 26.5 21.5 48 48 48h272c26.5 0 48-21.5 48-48z" />
+                                            </svg>
+                                    </button>
+                                </div>
+                                <!--copy clipboard mail02 pass02-->
+                            @endif
 
                         <!-- <h2 class="pass-profile">Password : {{@$ac->password02}}<span id="passwordnf"></span></h2> -->
                         @endif
@@ -724,5 +785,37 @@
     </script>
 @endif
 
+<script>
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand("copy");
+            alert("คัดลอกข้อมูลสำเร็จ!");
+        } catch (err) {
+            console.error("คัดลอกไม่สำเร็จ: ", err);
+            alert("คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง");
+        }
+        document.body.removeChild(textArea);
+    }
+    function copyUserInfo(email, password) { // alert(email + '  ' + password);
+        let textToCopy = `Email : ${email}\nPassword : ${password}`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("คัดลอกข้อมูลสำเร็จ!");
+            }).catch(err => {
+                console.error('คัดลอกไม่สำเร็จ: ', err);
+                fallbackCopyTextToClipboard(textToCopy);
+            });
+        } else {
+            console.warn("ใช้ HTTP → เปลี่ยนไปใช้ execCommand แทน");
+            fallbackCopyTextToClipboard(textToCopy);
+        }
+    }
+</script>
 
 @endsection
