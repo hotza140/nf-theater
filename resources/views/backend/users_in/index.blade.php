@@ -82,6 +82,22 @@
 
                                     <a style="color:white;" class="btn btn-info" href="{{url('edit_time_netflix')}}"> <i class="fa fa-plus"></i>จัดการเพิ่มเวลาทั้งหมดของ Account Netflix</a>
 
+                                    <br><br>
+                                    <div class="col-sm-8 col-md-6">
+                                    <form action="{{ url('im_account_netflix') }}" method="POST" enctype="multipart/form-data" style="display: flex; align-items: center; gap: 10px;">
+                                        @csrf
+                                        <input type="file" name="csv_file" accept=".csv" required
+                                            style="flex-grow: 1; height: 38px; padding: 6px 12px;" />
+                                        <button type="submit" class="btn btn-primary" style="white-space: nowrap;">Upload CSV</button>
+
+                                        <a href="{{ url('img/Ex_NF_ACCOUNT.csv') }}" 
+                                        class="btn btn-outline-primary" 
+                                        download 
+                                        style="white-space: nowrap; display: flex; align-items: center; gap: 6px;">
+                                        <i class="fa fa-download"></i> ดาวน์โหลดตัวอย่างไฟล์
+                                        </a>
+                                    </form>
+                                    </div>
                                     
                                         <br>
                                         <form class="form-horizontal" action="{{url('users_in')}}" method="GET" enctype="multipart/form-data">

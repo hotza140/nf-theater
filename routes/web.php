@@ -115,6 +115,9 @@ Route::post('OnlineUserUpdatetimeNow',[App\Http\Controllers\UserFrontendControll
 
 
 Route::group(['middleware' => ['admin']],function(){
+  
+  Route::post('/im_account_netflix',[App\Http\Controllers\AdminUserBackendController::class,'im_account_netflix']);
+
   Route::post('/youtube_in_yay',[App\Http\Controllers\AdminUserBackendController::class,'youtube_in_yay']);
   
   Route::post('/save_pass',[App\Http\Controllers\AdminUserBackendController::class,'save_pass']);

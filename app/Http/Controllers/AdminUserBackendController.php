@@ -40,6 +40,53 @@ use App\Models\created_history;
 
 class AdminUserBackendController extends Controller
 {
+
+    public function im_account_netflix(Request $request)
+    {
+        $request->validate([
+            'csv_file' => 'required|file|mimes:csv,txt'
+        ]);
+    
+        $file = $request->file('csv_file');
+    
+        if (($handle = fopen($file->getRealPath(), 'r')) !== false) {
+            $header = fgetcsv($handle); // อ่านแถวแรกเป็นหัวตาราง
+    
+            while (($data = fgetcsv($handle)) !== false) {
+                // ถ้า $data[3] ไม่มีค่า → ใส่ "ืีสส"
+                if (!isset($data[3]) || trim($data[3]) === '') {
+                    $formattedDate =null;
+                } else {
+                    $dateParts = explode('/', $data[3]); // แปลง 17/04/2025 → 2025-17-04
+                    if (count($dateParts) === 3) {
+                        $formattedDate = "{$dateParts[2]}-{$dateParts[0]}-{$dateParts[1]}";
+                    } else {
+                        $formattedDate =null; // ถ้า format ผิด
+                    }
+                }
+    
+                users_in::create([
+                    'name'     => $data[0],
+                    'email'    => $data[1],
+                    'password' => $data[2],
+                    'date_end' => $formattedDate,
+                    'date_ee' => $data[4],
+
+                    'email01' => $data[5],
+                    'password01' => $data[6],
+                    'email02' => $data[7],
+                    'password02' => $data[8],
+                    'type_f' => null,
+                ]);
+            }
+    
+            fclose($handle);
+        }
+    
+        return back()->with('success', 'นำเข้าสำเร็จ');
+    }
+
+
     public function otp_his(){
         $item=users::whereNotNull('otp_status_mail')->orderBy('otp_status_mail','desc')->get();
         $item2=users::whereNotNull('otp_status_phone')->orderBy('otp_status_phone','desc')->get();

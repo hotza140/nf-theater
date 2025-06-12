@@ -15,6 +15,19 @@ class users_in extends Authenticatable
     protected $table = "tb_users_in";
     protected $primarykey = "id";
 
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'date_end',
+        'date_ee',
+        'email01',
+        'password01',
+        'email02',
+        'password02',
+        'type_f',
+    ];
+
     // UserIn.php
     public function usersInIns()
     {
