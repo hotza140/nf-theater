@@ -83,7 +83,7 @@
                                     <a style="color:white;" class="btn btn-info" href="{{url('edit_time_netflix')}}"> <i class="fa fa-plus"></i>จัดการเพิ่มเวลาทั้งหมดของ Account Netflix</a>
 
                                     <br><br>
-                                    <div class="col-sm-8 col-md-6">
+                                    <!-- <div class="col-sm-8 col-md-6">
                                     <form action="{{ url('im_account_netflix') }}" method="POST" enctype="multipart/form-data" style="display: flex; align-items: center; gap: 10px;">
                                         @csrf
                                         <input type="file" name="csv_file" accept=".csv" required
@@ -97,8 +97,9 @@
                                         <i class="fa fa-download"></i> ดาวน์โหลดตัวอย่างไฟล์
                                         </a>
                                     </form>
-                                    </div>
-                                    
+                                    </div> -->
+
+
                                         <br>
                                         <form class="form-horizontal" action="{{url('users_in')}}" method="GET" enctype="multipart/form-data">
                                         @csrf
@@ -126,7 +127,94 @@
                                         </div>
                                     </form>
 
+
+                                    <div class="card-body px-4 py-3">
+                                <!-- ฟอร์มอัปโหลด -->
+                                <form onsubmit="event.preventDefault(); uploadCSV();" enctype="multipart/form-data">
+                                    <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                                        <!-- ช่องเลือกไฟล์ -->
+                                        <input type="file" id="csvFile" accept=".csv" class="form-control" style="max-width: 250px;" required>
+
+                                        <br>
+
+                                        <!-- ปุ่มอัปโหลด -->
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fa fa-upload me-1"></i> Upload CSV
+                                        </button>
+
+                                        <!-- ปุ่มดาวน์โหลด -->
+                                        <a href="{{ url('img/Ex_NF_ACCOUNT.csv') }}" class="btn btn-outline-primary" download>
+                                            <i class="fa fa-download me-1"></i> ตัวอย่างไฟล์
+                                        </a>
+                                    </div>
+                                </form>
+
+                                <br>
+
+                                <!-- แถบสถานะ -->
+                                <div class="mb-3" style="max-width: 500px;">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" id="progressBar" role="progressbar" style="width: 0%">0%</div>
+                                    </div>
                                 </div>
+
+                                <!-- ข้อความสถานะ -->
+                                <p id="statusText" class="text-muted ps-1 mt-2"></p>
+                            </div>
+
+
+
+                                                <!-- PapaParse -->
+                    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+                    <script>
+                    function uploadCSV() {
+                        const fileInput = document.getElementById('csvFile');
+                        const file = fileInput.files[0];
+
+                        if (!file) {
+                            alert("กรุณาเลือกไฟล์ CSV ก่อนอัปโหลด");
+                            return;
+                        }
+
+                        Papa.parse(file, {
+                            header: false,
+                            skipEmptyLines: true,
+                            complete: async function (results) {
+                                const rows = results.data.slice(1); // ข้าม header
+                                const chunkSize = 100;
+                                const total = rows.length;
+
+                                for (let i = 0; i < total; i += chunkSize) {
+                                    const chunk = rows.slice(i, i + chunkSize);
+
+                                    await fetch("{{ url('im_account_netflix') }}", {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        },
+                                        body: JSON.stringify({ data: chunk }),
+                                    });
+
+                                    const completed = i + chunk.length;
+                                    const percent = Math.round((completed / total) * 100);
+
+                                    document.getElementById("progressBar").style.width = percent + "%";
+                                    document.getElementById("progressBar").innerText = percent + "%";
+                                    document.getElementById("statusText").innerText = `📤 กำลังอัปโหลด ${completed} / ${total}`;
+                                }
+
+                                document.getElementById("statusText").innerText = "✅ อัปโหลดเสร็จสิ้น! กำลังโหลดหน้าใหม่...";
+                                setTimeout(() => location.reload(), 2000);
+                            }
+                        });
+                    }
+                    </script>
+
+                                </div>
+
+
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
                                         <table id="simpletable_call" class="table table-striped table-bordered nowrap">
