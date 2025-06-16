@@ -182,7 +182,7 @@
                             skipEmptyLines: true,
                             complete: async function (results) {
                                 const rows = results.data.slice(1); // ข้าม header
-                                const chunkSize = 100;
+                                const chunkSize = 50;
                                 const total = rows.length;
 
                                 for (let i = 0; i < total; i += chunkSize) {
