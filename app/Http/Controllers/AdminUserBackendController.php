@@ -785,15 +785,6 @@ $acc = users_in::whereNotNull('type_f')
 
 
     public function dashbord(Request $r){
-    // ลบเช็คเวลา
-   $date=date('Y-m-d');
-   $users_check = users_in_in::whereDate('date_end', '<=', $date)->pluck('id')->toArray();
-   $users_check_user = users_in_in::whereDate('date_end', '<=', $date)->pluck('id_user')->toArray();
-   $accounts=users_in_in::whereIn('id',@$users_check)->delete();
-   $users_update = users::whereIn('id',@$users_check_user)->update(['status_account' => 2]);
-   // ลบเช็คเวลา
-
-
         $date=date('Y-m-d');
         $startDate = date('Y-m-d', strtotime('+4 days', strtotime($date))); // มากกว่า 3 วัน (เริ่มจากวันที่ 4)
         $endDate = date('Y-m-d', strtotime('+7 days', strtotime($date))); // ไม่เกิน 7 วัน
