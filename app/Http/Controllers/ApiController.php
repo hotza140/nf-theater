@@ -229,27 +229,6 @@ foreach ($item as $aaa) {
 
 
 
-
-
-
-
-    public function api_call_bot_fall_back(Request $r)
-    {
-        try {
-
-                return response()->json([
-                    'status' => true,
-                    'message' => 'success!.'
-                ]);
     
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return response()->json([
-                'result' => [],
-                'status' => false,
-                'message' => $e->getMessage(),
-            ], 400);
-        }
-    }
 
 }
