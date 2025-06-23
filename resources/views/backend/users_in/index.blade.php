@@ -168,49 +168,68 @@
                     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
                     <script>
-                    function uploadCSV() {
-                        const fileInput = document.getElementById('csvFile');
-                        const file = fileInput.files[0];
+    async function uploadChunk(chunk) {
+        const response = await fetch("{{ url('im_account_netflix') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify({ data: chunk }),
+        });
 
-                        if (!file) {
-                            alert("กรุณาเลือกไฟล์ CSV ก่อนอัปโหลด");
-                            return;
-                        }
+        const result = await response.json();
 
-                        Papa.parse(file, {
-                            header: false,
-                            skipEmptyLines: true,
-                            complete: async function (results) {
-                                const rows = results.data.slice(1); // ข้าม header
-                                const chunkSize = 50;
-                                const total = rows.length;
+        if (!response.ok || result.error) {
+            throw new Error(result.error || 'เกิดข้อผิดพลาดจากเซิร์ฟเวอร์');
+        }
 
-                                for (let i = 0; i < total; i += chunkSize) {
-                                    const chunk = rows.slice(i, i + chunkSize);
+        return result;
+    }
 
-                                    await fetch("{{ url('im_account_netflix') }}", {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                        },
-                                        body: JSON.stringify({ data: chunk }),
-                                    });
+    function uploadCSV() {
+        const fileInput = document.getElementById('csvFile');
+        const file = fileInput.files[0];
 
-                                    const completed = i + chunk.length;
-                                    const percent = Math.round((completed / total) * 100);
+        if (!file) {
+            alert("กรุณาเลือกไฟล์ CSV ก่อนอัปโหลด");
+            return;
+        }
 
-                                    document.getElementById("progressBar").style.width = percent + "%";
-                                    document.getElementById("progressBar").innerText = percent + "%";
-                                    document.getElementById("statusText").innerText = `📤 กำลังอัปโหลด ${completed} / ${total}`;
-                                }
+        Papa.parse(file, {
+            header: false,
+            skipEmptyLines: true,
+            complete: async function (results) {
+                const rows = results.data.slice(1); // ข้าม header
+                const chunkSize = 50;
+                const total = rows.length;
 
-                                document.getElementById("statusText").innerText = "✅ อัปโหลดเสร็จสิ้น! กำลังโหลดหน้าใหม่...";
-                                setTimeout(() => location.reload(), 2000);
-                            }
-                        });
+                try {
+                    for (let i = 0; i < total; i += chunkSize) {
+                        const chunk = rows.slice(i, i + chunkSize);
+
+                        await uploadChunk(chunk); // มีการตรวจจับ error ที่นี่
+
+                        const completed = i + chunk.length;
+                        const percent = Math.round((completed / total) * 100);
+
+                        document.getElementById("progressBar").style.width = percent + "%";
+                        document.getElementById("progressBar").innerText = percent + "%";
+                        document.getElementById("statusText").innerText = `📤 กำลังอัปโหลด ${completed} / ${total}`;
                     }
-                    </script>
+
+                    document.getElementById("statusText").innerText = "✅ อัปโหลดเสร็จสิ้น! กำลังโหลดหน้าใหม่...";
+                    setTimeout(() => location.reload(), 2000);
+
+                } catch (err) {
+                    alert("❌ อัปโหลดล้มเหลว: " + err.message);
+                    document.getElementById("statusText").innerText = "❌ ล้มเหลว: " + err.message;
+                    document.getElementById("progressBar").classList.add("bg-danger");
+                }
+            }
+        });
+    }
+</script>
 
                                 </div>
 

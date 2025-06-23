@@ -115,6 +115,8 @@ Route::post('OnlineUserUpdatetimeNow',[App\Http\Controllers\UserFrontendControll
 
 
 Route::group(['middleware' => ['admin']],function(){
+
+  Route::post('/im_user_netflix',[App\Http\Controllers\AdminUserBackendController::class,'im_user_netflix']);
   
   Route::post('/im_account_netflix',[App\Http\Controllers\AdminUserBackendController::class,'im_account_netflix']);
 

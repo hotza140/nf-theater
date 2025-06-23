@@ -41,15 +41,224 @@ use App\Models\created_history;
 class AdminUserBackendController extends Controller
 {
 
-    public function im_account_netflix(Request $request)
+    public function im_user_netflix(Request $request)
     {
-        $data = $request->input('data');
+        try {
+
+            $data = $request->input('data');
+
+            if (!is_array($data)) {
+                return response()->json(['error' => '📛 ข้อมูลไม่ถูกต้อง (ไม่ใช่ array)'], 400);
+            }
+    
+            if (count($data) < 2) {
+                return response()->json(['error' => '⚠️ ไฟล์ควรมีอย่างน้อย 1 แถวของข้อมูล'], 400);
+            }
+    
+    
+             // ✅ เอาจำนวน column จากหัวข้อ (row แรก)
+             $header = $data[0];
+             $expectedColumnCount =12;
+    
+             if (count($header) !== $expectedColumnCount) {
+                return response()->json([
+                    'error' => "❌ หัวตารางควรมี $expectedColumnCount ช่อง แต่พบ " . count($header) . " ช่อง"
+                ], 400);
+            }
     
         if (!is_array($data)) {
             return response()->json(['error' => 'Invalid data format'], 400);
         }
     
         foreach ($data as $row) {
+            // ป้องกัน array ขนาดไม่ครบ
+            $row = array_pad($row, 12, null);
+
+
+
+            $exists = \App\Models\users::where('name', $row[0])->where('username', $row[1])
+            ->where('password', $row[2])->where('type_netflix',1)->exists();
+    
+            if ($exists) {
+                continue;
+            }
+
+    
+            // แปลงวันที่
+            if (!isset($row[9]) || trim($row[9]) === '') {
+                $formattedDate_start = null;
+            } else {
+                $dateParts = explode('/', $row[9]); // ex: 17/04/2025
+                $formattedDate_start = count($dateParts) === 3 ? "{$dateParts[2]}-{$dateParts[0]}-{$dateParts[1]}" : null;
+            }
+
+              // แปลงวันที่
+              if (!isset($row[10]) || trim($row[10]) === '') {
+                $formattedDate_end = null;
+            } else {
+                $datePartsa = explode('/', $row[10]); // ex: 17/04/2025
+                $formattedDate_end = count($datePartsa) === 3 ? "{$datePartsa[2]}-{$datePartsa[0]}-{$datePartsa[1]}" : null;
+            }
+
+            if($formattedDate_start=='0000-00-00'){
+                $formattedDate_start=null;
+            }
+
+            if($formattedDate_end=='0000-00-00'){
+                $formattedDate_end=null;
+            }
+
+            if($row[7]=='ยกเว้นทีวี'){
+                $type='MOBILE';
+            }else{
+                $type='PC';
+            }
+
+            $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$row[8])->first();
+    
+
+            $acc = \App\Models\users_in::whereNull('type_f')->where('email',$row[11])->first();
+            if($acc!=null){
+                $account=0;
+            }else{
+                $acc = \App\Models\users_in::whereNull('type_f')->where('email01',$row[11])->first();
+
+                if($acc!=null){
+                    $account=1;
+                }else{
+                    $acc = \App\Models\users_in::whereNull('type_f')->where('email02',$row[11])->first();
+
+                    if($acc!=null){
+                        $account=2;
+                    }else{
+                       $account=null;
+                    }
+
+                }
+            }    
+
+            
+            if(@$acc!=null){
+                $status=0;
+            }else{
+                $status=1;
+            }
+
+            $user=\App\Models\users::create([
+                'name'       => $row[0],
+                'username'   => $row[1],
+                'password'   => $row[2],
+                'phone'   => $row[3],
+                'email'   => $row[4],
+                'line'   => $row[5],
+                'link_line'   => $row[6],
+                'type'   => @$type,
+                'package'   => $row[8],
+                'id_package' => @$pack_id->id,
+                'date_start'   => @$formattedDate_start,
+                'date_end'   => @$formattedDate_end,
+                'type_netflix'   => 1,
+                'open'   => 0,
+                'status_account'   => @$status,
+            ]);
+
+
+
+            if($account==0){
+                $aaa=\App\Models\users_in_in::create([
+                    'id_user'       => $user->id,
+                    'id_user_in'   => @$acc->id,
+                    'type'   => @$type,
+                    'date_start'   => @$formattedDate_start,
+                    'date_end'   => @$formattedDate_end,
+                ]); 
+                
+                \App\Models\users_in_in_history::create([
+                    'id_user'       => $user->id,
+                    'id_user_in'   => @$account,
+                    'type'   => @$type,
+                    'date_start'   => @$formattedDate_start,
+                    'date_end'   => @$formattedDate_end,
+                    'id_user_in_in'   => @$aaa->id,
+                ]); 
+            }elseif($account==1){
+                $aaa=\App\Models\users_in_in::create([
+                    'id_user'       => $user->id,
+                    'id_user_in'   => @$acc->id,
+                    'type'   => @$type,
+                    'date_start'   => @$formattedDate_start,
+                    'date_end'   => @$formattedDate_end,
+                    'type_mail'   => 1,
+                ]); 
+                
+                \App\Models\users_in_in_history::create([
+                    'id_user'       => $user->id,
+                    'id_user_in'   => @$account,
+                    'type'   => @$type,
+                    'date_start'   => @$formattedDate_start,
+                    'date_end'   => @$formattedDate_end,
+                    'id_user_in_in'   => @$aaa->id,
+                    'type_mail'   => 1,
+                ]); 
+            }elseif($account==2){
+                $aaa=\App\Models\users_in_in::create([
+                    'id_user'       => $user->id,
+                    'id_user_in'   => @$acc->id,
+                    'type'   => @$type,
+                    'date_start'   => @$formattedDate_start,
+                    'date_end'   => @$formattedDate_end,
+                    'type_mail'   => 1,
+                ]); 
+                
+                \App\Models\users_in_in_history::create([
+                    'id_user'       => $user->id,
+                    'id_user_in'   => @$account,
+                    'type'   => @$type,
+                    'date_start'   => @$formattedDate_start,
+                    'date_end'   => @$formattedDate_end,
+                    'id_user_in_in'   => @$aaa->id,
+                    'type_mail'   => 1,
+                ]); 
+            }
+        }
+    
+        return response()->json(['success' => true]);
+
+        } catch (\Exception $e) {
+            \Log::error('❌ ERROR: ' . $e->getMessage());
+            return response()->json(['error' => 'เกิดข้อผิดพลาด: ' . $e->getMessage()], 500);
+        }
+        
+    }
+
+
+    public function im_account_netflix(Request $request)
+    {
+        try{
+
+        $data = $request->input('data');
+
+        if (!is_array($data)) {
+            return response()->json(['error' => '📛 ข้อมูลไม่ถูกต้อง (ไม่ใช่ array)'], 400);
+        }
+
+        if (count($data) < 2) {
+            return response()->json(['error' => '⚠️ ไฟล์ควรมีอย่างน้อย 1 แถวของข้อมูล'], 400);
+        }
+
+
+         // ✅ เอาจำนวน column จากหัวข้อ (row แรก)
+         $header = $data[0];
+         $expectedColumnCount = 9;
+
+         if (count($header) !== $expectedColumnCount) {
+            return response()->json([
+                'error' => "❌ หัวตารางควรมี $expectedColumnCount ช่อง แต่พบ " . count($header) . " ช่อง"
+            ], 400);
+        }
+    
+        foreach ($data as $row) {
+
             // ป้องกัน array ขนาดไม่ครบ
             $row = array_pad($row, 9, null);
     
@@ -59,6 +268,10 @@ class AdminUserBackendController extends Controller
             } else {
                 $dateParts = explode('/', $row[3]); // ex: 17/04/2025
                 $formattedDate = count($dateParts) === 3 ? "{$dateParts[2]}-{$dateParts[0]}-{$dateParts[1]}" : null;
+            }
+
+            if($formattedDate=='0000-00-00'){
+                $formattedDate=null;
             }
     
             $name     = trim($row[0]);
@@ -99,6 +312,13 @@ class AdminUserBackendController extends Controller
         }
     
         return response()->json(['success' => true]);
+
+    } catch (\Exception $e) {
+        \Log::error('❌ ERROR: ' . $e->getMessage());
+        return response()->json(['error' => 'เกิดข้อผิดพลาด: ' . $e->getMessage()], 500);
+    }
+
+    
     }
 
     public function otp_his(){

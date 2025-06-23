@@ -12,6 +12,24 @@ class users extends Authenticatable
     protected $table = "tb_users";
     protected $primarykey = "id";
 
+    protected $fillable = [
+        'name',
+        'username',
+        'password',
+        'phone',
+        'email',
+        'line',
+        'link_line',
+        'type',
+        'package',
+        'id_package',
+        'date_start',
+        'date_end',
+        'type_netflix',
+        'open',
+        'status_account',
+    ];
+
     public function users_in_in()
     {
         return $this->hasMany(users_in_in::class, 'id_user');

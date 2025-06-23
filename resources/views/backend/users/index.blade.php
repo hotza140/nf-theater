@@ -110,6 +110,14 @@
                                         </script>
 
 
+                                        <div class="form-group row" >
+                                        <div class="col-sm-2">
+                                            <a style="color:white;" class="btn btn-info" href="{{url('his_created')}}" target="_blank" >ประวัติการสร้าง User</a>
+                                            </div>
+
+                                            </div>
+
+
                                         <?php
                                             $status_account = $status_account ?? 999;
                                         ?>
@@ -143,17 +151,123 @@
                                                     <i class="fa fa-check-circle-o"></i> Search
                                                 </button>
                                             </div>
-                                            
+
+                                           
                                         </div>
                                         </form>
-                                    
 
 
-                                        <div class="col-sm-2">
-                                            <a style="color:white;" class="btn btn-info" href="{{url('his_created')}}" target="_blank" >ประวัติการสร้าง User</a>
-                                            </div>
+                                        
 
-                                            <br><br>
+
+
+
+
+
+
+                                            <div class="card-body px-4 py-3">
+                                <!-- ฟอร์มอัปโหลด -->
+                                <form onsubmit="event.preventDefault(); uploadCSV();" enctype="multipart/form-data">
+                                    <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                                        <!-- ช่องเลือกไฟล์ -->
+                                        <input type="file" id="csvFile" accept=".csv" class="form-control" style="max-width: 250px;" required>
+
+                                        <br>
+
+                                        <!-- ปุ่มอัปโหลด -->
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fa fa-upload me-1"></i> Upload CSV
+                                        </button>
+
+                                        <!-- ปุ่มดาวน์โหลด -->
+                                        <a href="{{ url('img/Ex_NF_USER.csv') }}" class="btn btn-outline-primary" download>
+                                            <i class="fa fa-download me-1"></i> ตัวอย่างไฟล์
+                                        </a>
+                                    </div>
+                                </form>
+
+                                <br>
+
+                                <!-- แถบสถานะ -->
+                                <div class="mb-3" style="max-width: 500px;">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" id="progressBar" role="progressbar" style="width: 0%">0%</div>
+                                    </div>
+                                </div>
+
+                                <!-- ข้อความสถานะ -->
+                                <p id="statusText" class="text-muted ps-1 mt-2"></p>
+                            </div>
+
+
+
+                                                <!-- PapaParse -->
+                    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+                    <script>
+    async function uploadChunk(chunk) {
+        const response = await fetch("{{ url('im_user_netflix') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify({ data: chunk }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || result.error) {
+            throw new Error(result.error || 'เกิดข้อผิดพลาดจากเซิร์ฟเวอร์');
+        }
+
+        return result;
+    }
+
+    function uploadCSV() {
+        const fileInput = document.getElementById('csvFile');
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert("กรุณาเลือกไฟล์ CSV ก่อนอัปโหลด");
+            return;
+        }
+
+        Papa.parse(file, {
+            header: false,
+            skipEmptyLines: true,
+            complete: async function (results) {
+                const rows = results.data.slice(1); // ข้าม header
+                const chunkSize = 50;
+                const total = rows.length;
+
+                try {
+                    for (let i = 0; i < total; i += chunkSize) {
+                        const chunk = rows.slice(i, i + chunkSize);
+
+                        await uploadChunk(chunk); // ใช้ฟังก์ชันที่มี error check
+
+                        const completed = i + chunk.length;
+                        const percent = Math.round((completed / total) * 100);
+
+                        document.getElementById("progressBar").style.width = percent + "%";
+                        document.getElementById("progressBar").innerText = percent + "%";
+                        document.getElementById("statusText").innerText = `📤 กำลังอัปโหลด ${completed} / ${total}`;
+                    }
+
+                    document.getElementById("statusText").innerText = "✅ อัปโหลดเสร็จสิ้น! กำลังโหลดหน้าใหม่...";
+                    setTimeout(() => location.reload(), 2000);
+                } catch (err) {
+                    alert("❌ อัปโหลดล้มเหลว: " + err.message);
+                    document.getElementById("statusText").innerText = "❌ ล้มเหลว: " + err.message;
+                    document.getElementById("progressBar").classList.add("bg-danger");
+                }
+            }
+        });
+    }
+</script>
+
+                                            
 
                                 </div>
 
@@ -200,19 +314,22 @@
                                                         }
                                                     </style>
 
-<style>
-.clickable-span {
-  cursor: pointer;
-  color: #007bff; /* สีคล้ายลิงก์ */
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
+                                                    <style>
+                                                    .clickable-span {
+                                                    cursor: pointer;
+                                                    color: #007bff; /* สีคล้ายลิงก์ */
+                                                    text-decoration: none;
+                                                    transition: all 0.2s ease;
+                                                    }
 
-.clickable-span:hover {
-  text-decoration: underline;
-  color: #0056b3; /* สีตอน hover */
-}
-</style>
+                                                    .clickable-span:hover {
+                                                    text-decoration: underline;
+                                                    color: #0056b3; /* สีตอน hover */
+                                                    }
+                                                    </style>
+
+
+
 
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
