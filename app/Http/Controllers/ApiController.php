@@ -222,11 +222,53 @@ foreach ($item as $aaa) {
             ], 400);
         }
     }
+
+
+
+
+
+
+
+
+    public function api_call_account_almost()
+    {
+        try {
+
+            $date=date('Y-m-d');
+
+            $accountList = users_in::where('open', 0)
+            ->whereNull('type_f')
+            ->whereBetween('date_end', [
+                $date,
+                date('Y-m-d', strtotime('+1 days', strtotime($date)))
+            ])
+            ->get([
+                'date_end',
+                'email',
+                'password',
+                'email01',
+                'password01',
+                'email02',
+                'password02',
+            ])
+            ->toArray();
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'success!.',
+                    'account' => $account,
+                ]);
     
-
-
-
-
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'result' => [],
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
+    
 
 
     
