@@ -256,7 +256,7 @@ foreach ($item as $aaa) {
                 return response()->json([
                     'status' => true,
                     'message' => 'success!.',
-                    'account' => $account,
+                    'accountList' => $accountList,
                 ]);
     
         } catch (Exception $e) {
