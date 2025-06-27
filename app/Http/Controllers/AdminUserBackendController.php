@@ -144,10 +144,31 @@ class AdminUserBackendController extends Controller
                 $status=1;
             }
 
+            if($row[1]==null){
+                do {
+                    // สุ่มเลขระหว่าง 000000 ถึง 999999
+                    $randomNumber = str_pad(rand(100000, 999999), 6, '0', STR_PAD_LEFT);
+                    $run = "NF{$randomNumber}";
+                
+                    // ตรวจสอบว่าเลขนี้มีอยู่ใน username หรือยัง
+                    $exists = DB::table('tb_users')->where('username', $run)->exists();
+                } while ($exists);
+
+                $username=@$run;
+            }else{
+                $username=$row[1];
+            }
+
+            if($row[2]==null){
+                $pass=rand(111111, 999999);
+            }else{
+                $pass=$row[2];
+            }
+
             $user=\App\Models\users::create([
                 'name'       => $row[0],
-                'username'   => $row[1],
-                'password'   => $row[2],
+                'username'   => @$username,
+                'password'   => @$pass,
                 'phone'   => $row[3],
                 'email'   => $row[4],
                 'line'   => $row[5],
