@@ -114,7 +114,7 @@ class AdminUserBackendController extends Controller
                 $type='PC';
             }
 
-            $pack_id=DB::table('tb_package_subwatch')->where('Subpackage_Name',$row[8])->first();
+            $pack_id=DB::table('tb_package_subwatch')->where('type',@$type)->where('Subpackage_Name',$row[8])->first();
     
 
             $acc = \App\Models\users_in::whereNull('type_f')->where('email',$row[11])->first();
