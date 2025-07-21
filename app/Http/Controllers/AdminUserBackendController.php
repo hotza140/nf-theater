@@ -276,7 +276,7 @@ class AdminUserBackendController extends Controller
                     'type'   => @$type,
                     'date_start'   => @$formattedDate_start,
                     'date_end'   => @$formattedDate_end,
-                    'type_mail'   => 1,
+                    'type_mail'   => 2,
                 ]); 
                 
                 \App\Models\users_in_in_history::create([
@@ -286,7 +286,7 @@ class AdminUserBackendController extends Controller
                     'date_start'   => @$formattedDate_start,
                     'date_end'   => @$formattedDate_end,
                     'id_user_in_in'   => @$aaa->id,
-                    'type_mail'   => 1,
+                    'type_mail'   => 2,
                 ]); 
 
                 $email=@$acc->email02;
