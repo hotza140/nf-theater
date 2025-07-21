@@ -111,7 +111,7 @@
                             <label class="form-label" style="color: var(--bs-emphasis-color);">จำนวนเงิน</label>
                             <input class="form-control form-v1" type="text" placeholder="139" name="Subpackage_Paymoney" id="Subpackage_Paymoney" value="{{$Subpackage_Paymoney}}" readonly>
                         </div>
-                        <div class="form-div p-1">
+                        <div class="form-div p-1" style="display: {{strtolower($package_Name)<>'netflix'?'block':'none'}};">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label>
                             <input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน" name="Orderemail" id="Orderemail" value="{{$Orderemail}}" readonly>
                         </div>
@@ -158,7 +158,7 @@
                     <label class="form-label" style="color: var(--bs-emphasis-color);">จำนวนเงิน</label>
                     <input class="form-control form-v1" type="text" placeholder="139" name="Subpackage_Paymoney" id="Subpackage_Paymoney" value="{{$Subpackage_Paymoney}}" readonly>
                 </div>
-                <div class="form-div">
+                <div class="form-div" style="display: {{strtolower($package_Name)<>'netflix'?'block':'none'}};">
                     <label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label>
                     <input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน" name="Orderemail" id="Orderemail" value="{{$Orderemail}}" readonly>
                 </div>
