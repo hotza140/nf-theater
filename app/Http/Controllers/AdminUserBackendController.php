@@ -188,6 +188,10 @@ class AdminUserBackendController extends Controller
 
 
             if($account==0){
+
+                $count = \App\Models\users_in_in::whereNull('type_f')->where('id_user_in',@$acc->id)->whereNull('type_mail')->count();
+                
+                if(@$count<6){
                 $aaa=\App\Models\users_in_in::create([
                     'id_user'       => $user->id,
                     'id_user_in'   => @$acc->id,
@@ -208,6 +212,17 @@ class AdminUserBackendController extends Controller
                 $email=@$acc->email;
                 $pa=@$acc->password;
                 $e_type='ยกเว้นทีวี';
+
+                }else{
+                    $email=@$acc->email.'(สร้างไม่สำเร็จ account เต็มแล้ว)';
+                    $pa=@$acc->password;
+                    $e_type='ยกเว้นทีวี';
+
+                    $ttt = \App\Models\users::where('type_netflix',1)->where('id',@$user->id)->first();
+                    $ttt->status_account=1;
+                    $ttt->save();
+
+                }
 
 
             }elseif($account==1){
