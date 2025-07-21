@@ -242,6 +242,11 @@ class AdminUserBackendController extends Controller
                     $email=@$acc->email01.'(สร้างไม่สำเร็จ ซ้ำกับอันที่มีอยู่แล้ว)';
                     $pa=@$acc->password01;
                     $e_type='TV';
+
+                    $ttt = \App\Models\users::where('type_netflix',1)->where('id',@$user->id)->first();
+                    $ttt->status_account=1;
+                    $ttt->save();
+
                 }
 
             }elseif($account==2){
@@ -277,6 +282,10 @@ class AdminUserBackendController extends Controller
                     $email=@$acc->email02.'(สร้างไม่สำเร็จ ซ้ำกับอันที่มีอยู่แล้ว)';
                     $pa=@$acc->password02;
                     $e_type='TV';
+
+                    $ttt = \App\Models\users::where('type_netflix',1)->where('id',@$user->id)->first();
+                    $ttt->status_account=1;
+                    $ttt->save();
                 }
             }
 
