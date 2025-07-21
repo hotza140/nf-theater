@@ -341,7 +341,7 @@
                                                     <th>Open/Close</th>
                                                     <th>สถานะแก้ใข</th>
                                                     <!-- <th>Picture</th> -->
-                                                    <th>Username</th>
+                                                    <th>Username / Password</th>
                                                     <th>Name Profile</th>
                                                     <th>ชื่อไลน์ลูกค้า</th>
                                                     <th>Package</th>
@@ -397,10 +397,10 @@
                                                     <!-- <td><img src="{{asset('/img/upload/'.$items->picture)}}" style="width:90px"></td> -->
                                                     <td>
                                                     @if($items->password==null)
-                                                    {{$items->username}} <span class="status-expired">ตัวแทน</span> 
+                                                    {{$items->username}} / {{$items->password}} <span class="status-expired">ตัวแทน</span> 
                                                     <a href="{{url('users_all_destroy/'.$items->id)}}"  onclick="javascript:return confirm('Confirm?')"  style="color:red;"><i class="fa fa-trash"></i>ลบทั้งหมด</a>
                                                     @else
-                                                    {{$items->username}}
+                                                    {{$items->username}} / {{$items->password}}
                                                         @endif
                                                         
                                                     </td>

@@ -124,11 +124,13 @@ class AdminUserBackendController extends Controller
                 $acc = \App\Models\users_in::whereNull('type_f')->where('email01',$row[11])->first();
 
                 if($acc!=null){
+                    $type='PC';
                     $account=1;
                 }else{
                     $acc = \App\Models\users_in::whereNull('type_f')->where('email02',$row[11])->first();
 
                     if($acc!=null){
+                        $type='PC';
                         $account=2;
                     }else{
                        $account=null;
@@ -196,13 +198,23 @@ class AdminUserBackendController extends Controller
                 
                 \App\Models\users_in_in_history::create([
                     'id_user'       => $user->id,
-                    'id_user_in'   => @$account,
+                    'id_user_in'   => @$acc->id,
                     'type'   => @$type,
                     'date_start'   => @$formattedDate_start,
                     'date_end'   => @$formattedDate_end,
                     'id_user_in_in'   => @$aaa->id,
                 ]); 
+
+                $email=@$acc->email;
+                $pa=@$acc->password;
+                $e_type='ยกเว้นทีวี';
+
+
             }elseif($account==1){
+                $vh = \App\Models\users_in_in::whereNull('type_f')->where('id_user_in',@$acc->id)->where('type_mail',1)->first();
+
+                if(@$vh==null){
+
                 $aaa=\App\Models\users_in_in::create([
                     'id_user'       => $user->id,
                     'id_user_in'   => @$acc->id,
@@ -214,14 +226,25 @@ class AdminUserBackendController extends Controller
                 
                 \App\Models\users_in_in_history::create([
                     'id_user'       => $user->id,
-                    'id_user_in'   => @$account,
+                    'id_user_in'   => @$acc->id,
                     'type'   => @$type,
                     'date_start'   => @$formattedDate_start,
                     'date_end'   => @$formattedDate_end,
                     'id_user_in_in'   => @$aaa->id,
                     'type_mail'   => 1,
                 ]); 
+
+                $email=@$acc->email01;
+                $pa=@$acc->password01;
+                $e_type='TV';
+
+                }
             }elseif($account==2){
+
+                $vh = \App\Models\users_in_in::whereNull('type_f')->where('id_user_in',@$acc->id)->where('type_mail',2)->first();
+
+                if(@$vh==null){
+
                 $aaa=\App\Models\users_in_in::create([
                     'id_user'       => $user->id,
                     'id_user_in'   => @$acc->id,
@@ -233,14 +256,43 @@ class AdminUserBackendController extends Controller
                 
                 \App\Models\users_in_in_history::create([
                     'id_user'       => $user->id,
-                    'id_user_in'   => @$account,
+                    'id_user_in'   => @$acc->id,
                     'type'   => @$type,
                     'date_start'   => @$formattedDate_start,
                     'date_end'   => @$formattedDate_end,
                     'id_user_in_in'   => @$aaa->id,
                     'type_mail'   => 1,
                 ]); 
+
+                $email=@$acc->email02;
+                $pa=@$acc->password02;
+                $e_type='TV';
+
+                }
             }
+
+            $randomNumber = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+
+            $his=new created_history();
+                $his->id_admin=Auth::guard('admin')->user()->id;
+                $his->id_user=$user->id;
+                $his->id_user_in=@$acc->id;
+                $his->id_user_in_in=@$aaa->id;
+                $his->number=$randomNumber;
+                $his->detail = 'สร้าง&nbsp;&nbsp;&nbsp;Account: '.@$acc->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile: '.$user->name.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Package: '.@$e_type.' '.$user->package.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: '.@$email.'&nbsp;&nbsp;Password: '.@$pa;
+
+                $his->save();
+
+
+                $dash_regis_to=new dash_regis_to();
+                $dash_regis_to->id_user=$user->id; 
+                $dash_regis_to->id_package=$user->id_package; 
+                $dash_regis_to->id_admin=Auth::guard('admin')->user()->id;
+                $dash_regis_to->date=date('Y-m-d');
+                $dash_regis_to->type=0;
+                $dash_regis_to->save();
+
+
         }
     
         return response()->json(['success' => true]);
