@@ -187,6 +187,8 @@ class AdminUserBackendController extends Controller
 
 
 
+            if(@$pack_id!=null){
+                
             if($account==0){
 
                 $count = \App\Models\users_in_in::whereNull('type_f')->where('id_user_in',@$acc->id)->whereNull('type_mail')->count();
@@ -302,6 +304,17 @@ class AdminUserBackendController extends Controller
                     $ttt->status_account=1;
                     $ttt->save();
                 }
+            }
+
+            }else{
+                $email=@$acc->email.'(สร้างไม่สำเร็จ Package ไม่ตรงกับระบบ)';
+                $pa=@$acc->password;
+                $e_type=$row[7];
+
+                $ttt = \App\Models\users::where('type_netflix',1)->where('id',@$user->id)->first();
+                $ttt->status_account=1;
+                $ttt->save();
+
             }
 
             $randomNumber = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
