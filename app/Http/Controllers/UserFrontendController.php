@@ -589,7 +589,7 @@ class UserFrontendController extends Controller
             self::SaveOrdPkTrueMoneyWallet($request);
         }
         $id = $request->id;
-        return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','Sucess! '.'Please wait to Admin Check.');
+        return redirect()->route($id==1?'frontend.netflix':'frontend.youtube',['id'=>$id])->with('message','คุณได้ต่ออายุแพ็คเกจเรียบร้อยแล้ว'); // 'Sucess! '.'Please wait to Admin Check.'
     }
 
     public function upCheckQR(Request $request) { 
