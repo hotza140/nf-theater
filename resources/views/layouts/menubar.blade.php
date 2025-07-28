@@ -4,7 +4,7 @@
 
 <!-- Gradient Able Bootstrap admin template made using Bootstrap 4 -->
 <head>
-    <title>NF THEATER</title>
+    <title>NF Streaming</title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -443,7 +443,7 @@
                         </div>
                         <a href="{{url('/backend')}}">
                             <img class="img-fluid" src="{{asset('assets/img/Frame 1 (1).png')}}" alt="Theme-Logo" width="50px" />
-                            <h7>NF THEATER</h7>
+                            <h7>NF Streaming</h7>
                         </a>
                         <a class="mobile-options">
                             <i class="ti-more"></i>

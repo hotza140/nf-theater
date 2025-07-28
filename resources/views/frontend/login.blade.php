@@ -5,7 +5,7 @@
         <div class="log-container">
             <div class="log-card">
                 <div class="log-left">
-                    <h1 class="log-title">NF THEATER</h1><img src="assets/img/avata2.png" alt="Avatar" class="log-avatar">
+                    <h1 class="log-title">NF Streaming</h1><img src="assets/img/avata2.png" alt="Avatar" class="log-avatar">
                 </div>
                 <div class="log-right">
                     <div class="d-01">

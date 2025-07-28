@@ -39,7 +39,7 @@
     </style>
     
         <div class="net-container">
-            <h1 class="head-pro">NF THEATER</h1>
+            <h1 class="head-pro">NF Streaming</h1>
         </div>
         <div class="net-container">
             <div class="net-plans">
@@ -68,7 +68,7 @@
     <!-- END SHOW -->
     
     <div>
-        <p class="copy-r">Copyright ©&nbsp;NF Theater&nbsp;2024.</p>
+        <p class="copy-r">Copyright ©&nbsp;NF Streaming&nbsp;2024.</p>
     </div>
     <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -2,7 +2,7 @@
 @section('contentfront')
 
     <div class="net-container">
-        <h1 class="head-pro">NF THEATER</h1>
+        <h1 class="head-pro">NF Streaming</h1>
     </div>
     <div class="net-container">
         <div class="net-plans">
@@ -154,7 +154,7 @@
         </div>
     </div>
     {{-- <div>
-        <p class="copy-r">Copyright ©&nbsp;NF Theater&nbsp;2024.</p>
+        <p class="copy-r">Copyright ©&nbsp;NF Streaming&nbsp;2024.</p>
     </div> --}}
     
 @endsection

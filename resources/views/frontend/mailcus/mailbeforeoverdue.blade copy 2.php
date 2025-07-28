@@ -40,7 +40,7 @@
     <table>
         <tr>
             <td><img src="{{$message->embed($ImageLinklogo)}}" alt="" style="width: 80px;"></td>
-            <td style="font-size: 28px;"><b>แจ้งการหมดอายุของ Package ที่ใช้บริการจาก NF THEATER.</b></td>
+            <td style="font-size: 28px;"><b>แจ้งการหมดอายุของ Package ที่ใช้บริการจาก NF Streaming.</b></td>
         </tr>
         @php
             $namecus = @$users->name;
@@ -67,6 +67,6 @@
         </tr>
     </table> --}}
 
-<h1>แจ้งการหมดอายุของ Package ที่ใช้บริการจาก NF THEATER.</h1>
+<h1>แจ้งการหมดอายุของ Package ที่ใช้บริการจาก NF Streaming.</h1>
 <p>{{$msghows}}</p>
 <a href="https://www.nf-theater.com/frontlogin">Package ใกล้หมดอายุ</a>

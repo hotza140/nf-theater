@@ -61,10 +61,10 @@
     <table>
         <tr>
             <td><img src="{{$message->embed($ImageLinklogo)}}" alt="" style="width: 80px;"></td>
-            <td style="font-size: 28px;"><b>ยืนยันอีเมล์ กับทาง NF THEATER.</b></td>
+            <td style="font-size: 28px;"><b>ยืนยันอีเมล์ กับทาง NF Streaming.</b></td>
         </tr>
         <tr>
-            <td colspan="2">เมล {{$emailconfirmIS}} ของท่านที่ต้องการยืนยันกับทาง NF THEATER.</td>
+            <td colspan="2">เมล {{$emailconfirmIS}} ของท่านที่ต้องการยืนยันกับทาง NF Streaming.</td>
         </tr>
         <tr>
             <td colspan="2" style="text-align: center;padding:10px;">
@@ -86,8 +86,8 @@
 </head>
 <body>
     <p><img src="{{$message->embed($ImageLinklogo)}}" alt="" style="width: 80px;"></p>
-    <p><h1>ยืนยันอีเมล์ กับทาง NF THEATER.</h1></p>
-    <p>เมล {{$emailconfirmIS}} ของท่านที่ต้องการยืนยันกับทาง NF THEATER.</p>
+    <p><h1>ยืนยันอีเมล์ กับทาง NF Streaming.</h1></p>
+    <p>เมล {{$emailconfirmIS}} ของท่านที่ต้องการยืนยันกับทาง NF Streaming.</p>
     <p>{{route('api.receiveconfirmmailck')}}?rtoken={{$genTokenIS}}</p>
     <p>กรุณายืนยันเมลของท่าน</p>
 </body>

@@ -7,7 +7,7 @@
     }
 </style>
     <div class="net-container">
-        <h1 class="head-pro">NF THEATER</h1>
+        <h1 class="head-pro">NF Streaming</h1>
         <div class="profile-plans">
             <button class="btn btn-primary logout-bt" type="button" onclick="document.location.href=`{{url('profile')}}`;">
                
@@ -143,6 +143,43 @@
         </a>
         @endforeach
 
+        @if(@$userProfile_all_disney)
+        <br><br>
+        <h1>Disney</h1>
+        
+        @foreach($userProfile_all_disney as $key => $userProfile)
+        <br>
+        <a href="{{url('change_profile/'.$userProfile->id)}}">
+        <div class="container profile-plans-white" style="padding-right: 24px;">
+            <div class="row">
+                <div class="col-12 col-sm-3 d-flex d-sm-flex justify-content-center align-items-sm-center">
+                    <div class="img-profile-a"><img class="net-profile-icon" src="assets/img/Frame%201%20(1).png" alt="Netflix Icon">
+                        {{-- <div class="edit-icon"><a data-bs-target="#modal-edit-img" data-bs-toggle="modal"><button class="btn btn-primary edit-bt" type="button" style="padding: 6px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pencil">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
+                                    </svg></button></a></div> --}}
+                    </div>
+                </div>
+                <div class="col d-flex align-items-center">
+                    <div class="net-plan-details">
+                        <?php 
+                        $c_dd=date('Y-m-d');
+                        $pak=DB::table('tb_users_in_in')->whereDate('date_start','<=',@$c_dd)->where('id_user',@$userProfile->id)->first();
+                        $ac=DB::table('tb_users_in')->where('id',@$pak->id_user_in)->first();
+                        ?>
+                        <div id="showUYoutube">
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Youtube Package.</h2>
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Email <!--Profile-->: {{@$userProfile->useremail}}</h2>
+                            <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Package : @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
+                            <!--<p class="mail-profile">Account Email: : {{--@$ac->email--}}<span id="emailYT"></span></p>--> <!--nftheater134+27@gmail.com-->
+                            <!--<p class="pass-profile">Password : {{--@$ac->password--}}<span id="passYT"></span></p>--> <!--0123456-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+        @endforeach
+        @endif
 
     </div>
 
@@ -214,7 +251,7 @@
 
     </div>
     {{-- <div>
-        <p class="copy-r">Copyright ©&nbsp;NF Theater&nbsp;2024.</p>
+        <p class="copy-r">Copyright ©&nbsp;NF Streaming&nbsp;2024.</p>
     </div> --}}
     <script>
         document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;

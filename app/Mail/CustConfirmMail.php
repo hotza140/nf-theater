@@ -32,7 +32,7 @@ class CustConfirmMail extends Mailable
      */
     public function build()
     {
-        $subject = "ยืนยันเมล เพื่อใช้งานกับทาง NF THEATER.";
+        $subject = "ยืนยันเมล เพื่อใช้งานกับทาง NF Streaming.";
         $genTokenIS = $this->genToken;
         $emailconfirmIS = $this->emailconfirm;
         // $base64Image = $this->base64Image;

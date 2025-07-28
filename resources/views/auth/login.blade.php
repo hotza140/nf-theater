@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>NF THEATER BACKEND</title>
+    <title>NF Streaming BACKEND</title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -99,7 +99,7 @@
                             <div class="auth-box">
                                 <div class="row m-b-20">
                                     <div class="col-md-12">
-                                        <h3 class="text-left txt-primary">ADMIN NF THEATER LOGIN</h3>
+                                        <h3 class="text-left txt-primary">ADMIN NF Streaming LOGIN</h3>
                                     </div>
                                 </div>
                                 <hr/>

@@ -2,7 +2,7 @@
 @section('contentfront')
 
 <div class="net-container">
-    <h1 class="head-pro">NF THEATER</h1>
+    <h1 class="head-pro">NF Streaming</h1>
     <div class="profile-plans">
         <button class="btn btn-primary logout-bt" type="button"
             onclick="document.location.href=`{{url('profile_change')}}`;">
@@ -200,6 +200,58 @@
                     @if(@$userProfile->type_youtube==1)
                     <div id="showUYoutube">
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Youtube Package.</h2>
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Email :</b> <!--Profile-->
+                            {{@$userProfile->useremail}}</h2>
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Package :</b>
+                            @if(@$pak->date_start!=null){{@$userProfile->Subpackage_Name}} @else ยังไม่มี @endif</h2>
+                        <!--<p class="mail-profile">Account Email: : {{--@$ac->email--}}<span id="emailYT"></span></p>-->
+                        <!--nftheater134+27@gmail.com-->
+                        <!--<p class="pass-profile">Password : {{--@$ac->password--}}<span id="passYT"></span></p>-->
+                        <!--0123456-->
+
+                        <?php
+                        $today = date('Y-m-d');
+                        $date_start = date('Y-m-d');
+                                                    // $date_start = @$pak->date_start; // วันที่เริ่มต้น (Y-m-d)
+                                                    $date_end = @$pak->date_end; // วันที่สิ้นสุด (Y-m-d)
+                                                     // วันที่ปัจจุบัน
+
+                                                    if ($date_start && $date_end) {
+                                                        if (strtotime($today) < strtotime($date_start)) {
+                                                            $status = "ยังไม่เข้าช่วง";
+                                                        } elseif (strtotime($today) >= strtotime($date_start) && strtotime($today) <= strtotime($date_end)) {
+                                                            $days_remaining = (strtotime($date_end) - strtotime($today)) / (60 * 60 * 24);
+                                                            $status = "เหลืออีก $days_remaining วัน";
+                                                        } else {
+                                                            $status = "หมดอายุแล้ว";
+                                                        }
+                                                    } else {
+                                                        $status = "ไม่มีข้อมูลวันที่";
+                                                    }
+
+                                                    if ($date_start) {
+                                                        $formatted_date1 = date('d/m/Y', strtotime($date_start));
+                                                    } else {
+                                                        $formatted_date1 = null;
+                                                    }
+                                                    if ($date_end) {
+                                                        $formatted_date2 = date('d/m/Y', strtotime($date_end));
+                                                    } else {
+                                                        $formatted_date2 = null;
+                                                    }
+                                                    ?>
+
+                        @if(@$pak->date_start!=null)
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>วันสิ้นสุด</b> {{@$formatted_date2}} </h2>
+                        @endif
+
+                    </div>
+                    @endif
+
+                    {{-- @if(@$selectNfYt=='Disney') --}}
+                    @if(@$userProfile->type_disney==1)
+                    <div id="showUDisney">
+                        <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i>Disney Package.</h2>
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Email :</b> <!--Profile-->
                             {{@$userProfile->useremail}}</h2>
                         <h2 class="pack-h2"><i class="fas fa-user" style="margin-right: 5px;"></i><b>Package :</b>
@@ -744,7 +796,7 @@
 
 </div>
 {{-- <div>
-    <p class="copy-r">Copyright ©&nbsp;NF Theater&nbsp;2024.</p>
+    <p class="copy-r">Copyright ©&nbsp;NF Streaming&nbsp;2024.</p>
 </div> --}}
 <script>
     document.getElementById('bodystart').style = `background: url("assets/img/image%201%20(1).jpg");`;

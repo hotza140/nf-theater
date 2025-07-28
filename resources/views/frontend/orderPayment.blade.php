@@ -68,7 +68,7 @@
 </div> --}}
 
 <div class="net-container" style="text-align: center;">
-    <h1 class="head-pro">NF THEATER</h1>
+    <h1 class="head-pro">NF Streaming</h1>
     <h3>ส่วนของการชำระเงินระบบ Payment</h3>
 </div>
 

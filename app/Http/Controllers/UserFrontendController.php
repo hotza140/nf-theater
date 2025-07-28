@@ -134,13 +134,17 @@ class UserFrontendController extends Controller
 
             $Packagewatch = Packagewatch::find($id); 
             $PackageSubwatch = PackageSubwatch::where('package_Code',$Packagewatch->package_Code)->where('type',@$ag->type)->get();
-        }else{
+        }else if($id==2) {
+            $Packagewatch = Packagewatch::find($id); 
+            $PackageSubwatch = PackageSubwatch::where('package_Code',$Packagewatch->package_Code)->get();
+        }else if($id==3) {
             $Packagewatch = Packagewatch::find($id); 
             $PackageSubwatch = PackageSubwatch::where('package_Code',$Packagewatch->package_Code)->get();
         }
 
         if($r->id==1) return view('frontend.netflix-pricing',compact('Packagewatch','PackageSubwatch','id'));
         else if($r->id==2) return view('frontend.youtube-pricing',compact('Packagewatch','PackageSubwatch','id'));
+        else if($r->id==3) return view('frontend.disney-pricing',compact('Packagewatch','PackageSubwatch','id'));
     }
 
     public function rewardsRead(Request $r) {
@@ -285,10 +289,34 @@ class UserFrontendController extends Controller
             ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
             ->where('tb_users.username', $users->username)->whereNotNull('type_youtube')->orderBy('id','asc')->get();
 
+            if(false)
+            $userProfile_all_disney = users::select(
+                'tb_users.id',
+                'tb_users.username',
+                'tb_users.email as useremail',
+                'tb_users.password as userpass',
+                'tb_users.name as utypename',
+                'tb_users.type_netflix',
+                'tb_users.type_youtube',
+                'tb_users.type_disney',
+                'tb_users_in_in.type as typeinin',
+                'tb_users_in_in.type_mail',
+                'tb_users_in.name','tb_users_in.email','tb_users_in.email01','tb_users_in.email02',
+                'tb_users_in.password','tb_users_in.password01','tb_users_in.password02',
+                'tb_package_subwatch.Subpackage_Name','tb_package_subwatch.Subpackage_Dayuse',
+                'tb_package_subwatch.Subpackage_Paymoney'
+            )
+            ->leftJoin('tb_users_in_in', 'tb_users.id', '=', 'tb_users_in_in.id_user')
+            ->leftJoin('tb_users_in', 'tb_users_in_in.id_user_in', '=', 'tb_users_in.id')
+            ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
+            ->where('tb_users.username', $users->username)->whereNotNull('type_disney')->orderBy('id','asc')->get();
+
             if($users->type_netflix!=null){
                 $selectNfYt='NetFlix';
-            }else{
+            }else if($users->type_youtube!=null) {
                 $selectNfYt='YouTube';
+            }else {
+                $selectNfYt='Disney';
             }
 
         return view('frontend.profile',compact('users','RewardUserLog','userProfile','userProfile_all_netflix','userProfile_all_youtube','selectNfYt','ReferFriend','ProfileNows'));
@@ -369,10 +397,35 @@ class UserFrontendController extends Controller
             ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
             ->where('tb_users.username', $users->username)->whereNotNull('type_youtube')->orderBy('id','asc')->get();
 
+
+            if(false)
+            $userProfile_all_disney = users::select(
+                'tb_users.id',
+                'tb_users.username',
+                'tb_users.email as useremail',
+                'tb_users.password as userpass',
+                'tb_users.name as utypename',
+                'tb_users.type_netflix',
+                'tb_users.type_youtube',
+                'tb_users.type_disney',
+                'tb_users_in_in.type as typeinin',
+                'tb_users_in_in.type_mail',
+                'tb_users_in.name','tb_users_in.email','tb_users_in.email01','tb_users_in.email02',
+                'tb_users_in.password','tb_users_in.password01','tb_users_in.password02',
+                'tb_package_subwatch.Subpackage_Name','tb_package_subwatch.Subpackage_Dayuse',
+                'tb_package_subwatch.Subpackage_Paymoney'
+            )
+            ->leftJoin('tb_users_in_in', 'tb_users.id', '=', 'tb_users_in_in.id_user')
+            ->leftJoin('tb_users_in', 'tb_users_in_in.id_user_in', '=', 'tb_users_in.id')
+            ->leftJoin('tb_package_subwatch', 'tb_users.id_package','tb_package_subwatch.id')
+            ->where('tb_users.username', $users->username)->whereNotNull('type_disney')->orderBy('id','asc')->get();
+
             if($users->type_netflix!=null){
                 $selectNfYt='NetFlix';
-            }else{
+            }else if($users->type_youtube!=null){
                 $selectNfYt='YouTube';
+            }else {
+                $selectNfYt='Disney';
             }
 
         return view('frontend.profile_change',compact('users','RewardUserLog','userProfile','userProfile_all_netflix','userProfile_all_youtube','selectNfYt','ReferFriend','ProfileNows'));

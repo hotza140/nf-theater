@@ -3,7 +3,7 @@
 
 {{-- <div class="con-bk" style="background: url(&quot;assets/img/backgrown-net1.jpg&quot;)">
     <div class="d-logo">
-        <div class="d-logo-m1"><img class="logo-m" src="assets/img/logo-netfilx.png"></div>
+        <div class="d-logo-m1"><img class="logo-m" src="assets/img/logo-disney.webp"></div>
     </div>
 </div> --}}
 
@@ -12,22 +12,22 @@
     <h3>เลือกแพ็กเกจที่จะต่ออายุ</h3>
 </div>
 
-<!--ส่วนของปุ่มไว้เลือกรายการบริการเช่น netflix youtube confirm service customer etc.-->
+<!--ส่วนของปุ่มไว้เลือกรายการบริการเช่น netflix youtube disney confirm service customer etc.-->
 @include('frontend.headbtnservice')
 
 <div class="net-container">
-    <h1 class="head-pack" style="font-family: Prompt, sans-serif;">แพ็กเกจสำหรับ Netflix</h1>
+    <h1 class="head-pack" style="font-family: Prompt, sans-serif;">แพ็กเกจสำหรับ Disney</h1>
     <div class="net-plans">
         {{-- 'Packagewatch','PackageSubwatch' --}}
         @foreach ($PackageSubwatch as $itemPs)
-            <div class="net-plan" data-bs-toggle="modal" data-bs-target="#modal-price" onclick="showPackageOrder('{{$itemPs->Subpackage_Code}}','{{$itemPs->Subpackage_Name}}','{{$itemPs->Subpackage_Paymoney}}');">
-                <div class="net-plan-info"><img class="net-plan-icon" src="assets/img/logo-netflix%201.png" alt="Netflix Icon" />
+            <div class="net-plan2" data-bs-toggle="modal" data-bs-target="#modal-price" onclick="showPackageOrder('{{$itemPs->Subpackage_Code}}','{{$itemPs->Subpackage_Name}}','{{$itemPs->Subpackage_Paymoney}}');">
+                <div class="net-plan-info"><img class="net-plan-icon" src="assets/img/logo-netflix%201%20(1).png" alt="Netflix Icon" />
                     <div class="net-plan-details">
-                        <h2>{{$Packagewatch->package_Name}}</h2>
-                        <p>{{$itemPs->Subpackage_Name}}</p>
+                        <h2 class="pack-h2">{{$Packagewatch->package_Name}}</h2>
+                        <p class="pack-h3">{{$itemPs->Subpackage_Name}}</p>
                     </div>
                 </div>
-                <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px; height:70px;width:90px;">
+                <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
                     <div style="margin: 0;padding: 0;height: auto;">
                         <p class="net-price" style="text-align: center;height: auto;margin-bottom: 0;">{{$itemPs->Subpackage_Paymoney}}</p>
                     </div>
@@ -36,12 +36,11 @@
             </div>
         @endforeach
         
-
-        {{-- <div class="net-plan" data-bs-toggle="modal" data-bs-target="#modal-price">
-            <div class="net-plan-info"><img class="net-plan-icon" src="assets/img/logo-netflix%201.png" alt="Netflix Icon" />
+        {{-- <div class="net-plan2" data-bs-toggle="modal" data-bs-target="#modal-price">
+            <div class="net-plan-info"><img class="net-plan-icon" src="assets/img/logo-netflix%201%20(1).png" alt="Netflix Icon" />
                 <div class="net-plan-details">
-                    <h2>แพ็กเกจ NETFLIX</h2>
-                    <p>Netflix ยาวนานถึง 1 เดือน</p>
+                    <h2 class="pack-h2">แพ็กเกจ Disney</h2>
+                    <p class="pack-h3">Disney ยาวนานถึง 1 เดือน</p>
                 </div>
             </div>
             <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
@@ -50,12 +49,12 @@
                 </div>
                 <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">บาท</span></div>
             </div>
-        </div> --}}
-        {{-- <div class="net-plan">
-            <div class="net-plan-info"><img src="assets/img/logo-netflix%201.png" alt="Netflix Icon" class="net-plan-icon">
+        </div>
+        <div class="net-plan2">
+            <div class="net-plan-info"><img src="assets/img/logo-netflix%201%20(1).png" alt="Netflix Icon" class="net-plan-icon">
                 <div class="net-plan-details">
-                    <h2>แพ็กเกจ NETFLIX</h2>
-                    <p>Netflix ยาวนานถึง 2 เดือน</p>
+                    <h2 class="pack-h2">แพ็กเกจ Disney</h2>
+                    <p class="pack-h3">Disney ยาวนานถึง 2 เดือน</p>
                 </div>
             </div>
             <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
@@ -65,11 +64,11 @@
                 <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">บาท</span></div>
             </div>
         </div>
-        <div class="net-plan">
-            <div class="net-plan-info"><img src="assets/img/logo-netflix%201.png" alt="Netflix Icon" class="net-plan-icon">
+        <div class="net-plan2">
+            <div class="net-plan-info"><img src="assets/img/logo-netflix%201%20(1).png" alt="Netflix Icon" class="net-plan-icon">
                 <div class="net-plan-details">
-                    <h2>แพ็กเกจ NETFLIX</h2>
-                    <p>Netflix ยาวนานถึง 3 เดือน</p>
+                    <h2 class="pack-h2">แพ็กเกจ Disney</h2>
+                    <p class="pack-h3">Disney ยาวนานถึง 3 เดือน</p>
                 </div>
             </div>
             <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
@@ -79,11 +78,11 @@
                 <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">บาท</span></div>
             </div>
         </div>
-        <div class="net-plan">
-            <div class="net-plan-info"><img src="assets/img/logo-netflix%201.png" alt="Netflix Icon" class="net-plan-icon">
+        <div class="net-plan2">
+            <div class="net-plan-info"><img src="assets/img/logo-netflix%201%20(1).png" alt="Netflix Icon" class="net-plan-icon">
                 <div class="net-plan-details">
-                    <h2>แพ็กเกจ NETFLIX</h2>
-                    <p>Netflix ยาวนานถึง 4 เดือน</p>
+                    <h2 class="pack-h2">แพ็กเกจ Disney</h2>
+                    <p class="pack-h3">Disney ยาวนานถึง 4 เดือน</p>
                 </div>
             </div>
             <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
@@ -93,11 +92,11 @@
                 <div class="bath-d" style="height: auto;margin: 0;padding: 0;"><span style="height: auto;margin-top: -10px;">บาท</span></div>
             </div>
         </div>
-        <div class="net-plan">
-            <div class="net-plan-info"><img src="assets/img/logo-netflix%201.png" alt="Netflix Icon" class="net-plan-icon">
+        <div class="net-plan2">
+            <div class="net-plan-info"><img src="assets/img/logo-netflix%201%20(1).png" alt="Netflix Icon" class="net-plan-icon">
                 <div class="net-plan-details">
-                    <h2>แพ็กเกจ NETFLIX</h2>
-                    <p>Netflix ยาวนานถึง 6 เดือน</p>
+                    <h2 class="pack-h2">แพ็กเกจ Disney</h2>
+                    <p class="pack-h3">Disney ยาวนานถึง 6 เดือน</p>
                 </div>
             </div>
             <div class="net-plan-price" style="background: var(--bs-emphasis-color);border-radius: 10px;padding: 10px;">
@@ -125,15 +124,15 @@
                         <div class="form-div">
                             <input type="hidden" name="id" value="{{$id}}">
                             <input type="hidden" name="Subpackage_Code" id="Subpackage_Code">
-                            <input type="hidden" name="package_Name" value="Netflix">
+                            <input type="hidden" name="package_Name" value="Disney">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">ชื่อ Package</label>
-                            <input class="form-control form-v1" type="text" placeholder="Nextflix ยกเว้นทีวี 1 เดือน" name="Subpackage_Name" id="Subpackage_Name" readonly>
+                            <input class="form-control form-v1" type="text" placeholder="Disney ยกเว้นทีวี 1 เดือน" name="Subpackage_Name" id="Subpackage_Name" readonly>
                         </div>
                         <div class="form-div">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">จำนวนเงิน</label>
                             <input class="form-control form-v1" type="text" placeholder="139" name="Subpackage_Paymoney" id="Subpackage_Paymoney" readonly>
                         </div>
-                        <div class="form-div" style="display: none;">
+                        <div class="form-div">
                             <label class="form-label" style="color: var(--bs-emphasis-color);">E-mail ลูกค้า</label>
                             <input class="form-control form-v1" type="text" placeholder="ระบุอีเมล์ของท่าน" name="Orderemail" id="Orderemail" readonly>
                         </div>
@@ -155,35 +154,7 @@
             document.getElementById('Subpackage_Paymoney').value=Subpackage_Paymoney;
             document.getElementById('Orderemail').value='{{$userCMail->email}}';
         }
-        // function checkPayment() {
-        //     var myModal = new bootstrap.Modal(document.getElementById('modal-payment'));
-        //     myModal.show();
-        // }
     </script>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-payment" style="margin-top: 150px;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header m-h">
-                    <div class="h-pop">
-                        <h4 class="modal-title head-pop" style="color: var(--bs-emphasis-color);">ส่วนของการชำระเงินระบบ Payment.</h4>
-                    </div>
-                    <div><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button></div>
-                </div>
-                <div class="modal-body m-h">
-                    <div class="point-box-div">
-                        <div class="point-box"><a href="https://line.me/R/ti/p/@343vxfsy?oat_content=url" target="_blank"><img class="img-po1" src="assets/img/event_theater.png"></a></div>
-                        <div class="point-box"><a href="{{route('frontend.rewards')}}"><img class="img-po1" src="assets/img/event_theater01.png"></a></div>
-                        <div class="point-box"><a href="{{route('frontend.rewards')}}"><img class="img-po1" src="assets/img/redeem_reward.png"></a></div>
-                    </div>
-                </div>
-                <div class="modal-footer m-f" style="padding-top: 20px;padding-bottom: 30px;"></div>
-            </div>
-            <div class="modal-footer fot-pay" style="padding-top: 20px;padding-bottom: 30px;">
-                <button class="btn btn-primary bt-pay" type="button" onclick="document.getElementById('SaveOrderPackageFront').submit();">ชำระเงินสำเร็จ</button>
-            </div>
-        </div>
-    </div>
-    
     {{-- <div class="modal fade" role="dialog" tabindex="-1" id="modal-points" style="margin-top: 150px;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -207,7 +178,7 @@
     </div> --}}
 
     @include('frontend.headmodelpoints')
-
+    
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-repoints" style="padding-top: 150px;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
